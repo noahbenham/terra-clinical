@@ -18,6 +18,8 @@ import LabelValueViewExamples from './examples/label-value-view/Index';
 import NoDataViewExamples from './examples/no-data-view/Index';
 import SlideGroupExamples from './examples/slide-group/Index';
 import ModalManagerExamples from './examples/modal-manager/Index';
+import NavigationPrimaryExamples from './examples/navigation-primary/Index';
+import NavigationSecondaryExamples from './examples/navigation-secondary/Index';
 
 // Test
 /* eslint-disable import/first */
@@ -36,6 +38,8 @@ import LabelValueViewTestRoutes from 'terra-clinical-label-value-view/tests/nigh
 import NoDataViewTestRoutes from 'terra-clinical-no-data-view/tests/nightwatch/NoDataViewTestRoutes';
 import SlideGroupTestRoutes from 'terra-clinical-slide-group/tests/nightwatch/SlideGroupTestRoutes';
 import ModalManagerTestRoutes from 'terra-clinical-modal-manager/tests/nightwatch/ModalManagerTestRoutes';
+import NavigationPrimaryTestRoutes from 'terra-clinical-navigation-primary/tests/nightwatch/NavigationPrimaryTestRoutes';
+import NavigationSecondaryTestRoutes from 'terra-clinical-navigation-secondary/tests/nightwatch/NavigationSecondaryTestRoutes';
 
 import TestLinks from './TestLinks';
 /* eslint-enable import/first */
@@ -57,6 +61,8 @@ ReactDOM.render((
       <Route path="no-data-view" component={NoDataViewExamples} />
       <Route path="slide-group" component={SlideGroupExamples} />
       <Route path="modal-manager" component={ModalManagerExamples} />
+      <Route path="navigation-primary" component={NavigationPrimaryExamples} />
+      <Route path="navigation-secondary" component={NavigationSecondaryExamples} />
     </Route>
     <Route path="/tests" component={TestLinks} />
     {ActionHeaderTestRoutes}
@@ -73,5 +79,7 @@ ReactDOM.render((
     {NoDataViewTestRoutes}
     {SlideGroupTestRoutes}
     {ModalManagerTestRoutes}
+    {NavigationPrimaryTestRoutes}
+    {NavigationSecondaryTestRoutes}
   </Router>
 ), document.getElementById('root'));
