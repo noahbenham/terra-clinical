@@ -1,5 +1,7 @@
 @import '~terra-mixins';
 
 .terraClinical-NavigationPrimary {
-  background-color: $terra-grey-25;
+  height: 100%;
+  position: relative;
+  width: 100%;
 }

@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-clinical-app-delegate';
+import ResponsiveElement from 'terra-responsive-element';
+import SlidePanel from 'terra-slide-panel';
 
 import './NavigationSecondary.scss';
 
@@ -33,6 +35,14 @@ class NavigationSecondary extends React.Component {
   componentWillUnmount() {
   }
 
+  buildChildren() {
+    const { app, children } = this.props;
+
+    return React.Children.map(children, (child) => {
+      return React.cloneElement(child, { app });
+    });
+  }
+
   render() {
     const { children, ...customProps } = this.props;
 
@@ -42,7 +52,9 @@ class NavigationSecondary extends React.Component {
     ]);
 
     return (
-      <div className={navigationClassNames} />
+      <div className={navigationClassNames}>
+        {this.buildChildren()}
+      </div>
     );
   }
 }
