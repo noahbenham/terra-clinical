@@ -22,7 +22,7 @@ const propTypes = {
 const defaultProps = {
   children: [],
   isOpen: false,
-  isTiny: false,
+  size: 'tiny',
 };
 
 class BasePrimary extends React.Component {
@@ -39,12 +39,12 @@ class BasePrimary extends React.Component {
     const { 
       app,
       children,
-      isTiny,
       isOpen,
       requestPrimaryOpen,
       requestPrimaryCLose,
       requestSecondaryOpen,
       requestSecondaryClose,
+      size,
       ...customProps
     } = this.props;
 
@@ -55,7 +55,7 @@ class BasePrimary extends React.Component {
 
     const clonedChildren = this.buildChildren();
     let content = clonedChildren;
-    if (!isTiny) {
+    if (size !== 'tiny') {
       // handle header when in large format
       const header = <div onClick={requestSecondaryOpen} style={{height: '40px', width: '100%', backgroundColor: '#10c022'}}>I'm Mr. Top Secondary</div>;
       content = (

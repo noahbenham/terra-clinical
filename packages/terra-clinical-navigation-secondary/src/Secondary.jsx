@@ -7,7 +7,7 @@ import AppDelegate from 'terra-clinical-app-delegate';
 import ContentContainer from 'terra-content-container';
 import SlidePanel from 'terra-slide-panel';
 
-import './NavigationSecondary.scss';
+import './Secondary.scss';
 
 const propTypes = {
   /**
@@ -15,11 +15,11 @@ const propTypes = {
    **/
   app: AppDelegate.propType,
   /**
-   * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   * Components that will receive the Secondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
   /**
-   * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   * Components that will receive the Secondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   header: PropTypes.node,
 };
@@ -27,7 +27,7 @@ const propTypes = {
 const defaultProps = {
   children: [],
   isOpen: false,
-  isTiny: false,
+  size: 'tiny',
 };
 
 class Secondary extends React.Component {
@@ -40,7 +40,7 @@ class Secondary extends React.Component {
     });
   }
 
-  buildSideNavigation(navigationItems) {
+  buildSideNavigation(isTiny, navigationItems) {
     const sideHeader = <div onClick={this.props.requestPrimaryOpen} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
     return (
       <ContentContainer
@@ -57,12 +57,12 @@ class Secondary extends React.Component {
     const { 
       app,
       children,
-      isTiny,
       isOpen,
       requestPrimaryOpen,
       requestPrimaryCLose,
       requestSecondaryOpen,
       requestSecondaryClose,
+      size,
       ...customProps
     } = this.props;
 
@@ -71,7 +71,8 @@ class Secondary extends React.Component {
       customProps.className,
     ]);
 
-    const sideNav = this.buildSideNavigation([]);
+    const isTiny = size === 'tiny';
+    const sideNav = this.buildSideNavigation(isTiny, []);
     const clonedChildren = this.buildChildren();
     let contentHeader = header;
     if (isTiny) {

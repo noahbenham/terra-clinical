@@ -4,12 +4,12 @@ import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-clinical-app-delegate';
+import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import BasePrimary from './_BasePrimary';
 import BaseSecondary from './_BaseSecondary';
 
 import './Navigation.scss';
 
-const TINY_BREAKPOINT = 544;
 
 const propTypes = {
   /**
@@ -39,9 +39,8 @@ const defaultProps = {
 class NavigationPrimary extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isInitalState: true, isTiny: false, isPrimaryOpen: false, isSecondaryOpen: false };
+    this.state = { size: 'default', isPrimaryOpen: false, isSecondaryOpen: false };
     this.handleResize = this.handleResize.bind(this);
-    this.handleWindowResize = this.handleWindowResize.bind(this);
     this.handleRequestOpen = this.handleRequestOpen.bind(this);
     this.handleRequestClose = this.handleRequestClose.bind(this);
   }
@@ -54,78 +53,61 @@ class NavigationPrimary extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
 
-  handleWindowResize() {
-    this.handleResize(window.innerWidth);
-  }
-
-  handleResize(newWidth) {
-    if (this.state.isInitalState) {
-      if (newWidth >= TINY_BREAKPOINT) {
-        this.setState({ isInitalState: false, isTiny: false, isPrimaryOpen: false, isSecondaryOpen: false });
-      } else if (newWidth < TINY_BREAKPOINT) {
-        this.setState({ isInitalState: false, isTiny: true, isPrimaryOpen: false, isSecondaryOpen: false });
-      }
-    } else {
-      if (this.state.isTiny && newWidth >= TINY_BREAKPOINT) {
-        this.setState({ isInitalState: false, isTiny: false, isPrimaryOpen: false, isSecondaryOpen: false });
-      } else if (!this.state.isTiny && newWidth < TINY_BREAKPOINT) {
-        this.setState({ isInitalState: false, isTiny: true, isPrimaryOpen: false, isSecondaryOpen: false });
-      }
+  handleResize() {
+    const size = this.getBreakpointSize();
+    if (size !== this.state.size) {
+      this.setState({ size: size, isPrimaryOpen: false, isSecondaryOpen: false });
     }
   }
 
   handleRequestOpenPrimary() {
-    const newState = {
-      isInitalState: this.state.isInitalState,
-      isTiny: this.state.isTiny,
-      isOpen: true,
-      isSecondaryOpen: this.state.isSecondaryOpen,
-    };
-    this.setState(newState);
+    if (!this.state.isPrimaryOpen) {
+      this.setState({ isPrimaryOpen: true, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
+    }
   }
 
   handleRequestClosePrimary() {
-    const newState = {
-      isInitalState: this.state.isInitalState,
-      isTiny: this.state.isTiny,
-      isOpen: false,
-      isSecondaryOpen: this.state.isSecondaryOpen,
-    };
-    this.setState(newState);
+    if (this.state.isPrimaryOpen) {
+      this.setState({ isPrimaryOpen: false, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
+    }
   }
 
   handleRequestOpenSecondary() {
-    const newState = {
-      isInitalState: this.state.isInitalState,
-      isTiny: this.state.isTiny,
-      isPrimaryOpen: this.state.isPrimaryOpen,
-      isSecondaryOpen: true,
-    };
-    this.setState(newState);
+    if (!this.state.isSecondaryOpen) {
+      this.setState({ isPrimaryOpen: this.state.isPrimaryOpen, isSecondaryOpen: true, size: this.state.size });
+    }
   }
 
   handleRequestCloseSecondary() {
-    const newState = {
-      isInitalState: this.state.isInitalState,
-      isTiny: this.state.isTiny,
-      isPrimaryOpen: this.state.isPrimaryOpen,
-      isSecondaryOpen: false,
-    };
-    this.setState(newState);
+    if (this.state.isSecondaryOpen) {
+      this.setState({ isPrimaryOpen: this.state.isPrimaryOpen, isSecondaryOpen: false, size: this.state.size });
+    }
   }
 
-  buildPrimary(isTiny, requests, secondary) {
+  buildPrimary(size, requests, secondary) {
     const { app } = this.props;
-    return React.cloneElement(child, { app, children: secondary, isTiny, isOpen: this.state.isPrimaryOpen, ...requests });
+    return React.cloneElement(child, { app, children: secondary, size, isOpen: this.state.isPrimaryOpen, ...requests });
   }
 
-  buildSecondary(isTiny, requests) {
+  buildSecondary(size, requests) {
     const { app, children, secondary } = this.props;
-    return React.cloneElement(secondary, { app, children, isTiny, isOpen: this.state.isSecondaryOpen, ...requests });
+    return React.cloneElement(secondary, { app, children, size, isOpen: this.state.isSecondaryOpen, ...requests });
   }
 
-  isTinyWidth() {
-    return window.innerWidth < TINY_BREAKPOINT;
+  getBreakpointSize() {
+    const width = window.innerWidth;
+    const { tiny, small, medium, large, huge } = getBreakpoints();
+    
+    if (width >= huge) {
+      return 'huge';
+    } else if (width >= large) {
+      return 'large';
+    } else if (width >= medium) {
+      return 'medium';
+    } else if (width >= small) {
+      return 'small';
+    }
+    return 'tiny';
   }
 
   render() {
@@ -143,9 +125,9 @@ class NavigationPrimary extends React.Component {
       requestSecondaryClosed: this.handleRequestCloseSecondary,
     };
 
-    const isTiny = this.state.isInitalState ? this.isTinyWidth() : this.state.isTiny;
-    const secondary = this.buildSecondary(isTiny, requests);
-    const primary = this.buildPrimary(isTiny, requests, secondary);
+    const size = this.state.size !== 'default' ? this.getBreakpointSize() : this.state.size;
+    const secondary = this.buildSecondary(size, requests);
+    const primary = this.buildPrimary(size, requests, secondary);
 
     return (
       <div {...customProps} className={navigationClassNames}>

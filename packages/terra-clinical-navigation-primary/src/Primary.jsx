@@ -9,21 +9,21 @@ import SlidePanel from 'terra-slide-panel';
 
 import './Primary.scss';
 
-const TINY_BREAKPOINT = 544;
-
 const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
   app: AppDelegate.propType,
   /**
-   * Components that will receive the NavigationPrimary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
 };
 
 const defaultProps = {
   children: [],
+  isOpen: false,
+  size: 'tiny',
 };
 
 class Primary extends React.Component {
@@ -64,21 +64,16 @@ class Primary extends React.Component {
     
   }
 
-  // debate extending it to useParent sizes
-  isTinyWidth() {
-    return window.innerWidth < TINY_BREAKPOINT;
-  }
-
   render() {
     const { 
       app,
       children,
-      isTiny,
       isOpen,
       requestPrimaryOpen,
       requestPrimaryCLose,
       requestSecondaryOpen,
       requestSecondaryClose,
+      size,
       ...customProps
     } = this.props;
 
@@ -87,6 +82,7 @@ class Primary extends React.Component {
       customProps.className,
     ]); 
 
+    const isTiny = size === 'tiny';
     const topNav = this.buildTopNavigation(!isTiny);
     const sideNav = this.buildSideNavigation(isTiny, []);
     const clonedChildren = this.buildChildren(isTiny);
