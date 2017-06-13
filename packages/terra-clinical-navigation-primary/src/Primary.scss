@@ -1,0 +1,11 @@
+@import '~terra-mixins';
+
+.terraClinical-NavigationPrimary {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-PrimaryPanel--disabled > * {
+  transition: none !important;
+}

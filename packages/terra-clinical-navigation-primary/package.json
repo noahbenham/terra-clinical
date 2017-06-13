@@ -1,6 +1,6 @@
 {
   "name": "terra-clinical-navigation-primary",
-  "main": "lib/NavigationPrimary.js",
+  "main": "lib/Primary.js",
   "version": "0.0.0",
   "description": "This component renders primary navigation items with react router.",
   "repository": {
@@ -40,7 +40,6 @@
     "terra-content-container": "^0.x",
     "terra-icon": "^0.x",
     "terra-mixins": "^1.0.0",
-    "terra-responsive-element": "^0.x",
     "terra-slide-panel": "^0.x"
   },
   "scripts": {
