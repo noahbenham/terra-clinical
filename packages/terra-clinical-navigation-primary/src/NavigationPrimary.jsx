@@ -32,29 +32,18 @@ class NavigationPrimary extends React.Component {
 
   buildTopNavigation(isTiny, hasSecondary) {
     // hide nav button if hasSecondary is false
-    return <NavigationHeader onButtonClick={this.props.requestPrimaryOpen} />;
+    return <NavigationHeader onButtonClick={this.props.requestToggleNavigation} />;
   }
 
   buildSideNavigation(shouldDisplaySide, navigationItems) {
     if (shouldDisplaySide) {
-      const sideHeader = <div onClick={this.handleRequestClose} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
+      const sideHeader = <div onClick={this.props.requestToggleNavigation} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
       return (
         <ContentContainer header={sideHeader} fill>
           {navigationItems}
         </ContentContainer>
       );
     }
-  }
-
-  buildMainContent(children, topNav) {
-    if (topNav) {
-      return (
-        <ContentContainer header={topNav} fill>
-          {children}
-        </ContentContainer>
-      );
-    }
-    return children;
   }
 
   buildChildren(isTiny) {
@@ -87,7 +76,6 @@ class NavigationPrimary extends React.Component {
     const topNav = this.buildTopNavigation(!isTiny);
     const sideNav = this.buildSideNavigation(isTiny, []);
     const clonedChildren = this.buildChildren(isTiny);
-    const mainContent = this.buildMainContent(clonedChildren, topNav);
 
     let panelClassNames;
     if (!isTiny) {
@@ -99,7 +87,7 @@ class NavigationPrimary extends React.Component {
         <ContentContainer header={topNav} fill>
           <SlidePanel
             className={panelClassNames}
-            mainContent={mainContent}
+            mainContent={clonedChildren}
             panelContent={sideNav}
             panelSize="small"
             panelBehavior="overlay"

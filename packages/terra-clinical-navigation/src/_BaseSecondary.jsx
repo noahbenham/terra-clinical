@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-clinical-app-delegate';
-import ContentContainer from 'terra-content-container';
-import NavigationHeader from 'terra-clinical-navigation-header';
 
 import './BaseSecondary.scss';
 

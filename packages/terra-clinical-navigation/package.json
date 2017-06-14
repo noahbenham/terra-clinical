@@ -37,6 +37,7 @@
     "prop-types": "^15.5.8",
     "terra-base": "^0.x",
     "terra-clinical-navigation-header": "^0.x",
+    "terra-content-container": "^0.x",
     "terra-icon": "^0.x",
     "terra-mixins": "^1.0.0",
     "terra-responsive-element": "^0.x"

@@ -18,6 +18,8 @@ import LabelValueViewExamples from './examples/label-value-view/Index';
 import NoDataViewExamples from './examples/no-data-view/Index';
 import SlideGroupExamples from './examples/slide-group/Index';
 import ModalManagerExamples from './examples/modal-manager/Index';
+import NavigationExamples from './examples/navigation/Index';
+import NavigationHeaderExamples from './examples/navigation-header/Index';
 import NavigationPrimaryExamples from './examples/navigation-primary/Index';
 import NavigationSecondaryExamples from './examples/navigation-secondary/Index';
 
@@ -61,6 +63,8 @@ ReactDOM.render((
       <Route path="no-data-view" component={NoDataViewExamples} />
       <Route path="slide-group" component={SlideGroupExamples} />
       <Route path="modal-manager" component={ModalManagerExamples} />
+      <Route path="navigation" component={NavigationExamples} />
+      <Route path="navigation-header" component={NavigationHeaderExamples} />
       <Route path="navigation-primary" component={NavigationPrimaryExamples} />
       <Route path="navigation-secondary" component={NavigationSecondaryExamples} />
     </Route>

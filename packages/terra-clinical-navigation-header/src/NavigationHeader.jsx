@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
-import IconNoData from './NoDataIcon';
 import Button from 'terra-button';
 import './NavigationHeader.scss';
 
@@ -30,7 +29,7 @@ const NavigationHeader = ({
 
   return (
     <div {...customProps} className={headerClassNames}>
-      <Button onClick={this.onButtonClick} />
+      <Button onClick={onButtonClick} />
     </div>
   );
 };

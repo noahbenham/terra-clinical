@@ -34,21 +34,22 @@ const defaultProps = {
   children: [],
 };
 
-class NavigationPrimary extends React.Component {
+class Navigation extends React.Component {
   constructor(props) {
     super(props);
     this.state = { size: 'default', isPrimaryOpen: false, isSecondaryOpen: false };
     this.handleResize = this.handleResize.bind(this);
-    this.handleRequestOpen = this.handleRequestOpen.bind(this);
-    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.handleRequestTogglePrimary = this.handleRequestTogglePrimary.bind(this);
+    this.handleRequestToggleSecondary = this.handleRequestToggleSecondary.bind(this);
+    this.handleRequestToggleNavigation = this.handleRequestToggleNavigation.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleWindowResize);
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   handleResize() {
@@ -58,7 +59,7 @@ class NavigationPrimary extends React.Component {
     }
   }
 
-  handleRequestOpenPrimary() {
+  handleRequestTogglePrimary() {
     this.setState({ isPrimaryOpen: !this.state.isPrimaryOpen, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
   }
 
@@ -74,12 +75,12 @@ class NavigationPrimary extends React.Component {
     }
   }
 
-  buildPrimary(primaryNav, size, requests, hasSecondary, secondary) {
+  buildPrimaryContent(primaryNav, size, requests, hasSecondary, secondary) {
     const { app } = this.props;
     return React.cloneElement(primaryNav, { app, children: secondary, size, isOpen: this.state.isPrimaryOpen, ...requests });
   }
 
-  buildSecondary(secondaryNav, size, hasPrimary, requests) {
+  buildSecondaryContent(secondaryNav, size, requests, hasPrimary) {
     const { app, children } = this.props;
     return React.cloneElement(secondaryNav, { app, children, size, isOpen: this.state.isSecondaryOpen, ...requests });
   }
@@ -129,7 +130,7 @@ class NavigationPrimary extends React.Component {
       hasSecondary = false;
     }
 
-    const size = this.state.size !== 'default' ? this.getBreakpointSize() : this.state.size;
+    const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
     const secondaryContent = this.buildSecondaryContent(secondaryNav, size, requests, hasPrimary);
     const primaryContent = this.buildPrimaryContent(primaryNav, size, requests, hasSecondary, secondaryContent);
 

@@ -44,7 +44,7 @@ class NavigationSecondary extends React.Component {
 
   buildSideNavigation(isTiny, hasPrimary, navigationItems) {
     // use hasPrimary here
-    const sideHeader = <div onClick={this.props.requestToggleSecondary} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
+    const sideHeader = <div onClick={this.props.requestToggleSecondary} style={{height: '40px', width: '100%', backgroundColor: '#b6c0de'}}>I'm Mr. Side Secondary</div>;
     return (
       <ContentContainer header={sideHeader} fill>
         {navigationItems}

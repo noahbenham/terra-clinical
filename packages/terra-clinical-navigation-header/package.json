@@ -13,7 +13,7 @@
     "Clinical",
     "terra-clinical-navigation-header",
     "Navigation",
-    "NavigationHeader"
+    "NavigationHeader",
     "UI"
   ],
   "author": "Cerner Corporation",
@@ -35,7 +35,7 @@
     "terra-base": "^0.x",
     "terra-button": "^0.x",
     "terra-icon": "^0.x",
-    "terra-mixins": "^1.0.0",
+    "terra-mixins": "^1.0.0"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",
