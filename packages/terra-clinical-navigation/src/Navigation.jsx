@@ -39,9 +39,7 @@ class Navigation extends React.Component {
     super(props);
     this.state = { size: 'default', isPrimaryOpen: false, isSecondaryOpen: false };
     this.handleResize = this.handleResize.bind(this);
-    this.handleRequestTogglePrimary = this.handleRequestTogglePrimary.bind(this);
-    this.handleRequestToggleSecondary = this.handleRequestToggleSecondary.bind(this);
-    this.handleRequestToggleNavigation = this.handleRequestToggleNavigation.bind(this);
+    this.handleNavigationRequests = this.handleNavigationRequests.bind(this);
   }
 
   componentDidMount() {
@@ -59,19 +57,25 @@ class Navigation extends React.Component {
     }
   }
 
-  handleRequestTogglePrimary() {
-    this.setState({ isPrimaryOpen: !this.state.isPrimaryOpen, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
+  validateNavigationRequest(requestValue, previousState) {
+    if (requestValue) {
+      if (requestValue === 'toggle') {
+        return !previousState;
+      } else if (requestValue === 'true') {
+        return true;
+      } else if (requestValue === 'false') {
+        return false;
+      }
+    } 
+    return previousState;
   }
 
-  handleRequestToggleSecondary() {
-    this.setState({ isPrimaryOpen: this.state.isPrimaryOpen, isSecondaryOpen: !this.state.isSecondaryOpen, size: this.state.size });
-  }
+  handleNavigationRequests(requests) {
+    const primaryValue = this.validateNavigationRequest(requests.primary, this.state.isPrimaryOpen);
+    const secondaryValue = this.validateNavigationRequest(requests.secondary, this.state.isSecondaryOpen);
 
-  handleRequestToggleNavigation() {
-    if (this.state.isPrimaryOpen || this.state.isSecondaryOpen ) {
-      this.setState({ isPrimaryOpen: false, isSecondaryOpen: false, size: this.state.size });
-    } else {
-      this.setState({ isPrimaryOpen: true, isSecondaryOpen: true, size: this.state.size });
+    if (this.state.isPrimaryOpen !== primaryValue || this.state.isSecondaryOpen !== secondaryValue ) {
+      this.setState({ isPrimaryOpen: primaryValue, isSecondaryOpen: secondaryValue, size: this.state.size });
     }
   }
 
@@ -110,11 +114,8 @@ class Navigation extends React.Component {
     ]); 
 
     const requests = {
-      requestTogglePrimary: this.handleRequestTogglePrimary,
-      requestToggleSecondary: this.handleRequestToggleSecondary,
-      requestToggleNavigation: this.handleRequestToggleNavigation,
+      requestNavigationUpdate: this.handleNavigationRequests,
     };
-
 
     let hasPrimary = true;
     let primaryNav = primary;

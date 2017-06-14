@@ -33,6 +33,15 @@ const defaultProps = {
 };
 
 class NavigationSecondary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handlePrimaryClick = this.handlePrimaryClick.bind(this);
+  }
+
+  handlePrimaryClick() {
+    const navState = { primary: 'toggle' };
+    this.props.requestNavigationUpdate(navState);
+  }
 
   buildChildren() {
     const { app, children } = this.props;
@@ -44,10 +53,10 @@ class NavigationSecondary extends React.Component {
 
   buildSideNavigation(isTiny, hasPrimary, navigationItems) {
     // use hasPrimary here
-    const sideHeader = <div onClick={this.props.requestToggleSecondary} style={{height: '40px', width: '100%', backgroundColor: '#b6c0de'}}>I'm Mr. Side Secondary</div>;
+    const sideHeader = <div onClick={this.handlePrimaryClick} style={{height: '40px', width: '100%', backgroundColor: '#b6c0de'}}>I'm Mr. Side Secondary</div>;
     return (
       <ContentContainer header={sideHeader} fill>
-        {navigationItems}
+        <div style={{ height: '100%', width: '100%', backgroundColor: 'red' }} />
       </ContentContainer>
     );
   }
@@ -59,9 +68,7 @@ class NavigationSecondary extends React.Component {
       hasPrimary,
       header,
       isOpen,
-      requestTogglePrimary,
-      requestToggleSecondary,
-      requestToggleNavigation,
+      requestNavigationUpdate,
       size,
       ...customProps
     } = this.props;

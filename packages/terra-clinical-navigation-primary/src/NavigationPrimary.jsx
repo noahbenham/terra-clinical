@@ -29,18 +29,33 @@ const defaultProps = {
 };
 
 class NavigationPrimary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleNavButtonClick = this.handleNavButtonClick.bind(this);
+    this.handleSelectionClick = this.handleSelectionClick.bind(this);
+  }
+
+  handleNavButtonClick() {
+    const navState = { primary: 'false', secondary: 'toggle' };
+    this.props.requestNavigationUpdate(navState);
+  }
+
+  handleSelectionClick() {
+    const navState = { primary: 'toggle' };
+    this.props.requestNavigationUpdate(navState);
+  }
 
   buildTopNavigation(isTiny, hasSecondary) {
     // hide nav button if hasSecondary is false
-    return <NavigationHeader onButtonClick={this.props.requestToggleNavigation} />;
+    return <NavigationHeader onButtonClick={this.handleNavButtonClick} />;
   }
 
   buildSideNavigation(shouldDisplaySide, navigationItems) {
     if (shouldDisplaySide) {
-      const sideHeader = <div onClick={this.props.requestToggleNavigation} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
+      const sideHeader = <div onClick={this.handleSelectionClick} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
       return (
         <ContentContainer header={sideHeader} fill>
-          {navigationItems}
+          <div style={{ height: '100%', width: '100%', backgroundColor: 'pink' }} />
         </ContentContainer>
       );
     }
@@ -60,9 +75,7 @@ class NavigationPrimary extends React.Component {
       children,
       hasSecondary,
       isOpen,
-      requestTogglePrimary,
-      requestToggleSecondary,
-      requestToggleNavigation,
+      requestNavigationUpdate,
       size,
       ...customProps
     } = this.props;

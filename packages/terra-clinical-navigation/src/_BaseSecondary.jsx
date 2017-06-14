@@ -39,9 +39,7 @@ class BaseSecondary extends React.Component {
       app,
       children,
       isOpen,
-      requestTogglePrimary,
-      requestToggleSecondary,
-      requestToggleNavigation,
+      requestNavigationUpdate,
       size,
       ...customProps
     } = this.props;
