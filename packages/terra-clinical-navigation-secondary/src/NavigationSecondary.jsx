@@ -27,6 +27,7 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
+  hasPrimary: false,
   isOpen: false,
   size: 'tiny',
 };
@@ -42,6 +43,7 @@ class NavigationSecondary extends React.Component {
   }
 
   buildSideNavigation(isTiny, navigationItems) {
+    // use hasPrimary here
     const sideHeader = <div onClick={this.props.requestPrimaryOpen} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
     return (
       <ContentContainer header={sideHeader} fill>
@@ -54,6 +56,7 @@ class NavigationSecondary extends React.Component {
     const { 
       app,
       children,
+      hasPrimary,
       header,
       isOpen,
       requestPrimaryOpen,

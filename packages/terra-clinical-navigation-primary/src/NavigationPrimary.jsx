@@ -23,6 +23,7 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
+  hasSecondary: false,
   isOpen: false,
   size: 'tiny',
 };
@@ -67,6 +68,7 @@ class NavigationPrimary extends React.Component {
     const { 
       app,
       children,
+      hasSecondary,
       isOpen,
       requestPrimaryOpen,
       requestPrimaryCLose,

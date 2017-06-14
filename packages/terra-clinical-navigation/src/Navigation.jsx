@@ -32,8 +32,6 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
-  primary: <BasePrimary />,
-  secondary: <BaseSecondary />,
 };
 
 class NavigationPrimary extends React.Component {
@@ -84,14 +82,14 @@ class NavigationPrimary extends React.Component {
     }
   }
 
-  buildPrimary(size, requests, secondary) {
+  buildPrimary(primaryNav, size, requests, hasSecondary, secondary) {
     const { app } = this.props;
-    return React.cloneElement(child, { app, children: secondary, size, isOpen: this.state.isPrimaryOpen, ...requests });
+    return React.cloneElement(primaryNav, { app, children: secondary, size, isOpen: this.state.isPrimaryOpen, ...requests });
   }
 
-  buildSecondary(size, requests) {
-    const { app, children, secondary } = this.props;
-    return React.cloneElement(secondary, { app, children, size, isOpen: this.state.isSecondaryOpen, ...requests });
+  buildSecondary(secondaryNav, size, hasPrimary, requests) {
+    const { app, children } = this.props;
+    return React.cloneElement(secondaryNav, { app, children, size, isOpen: this.state.isSecondaryOpen, ...requests });
   }
 
   getBreakpointSize() {
@@ -111,7 +109,7 @@ class NavigationPrimary extends React.Component {
   }
 
   render() {
-    const { children, ...customProps } = this.props;
+    const { children, primary, secondary, ...customProps } = this.props;
 
     const navigationClassNames = classNames([
       'terraClinical-Navigation',
@@ -125,13 +123,28 @@ class NavigationPrimary extends React.Component {
       requestSecondaryClosed: this.handleRequestCloseSecondary,
     };
 
+
+    let hasPrimary = true;
+    let primaryNav = primary;
+    if (!primaryNav) {
+      primaryNav = <BasePrimary />;
+      hasPrimary = false;
+    }
+
+    let hasSecondary = true;
+    let secondaryNav = secondary;
+    if (!secondaryNav) {
+      secondaryNav = <BaseSecondary />;
+      hasSecondary = false;
+    }
+
     const size = this.state.size !== 'default' ? this.getBreakpointSize() : this.state.size;
-    const secondary = this.buildSecondary(size, requests);
-    const primary = this.buildPrimary(size, requests, secondary);
+    const secondaryContent = this.buildSecondaryContent(secondaryNav, size, requests, hasPrimary);
+    const primaryContent = this.buildPrimaryContent(primaryNav, size, requests, hasSecondary, secondaryContent);
 
     return (
       <div {...customProps} className={navigationClassNames}>
-        {primary}
+        {primaryContent}
       </div>
     );
   }
