@@ -6,8 +6,9 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-clinical-app-delegate';
 import ContentContainer from 'terra-content-container';
 import SlidePanel from 'terra-slide-panel';
+import NavigationHeader from 'terra-clinical-navigation-header';
 
-import './Primary.scss';
+import './NavigationPrimary.scss';
 
 const propTypes = {
   /**
@@ -26,21 +27,32 @@ const defaultProps = {
   size: 'tiny',
 };
 
-class Primary extends React.Component {
+class NavigationPrimary extends React.Component {
+
+  buildTopNavigation(isTiny) {
+    return <NavigationHeader onButtonClick={this.props.requestPrimaryOpen} />;
+  }
 
   buildSideNavigation(shouldDisplaySide, navigationItems) {
     if (shouldDisplaySide) {
       const sideHeader = <div onClick={this.handleRequestClose} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
       return (
-        <ContentContainer
-          header={sideHeader}
-          fill
-          style={{backgroundColor: '#1022c0'}}
-        >
+        <ContentContainer header={sideHeader} fill>
           {navigationItems}
         </ContentContainer>
       );
     }
+  }
+
+  buildMainContent(children, topNav) {
+    if (topNav) {
+      return (
+        <ContentContainer header={topNav} fill>
+          {children}
+        </ContentContainer>
+      );
+    }
+    return children;
   }
 
   buildChildren(isTiny) {
@@ -49,19 +61,6 @@ class Primary extends React.Component {
     return React.Children.map(children, (child) => {
       return React.cloneElement(child, { app, requestPrimaryOpen: this.handleRequestOpen, isTiny});
     });
-  }
-
-  buildMainContent(children, topNav) {
-    return (
-      <ContentContainer
-        header={topNav}
-        fill
-        style={{backgroundColor: '#c03710'}}
-      >
-        {children}
-      </ContentContainer>
-    );
-    
   }
 
   render() {
@@ -95,22 +94,24 @@ class Primary extends React.Component {
 
     return (
       <div {...customProps} className={navigationClassNames}>
-        <SlidePanel
-          className={panelClassNames}
-          mainContent={mainContent}
-          panelContent={sideNav}
-          panelSize="small"
-          panelBehavior="overlay"
-          panelPosition="start"
-          isOpen={isOpen && isTiny}
-          fill
-        />
+        <ContentContainer header={topNav} fill>
+          <SlidePanel
+            className={panelClassNames}
+            mainContent={mainContent}
+            panelContent={sideNav}
+            panelSize="small"
+            panelBehavior="overlay"
+            panelPosition="start"
+            isOpen={isOpen && isTiny}
+            fill
+          />
+        </ContentContainer>
       </div>
     );
   }
 }
 
-Primary.propTypes = propTypes;
-Primary.defaultProps = defaultProps;
+NavigationPrimary.propTypes = propTypes;
+NavigationPrimary.defaultProps = defaultProps;
 
-export default Primary;
+export default NavigationPrimary;

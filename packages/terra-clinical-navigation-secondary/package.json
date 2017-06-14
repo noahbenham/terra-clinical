@@ -1,6 +1,6 @@
 {
   "name": "terra-clinical-navigation-secondary",
-  "main": "lib/Secondary.js",
+  "main": "lib/NavigationSecondary.js",
   "version": "0.0.0",
   "description": "This component renders secondary navigation items with react router.",
   "repository": {
@@ -37,6 +37,7 @@
     "classnames": "^2.2.5",
     "prop-types": "^15.5.8",
     "terra-base": "^0.x",
+    "terra-clinical-navigation-header": "^0.x",
     "terra-content-container": "^0.x",
     "terra-icon": "^0.x",
     "terra-mixins": "^1.0.0",
