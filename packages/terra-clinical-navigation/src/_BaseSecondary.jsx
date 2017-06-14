@@ -41,10 +41,9 @@ class BaseSecondary extends React.Component {
       app,
       children,
       isOpen,
-      requestPrimaryOpen,
-      requestPrimaryClose,
-      requestSecondaryOpen,
-      requestSecondaryClose,
+      requestTogglePrimary,
+      requestToggleSecondary,
+      requestToggleNavigation,
       size,
       ...customProps
     } = this.props;
@@ -54,21 +53,9 @@ class BaseSecondary extends React.Component {
       customProps.className,
     ]);
 
-    const clonedChildren = this.buildChildren();
-    let content = clonedChildren;
-    if (size === 'tiny') {
-      // handle header when in small format
-      const header = <div onClick={requestPrimaryOpen} style={{height: '40px', width: '100%', backgroundColor: '#10c022'}}>I'm Mr. Top Secondary</div>;
-      content = (
-        <ContentContainer fill header={header}>
-          {clonedChildren}
-        </ContentContainer>
-      );
-    }
-
     return (
       <div {...customProps} className={navigationClassNames}>
-        {content}
+        {this.buildChildren()}
       </div>
     );
   }

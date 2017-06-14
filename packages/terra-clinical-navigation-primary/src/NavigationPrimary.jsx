@@ -30,7 +30,8 @@ const defaultProps = {
 
 class NavigationPrimary extends React.Component {
 
-  buildTopNavigation(isTiny) {
+  buildTopNavigation(isTiny, hasSecondary) {
+    // hide nav button if hasSecondary is false
     return <NavigationHeader onButtonClick={this.props.requestPrimaryOpen} />;
   }
 
@@ -70,10 +71,9 @@ class NavigationPrimary extends React.Component {
       children,
       hasSecondary,
       isOpen,
-      requestPrimaryOpen,
-      requestPrimaryCLose,
-      requestSecondaryOpen,
-      requestSecondaryClose,
+      requestTogglePrimary,
+      requestToggleSecondary,
+      requestToggleNavigation,
       size,
       ...customProps
     } = this.props;

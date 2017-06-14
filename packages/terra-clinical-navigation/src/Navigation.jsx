@@ -59,26 +59,18 @@ class NavigationPrimary extends React.Component {
   }
 
   handleRequestOpenPrimary() {
-    if (!this.state.isPrimaryOpen) {
-      this.setState({ isPrimaryOpen: true, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
-    }
+    this.setState({ isPrimaryOpen: !this.state.isPrimaryOpen, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
   }
 
-  handleRequestClosePrimary() {
-    if (this.state.isPrimaryOpen) {
-      this.setState({ isPrimaryOpen: false, isSecondaryOpen: this.state.isSecondaryOpen, size: this.state.size });
-    }
+  handleRequestToggleSecondary() {
+    this.setState({ isPrimaryOpen: this.state.isPrimaryOpen, isSecondaryOpen: !this.state.isSecondaryOpen, size: this.state.size });
   }
 
-  handleRequestOpenSecondary() {
-    if (!this.state.isSecondaryOpen) {
-      this.setState({ isPrimaryOpen: this.state.isPrimaryOpen, isSecondaryOpen: true, size: this.state.size });
-    }
-  }
-
-  handleRequestCloseSecondary() {
-    if (this.state.isSecondaryOpen) {
-      this.setState({ isPrimaryOpen: this.state.isPrimaryOpen, isSecondaryOpen: false, size: this.state.size });
+  handleRequestToggleNavigation() {
+    if (this.state.isPrimaryOpen || this.state.isSecondaryOpen ) {
+      this.setState({ isPrimaryOpen: false, isSecondaryOpen: false, size: this.state.size });
+    } else {
+      this.setState({ isPrimaryOpen: true, isSecondaryOpen: true, size: this.state.size });
     }
   }
 
@@ -117,10 +109,9 @@ class NavigationPrimary extends React.Component {
     ]); 
 
     const requests = {
-      requestPrimaryOpen: this.handleRequestOpenPrimary,
-      requestPrimaryClose: this.handleRequestClosePrimary,
-      requestSecondaryOpen: this.handleRequestOpenSecondary,
-      requestSecondaryClosed: this.handleRequestCloseSecondary,
+      requestTogglePrimary: this.handleRequestTogglePrimary,
+      requestToggleSecondary: this.handleRequestToggleSecondary,
+      requestToggleNavigation: this.handleRequestToggleNavigation,
     };
 
 

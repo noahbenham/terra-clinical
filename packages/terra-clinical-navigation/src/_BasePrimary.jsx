@@ -22,6 +22,7 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
+  hasSecondary: false,
   isOpen: false,
   size: 'tiny',
 };
@@ -40,11 +41,11 @@ class BasePrimary extends React.Component {
     const { 
       app,
       children,
+      hasSecondary,
       isOpen,
-      requestPrimaryOpen,
-      requestPrimaryCLose,
-      requestSecondaryOpen,
-      requestSecondaryClose,
+      requestTogglePrimary,
+      requestToggleSecondary,
+      requestToggleNavigation,
       size,
       ...customProps
     } = this.props;
@@ -54,17 +55,13 @@ class BasePrimary extends React.Component {
       customProps.className,
     ]);
 
-    const clonedChildren = this.buildChildren();
     let content = clonedChildren;
-    if (size !== 'tiny') {
-      // handle header when in large format
-      const header = <div onClick={requestSecondaryOpen} style={{height: '40px', width: '100%', backgroundColor: '#10c022'}}>I'm Mr. Top Secondary</div>;
-      content = (
-        <ContentContainer fill header={header}>
-          {clonedChildren}
-        </ContentContainer>
-      );
-    }
+    const header = <NavigationHeader onButtonClick={requestToggleNavigation} />;
+    const content = (
+      <ContentContainer fill header={header}>
+        {clonedChildren}
+      </ContentContainer>
+    );
 
     return (
       <div {...customProps} className={navigationClassNames}>

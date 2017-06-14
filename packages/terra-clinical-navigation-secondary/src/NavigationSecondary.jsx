@@ -42,9 +42,9 @@ class NavigationSecondary extends React.Component {
     });
   }
 
-  buildSideNavigation(isTiny, navigationItems) {
+  buildSideNavigation(isTiny, hasPrimary, navigationItems) {
     // use hasPrimary here
-    const sideHeader = <div onClick={this.props.requestPrimaryOpen} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
+    const sideHeader = <div onClick={this.props.requestToggleSecondary} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
     return (
       <ContentContainer header={sideHeader} fill>
         {navigationItems}
@@ -59,10 +59,9 @@ class NavigationSecondary extends React.Component {
       hasPrimary,
       header,
       isOpen,
-      requestPrimaryOpen,
-      requestPrimaryCLose,
-      requestSecondaryOpen,
-      requestSecondaryClose,
+      requestTogglePrimary,
+      requestToggleSecondary,
+      requestToggleNavigation,
       size,
       ...customProps
     } = this.props;
@@ -73,7 +72,7 @@ class NavigationSecondary extends React.Component {
     ]);
 
     const isTiny = size === 'tiny';
-    const sideNav = this.buildSideNavigation(isTiny, []);
+    const sideNav = this.buildSideNavigation(isTiny, hasPrimary, []);
     const clonedChildren = this.buildChildren();
     const mainContent = (
       <ContentContainer fill header={header}>
