@@ -18,6 +18,8 @@ const propTypes = {
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
+  hasSecondary: PropTypes.bool,
+  size: PropTypes.string,
 };
 
 const defaultProps = {

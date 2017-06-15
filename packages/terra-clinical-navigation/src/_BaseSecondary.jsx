@@ -16,10 +16,13 @@ const propTypes = {
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
+  hasPrimary: PropTypes.bool,
+  size: PropTypes.string,
 };
 
 const defaultProps = {
   children: [],
+  hasPrimary: false,
   isOpen: false,
   size: 'tiny',
 };
@@ -38,6 +41,7 @@ class BaseSecondary extends React.Component {
     const { 
       app,
       children,
+      hasPrimary,
       isOpen,
       requestNavigationUpdate,
       size,

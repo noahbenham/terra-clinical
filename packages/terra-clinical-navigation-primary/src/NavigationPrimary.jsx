@@ -67,10 +67,12 @@ class NavigationPrimary extends React.Component {
   }
 
   buildChildren() {
-    const { app, children } = this.props;
+    const { app, children, items, tools, junk, utility } = this.props;
+
+    let enablePrimary = !!items || !!tools || !!junk || !!utility;
 
     return React.Children.map(children, (child) => {
-      return React.cloneElement(child, { app });
+      return React.cloneElement(child, { app, isPrimaryButtonEnabled: enablePrimary });
     });
   }
 

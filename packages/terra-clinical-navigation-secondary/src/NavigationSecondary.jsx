@@ -6,7 +6,6 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-clinical-app-delegate';
 import ContentContainer from 'terra-content-container';
 import SlidePanel from 'terra-slide-panel';
-import NavigationHeader from 'terra-clinical-navigation-header';
 
 import './NavigationSecondary.scss';
 
@@ -22,12 +21,15 @@ const propTypes = {
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
-  header: PropTypes.node,
+  header: PropTypes.element,
+
+  sideContent: PropTypes.element,
 };
 
 const defaultProps = {
   children: [],
   hasPrimary: false,
+  isPrimaryButtonEnabled: false,
   isOpen: false,
   size: 'tiny',
 };
@@ -51,9 +53,12 @@ class NavigationSecondary extends React.Component {
     });
   }
 
-  buildSideNavigation(isTiny, hasPrimary, navigationItems) {
-    // use hasPrimary here
-    const sideHeader = <div onClick={this.handlePrimaryClick} style={{height: '40px', width: '100%', backgroundColor: '#b6c0de'}}>I'm Mr. Side Secondary</div>;
+  buildSideNavigation(isTiny, sideContent) {
+    let sideHeader;
+    if (isTiny && this.props.isPrimaryButtonEnabled) {
+      sideHeader = <div onClick={this.handlePrimaryClick} style={{height: '40px', width: '100%', backgroundColor: '#b6c0de'}}>I'm Mr. Side Secondary</div>;
+    }
+
     return (
       <ContentContainer header={sideHeader} fill>
         <div style={{ height: '100%', width: '100%', backgroundColor: 'red' }} />
@@ -79,7 +84,7 @@ class NavigationSecondary extends React.Component {
     ]);
 
     const isTiny = size === 'tiny';
-    const sideNav = this.buildSideNavigation(isTiny, hasPrimary, []);
+    const sideNav = this.buildSideNavigation(isTiny);
     const clonedChildren = this.buildChildren();
     const mainContent = (
       <ContentContainer fill header={header}>
