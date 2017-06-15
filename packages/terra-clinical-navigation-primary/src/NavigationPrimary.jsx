@@ -47,7 +47,7 @@ class NavigationPrimary extends React.Component {
 
   buildTopNavigation(isTiny, hasSecondary) {
     // hide nav button if hasSecondary is false
-    return <NavigationHeader onButtonClick={this.handleNavButtonClick} />;
+    return <NavigationHeader onToggleClick={this.handleNavButtonClick} />;
   }
 
   buildSideNavigation(shouldDisplaySide, navigationItems) {
@@ -61,11 +61,11 @@ class NavigationPrimary extends React.Component {
     }
   }
 
-  buildChildren(isTiny) {
+  buildChildren() {
     const { app, children } = this.props;
 
     return React.Children.map(children, (child) => {
-      return React.cloneElement(child, { app, requestPrimaryOpen: this.handleRequestOpen, isTiny});
+      return React.cloneElement(child, { app });
     });
   }
 
@@ -88,7 +88,7 @@ class NavigationPrimary extends React.Component {
     const isTiny = size === 'tiny';
     const topNav = this.buildTopNavigation(!isTiny);
     const sideNav = this.buildSideNavigation(isTiny, []);
-    const clonedChildren = this.buildChildren(isTiny);
+    const clonedChildren = this.buildChildren();
 
     let panelClassNames;
     if (!isTiny) {

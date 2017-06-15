@@ -1,0 +1,9 @@
+@import '~terra-mixins';
+
+.terraClinical-NavigationHeader-logo {
+  align-items: center;
+}
+
+.terraClinical-NavigationHeader-logo > * {
+  display: inline-block;
+}

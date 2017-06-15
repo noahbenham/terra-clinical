@@ -75,7 +75,7 @@ class Navigation extends React.Component {
     const secondaryValue = this.validateNavigationRequest(requests.secondary, this.state.isSecondaryOpen);
 
     if (this.state.isPrimaryOpen !== primaryValue || this.state.isSecondaryOpen !== secondaryValue ) {
-      this.setState({ isPrimaryOpen: primaryValue, isSecondaryOpen: secondaryValue, size: this.state.size });
+      this.setState({ isPrimaryOpen: primaryValue, isSecondaryOpen: secondaryValue});
     }
   }
 

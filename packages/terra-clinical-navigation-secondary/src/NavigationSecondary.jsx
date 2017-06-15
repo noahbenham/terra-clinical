@@ -89,6 +89,7 @@ class NavigationSecondary extends React.Component {
 
     return (
       <SlidePanel
+        {...customProps}
         className={navigationClassNames}
         mainContent={mainContent}
         panelContent={sideNav}
