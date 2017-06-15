@@ -9,32 +9,54 @@ import './Logo.scss';
 
 const propTypes = {
   icon: PropTypes.element,
-  onToggleClick: PropTypes.func,
+  onButtonClick: PropTypes.func,
   title: PropTypes.string,
 };
 
 const Logo = ({
     icon,
-    onToggleClick,
+    onButtonClick,
     title,
     ...customProps
   }) => {
 
   const logoClassNames = classNames([
-    'terraClinical-NavigationHeader-logo',
+    'terraClinical-NavigationLogo',
     customProps.className,
   ]);
 
-  let button;
-  if (onToggleClick) {
-    button = <Button icon={<IconMenu />} onClick={onToggleClick} />;
+  let buttonElement;
+  if (onButtonClick) {
+    buttonElement = (
+      <div className="terraClinical-NavigationLogo-element">
+        <Button icon={<IconMenu />} onClick={onButtonClick} />
+      </div>
+    );
+  }
+
+  let iconElement;
+  if (icon) {
+    iconElement = (
+      <div className="terraClinical-NavigationLogo-element">
+        {icon}
+      </div>
+    );
+  }
+
+  let titleElement;
+  if (title) {
+    titleElement = (
+      <div className="terraClinical-NavigationLogo-text">
+        {title}
+      </div>
+    );
   }
 
   return (
     <div {...customProps} className={logoClassNames}>
-      {button}
-      {icon}
-      {title}
+      {buttonElement}
+      {iconElement}
+      {titleElement}
     </div>
   );
 };

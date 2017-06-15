@@ -53,8 +53,11 @@ class BasePrimary extends React.Component {
       customProps.className,
     ]);
 
-    // use hasSecondary here
-    const header = <NavigationHeader onToggleClick={requestNavigationUpdate} />;
+    let onButtonClick;
+    if (hasSecondary) {
+      onButtonClick = requestNavigationUpdate;
+    }
+    const header = <NavigationHeader onLogoButtonClick={onButtonClick} />;
     const content = (
       <ContentContainer fill header={header}>
         {clonedChildren}

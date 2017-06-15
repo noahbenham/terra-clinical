@@ -7,22 +7,22 @@ import Logo from './_Logo';
 import './NavigationHeader.scss';
 
 const propTypes = {
-  onToggleClick: PropTypes.func,
-  applicationTitle: PropTypes.string,
-  applicationIcon: PropTypes.element,
   itemSection: PropTypes.element,
-  toolSection: PropTypes.element,
   junkSection: PropTypes.element,
+  logoTitle: PropTypes.string,
+  logoIcon: PropTypes.element,
+  onLogoButtonClick: PropTypes.func,
+  toolSection: PropTypes.element,
   utilitySection: PropTypes.element,
 };
 
 const NavigationHeader = ({
-    onToggleClick,
-    applicationTitle,
-    applicationIcon,
     itemSection,
-    toolSection,
     junkSection,
+    logoIcon,
+    logoTitle,
+    onLogoButtonClick,
+    toolSection,
     utilitySection,
     ...customProps
   }) => {
@@ -32,8 +32,8 @@ const NavigationHeader = ({
   ]);
 
   let logoContent;
-  if (applicationIcon || onToggleClick || applicationTitle) {
-    const logo = <Logo icon={applicationIcon} onToggleClick={onToggleClick} title={applicationTitle} />;
+  if (logoIcon || onLogoButtonClick || logoTitle) {
+    const logo = <Logo icon={logoIcon} onButtonClick={onLogoButtonClick} title={logoTitle} />;
     logoContent = <div className="terraClinical-NavigationHeader-logo">{logo}</div>;
   }
 

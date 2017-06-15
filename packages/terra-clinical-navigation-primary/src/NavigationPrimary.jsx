@@ -19,6 +19,8 @@ const propTypes = {
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
+  icon: PropTypes.element,
+  title: PropTypes.string,
 };
 
 const defaultProps = {
@@ -31,11 +33,11 @@ const defaultProps = {
 class NavigationPrimary extends React.Component {
   constructor(props) {
     super(props);
-    this.handleNavButtonClick = this.handleNavButtonClick.bind(this);
+    this.handleLogoButtonClick = this.handleLogoButtonClick.bind(this);
     this.handleSelectionClick = this.handleSelectionClick.bind(this);
   }
 
-  handleNavButtonClick() {
+  handleLogoButtonClick() {
     const navState = { primary: 'false', secondary: 'toggle' };
     this.props.requestNavigationUpdate(navState);
   }
@@ -45,9 +47,12 @@ class NavigationPrimary extends React.Component {
     this.props.requestNavigationUpdate(navState);
   }
 
-  buildTopNavigation(isTiny, hasSecondary) {
-    // hide nav button if hasSecondary is false
-    return <NavigationHeader onToggleClick={this.handleNavButtonClick} />;
+  buildTopNavigation(isTiny, hasSecondary, title, icon) {
+    let handleClick;
+    if (hasSecondary) {
+      handleClick = this.handleLogoButtonClick;
+    }
+    return <NavigationHeader onLogoButtonClick={handleClick} logoTitle={title} logoIcon={icon} />;
   }
 
   buildSideNavigation(shouldDisplaySide, navigationItems) {
@@ -74,9 +79,11 @@ class NavigationPrimary extends React.Component {
       app,
       children,
       hasSecondary,
+      icon,
       isOpen,
       requestNavigationUpdate,
       size,
+      title,
       ...customProps
     } = this.props;
 
@@ -86,7 +93,7 @@ class NavigationPrimary extends React.Component {
     ]); 
 
     const isTiny = size === 'tiny';
-    const topNav = this.buildTopNavigation(!isTiny);
+    const topNav = this.buildTopNavigation(!isTiny, hasSecondary, title, icon);
     const sideNav = this.buildSideNavigation(isTiny, []);
     const clonedChildren = this.buildChildren();
 

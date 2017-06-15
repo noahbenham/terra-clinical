@@ -1,9 +1,20 @@
 @import '~terra-mixins';
 
-.terraClinical-NavigationHeader-logo {
+.terraClinical-NavigationLogo {
   align-items: center;
+  display: flex;
+  flex: 0 0 auto;
 }
 
-.terraClinical-NavigationHeader-logo > * {
-  display: inline-block;
+.terraClinical-NavigationLogo-element {
+  @include terra-padding-start(5px);
+}
+
+.terraClinical-NavigationLogo-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+  word-wrap: normal;
+  @include terra-padding-start(5px);
 }

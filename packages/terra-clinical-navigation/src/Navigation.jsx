@@ -81,12 +81,12 @@ class Navigation extends React.Component {
 
   buildPrimaryContent(primaryNav, size, requests, hasSecondary, secondary) {
     const { app } = this.props;
-    return React.cloneElement(primaryNav, { app, children: secondary, size, isOpen: this.state.isPrimaryOpen, ...requests });
+    return React.cloneElement(primaryNav, { app, children: secondary, size, hasSecondary, isOpen: this.state.isPrimaryOpen, ...requests });
   }
 
   buildSecondaryContent(secondaryNav, size, requests, hasPrimary) {
     const { app, children } = this.props;
-    return React.cloneElement(secondaryNav, { app, children, size, isOpen: this.state.isSecondaryOpen, ...requests });
+    return React.cloneElement(secondaryNav, { app, children, size, hasPrimary, isOpen: this.state.isSecondaryOpen, ...requests });
   }
 
   getBreakpointSize() {
