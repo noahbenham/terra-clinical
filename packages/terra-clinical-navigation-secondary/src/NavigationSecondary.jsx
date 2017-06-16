@@ -73,6 +73,7 @@ class NavigationSecondary extends React.Component {
       hasPrimary,
       header,
       isOpen,
+      isPrimaryButtonEnabled,
       requestNavigationUpdate,
       size,
       ...customProps

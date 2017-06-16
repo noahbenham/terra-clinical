@@ -43,6 +43,7 @@ class BaseSecondary extends React.Component {
       children,
       hasPrimary,
       isOpen,
+      isPrimaryButtonEnabled,
       requestNavigationUpdate,
       size,
       ...customProps

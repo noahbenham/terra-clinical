@@ -21,6 +21,7 @@ const propTypes = {
   children: PropTypes.node,
   icon: PropTypes.element,
   title: PropTypes.string,
+  items: PropTypes.element,
 };
 
 const defaultProps = {
@@ -31,48 +32,66 @@ const defaultProps = {
 };
 
 class NavigationPrimary extends React.Component {
+
+  static hasContent(items, tools, junk, utility) {
+    return !!items || !!tools || !!junk || !!utility;
+  }
+
   constructor(props) {
     super(props);
     this.handleLogoButtonClick = this.handleLogoButtonClick.bind(this);
-    this.handleSelectionClick = this.handleSelectionClick.bind(this);
   }
 
   handleLogoButtonClick() {
-    const navState = { primary: 'false', secondary: 'toggle' };
+    let navState = { primary: 'false', secondary: 'toggle' };
+    if (!this.props.hasSecondary) {
+      navState = { primary: 'toggle' };
+    }
+    
     this.props.requestNavigationUpdate(navState);
   }
 
-  handleSelectionClick() {
-    const navState = { primary: 'toggle' };
-    this.props.requestNavigationUpdate(navState);
-  }
+  buildTopNavigation(isTiny) {
+    const { hasSecondary, icon, items, tools, junk, title, utility } = this.props;
+    const hasPrimaryContent = NavigationPrimary.hasContent(items, tools, junk, utility);
 
-  buildTopNavigation(isTiny, hasSecondary, title, icon) {
     let handleClick;
-    if (hasSecondary) {
+    if (hasSecondary || (isTiny && hasPrimaryContent)) {
       handleClick = this.handleLogoButtonClick;
     }
-    return <NavigationHeader onLogoButtonClick={handleClick} logoTitle={title} logoIcon={icon} />;
+
+    let navItems;
+    if (!isTiny) {
+      navItems = {
+        itemSection: items,
+        toolSection: tools,
+        junkSection: junk,
+        utilitySection: utility,
+      };
+    }
+    return <NavigationHeader onLogoButtonClick={handleClick} logoTitle={title} logoIcon={icon} {...navItems} />;
   }
 
-  buildSideNavigation(shouldDisplaySide, navigationItems) {
+  buildSideNavigation(shouldDisplaySide) {
     if (shouldDisplaySide) {
-      const sideHeader = <div onClick={this.handleSelectionClick} style={{height: '40px', width: '100%', backgroundColor: '#c07610'}}>I'm Mr. Side Primary</div>;
+      const { items, tools, junk, utility } = this.props;
       return (
-        <ContentContainer header={sideHeader} fill>
-          <div style={{ height: '100%', width: '100%', backgroundColor: 'pink' }} />
-        </ContentContainer>
+        <div style={{ height: '100%', width: '100%', backgroundColor: 'pink' }}>
+          {items}
+          {tools}
+          {junk}
+          {utility}
+        </div>
       );
     }
   }
 
   buildChildren() {
     const { app, children, items, tools, junk, utility } = this.props;
-
-    let enablePrimary = !!items || !!tools || !!junk || !!utility;
+    const hasPrimaryContent = NavigationPrimary.hasContent(items, tools, junk, utility);
 
     return React.Children.map(children, (child) => {
-      return React.cloneElement(child, { app, isPrimaryButtonEnabled: enablePrimary });
+      return React.cloneElement(child, { app, isPrimaryButtonEnabled: hasPrimaryContent });
     });
   }
 
@@ -83,6 +102,7 @@ class NavigationPrimary extends React.Component {
       hasSecondary,
       icon,
       isOpen,
+      items,
       requestNavigationUpdate,
       size,
       title,
@@ -95,8 +115,8 @@ class NavigationPrimary extends React.Component {
     ]); 
 
     const isTiny = size === 'tiny';
-    const topNav = this.buildTopNavigation(!isTiny, hasSecondary, title, icon);
-    const sideNav = this.buildSideNavigation(isTiny, []);
+    const topNav = this.buildTopNavigation(isTiny);
+    const sideNav = this.buildSideNavigation(isTiny, items);
     const clonedChildren = this.buildChildren();
 
     let panelClassNames;

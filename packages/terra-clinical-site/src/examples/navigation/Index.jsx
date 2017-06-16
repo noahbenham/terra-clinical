@@ -11,6 +11,9 @@ import NavigationSrc from '!raw-loader!terra-clinical-navigation/src/Navigation.
 
 // Example Files
 import NavigationStandard from './NavigationStandard';
+import NavigationBoth from './NavigationBoth';
+import NavigationOnlyPrimary from './NavigationOnlyPrimary';
+import NavigationOnlySecondary from './NavigationOnlySecondary';
 
 const NavigationExamples = () => (
   <div>
@@ -19,6 +22,12 @@ const NavigationExamples = () => (
     <PropsTable id="props-navigationStandard" src={NavigationSrc} />
     <h2 id="navigation-standard">Navigation Standard</h2>
     <NavigationStandard />
+    <h2 id="navigation-standard">Navigation With Primary and Secondary</h2>
+    <NavigationBoth />
+    <h2 id="navigation-standard">Navigation With Only Primary</h2>
+    <NavigationOnlyPrimary />
+    <h2 id="navigation-standard">Navigation With Only Secondary</h2>
+    <NavigationOnlySecondary />
   </div>
 );
 

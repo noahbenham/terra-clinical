@@ -30,6 +30,15 @@ const defaultProps = {
 };
 
 class BasePrimary extends React.Component {
+    constructor(props) {
+    super(props);
+    this.handleLogoButtonClick = this.handleLogoButtonClick.bind(this);
+  }
+
+  handleLogoButtonClick() {
+    const navState = { primary: 'false', secondary: 'toggle' };
+    this.props.requestNavigationUpdate(navState);
+  }
 
   buildChildren() {
     const { app, children } = this.props;
@@ -57,18 +66,15 @@ class BasePrimary extends React.Component {
 
     let onButtonClick;
     if (hasSecondary) {
-      onButtonClick = requestNavigationUpdate;
+      onButtonClick = this.handleLogoButtonClick;
     }
     const header = <NavigationHeader onLogoButtonClick={onButtonClick} />;
-    const content = (
-      <ContentContainer fill header={header}>
-        {clonedChildren}
-      </ContentContainer>
-    );
 
     return (
       <div {...customProps} className={navigationClassNames}>
-        {content}
+        <ContentContainer fill header={header}>
+          {this.buildChildren()}
+        </ContentContainer>
       </div>
     );
   }
