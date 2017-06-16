@@ -2,28 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
+import Arrange from 'terra-arrange'
+import Button from 'terra-button';
+import IconMenu from 'terra-icon/lib/icon/IconMenu';
 
-import Logo from './_Logo';
 import './NavigationHeader.scss';
 
 const propTypes = {
-  itemSection: PropTypes.element,
-  junkSection: PropTypes.element,
-  logoTitle: PropTypes.string,
-  logoIcon: PropTypes.element,
-  onLogoButtonClick: PropTypes.func,
-  toolSection: PropTypes.element,
-  utilitySection: PropTypes.element,
+  content: PropTypes.element,
+  logo: PropTypes.element,
+  onButtonClick: PropTypes.func,
+  utility: PropTypes.element,
 };
 
 const NavigationHeader = ({
-    itemSection,
-    junkSection,
-    logoIcon,
-    logoTitle,
-    onLogoButtonClick,
-    toolSection,
-    utilitySection,
+    content,
+    logo,
+    onButtonClick,
+    utility,
     ...customProps
   }) => {
   const headerClassNames = classNames([
@@ -31,40 +27,43 @@ const NavigationHeader = ({
     customProps.className,
   ]);
 
-  let logoContent;
-  if (logoIcon || onLogoButtonClick || logoTitle) {
-    const logo = <Logo icon={logoIcon} onButtonClick={onLogoButtonClick} title={logoTitle} />;
-    logoContent = <div className="terraClinical-NavigationHeader-logo">{logo}</div>;
+  let headerButton = <div />;
+  if (onButtonClick) {
+    headerButton = <Button icon={<IconMenu />} onClick={onButtonClick} />;
   }
 
-  let itemContent;
-  if (itemSection) {
-    itemContent = <div className="terraClinical-NavigationHeader-items">{itemSection}</div>;
+  let requiredStart = <div />;
+  if (logo) {
+    requiredStart = logo;
   }
 
-  let toolContent;
-  if (toolSection) {
-    toolContent = <div className="terraClinical-NavigationHeader-tools">{toolSection}</div>;
+  let requiredContent = <div />;
+  if (content) {
+    requiredContent = content;
   }
 
-  let junkContent;
-  if (junkSection) {
-    junkContent = <div className="terraClinical-NavigationHeader-junk">{junkSection}</div>;
+  let requiredEnd = <div />;
+  if (utility) {
+    requiredEnd = utility;
   }
 
-  let utilityContent;
-  if (utilitySection) {
-    utilityContent = <div className="terraClinical-NavigationHeader-utility">{utilitySection}</div>;
-  }
+  const headerBody = (
+    <Arrange
+      fitStart={requiredStart}
+      fill={requiredContent}
+      fitEnd={requiredEnd}
+      align="center"
+    />
+  );
 
   return (
-    <div {...customProps} className={headerClassNames}>
-      {logoContent}
-      {itemContent}
-      {toolContent}
-      {junkContent}
-      {utilityContent}
-    </div>
+    <Arrange
+      {...customProps}
+      className={headerClassNames}
+      fitStart={headerButton}
+      fill={headerBody}
+      align="center"
+    />
   );
 };
 

@@ -3,19 +3,16 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
-import Button from 'terra-button';
 import IconMenu from 'terra-icon/lib/icon/IconMenu';
 import './Logo.scss';
 
 const propTypes = {
   icon: PropTypes.element,
-  onButtonClick: PropTypes.func,
   title: PropTypes.string,
 };
 
 const Logo = ({
     icon,
-    onButtonClick,
     title,
     ...customProps
   }) => {
@@ -24,15 +21,6 @@ const Logo = ({
     'terraClinical-NavigationLogo',
     customProps.className,
   ]);
-
-  let buttonElement;
-  if (onButtonClick) {
-    buttonElement = (
-      <div className="terraClinical-NavigationLogo-element">
-        <Button icon={<IconMenu />} onClick={onButtonClick} />
-      </div>
-    );
-  }
 
   let iconElement;
   if (icon) {
@@ -52,9 +40,9 @@ const Logo = ({
     );
   }
 
+  // should this take images? icons? a content section?
   return (
     <div {...customProps} className={logoClassNames}>
-      {buttonElement}
       {iconElement}
       {titleElement}
     </div>

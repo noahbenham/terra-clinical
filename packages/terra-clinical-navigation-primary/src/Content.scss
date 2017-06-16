@@ -1,0 +1,15 @@
+@import '~terra-mixins';
+
+.terraClinical-NavigationContent {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-NavigationContent--vertical {
+  align-items: stretch;
+  flex-direction: column;
+  height: 100%;
+}

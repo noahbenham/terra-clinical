@@ -19,9 +19,18 @@ const propTypes = {
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
-  icon: PropTypes.element,
-  title: PropTypes.string,
-  items: PropTypes.element,
+  /**
+   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   **/
+  content: PropTypes.element,
+  /**
+   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   **/
+  logo: PropTypes.element,
+  /**
+   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   **/
+  utility: PropTypes.element,
 };
 
 const defaultProps = {
@@ -33,16 +42,12 @@ const defaultProps = {
 
 class NavigationPrimary extends React.Component {
 
-  static hasContent(items, tools, junk, utility) {
-    return !!items || !!tools || !!junk || !!utility;
-  }
-
   constructor(props) {
     super(props);
-    this.handleLogoButtonClick = this.handleLogoButtonClick.bind(this);
+    this.handleNavButtonClick = this.handleNavButtonClick.bind(this);
   }
 
-  handleLogoButtonClick() {
+  handleNavButtonClick() {
     let navState = { primary: 'false', secondary: 'toggle' };
     if (!this.props.hasSecondary) {
       navState = { primary: 'toggle' };
@@ -52,46 +57,44 @@ class NavigationPrimary extends React.Component {
   }
 
   buildTopNavigation(isTiny) {
-    const { hasSecondary, icon, items, tools, junk, title, utility } = this.props;
-    const hasPrimaryContent = NavigationPrimary.hasContent(items, tools, junk, utility);
+    const { hasSecondary, content, logo, utility } = this.props;
 
-    let handleClick;
-    if (hasSecondary || (isTiny && hasPrimaryContent)) {
-      handleClick = this.handleLogoButtonClick;
+    let onButtonClick;
+    if (hasSecondary || (isTiny && content)) {
+      onButtonClick = this.handleNavButtonClick;
     }
 
     let navItems;
     if (!isTiny) {
-      navItems = {
-        itemSection: items,
-        toolSection: tools,
-        junkSection: junk,
-        utilitySection: utility,
-      };
+      let horizontalContent;
+      if (content) {
+        horizontalContent = React.cloneElement(content, { isVerticalAlignment: false });
+      }
+      navItems = { content: horizontalContent, logo, utility };
     }
-    return <NavigationHeader onLogoButtonClick={handleClick} logoTitle={title} logoIcon={icon} {...navItems} />;
+    return <NavigationHeader onButtonClick={onButtonClick} {...navItems} />;
   }
 
   buildSideNavigation(shouldDisplaySide) {
     if (shouldDisplaySide) {
-      const { items, tools, junk, utility } = this.props;
+      const { content } = this.props;
+      let verticalContent;
+      if (content) {
+        verticalContent = React.cloneElement(content, { isVerticalAlignment: true });
+      }
       return (
         <div style={{ height: '100%', width: '100%', backgroundColor: 'pink' }}>
-          {items}
-          {tools}
-          {junk}
-          {utility}
+          {verticalContent}
         </div>
       );
     }
   }
 
   buildChildren() {
-    const { app, children, items, tools, junk, utility } = this.props;
-    const hasPrimaryContent = NavigationPrimary.hasContent(items, tools, junk, utility);
+    const { app, children, content} = this.props;
 
     return React.Children.map(children, (child) => {
-      return React.cloneElement(child, { app, isPrimaryButtonEnabled: hasPrimaryContent });
+      return React.cloneElement(child, { app, isPrimaryButtonEnabled: !!content });
     });
   }
 
@@ -99,13 +102,13 @@ class NavigationPrimary extends React.Component {
     const { 
       app,
       children,
+      content,
       hasSecondary,
-      icon,
       isOpen,
-      items,
+      logo,
       requestNavigationUpdate,
       size,
-      title,
+      utility,
       ...customProps
     } = this.props;
 
@@ -116,7 +119,7 @@ class NavigationPrimary extends React.Component {
 
     const isTiny = size === 'tiny';
     const topNav = this.buildTopNavigation(isTiny);
-    const sideNav = this.buildSideNavigation(isTiny, items);
+    const sideNav = this.buildSideNavigation(isTiny);
     const clonedChildren = this.buildChildren();
 
     let panelClassNames;
