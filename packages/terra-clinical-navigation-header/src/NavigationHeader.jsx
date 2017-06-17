@@ -9,17 +9,19 @@ import IconMenu from 'terra-icon/lib/icon/IconMenu';
 import './NavigationHeader.scss';
 
 const propTypes = {
-  content: PropTypes.element,
-  logo: PropTypes.element,
+  end: PropTypes.element,
+  endContent: PropTypes.element,
   onButtonClick: PropTypes.func,
-  utility: PropTypes.element,
+  start: PropTypes.element,
+  startContent: PropTypes.element,
 };
 
 const NavigationHeader = ({
-    content,
-    logo,
+    end,
+    endContent,
     onButtonClick,
-    utility,
+    start,
+    startContent,
     ...customProps
   }) => {
   const headerClassNames = classNames([
@@ -27,43 +29,48 @@ const NavigationHeader = ({
     customProps.className,
   ]);
 
-  let headerButton = <div />;
+  let headerButton;
   if (onButtonClick) {
-    headerButton = <Button icon={<IconMenu />} onClick={onButtonClick} />;
+    headerButton = <div className="terraClinical-NavigationHeader-button"><Button icon={<IconMenu />} onClick={onButtonClick} /></div>;
   }
 
-  let requiredStart = <div />;
-  if (logo) {
-    requiredStart = logo;
+  let startElement;
+  if (start) {
+    startElement = <div className="terraClinical-NavigationHeader-start">{start}</div>;
   }
 
-  let requiredContent = <div />;
-  if (content) {
-    requiredContent = content;
+  let startContentELement;
+  if (startContent) {
+    startContentELement = <div className="terraClinical-NavigationHeader-startContent">{startContent}</div>;
   }
 
-  let requiredEnd = <div />;
-  if (utility) {
-    requiredEnd = utility;
+  let endElement;
+  if (end) {
+    endElement = <div className="terraClinical-NavigationHeader-end">{end}</div>;
   }
 
-  const headerBody = (
-    <Arrange
-      fitStart={requiredStart}
-      fill={requiredContent}
-      fitEnd={requiredEnd}
-      align="center"
-    />
-  );
+  let endContentElement;
+  if (endContent) {
+    endContentElement = <div className="terraClinical-NavigationHeader-endContent">{endContent}</div>;
+  }
+
+  let headerBody;
+  if (startElement || startContentELement || endElement || endContentElement) {
+    headerBody = (
+      <div className="terraClinical-NavigationHeader-body">
+        {startElement}
+        {startContent}
+        {endContentElement}
+        {endElement}
+      </div>
+    );
+  }
 
   return (
-    <Arrange
-      {...customProps}
-      className={headerClassNames}
-      fitStart={headerButton}
-      fill={headerBody}
-      align="center"
-    />
+    <div {...customProps} className={headerClassNames}>
+      {headerButton}
+      {headerBody}
+    </div>
   );
 };
 

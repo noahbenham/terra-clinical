@@ -70,9 +70,9 @@ class NavigationPrimary extends React.Component {
       if (content) {
         horizontalContent = React.cloneElement(content, { isVerticalAlignment: false });
       }
-      navItems = { content: horizontalContent, logo, utility };
+      navItems = { endContent: horizontalContent, start: logo, end: utility };
     }
-    return <NavigationHeader onButtonClick={onButtonClick} {...navItems} />;
+    return <NavigationHeader onButtonClick={onButtonClick} {...navItems} key="navigation-primary-header" />;
   }
 
   buildSideNavigation(shouldDisplaySide) {

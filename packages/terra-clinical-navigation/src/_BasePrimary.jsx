@@ -68,7 +68,7 @@ class BasePrimary extends React.Component {
     if (hasSecondary) {
       onButtonClick = this.handleNavButtonClick;
     }
-    const header = <NavigationHeader onButtonClick={onButtonClick} />;
+    const header = <NavigationHeader onButtonClick={onButtonClick} key="navigation-primary-header" />;
 
     return (
       <div {...customProps} className={navigationClassNames}>
