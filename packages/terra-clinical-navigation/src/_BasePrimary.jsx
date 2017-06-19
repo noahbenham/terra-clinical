@@ -30,7 +30,7 @@ const defaultProps = {
 };
 
 class BasePrimary extends React.Component {
-    constructor(props) {
+  constructor(props) {
     super(props);
     this.handleNavButtonClick = this.handleNavButtonClick.bind(this);
   }
