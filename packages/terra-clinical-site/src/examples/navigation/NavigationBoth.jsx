@@ -8,7 +8,7 @@ import Logo from 'terra-clinical-navigation-primary/lib/Logo';
 import ContentSection from 'terra-clinical-navigation-primary/lib/ContentSection';
 
 const contentSection = <ContentSection><div style={{ border: '1px solid black', height: '30px', width: '200px', backgroundColor: 'blue' }}>items</div></ContentSection>;
-const content = <Content>{contentSection}</Content>;
+const content = <Content style={{ backgroundColor: 'pink' }}>{contentSection}</Content>;
 const logo = <Logo icon={<IconVisualization />} title={'Chart of My Awesomeness'} />;
 
 const secondaryContent1 = <div style={{ height: '100%', width: '100%', backgroundColor: 'red' }} />;

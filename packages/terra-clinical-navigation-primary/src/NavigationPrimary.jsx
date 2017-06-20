@@ -88,7 +88,7 @@ class NavigationPrimary extends React.Component {
 
   buildSideNavigation(isTiny) {
     if (!!this.props.content && isTiny) {
-      return React.cloneElement(content, { isVerticalAlignment: true });
+      return React.cloneElement(this.props.content, { isVerticalAlignment: true });
     }
   }
 
@@ -133,7 +133,7 @@ class NavigationPrimary extends React.Component {
       customProps.className,
     ]); 
 
-    const isOpen = index ? (index === openIndex) : false;
+    const isOpen = index >= 0 ? (index === openIndex) : false;
     const isTiny = size === 'tiny';
     const topNav = this.buildTopNavigation(isTiny);
     const sideNav = this.buildSideNavigation(isTiny);

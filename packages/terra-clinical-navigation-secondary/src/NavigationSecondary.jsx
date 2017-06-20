@@ -109,7 +109,7 @@ class NavigationSecondary extends React.Component {
       customProps.className,
     ]);
 
-    const isOpen = index ? (index === openIndex) : false;
+    const isOpen = index >= 0 ? (index === openIndex) : false;
     const isTiny = size === 'tiny';
     const sideNav = this.buildSideNavigation(isTiny, content);
     const clonedChildren = this.buildChildren();
