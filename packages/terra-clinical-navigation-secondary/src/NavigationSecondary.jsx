@@ -6,6 +6,7 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-clinical-app-delegate';
 import ContentContainer from 'terra-content-container';
 import SlidePanel from 'terra-slide-panel';
+import SecondaryHeader from './SecondaryHeader';
 
 import './NavigationSecondary.scss';
 
@@ -18,50 +19,69 @@ const propTypes = {
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   children: PropTypes.node,
+  content: PropTypes.element,
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
-  header: PropTypes.element,
-
-  sideContent: PropTypes.element,
+  banner: PropTypes.element,
 };
 
 const defaultProps = {
   children: [],
-  hasPrimary: false,
-  isPrimaryButtonEnabled: false,
-  isOpen: false,
-  size: 'tiny',
 };
 
 class NavigationSecondary extends React.Component {
   constructor(props) {
     super(props);
-    this.handlePrimaryClick = this.handlePrimaryClick.bind(this);
+    this.handleUpClick = this.handleUpClick.bind(this);
   }
 
-  handlePrimaryClick() {
-    const navState = { primary: 'toggle' };
-    this.props.requestNavigationUpdate(navState);
+  componentDidMount() {
+    if (this.props.requestUpdateHasContent) {
+      this.props.requestUpdateHasContent(this.props.index, !!this.props.content);
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.requestUpdateHasContent && !!this.props.content !== !!newProps.content) {
+      newProps.requestUpdateHasContent(newProps.index, !!newProps.content);
+    }
+  }
+
+  handleUpClick() {
+    if (this.props.requestUpNavigation) {
+      this.props.requestUpNavigation();
+    }
   }
 
   buildChildren() {
-    const { app, children } = this.props;
+    const { app, children, content, hasParentContent, index, openIndex, requestToggleNavigation, requestUpNavigation, requestUpdateHasContent, size } = this.props;
+
+    const newProps = {
+      app,
+      hasParentContent: hasParentContent || !!content,
+      index: index + 1,
+      openIndex,
+      requestToggleNavigation,
+      requestUpNavigation,
+      requestUpdateHasContent,
+      size,
+    };
 
     return React.Children.map(children, (child) => {
-      return React.cloneElement(child, { app });
+      return React.cloneElement(child, newProps);
     });
   }
 
-  buildSideNavigation(isTiny, sideContent) {
+  buildSideNavigation(isTiny, content) {
     let sideHeader;
-    if (isTiny && this.props.isPrimaryButtonEnabled) {
-      sideHeader = <div onClick={this.handlePrimaryClick} style={{height: '40px', width: '100%', backgroundColor: '#b6c0de'}}>I'm Mr. Side Secondary</div>;
+    if (this.props.hasParentContent) {
+      sideHeader = <SecondaryHeader onButtonClick={this.handleUpClick} />;
     }
 
     return (
       <ContentContainer header={sideHeader} fill>
-        <div style={{ height: '100%', width: '100%', backgroundColor: 'red' }} />
+        {content}
       </ContentContainer>
     );
   }
@@ -70,11 +90,16 @@ class NavigationSecondary extends React.Component {
     const { 
       app,
       children,
-      hasPrimary,
-      header,
-      isOpen,
-      isPrimaryButtonEnabled,
-      requestNavigationUpdate,
+      content,
+      hasParentContent,
+      banner,
+      index,
+      isOpenArray,
+      isParentContentPresent,
+      openIndex,
+      requestUpdateHasContent,
+      requestToggleNavigation,
+      requestUpNavigation,
       size,
       ...customProps
     } = this.props;
@@ -84,11 +109,12 @@ class NavigationSecondary extends React.Component {
       customProps.className,
     ]);
 
+    const isOpen = index ? (index === openIndex) : false;
     const isTiny = size === 'tiny';
-    const sideNav = this.buildSideNavigation(isTiny);
+    const sideNav = this.buildSideNavigation(isTiny, content);
     const clonedChildren = this.buildChildren();
     const mainContent = (
-      <ContentContainer fill header={header}>
+      <ContentContainer fill header={banner}>
         {clonedChildren}
       </ContentContainer>
     );

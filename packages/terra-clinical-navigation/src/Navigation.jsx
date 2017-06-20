@@ -5,8 +5,6 @@ import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-clinical-app-delegate';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
-import BasePrimary from './_BasePrimary';
-import BaseSecondary from './_BaseSecondary';
 
 import './Navigation.scss';
 
@@ -23,11 +21,7 @@ const propTypes = {
   /**
    * Component that will managed primary navigation actions.
    **/
-  primary: PropTypes.element,
-  /**
-   * Component that will managed secondary navigation actions.
-   **/
-  secondary: PropTypes.element,
+  primary: PropTypes.element.isRequired,
 };
 
 const defaultProps = {
@@ -37,9 +31,13 @@ const defaultProps = {
 class Navigation extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { size: 'default', isPrimaryOpen: false, isSecondaryOpen: false };
+    this.state = { size: 'default', openIndex: -1, hasContent: false };
     this.handleResize = this.handleResize.bind(this);
-    this.handleNavigationRequests = this.handleNavigationRequests.bind(this);
+    this.handleToggleNavigation = this.handleToggleNavigation.bind(this);
+    this.handleUpNavigation = this.handleUpNavigation.bind(this);
+    this.handleHasContent = this.handleHasContent.bind(this);
+    this.hasContentArray = [];
+    this.isOpenArray = [];
   }
 
   componentDidMount() {
@@ -53,40 +51,51 @@ class Navigation extends React.Component {
   handleResize() {
     const size = this.getBreakpointSize();
     if (size !== this.state.size) {
-      this.setState({ size: size, isPrimaryOpen: false, isSecondaryOpen: false });
+      this.isOpenArray.fill(false);
+      this.setState({ size: size, openIndex: -1 });
     }
   }
 
-  validateNavigationRequest(requestValue, previousState) {
-    if (requestValue) {
-      if (requestValue === 'toggle') {
-        return !previousState;
-      } else if (requestValue === 'true') {
-        return true;
-      } else if (requestValue === 'false') {
-        return false;
+  handleHasContent(index, hasContent) {
+    if (this.hasContentArray[index] !== hasContent) {
+      this.hasContentArray[index] = hasContent;
+      this.isOpenArray[index] = false;
+
+      const updatedHasContent = this.hasContentArray.indexOf(true) >= 0;
+      if (this.state.hasContent !== updatedHasContent) {
+        this.setState({ hasContent: updatedHasContent });
       }
-    } 
-    return previousState;
-  }
-
-  handleNavigationRequests(requests) {
-    const primaryValue = this.validateNavigationRequest(requests.primary, this.state.isPrimaryOpen);
-    const secondaryValue = this.validateNavigationRequest(requests.secondary, this.state.isSecondaryOpen);
-
-    if (this.state.isPrimaryOpen !== primaryValue || this.state.isSecondaryOpen !== secondaryValue ) {
-      this.setState({ isPrimaryOpen: primaryValue, isSecondaryOpen: secondaryValue});
     }
   }
 
-  buildPrimaryContent(primaryNav, size, requests, hasSecondary, secondary) {
-    const { app } = this.props;
-    return React.cloneElement(primaryNav, { app, children: secondary, size, hasSecondary, isOpen: this.state.isPrimaryOpen, ...requests });
+  handleToggleNavigation() {
+    if (this.isOpenArray.indexOf(true) >= 0) {
+      this.isOpenArray.fill(false);
+      this.setState({ openIndex: -1 });
+    } else {
+      const hasContentIndex = this.hasContentArray.lastIndexOf(true);
+      this.isOpenArray[hasContentIndex] = true;
+      this.setState({ openIndex: hasContentIndex });
+    }    
   }
 
-  buildSecondaryContent(secondaryNav, size, requests, hasPrimary) {
-    const { app, children } = this.props;
-    return React.cloneElement(secondaryNav, { app, children, size, hasPrimary, isOpen: this.state.isSecondaryOpen, ...requests });
+  handleUpNavigation() {
+    const openIndex = this.isOpenArray.indexOf(true);
+    if (openIndex >= 0) {
+      const hasContentIndex = this.hasContentArray.lastIndexOf(true, openIndex - 1);
+      if (hasContentIndex >= 0) {
+        this.isOpenArray[openIndex] = false;
+        this.isOpenArray[hasContentIndex] = true;
+        this.setState({ openIndex: hasContentIndex });
+      } else {
+        this.setState({ openIndex: -1 });
+      }
+    }
+  }
+
+  buildPrimaryContent(size, requests) {
+    const { app, primary } = this.props;
+    return React.cloneElement(primary, { app, size, hasContent: this.state.hasContent, index: 0, openIndex: this.state.openIndex, ...requests });
   }
 
   getBreakpointSize() {
@@ -106,7 +115,7 @@ class Navigation extends React.Component {
   }
 
   render() {
-    const { children, primary, secondary, ...customProps } = this.props;
+    const { children, primary, ...customProps } = this.props;
 
     const navigationClassNames = classNames([
       'terraClinical-Navigation',
@@ -114,26 +123,13 @@ class Navigation extends React.Component {
     ]); 
 
     const requests = {
-      requestNavigationUpdate: this.handleNavigationRequests,
+      requestToggleNavigation: this.handleToggleNavigation,
+      requestUpNavigation: this.handleUpNavigation,
+      requestUpdateHasContent: this.handleHasContent,
     };
 
-    let hasPrimary = true;
-    let primaryNav = primary;
-    if (!primaryNav) {
-      primaryNav = <BasePrimary />;
-      hasPrimary = false;
-    }
-
-    let hasSecondary = true;
-    let secondaryNav = secondary;
-    if (!secondaryNav) {
-      secondaryNav = <BaseSecondary />;
-      hasSecondary = false;
-    }
-
     const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
-    const secondaryContent = this.buildSecondaryContent(secondaryNav, size, requests, hasPrimary);
-    const primaryContent = this.buildPrimaryContent(primaryNav, size, requests, hasSecondary, secondaryContent);
+    const primaryContent = this.buildPrimaryContent(size, requests);
 
     return (
       <div {...customProps} className={navigationClassNames}>

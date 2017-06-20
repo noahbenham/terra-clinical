@@ -31,7 +31,7 @@ const NavigationHeader = ({
 
   let headerButton;
   if (onButtonClick) {
-    headerButton = <div className="terraClinical-NavigationHeader-button"><Button icon={<IconMenu />} onClick={onButtonClick} /></div>;
+    headerButton = <div className="terraClinical-NavigationHeader-button"><Button variant="secondary" icon={<IconMenu />} onClick={onButtonClick} /></div>;
   }
 
   let startElement;

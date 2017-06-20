@@ -35,9 +35,6 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
-  hasSecondary: false,
-  isOpen: false,
-  size: 'tiny',
 };
 
 class NavigationPrimary extends React.Component {
@@ -47,20 +44,34 @@ class NavigationPrimary extends React.Component {
     this.handleNavButtonClick = this.handleNavButtonClick.bind(this);
   }
 
-  handleNavButtonClick() {
-    let navState = { primary: 'false', secondary: 'toggle' };
-    if (!this.props.hasSecondary) {
-      navState = { primary: 'toggle' };
+  componentDidMount() {
+    if (this.props.requestUpdateHasContent) {
+      const hasContent = !!this.props.content && this.props.size === 'tiny';
+      this.props.requestUpdateHasContent(this.props.index, hasContent);
     }
-    
-    this.props.requestNavigationUpdate(navState);
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.requestUpdateHasContent) {
+      const newHasContent = !!newProps.content && newProps.size === 'tiny';
+      const currentHasContent = !!this.props.content && this.props.size === 'tiny';
+      if (newHasContent !== currentHasContent) {
+        newProps.requestUpdateHasContent(newProps.index, newHasContent);
+      }
+    }
+  }
+
+  handleNavButtonClick() {
+    if (this.props.requestToggleNavigation) {
+      this.props.requestToggleNavigation();
+    }
   }
 
   buildTopNavigation(isTiny) {
-    const { hasSecondary, content, logo, utility } = this.props;
+    const { hasContent, content, logo, utility } = this.props;
 
     let onButtonClick;
-    if (hasSecondary || (isTiny && content)) {
+    if (hasContent) {
       onButtonClick = this.handleNavButtonClick;
     }
 
@@ -75,26 +86,28 @@ class NavigationPrimary extends React.Component {
     return <NavigationHeader onButtonClick={onButtonClick} {...navItems} key="navigation-primary-header" />;
   }
 
-  buildSideNavigation(shouldDisplaySide) {
-    if (shouldDisplaySide) {
-      const { content } = this.props;
-      let verticalContent;
-      if (content) {
-        verticalContent = React.cloneElement(content, { isVerticalAlignment: true });
-      }
-      return (
-        <div style={{ height: '100%', width: '100%', backgroundColor: 'pink' }}>
-          {verticalContent}
-        </div>
-      );
+  buildSideNavigation(isTiny) {
+    if (!!this.props.content && isTiny) {
+      return React.cloneElement(content, { isVerticalAlignment: true });
     }
   }
 
-  buildChildren() {
-    const { app, children, content} = this.props;
+  buildChildren(isTiny) {
+    const { app, children, content, index, openIndex, requestToggleNavigation, requestUpNavigation, requestUpdateHasContent, size } = this.props;
+
+    const newProps = {
+      app,
+      hasParentContent: !!content && isTiny,
+      index: index + 1,
+      openIndex,
+      requestToggleNavigation,
+      requestUpNavigation,
+      requestUpdateHasContent,
+      size,
+    };
 
     return React.Children.map(children, (child) => {
-      return React.cloneElement(child, { app, isPrimaryButtonEnabled: !!content });
+      return React.cloneElement(child, newProps);
     });
   }
 
@@ -103,10 +116,13 @@ class NavigationPrimary extends React.Component {
       app,
       children,
       content,
-      hasSecondary,
-      isOpen,
+      hasContent,
+      index,
       logo,
-      requestNavigationUpdate,
+      openIndex,
+      requestToggleNavigation,
+      requestUpNavigation,
+      requestUpdateHasContent,
       size,
       utility,
       ...customProps
@@ -117,21 +133,16 @@ class NavigationPrimary extends React.Component {
       customProps.className,
     ]); 
 
+    const isOpen = index ? (index === openIndex) : false;
     const isTiny = size === 'tiny';
     const topNav = this.buildTopNavigation(isTiny);
     const sideNav = this.buildSideNavigation(isTiny);
-    const clonedChildren = this.buildChildren();
-
-    let panelClassNames;
-    if (!isTiny) {
-      panelClassNames = 'terraClinical-PrimaryPanel--disabled';
-    }
+    const clonedChildren = this.buildChildren(isTiny);
 
     return (
       <div {...customProps} className={navigationClassNames}>
         <ContentContainer header={topNav} fill>
           <SlidePanel
-            className={panelClassNames}
             mainContent={clonedChildren}
             panelContent={sideNav}
             panelSize="small"

@@ -11,10 +11,24 @@ const contentSection = <ContentSection><div style={{ border: '1px solid black', 
 const content = <Content>{contentSection}</Content>;
 const logo = <Logo icon={<IconVisualization />} title={'Chart of My Awesomeness'} />;
 
+const secondaryContent1 = <div style={{ height: '100%', width: '100%', backgroundColor: 'red' }} />;
+const secondaryContent2 = <div style={{ height: '100%', width: '100%', backgroundColor: 'green' }} />;
+const secondaryContent3 = <div style={{ height: '100%', width: '100%', backgroundColor: 'black' }} />;
+
+const secondary = (
+  <NavigationSecondary content={secondaryContent1}>
+    <NavigationSecondary content={secondaryContent2}>
+      <NavigationSecondary>
+        <NavigationSecondary content={secondaryContent3}>
+        </NavigationSecondary>
+      </NavigationSecondary>
+    </NavigationSecondary>
+  </NavigationSecondary>
+);
+
 const navigation = () => (
   <Navigation
-    primary={<NavigationPrimary content={content} logo={logo} />}
-    secondary={<NavigationSecondary />}
+    primary={<NavigationPrimary content={content} logo={logo}>{secondary}</NavigationPrimary>}
     style={{ border: '1px solid black', height: '400px' }}
   />
 );
