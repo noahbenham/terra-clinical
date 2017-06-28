@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
-import AppDelegate from 'terra-clinical-app-delegate';
+import AppDelegate from 'terra-app-delegate';
 import SlidePanel from 'terra-slide-panel';
 
 import './Navigation.scss';

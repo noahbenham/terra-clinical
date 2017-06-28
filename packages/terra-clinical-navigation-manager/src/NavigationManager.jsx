@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
-import AppDelegate from 'terra-clinical-app-delegate';
+import AppDelegate from 'terra-app-delegate';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import ContentContainer from 'terra-content-container';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';

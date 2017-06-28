@@ -2,6 +2,7 @@
 @import './mixins';
 
 .terraClinical-ItemDisplay {
+  @include terra-clinical-item-body;
   align-items: center;
   display: flex;
   overflow: hidden; // VERY IMPORTANT FOR IE10
@@ -27,7 +28,6 @@
   width: 16px;
 }
 
-.terraClinical-ItemDisplay-text,
 .terraClinical-ItemDisplay-text--isTruncated {
   @include terra-clinical-text-truncate;
 }
@@ -35,11 +35,11 @@
 // Text Styles
 
 .terraClinical-ItemDisplay-text--secondary {
-  color: $terra-grey-70 !important;
+  color: #64696c !important;
 }
 
 .terraClinical-ItemDisplay-text--attention {
-  color: $terra-clinical-critical-color !important;
+  color: #c00 !important;
   font-weight: 700 !important;
 }
 

@@ -12,6 +12,7 @@ const i18nSupportedLocales = require('terra-i18n/lib/i18nSupportedLocales');
 
 module.exports = {
   entry: {
+    'babel-polyfill': 'babel-polyfill',
     'terra-clinical': path.resolve(path.join(__dirname, 'src', 'Index')),
   },
   module: {
@@ -50,9 +51,6 @@ module.exports = {
             },
           }, {
             loader: 'sass-loader',
-            options: {
-              data: `@import "${path.resolve(path.join(__dirname, 'node_modules/terra-legacy-theme/lib/LegacyTheme.scss'))}"; $terra-bidi: true;`,
-            },
           }],
         }),
       },
@@ -66,7 +64,7 @@ module.exports = {
     new ExtractTextPlugin('[name]-[hash].css'),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'index.html'),
-      chunks: ['terra-clinical'],
+      chunks: ['babel-polyfill', 'terra-clinical'],
     }),
     new I18nAggregatorPlugin({
       baseDirectory: __dirname,

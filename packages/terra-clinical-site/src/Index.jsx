@@ -1,13 +1,12 @@
-import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { Router, Route, hashHistory, IndexRoute, Redirect } from 'react-router';
 import App from './App';
 import Home from './Home';
 
 // Examples
 import ActionHeaderExamples from './examples/action-header/Index';
-import AppDelegateExamples from './examples/app-delegate/Index';
 import ApplicationExamples from './examples/application/Index';
 import DetailViewExamples from './examples/detail-view/Index';
 import ErrorViewExamples from './examples/error-view/Index';
@@ -16,8 +15,8 @@ import ItemViewExamples from './examples/item-view/Index';
 import HeaderExamples from './examples/header/Index';
 import LabelValueViewExamples from './examples/label-value-view/Index';
 import NoDataViewExamples from './examples/no-data-view/Index';
-import SlideGroupExamples from './examples/slide-group/Index';
-import ModalManagerExamples from './examples/modal-manager/Index';
+import ItemCollectionExamples from './examples/item-collection/Index';
+import DemoApplicationExamples from './examples/demo-application/Index';
 import NavigationExamples from './examples/navigation/Index';
 import NavigationManagerExamples from './examples/navigation-manager/Index';
 import NavigationToolbarExamples from './examples/navigation-toolbar/Index';
@@ -26,7 +25,6 @@ import NavigationToolbarExamples from './examples/navigation-toolbar/Index';
 /* eslint-disable import/first */
 
 import ActionHeaderTestRoutes from 'terra-clinical-action-header/tests/nightwatch/ActionHeaderTestRoutes';
-import ApplicationTestRoutes from 'terra-clinical-application/tests/nightwatch/ApplicationTestRoutes';
 import DetailViewTestRoutes from 'terra-clinical-detail-view/tests/nightwatch/DetailView/DetailViewTestRoutes';
 import DetailListTestRoutes from 'terra-clinical-detail-view/tests/nightwatch/DetailList/DetailListTestRoutes';
 import DetailListItemTestRoutes from 'terra-clinical-detail-view/tests/nightwatch/DetailListItem/ListItemTestRoutes';
@@ -37,8 +35,13 @@ import ItemCommentTestRoutes from 'terra-clinical-item-display/tests/nightwatch/
 import HeaderTestRoutes from 'terra-clinical-header/tests/nightwatch/HeaderTestRoutes';
 import LabelValueViewTestRoutes from 'terra-clinical-label-value-view/tests/nightwatch/LabelValueViewTestRoutes';
 import NoDataViewTestRoutes from 'terra-clinical-no-data-view/tests/nightwatch/NoDataViewTestRoutes';
-import SlideGroupTestRoutes from 'terra-clinical-slide-group/tests/nightwatch/SlideGroupTestRoutes';
-import ModalManagerTestRoutes from 'terra-clinical-modal-manager/tests/nightwatch/ModalManagerTestRoutes';
+import ItemCollectionTestRoutes from 'terra-clinical-item-collection/tests/nightwatch/item-collection/ItemCollectionTestRoutes';
+import TableHeaderCellTestRoutes from 'terra-clinical-item-collection/tests/nightwatch/table-header-cell/TableHeaderCellTestRoutes';
+
+// Remove eslint rule when these packages have been released.
+/* eslint-disable import/no-extraneous-dependencies */
+import ApplicationTestRoutes from 'terra-clinical-application/tests/nightwatch/ApplicationTestRoutes';
+/* eslint-enable import/no-extraneous-dependencies */
 
 import TestLinks from './TestLinks';
 /* eslint-enable import/first */
@@ -49,7 +52,6 @@ ReactDOM.render((
     <Route path="/site" component={App}>
       <IndexRoute component={Home} />
       <Route path="action-header" component={ActionHeaderExamples} />
-      <Route path="app-delegate" component={AppDelegateExamples} />
       <Route path="application" component={ApplicationExamples} />
       <Route path="detail-view" component={DetailViewExamples} />
       <Route path="error-view" component={ErrorViewExamples} />
@@ -58,8 +60,7 @@ ReactDOM.render((
       <Route path="item-view" component={ItemViewExamples} />
       <Route path="label-value-view" component={LabelValueViewExamples} />
       <Route path="no-data-view" component={NoDataViewExamples} />
-      <Route path="slide-group" component={SlideGroupExamples} />
-      <Route path="modal-manager" component={ModalManagerExamples} />
+      <Route path="item-collection" component={ItemCollectionExamples} />
       <Route path="navigation" component={NavigationExamples} />
       <Route path="navigation-manager" component={NavigationManagerExamples} />
       <Route path="navigation-toolbar" component={NavigationToolbarExamples} />
@@ -77,7 +78,8 @@ ReactDOM.render((
     {ItemViewTestRoutes}
     {LabelValueViewTestRoutes}
     {NoDataViewTestRoutes}
-    {SlideGroupTestRoutes}
-    {ModalManagerTestRoutes}
+    {ItemCollectionTestRoutes}
+    {TableHeaderCellTestRoutes}
+    <Route path="/demo" component={DemoApplicationExamples} />
   </Router>
 ), document.getElementById('root'));
