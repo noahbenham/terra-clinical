@@ -8,6 +8,7 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import Logo from 'terra-clinical-navigation-toolbar/lib/Logo';
 import Utility from 'terra-clinical-navigation-toolbar/lib/Utility';
 import MenuExample from './MenuExample';
+import CustomNavigationExample from './CustomNavigationExample';
 
 const logo = <Logo accessory={<IconVisualization />} title={'Chart of My Awesomeness'} />;
 const utility = <Utility accessory={<IconProvider />} title={'Mr. Awesomeness'} />;
@@ -24,8 +25,8 @@ const manager = () => (
     <Navigation menu={menuContent1}>
       <Navigation menu={menuContent2}>
         <UnmanagedNavigation menu={menuContent3}>
-          <Navigation menu={menuContent4}>
-          </Navigation>
+          <CustomNavigationExample menu={menuContent4}>
+          </CustomNavigationExample>
         </UnmanagedNavigation>
       </Navigation>
     </Navigation>
