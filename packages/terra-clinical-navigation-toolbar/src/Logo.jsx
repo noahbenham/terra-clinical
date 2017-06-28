@@ -24,6 +24,7 @@ const propTypes = {
 const Logo = ({
     accessory,
     app,
+    size,
     title,
     ...customProps
   }) => {
@@ -43,7 +44,7 @@ const Logo = ({
   }
 
   let titleElement;
-  if (title) {
+  if (title && size !== 'tiny') {
     titleElement = (
       <div className="terraClinical-NavigationLogo-title">
         {title}

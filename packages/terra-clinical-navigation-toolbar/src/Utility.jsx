@@ -24,6 +24,7 @@ const propTypes = {
 const Utility = ({
     app,
     accessory,
+    size,
     title,
     ...customProps
   }) => {
@@ -43,7 +44,7 @@ const Utility = ({
   }
 
   let titleElement;
-  if (title) {
+  if (title && size !== 'tiny') {
     titleElement = (
       <div className="terraClinical-NavigationUtility-title">
         {title}
