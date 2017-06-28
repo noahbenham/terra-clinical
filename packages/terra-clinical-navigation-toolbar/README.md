@@ -1,18 +1,18 @@
-# Terra Clinical NavigationSecondary
+# Terra Clinical NavigationToolbar
 
 
-[![NPM version](http://img.shields.io/npm/v/terra-clinical-navigation-secondary.svg)](https://www.npmjs.org/package/terra-clinical-navigation-primary)
+[![NPM version](http://img.shields.io/npm/v/terra-clinical-navigation-toolbar.svg)](https://www.npmjs.org/package/terra-clinical-navigation-toolbar)
 [![Build Status](https://travis-ci.org/cerner/terra-clinical.svg?branch=master)](https://travis-ci.org/cerner/terra-clinical)
 
-This component renders secondary navigation items with react router.
+This component renders a toolbar with displays for logo and utility.
 
 - [Getting Started](#getting-started)
-- [Documentation](https://github.com/cerner/terra-clinical/tree/master/packages/terra-clinical-navigation-secondary/docs)
+- [Documentation](https://github.com/cerner/terra-clinical/tree/master/packages/terra-clinical-navigation-toolbar/docs)
 - [LICENSE](#license)
 
 ## Getting Started
 
-- Install from [npmjs](https://www.npmjs.com): `npm install terra-clinical-navigation-secondary`
+- Install from [npmjs](https://www.npmjs.com): `npm install terra-clinical-navigation-toolbar`
 
 ## LICENSE
 

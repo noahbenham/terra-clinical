@@ -19,9 +19,8 @@ import NoDataViewExamples from './examples/no-data-view/Index';
 import SlideGroupExamples from './examples/slide-group/Index';
 import ModalManagerExamples from './examples/modal-manager/Index';
 import NavigationExamples from './examples/navigation/Index';
-import NavigationHeaderExamples from './examples/navigation-header/Index';
-import NavigationPrimaryExamples from './examples/navigation-primary/Index';
-import NavigationSecondaryExamples from './examples/navigation-secondary/Index';
+import NavigationManagerExamples from './examples/navigation-header/Index';
+import NavigationToolbarExamples from './examples/navigation-primary/Index';
 
 // Test
 /* eslint-disable import/first */
@@ -64,9 +63,8 @@ ReactDOM.render((
       <Route path="slide-group" component={SlideGroupExamples} />
       <Route path="modal-manager" component={ModalManagerExamples} />
       <Route path="navigation" component={NavigationExamples} />
-      <Route path="navigation-header" component={NavigationHeaderExamples} />
-      <Route path="navigation-primary" component={NavigationPrimaryExamples} />
-      <Route path="navigation-secondary" component={NavigationSecondaryExamples} />
+      <Route path="navigation-manager" component={NavigationManagerExamples} />
+      <Route path="navigation-toolbar" component={NavigationToolbarExamples} />
     </Route>
     <Route path="/tests" component={TestLinks} />
     {ActionHeaderTestRoutes}
