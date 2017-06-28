@@ -5,6 +5,7 @@ import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-clinical-app-delegate';
 import IconMenu from 'terra-icon/lib/icon/IconMenu';
+import Button from 'terra-button';
 
 import './NavigationToolbar.scss';
 
@@ -45,10 +46,11 @@ class NavigationToolbar extends React.Component {
       onToggleClick,
       logo,
       size,
+      utility,
       ...customProps
     } = this.props;
 
-    const navigationClassNames = classNames([
+    const toolbarClassNames = classNames([
       'terraClinical-NavigationToolbar',
       customProps.className,
     ]); 
@@ -72,10 +74,10 @@ class NavigationToolbar extends React.Component {
     }
 
     let headerButton;
-    if (onButtonClick) {
+    if (onToggleClick) {
       headerButton = (
         <div className="terraClinical-NavigationToolbar-button">
-          <Button variant="secondary" icon={<IconMenu />} onClick={onButtonClick} />
+          <Button variant="secondary" icon={<IconMenu />} onClick={onToggleClick} />
         </div>
       );
     }
@@ -92,7 +94,7 @@ class NavigationToolbar extends React.Component {
     }
 
     return (
-      <div {...customProps} className={headerClassNames}>
+      <div {...customProps} className={toolbarClassNames}>
         {headerButton}
         {headerBody}
       </div>

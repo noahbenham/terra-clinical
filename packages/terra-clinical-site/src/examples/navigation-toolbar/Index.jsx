@@ -2,24 +2,24 @@
 import React from 'react';
 import PropsTable from 'terra-props-table';
 import Markdown from 'terra-markdown';
-import ReadMe from 'terra-clinical-navigation-header/docs/README.md';
-import { version } from 'terra-clinical-navigation-header/package.json';
+import ReadMe from 'terra-clinical-navigation-toolbar/docs/README.md';
+import { version } from 'terra-clinical-navigation-toolbar/package.json';
 
 // Component Source
 // eslint-disable-next-line import/no-webpack-loader-syntax, import/first, import/no-unresolved, import/extensions
-import NavigationHeaderSrc from '!raw-loader!terra-clinical-navigation-header/src/NavigationHeader.jsx';
+import NavigationToolbarSrc from '!raw-loader!terra-clinical-navigation-toolbar/src/NavigationToolbar.jsx';
 
 // Example Files
-import NavigationHeaderStandard from './NavigationHeaderStandard';
+import NavigationToolbarStandard from './NavigationToolbarStandard';
 
-const NavigationHeaderExamples = () => (
+const NavigationToolbarExamples = () => (
   <div>
     <div id="version">Version: {version}</div>
     <Markdown id="readme" src={ReadMe} />
-    <PropsTable id="props-primaryStandard" src={NavigationHeaderSrc} />
-    <h2 id="header-standard">NavigationHeader Standard</h2>
-    <NavigationHeaderStandard />
+    <PropsTable id="props-toolbarStandard" src={NavigationToolbarSrc} />
+    <h2 id="toolbar-standard">NavigationToolbar Standard</h2>
+    <NavigationToolbarStandard />
   </div>
 );
 
-export default NavigationHeaderExamples;
+export default NavigationToolbarExamples;

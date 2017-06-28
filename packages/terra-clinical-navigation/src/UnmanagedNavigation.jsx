@@ -38,7 +38,7 @@ class UnmanagedNavigation extends React.Component {
     } = this.props;
 
     let menuContent = menu;
-    if (size !== 'tiny') {
+    if (this.props.size !== 'tiny') {
       menuContent = null;
     }
 

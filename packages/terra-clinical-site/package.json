@@ -35,6 +35,7 @@
     "redux": "^3.6.0",
     "terra-base": "^0.x",
     "terra-button": "^0.x",
+    "terra-content-container": "^0.x",
     "terra-clinical-action-header": "^0.x",
     "terra-clinical-app-delegate": "^0.x",
     "terra-clinical-application": "^0.x",

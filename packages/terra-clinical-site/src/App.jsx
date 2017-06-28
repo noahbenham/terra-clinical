@@ -37,9 +37,8 @@ const App = props => (
             <List.Item content={<Link to="/site/no-data-view">No Data View</Link>} />
             <List.Item content={<Link to="/site/modal-manager">Modal Manager</Link>} />
             <List.Item content={<Link to="/site/navigation">Navigation</Link>} />
-            <List.Item content={<Link to="/site/navigation-header">Navigation Header</Link>} />
-            <List.Item content={<Link to="/site/navigation-primary">Navigation Primary</Link>} />
-            <List.Item content={<Link to="/site/navigation-secondary">Navigation Secondary</Link>} />
+            <List.Item content={<Link to="/site/navigation-manager">Navigation Manager</Link>} />
+            <List.Item content={<Link to="/site/navigation-toolbar">Navigation Toolbar</Link>} />
             <List.Item content={<Link to="/tests">Tests</Link>} />
           </List>
         </Grid.Column>

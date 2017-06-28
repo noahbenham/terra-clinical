@@ -16,10 +16,6 @@ const propTypes = {
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
-  banner: PropTypes.element,
-  /**
-   * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
   children: PropTypes.node,
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
@@ -53,8 +49,8 @@ class Navigation extends React.Component {
       hasParentMenu: hasParentMenu || !!menu,
       index: index + 1,
       openIndex,
-      requestToggleNavigation,
-      requestUpNavigation,
+      requestToggleMenu,
+      requestOpenParentMenu,
       requestUpdateHasMenu,
       size,
     };
@@ -66,12 +62,15 @@ class Navigation extends React.Component {
 
   buildMenu() {
     const { app, hasParentMenu, menu, requestToggleMenu, requestOpenParentMenu } = this.props;
-    const newProps = { app, requestToggleMenu };
-    if (hasParentMenu) {
-      newProps.requestOpenParentMenu = requestOpenParentMenu;
-    }
 
-    return React.cloneElement(menu, newProps);
+    if (menu) {
+      const newProps = { app, requestToggleMenu };
+      if (hasParentMenu) {
+        newProps.requestOpenParentMenu = requestOpenParentMenu;
+      }
+
+      return React.cloneElement(menu, newProps);
+    }
   }
 
   render() {
@@ -79,14 +78,13 @@ class Navigation extends React.Component {
       app,
       children,
       hasParentMenu,
-      banner,
       index,
       isOpenArray,
       menu,
       openIndex,
-      requestUpdateHasContent,
-      requestToggleMenu,
       requestOpenParentMenu,
+      requestToggleMenu,
+      requestUpdateHasMenu,
       size,
       ...customProps
     } = this.props;

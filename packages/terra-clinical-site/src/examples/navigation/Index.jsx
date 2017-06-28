@@ -10,7 +10,7 @@ import { version } from 'terra-clinical-navigation/package.json';
 import NavigationSrc from '!raw-loader!terra-clinical-navigation/src/Navigation.jsx';
 
 // Example Files
-import NavigationStandard from './NavigationSecondaryStandard';
+import NavigationStandard from './NavigationStandard';
 
 const NavigationExamples = () => (
 	<div>

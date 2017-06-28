@@ -10,11 +10,11 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  app: AppDelegate.propType,
+  accessory: PropTypes.element,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  accessory: PropTypes.element,
+  app: AppDelegate.propType,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
@@ -22,6 +22,7 @@ const propTypes = {
 };
 
 const Utility = ({
+    app,
     accessory,
     title,
     ...customProps

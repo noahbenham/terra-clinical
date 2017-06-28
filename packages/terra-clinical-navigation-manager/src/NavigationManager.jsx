@@ -6,7 +6,7 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-clinical-app-delegate';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import ContentContainer from 'terra-content-container';
-import NavigationToolbar from 'terra-navigation-toolbar';
+import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 
 import './NavigationManager.scss';
 
@@ -109,7 +109,7 @@ class NavigationManager extends React.Component {
 
   buildChildren(size, requests) {
     const { app, children } = this.props;
-    const newProps = { app, size, hasMenu: this.state.hasMenu, index: 0, openIndex: this.state.openIndex, ...requests };
+    const newProps = { app, size, index: 0, hasParentMenu: false, openIndex: this.state.openIndex, ...requests };
 
     return React.Children.map(children, (child) => {
       return React.cloneElement(child, newProps);
@@ -133,7 +133,11 @@ class NavigationManager extends React.Component {
   }
 
   render() {
-    const { children, primary, ...customProps } = this.props;
+    const {
+      app,
+      children,
+      toolbar,
+      ...customProps } = this.props;
 
     const navigationClassNames = classNames([
       'terraClinical-NavigationManager',

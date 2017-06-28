@@ -1,0 +1,54 @@
+@import '~terra-mixins';
+
+.terraClinical-NavigationToolbar {
+  background-color: #86bce5;
+  display: flex;
+  justify-content: space-between;
+  max-height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-NavigationToolbar-button {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.terraClinical-NavigationToolbar-body {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  max-height: 100%;
+  min-width: 0;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-NavigationToolbar-start {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  max-width: 50%;
+  position: relative;
+}
+
+.terraClinical-NavigationToolbar-end {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  max-width: 50%;
+  position: relative;
+}
+
+.terraClinical-NavigationToolbar-content {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+}
