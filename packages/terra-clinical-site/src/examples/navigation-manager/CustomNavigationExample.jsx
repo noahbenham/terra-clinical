@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'terra-button';
 import ContentContainer from 'terra-content-container';
 import Navigation from 'terra-clinical-navigation';
-import IconMenu from 'terra-icon/lib/icon/IconMenu';
+import IconNext from 'terra-icon/lib/icon/IconNext';
 import ContentShellExample from './ContentShellExample';
 
 class MenuExample extends React.Component {
@@ -13,7 +13,7 @@ class MenuExample extends React.Component {
 
     let button;
     if ((this.props.hasParentMenu || this.props.menu) && this.props.size !== 'tiny') {
-      button = <Button onClick={this.props.requestToggleMenu} icon={<IconMenu />} />;
+      button = <Button onClick={this.props.requestToggleMenu} icon={<IconNext />} />;
     }
 
     return (
