@@ -16,8 +16,8 @@ const NavigationExamples = () => (
 	<div>
     <div id="version">Version: {version}</div>
     <Markdown id="readme" src={ReadMe} />
-    <PropsTable id="props-secondaryStandard" src={NavigationSecondarySrc} />
-    <h2 id="navigation-standard">NavigationSecondary Standard</h2>
+    <PropsTable id="props-navigation" src={NavigationSrc} />
+    <h2 id="navigation-standard">Navigation Standard</h2>
     <NavigationStandard />
   </div>
 );
