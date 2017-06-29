@@ -34,28 +34,10 @@ const Logo = ({
     customProps.className,
   ]);
 
-  let accessoryElement;
-  if (accessory) {
-    accessoryElement = (
-      <div className="terraClinical-NavigationLogo-accessory">
-        {accessory}
-      </div>
-    );
-  }
-
-  let titleElement;
-  if (title && size !== 'tiny') {
-    titleElement = (
-      <div className="terraClinical-NavigationLogo-title">
-        {title}
-      </div>
-    );
-  }
-
   return (
     <div {...customProps} className={logoClassNames}>
-      {accessoryElement}
-      {titleElement}
+      {!!accessory && <div className="terraClinical-NavigationLogo-accessory">{accessory}</div>}
+      {!!title && size !== 'tiny' && <div className="terraClinical-NavigationLogo-title">{title}</div>}
     </div>
   );
 };

@@ -18,47 +18,61 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
+  menuName: PropTypes.string,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   **/
+  menuProps: PropTypes.object,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   **/
   title: PropTypes.string,
 };
 
-const Utility = ({
-    app,
-    accessory,
-    size,
-    title,
-    ...customProps
-  }) => {
+class Utility extends React.Component {
+  constructor(props) {
+    super(props);
+    this.disclose = this.disclose.bind(this);
+  }
 
-  const utilityClassNames = classNames([
-    'terraClinical-NavigationUtility',
-    customProps.className,
-  ]);
+  disclose() {
+    if (this.props.app && this.props.app.disclose) {
+      this.props.app.disclose({
+        preferredType: 'modal',
+        size: 'tiny',
+        content: {
+          key: `${this.props.menuName}-${Date.now()}`,
+          name: this.props.menuName,
+          props: this.props.menuProps,
+        },
+      });
+    }
+  }
 
-  let accessoryElement;
-  if (accessory) {
-    accessoryElement = (
-      <div className="terraClinical-NavigationUtility-accessory">
-        {accessory}
+  render() {
+    const { 
+      app,
+      accessory,
+      menuName,
+      menuProps,
+      size,
+      title,
+      ...customProps
+    } = this.props;
+
+    const utilityClassNames = classNames([
+      'terraClinical-NavigationUtility',
+      customProps.className,
+    ]);
+
+    return (
+      <div {...customProps} className={utilityClassNames} onClick={this.disclose}>
+        {!!title && size !== 'tiny' && <div className="terraClinical-NavigationUtility-title">{title}</div>}
+        {!!accessory && <div className="terraClinical-NavigationUtility-accessory">{accessory}</div>}
       </div>
     );
   }
-
-  let titleElement;
-  if (title && size !== 'tiny') {
-    titleElement = (
-      <div className="terraClinical-NavigationUtility-title">
-        {title}
-      </div>
-    );
-  }
-
-  return (
-    <div {...customProps} className={utilityClassNames}>
-      {titleElement}
-      {accessoryElement}
-    </div>
-  );
-};
+}
 
 Utility.propTypes = propTypes;
 

@@ -9,28 +9,32 @@ import Logo from 'terra-clinical-navigation-toolbar/lib/Logo';
 import Utility from 'terra-clinical-navigation-toolbar/lib/Utility';
 import MenuExample from './MenuExample';
 import CustomNavigationExample from './CustomNavigationExample';
+import Application from 'terra-clinical-application';
+import AppDelegate from 'terra-app-delegate';
 
 const logo = <Logo accessory={<IconVisualization />} title={'Chart of My Awesomeness'} />;
-const utility = <Utility accessory={<IconProvider />} title={'Mr. Awesomeness'} />;
+const utility = <Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'Mr. Awesomeness'} />;
 const menuContent1 = <MenuExample style={{ backgroundColor: 'red' }} />;
 const menuContent2 = <MenuExample style={{ backgroundColor: 'green' }} />;
 const menuContent3 = <MenuExample style={{ backgroundColor: 'orange' }} />;
 const menuContent4 = <MenuExample style={{ backgroundColor: 'black' }} />;
 
 const manager = () => (
-  <NavigationManager
-    toolbar={<NavigationToolbar utility={utility} logo={logo} />}
-    style={{ border: '1px solid black', height: '400px' }}
-  >
-    <Navigation menu={menuContent1}>
-      <Navigation menu={menuContent2}>
-        <UnmanagedNavigation menu={menuContent3}>
-          <CustomNavigationExample menu={menuContent4}>
-          </CustomNavigationExample>
-        </UnmanagedNavigation>
+  <Application app={AppDelegate.create({})} reducers={[NavigationManager.reducers]}>
+    <NavigationManager
+      toolbar={<NavigationToolbar utility={utility} logo={logo} />}
+      style={{ border: '1px solid black', height: '400px' }}
+    >
+      <Navigation menu={menuContent1}>
+        <Navigation menu={menuContent2}>
+          <UnmanagedNavigation menu={menuContent3}>
+            <CustomNavigationExample menu={menuContent4}>
+            </CustomNavigationExample>
+          </UnmanagedNavigation>
+        </Navigation>
       </Navigation>
-    </Navigation>
-  </NavigationManager>
+    </NavigationManager>
+  </Application>
 );
 
 export default manager;

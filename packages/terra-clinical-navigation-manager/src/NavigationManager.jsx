@@ -5,8 +5,9 @@ import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-app-delegate';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
-import ContentContainer from 'terra-content-container';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
+import ModalManager, { reducers as modalManagerReducers } from 'terra-modal-manager';
+import NavigationContainer from './_NavigationContainer';
 
 import './NavigationManager.scss';
 
@@ -95,7 +96,7 @@ class NavigationManager extends React.Component {
     }
   }
 
-  buildNavigationToolbar(size, requests) {
+  buildNavigationToolbar(size) {
     const { app, toolbar } = this.props;
     let toggle;
     if (this.state.hasMenu && size === 'tiny') {
@@ -105,15 +106,6 @@ class NavigationManager extends React.Component {
       return React.cloneElement(toolbar, { app, size, onToggleClick: toggle });
     }
     return <NavigationToolbar app={app} size={size} onToggleClick={toggle} />;
-  }
-
-  buildChildren(size, requests) {
-    const { app, children } = this.props;
-    const newProps = { app, size, index: 0, hasParentMenu: false, openIndex: this.state.openIndex, ...requests };
-
-    return React.Children.map(children, (child) => {
-      return React.cloneElement(child, newProps);
-    });
   }
 
   getBreakpointSize() {
@@ -144,26 +136,31 @@ class NavigationManager extends React.Component {
       customProps.className,
     ]); 
 
-    const requests = {
+    const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
+    const toolbarContent = this.buildNavigationToolbar(size);
+    const containerProps = {
+      app,
+      hasParentMenu: false,
+      index: 0,
+      openIndex: this.state.openIndex,
       requestToggleMenu: this.handleToggleMenu,
       requestOpenParentMenu: this.handleOpenParentMenu,
       requestUpdateHasMenu: this.handleUpdateHasMenu,
+      size,
     };
 
-    const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
-    const toolbarContent = this.buildNavigationToolbar(size, requests);
-    const childContent = this.buildChildren(size, requests);
-
-    // add modal manager
     return (
-      <ContentContainer {...customProps} className={navigationClassNames} header={toolbarContent} fill>
-        {childContent}
-      </ContentContainer>
+      <ModalManager app={app}>
+        <NavigationContainer {...customProps} className={navigationClassNames} header={toolbarContent} {...containerProps}>
+          {children}
+        </NavigationContainer>
+      </ModalManager>
     );
   }
 }
 
 NavigationManager.propTypes = propTypes;
 NavigationManager.defaultProps = defaultProps;
+NavigationManager.reducers = modalManagerReducers;
 
 export default NavigationManager;
