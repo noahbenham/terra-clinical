@@ -42,15 +42,16 @@ class Navigation extends React.Component {
   }
 
   buildChildren() {
-    const { app, children, hasParentMenu, index, menu, openIndex, requestToggleMenu, requestOpenParentMenu, requestUpdateHasMenu, size } = this.props;
+    const { app, children, hasParentMenu, index, menu, openIndex, requestOpenHomeMenu, requestOpenParentMenu, requestToggleMenu, requestUpdateHasMenu, size } = this.props;
 
     const newProps = {
       app,
       hasParentMenu: hasParentMenu || !!menu,
       index: index + 1,
       openIndex,
-      requestToggleMenu,
+      requestOpenHomeMenu,
       requestOpenParentMenu,
+      requestToggleMenu,
       requestUpdateHasMenu,
       size,
     };
@@ -61,12 +62,13 @@ class Navigation extends React.Component {
   }
 
   buildMenu() {
-    const { app, hasParentMenu, menu, requestToggleMenu, requestOpenParentMenu } = this.props;
+    const { app, hasParentMenu, menu, requestOpenHomeMenu, requestOpenParentMenu, requestToggleMenu } = this.props;
 
     if (menu) {
       const newProps = { app, requestToggleMenu };
       if (hasParentMenu) {
         newProps.requestOpenParentMenu = requestOpenParentMenu;
+        newProps.requestOpenHomeMenu = requestOpenHomeMenu;
       }
 
       return React.cloneElement(menu, newProps);
@@ -82,6 +84,7 @@ class Navigation extends React.Component {
       isOpenArray,
       menu,
       openIndex,
+      requestOpenHomeMenu,
       requestOpenParentMenu,
       requestToggleMenu,
       requestUpdateHasMenu,

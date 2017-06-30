@@ -36,8 +36,9 @@ class NavigationManager extends React.Component {
     super(props);
     this.state = { size: 'default', openIndex: -1, hasMenu: false };
     this.handleResize = this.handleResize.bind(this);
-    this.handleToggleMenu = this.handleToggleMenu.bind(this);
+    this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
     this.handleOpenParentMenu = this.handleOpenParentMenu.bind(this);
+    this.handleToggleMenu = this.handleToggleMenu.bind(this);
     this.handleUpdateHasMenu = this.handleUpdateHasMenu.bind(this);
     this.hasMenuArray = [];
     this.isOpenArray = [];
@@ -82,17 +83,28 @@ class NavigationManager extends React.Component {
     }    
   }
 
+  handleOpenHomeMenu() {
+    const openIndex = this.isOpenArray.indexOf(true);
+    const hasMenuIndex = this.hasMenuArray.indexOf(true);
+
+    this.traverseMenuStack(openIndex, hasMenuIndex);
+  }
+
   handleOpenParentMenu() {
     const openIndex = this.isOpenArray.indexOf(true);
-    if (openIndex >= 0) {
-      const hasMenuIndex = this.hasMenuArray.lastIndexOf(true, openIndex - 1);
-      if (hasMenuIndex >= 0) {
-        this.isOpenArray[openIndex] = false;
-        this.isOpenArray[hasMenuIndex] = true;
-        this.setState({ openIndex: hasMenuIndex });
-      } else {
-        this.setState({ openIndex: -1 });
-      }
+    const hasMenuIndex = this.hasMenuArray.lastIndexOf(true, openIndex - 1);
+
+    this.traverseMenuStack(openIndex, hasMenuIndex);
+  }
+
+  traverseMenuStack(previousIndex, nextIndex) {
+    if (nextIndex >= 0 && previousIndex !== nextIndex) {
+      this.isOpenArray[previousIndex] = false;
+      this.isOpenArray[nextIndex] = true;
+      this.setState({ openIndex: nextIndex });
+    } else {
+      this.isOpenArray.fill(false);
+      this.setState({ openIndex: -1 });
     }
   }
 
@@ -143,8 +155,9 @@ class NavigationManager extends React.Component {
       hasParentMenu: false,
       index: 0,
       openIndex: this.state.openIndex,
-      requestToggleMenu: this.handleToggleMenu,
+      requestOpenHomeMenu: this.handleOpenHomeMenu,
       requestOpenParentMenu: this.handleOpenParentMenu,
+      requestToggleMenu: this.handleToggleMenu,
       requestUpdateHasMenu: this.handleUpdateHasMenu,
       size,
     };
