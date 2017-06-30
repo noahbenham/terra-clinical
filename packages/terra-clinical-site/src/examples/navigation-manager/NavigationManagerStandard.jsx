@@ -11,6 +11,9 @@ import MenuExample from './MenuExample';
 import CustomNavigationExample from './CustomNavigationExample';
 import Application from 'terra-clinical-application';
 import AppDelegate from 'terra-app-delegate';
+import UtilityMenuExample from './UtilityMenuExample';
+
+AppDelegate.registerComponentForDisclosure('UtilityMenuExample', UtilityMenuExample);
 
 const logo = <Logo accessory={<IconVisualization />} title={'Chart of My Awesomeness'} />;
 const utility = <Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'Mr. Awesomeness'} />;

@@ -24,6 +24,6 @@ class UtilityMenuExample extends React.Component {
   }
 }
 
-AppDelegate.registerComponentForDisclosure('UtilityMenuExample', UtilityMenuExample);
+// AppDelegate.registerComponentForDisclosure('UtilityMenuExample', UtilityMenuExample);
 
 export default UtilityMenuExample;
