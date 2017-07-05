@@ -8,6 +8,14 @@ import SlidePanel from 'terra-slide-panel';
 
 import './Navigation.scss';
 
+const BREAKPOINTS = [
+  'tiny',
+  'small',
+  'medium',
+  'large',
+  'huge',
+];
+
 const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
@@ -21,24 +29,42 @@ const propTypes = {
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   menu: PropTypes.element,
+  /**
+   * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   **/
+  menuBreakpoint: PropTypes.oneOf(BREAKPOINTS),
 };
 
 const defaultProps = {
   children: [],
+  menuBreakpoint: 'tiny',
 };
 
 class Navigation extends React.Component {
 
   componentDidMount() {
     if (this.props.requestUpdateHasMenu) {
-      this.props.requestUpdateHasMenu(this.props.index, !!this.props.menu);
+      this.props.requestUpdateHasMenu(this.props.index, this.shouldDisplayMenu(this.props.size, this.props.menu, this.props.menuBreakpoint));
     }
   }
 
+  componentWillUnmount() {
+    // consider unregistering
+  }
+
   componentWillReceiveProps(newProps) {
-    if (newProps.requestUpdateHasMenu && !!this.props.menu !== !!newProps.menu) {
-      newProps.requestUpdateHasMenu(newProps.index, !!newProps.menu);
+    if (newProps.requestUpdateHasMenu) {
+      const displayMenu = this.shouldDisplayMenu(this.props.size, this.props.menu, this.props.menuBreakpoint);
+      const newDisplayMenu = this.shouldDisplayMenu(newProps.size, newProps.menu, newProps.menuBreakpoint);
+
+      if (displayMenu !== newDisplayMenu) {
+        newProps.requestUpdateHasMenu(newProps.index, newDisplayMenu);
+      } 
     }
+  }
+
+  shouldDisplayMenu(size, menu, menuBreakpoint) {
+    return !!menu && (BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menuBreakpoint));
   }
 
   buildChildren() {
@@ -83,6 +109,7 @@ class Navigation extends React.Component {
       index,
       isOpenArray,
       menu,
+      menuBreakpoint,
       openIndex,
       requestOpenHomeMenu,
       requestOpenParentMenu,

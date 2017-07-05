@@ -6,6 +6,8 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-app-delegate';
 import IconMenu from 'terra-icon/lib/icon/IconMenu';
 import Button from 'terra-button';
+import Utility from './Utility';
+import Logo from './Logo';
 
 import './NavigationToolbar.scss';
 
@@ -103,5 +105,7 @@ class NavigationToolbar extends React.Component {
 }
 
 NavigationToolbar.propTypes = propTypes;
+NavigationToolbar.Utility = Utility;
+NavigationToolbar.Logo = Logo;
 
 export default NavigationToolbar;

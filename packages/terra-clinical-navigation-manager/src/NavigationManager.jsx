@@ -6,8 +6,7 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-app-delegate';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
-import ModalManager, { reducers as modalManagerReducers } from 'terra-modal-manager';
-import NavigationContainer from './_NavigationContainer';
+import ContentContainer from 'terra-content-container';
 
 import './NavigationManager.scss';
 
@@ -108,8 +107,7 @@ class NavigationManager extends React.Component {
     }
   }
 
-  buildNavigationToolbar(size) {
-    const { app, toolbar } = this.props;
+  buildToolbar(app, size, toolbar) {
     let toggle;
     if (this.state.hasMenu && size === 'tiny') {
       toggle = this.handleToggleMenu;
@@ -120,20 +118,38 @@ class NavigationManager extends React.Component {
     return <NavigationToolbar app={app} size={size} onToggleClick={toggle} />;
   }
 
+  buildChildren(app, size, children) {
+    const newChildProps = {
+      app,
+      hasParentMenu: false,
+      index: 0,
+      openIndex: this.state.openIndex,
+      requestOpenHomeMenu: this.handleOpenHomeMenu,
+      requestOpenParentMenu: this.handleOpenParentMenu,
+      requestToggleMenu: this.handleToggleMenu,
+      requestUpdateHasMenu: this.handleUpdateHasMenu,
+      size,
+    };
+
+    return React.Children.map(children, (child) => {
+      return React.cloneElement(child, newChildProps);
+    });
+  }
+
   getBreakpointSize() {
     const width = window.innerWidth;
     const { tiny, small, medium, large, huge } = getBreakpoints();
     
-    if (width >= huge) {
-      return 'huge';
-    } else if (width >= large) {
-      return 'large';
-    } else if (width >= medium) {
-      return 'medium';
-    } else if (width >= small) {
+    if (width < tiny) {
+      return 'tiny';
+    } else if (width < small) {
       return 'small';
+    } else if (width < medium) {
+      return 'medium';
+    } else if (width < large) {
+      return 'large';
     }
-    return 'tiny';
+    return 'huge';
   }
 
   render() {
@@ -149,31 +165,18 @@ class NavigationManager extends React.Component {
     ]); 
 
     const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
-    const toolbarContent = this.buildNavigationToolbar(size);
-    const containerProps = {
-      app,
-      hasParentMenu: false,
-      index: 0,
-      openIndex: this.state.openIndex,
-      requestOpenHomeMenu: this.handleOpenHomeMenu,
-      requestOpenParentMenu: this.handleOpenParentMenu,
-      requestToggleMenu: this.handleToggleMenu,
-      requestUpdateHasMenu: this.handleUpdateHasMenu,
-      size,
-    };
+    const toolbarContent = this.buildToolbar(app, size, toolbar);
+    const childContent = this.buildChildren(app, size, children);
 
     return (
-      <ModalManager app={app}>
-        <NavigationContainer {...customProps} className={navigationClassNames} header={toolbarContent} {...containerProps}>
-          {children}
-        </NavigationContainer>
-      </ModalManager>
+      <ContentContainer {...customProps} className={navigationClassNames} header={toolbarContent} fill>
+        {childContent}
+      </ContentContainer>
     );
   }
 }
 
 NavigationManager.propTypes = propTypes;
 NavigationManager.defaultProps = defaultProps;
-NavigationManager.reducers = modalManagerReducers;
 
 export default NavigationManager;
