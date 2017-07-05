@@ -88,10 +88,10 @@ class Navigation extends React.Component {
   }
 
   buildMenu() {
-    const { app, hasParentMenu, menu, requestOpenHomeMenu, requestOpenParentMenu, requestToggleMenu } = this.props;
+    const { app, hasParentMenu, menu, requestOpenHomeMenu, requestOpenParentMenu, requestToggleMenu, size } = this.props;
 
     if (menu) {
-      const newProps = { app, requestToggleMenu };
+      const newProps = { app, requestToggleMenu, size };
       if (hasParentMenu) {
         newProps.requestOpenParentMenu = requestOpenParentMenu;
         newProps.requestOpenHomeMenu = requestOpenHomeMenu;

@@ -12,6 +12,7 @@ class MenuExample extends React.Component {
       requestOpenHomeMenu,
       requestOpenParentMenu,
       requestToggleMenu,
+      size,
       ...customProps
     } = this.props;
 

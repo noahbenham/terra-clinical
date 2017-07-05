@@ -140,16 +140,16 @@ class NavigationManager extends React.Component {
     const width = window.innerWidth;
     const { tiny, small, medium, large, huge } = getBreakpoints();
     
-    if (width < tiny) {
-      return 'tiny';
-    } else if (width < small) {
-      return 'small';
-    } else if (width < medium) {
-      return 'medium';
-    } else if (width < large) {
+    if (width >= huge) {
+      return 'huge';
+    } else if (width >= large) {
       return 'large';
+    } else if (width >= medium) {
+      return 'medium';
+    } else if (width >= small) {
+      return 'small';
     }
-    return 'huge';
+    return 'tiny';
   }
 
   render() {
