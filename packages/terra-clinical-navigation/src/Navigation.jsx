@@ -22,9 +22,17 @@ const propTypes = {
    **/
   app: AppDelegate.propType,
   /**
-   * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  children: PropTypes.node,
+  contentComponentData: PropTypes.objectOf(PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    props: PropTypes.object,
+  })),
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   **/
+  discloseContent: PropTypes.func.required,
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
@@ -33,6 +41,13 @@ const propTypes = {
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   menuBreakpoint: PropTypes.oneOf(BREAKPOINTS),
+  /**
+   * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   **/
+  routes: PropTypes.objectOf(PropTypes.shapeOf({
+    key: PropTypes.string,
+    reactComponent: PropTypes.func,
+  })),
 };
 
 const defaultProps = {
@@ -69,23 +84,12 @@ class Navigation extends React.Component {
     return !!menu && (BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menuBreakpoint));
   }
 
-  buildChildren(children, newProps) {
-    return React.Children.map(children, (child) => {
-      return React.cloneElement(child, newProps);
-    });
-  }
-
-  buildMenu(menu, newProps) {
-    if (menu) {
-      return React.cloneElement(menu, newProps);
-    }
-  }
-
   render() {
     const { 
       app,
-      children,
+      contentComponentData,
       deregisterNavigation,
+      discloseContent,
       hasParentMenu,
       index,
       isOpenArray,
@@ -96,6 +100,8 @@ class Navigation extends React.Component {
       requestOpenHomeMenu,
       requestOpenParentMenu,
       requestToggleMenu,
+      routes,
+      selectedRoute,
       size,
       ...customProps
     } = this.props;
@@ -104,32 +110,38 @@ class Navigation extends React.Component {
       'terraClinical-Navigation',
       customProps.className,
     ]);
+    const isOpen = index >= 0 ? (index === openIndex) : false;
 
-    let newMenuProps;
+    let menuElement;
     if (menu) {
-      newMenuProps = { app, requestToggleMenu, size };
+      const newMenuProps = { app, requestToggleMenu, discloseContent, size };
       if (hasParentMenu) {
         newMenuProps.requestOpenParentMenu = requestOpenParentMenu;
         newMenuProps.requestOpenHomeMenu = requestOpenHomeMenu;
       }
+      menuElement = React.cloneElement(menu, newProps);
     }
 
-    const newChildProps = {
-      app,
-      deregisterNavigation,
-      hasParentMenu: hasParentMenu || !!menu,
-      index: index + 1,
-      openIndex,
-      registerNavigation,
-      requestOpenHomeMenu,
-      requestOpenParentMenu,
-      requestToggleMenu,
-      size,
-    };
-
-    const isOpen = index >= 0 ? (index === openIndex) : false;
-    const menuContent = this.buildMenu(menu, newMenuProps);
-    const childContent = this.buildChildren(children, newChildProps);
+    let contentElement;
+    if (selectedRoute) {
+      const contentProps = {
+        ...contentComponentData.props,
+        app,
+        deregisterNavigation,
+        hasParentMenu: hasParentMenu || !!menu,
+        index: index + 1,
+        openIndex,
+        registerNavigation,
+        requestOpenHomeMenu,
+        requestOpenParentMenu,
+        requestToggleMenu,        
+      };
+      
+      const ContentClass = routes[contentComponentData.name];
+      if (ContentClass) {
+        return <ComponentClass key={componentData.key}  {...contentProps} />;
+      }
+    }
 
     return (
       <SlidePanel
