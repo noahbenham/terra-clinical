@@ -101,7 +101,6 @@ class Navigation extends React.Component {
       requestOpenParentMenu,
       requestToggleMenu,
       routes,
-      selectedRoute,
       size,
       ...customProps
     } = this.props;
@@ -123,7 +122,7 @@ class Navigation extends React.Component {
     }
 
     let contentElement;
-    if (selectedRoute) {
+    if (contentComponentData) {
       const contentProps = {
         ...contentComponentData.props,
         app,
@@ -139,7 +138,7 @@ class Navigation extends React.Component {
       
       const ContentClass = routes[contentComponentData.name];
       if (ContentClass) {
-        return <ComponentClass key={componentData.key}  {...contentProps} />;
+        return <ComponentClass key={contentComponentData.key}  {...contentProps} />;
       }
     }
 
