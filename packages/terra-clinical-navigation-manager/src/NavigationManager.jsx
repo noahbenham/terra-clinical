@@ -38,7 +38,8 @@ class NavigationManager extends React.Component {
     this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
     this.handleOpenParentMenu = this.handleOpenParentMenu.bind(this);
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
-    this.handleUpdateHasMenu = this.handleUpdateHasMenu.bind(this);
+    this.handleRegisterNavigation = this.handleRegisterNavigation.bind(this);
+    this.handleDeregisterNavigation = this.handleDeregisterNavigation.bind(this);
     this.hasMenuArray = [];
     this.isOpenArray = [];
   }
@@ -59,14 +60,33 @@ class NavigationManager extends React.Component {
     }
   }
 
-  handleUpdateHasMenu(index, hasMenu) {
+  handleRegisterNavigation(index, hasMenu) {
     if (this.hasMenuArray[index] !== hasMenu) {
       this.hasMenuArray[index] = hasMenu;
       this.isOpenArray[index] = false;
 
-      const updatedHasMenu= this.hasMenuArray.indexOf(true) >= 0;
-      if (this.state.hasMenu !== updatedHasMenu) {
-        this.setState({ hasMenu: updatedHasMenu});
+      const newHasMenu= this.hasMenuArray.indexOf(true) >= 0;
+      if (this.state.hasMenu !== newHasMenu) {
+        this.setState({ hasMenu: newHasMenu});
+      }
+    }
+  }
+
+  handleDeregisterNavigation(index) {
+    if (this.hasMenuArray[index] || this.isOpenArray[index]) {
+      this.hasMenuArray.splice(index);
+      this.isOpenArray.splice(index);
+
+      let newState;
+      const newHasMenu= this.hasMenuArray.indexOf(true) >= 0;
+      if (this.state.hasMenu !== newHasMenu) {
+        newState = { hasMenu: newHasMenu };
+      }
+      if (this.state.openIndex >= index) {
+        (newState || {}).openIndex = -1;
+      }
+      if (newState) {
+        this.setState(newState);
       }
     }
   }
@@ -127,7 +147,8 @@ class NavigationManager extends React.Component {
       requestOpenHomeMenu: this.handleOpenHomeMenu,
       requestOpenParentMenu: this.handleOpenParentMenu,
       requestToggleMenu: this.handleToggleMenu,
-      requestUpdateHasMenu: this.handleUpdateHasMenu,
+      registerNavigation: this.handleRegisterNavigation,
+      deregisterNavigation: this.handleDeregisterNavigation,
       size,
     };
 

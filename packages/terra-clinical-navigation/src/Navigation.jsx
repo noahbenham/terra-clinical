@@ -43,22 +43,24 @@ const defaultProps = {
 class Navigation extends React.Component {
 
   componentDidMount() {
-    if (this.props.requestUpdateHasMenu) {
-      this.props.requestUpdateHasMenu(this.props.index, this.shouldDisplayMenu(this.props.size, this.props.menu, this.props.menuBreakpoint));
+    if (this.props.registerNavigation) {
+      this.props.registerNavigation(this.props.index, this.shouldDisplayMenu(this.props.size, this.props.menu, this.props.menuBreakpoint));
     }
   }
 
   componentWillUnmount() {
-    // consider unregistering
+    if (this.props.deregisterNavigation) {
+      this.props.deregisterNavigation(this.props.index);
+    }
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.requestUpdateHasMenu) {
+    if (newProps.registerNavigation) {
       const displayMenu = this.shouldDisplayMenu(this.props.size, this.props.menu, this.props.menuBreakpoint);
       const newDisplayMenu = this.shouldDisplayMenu(newProps.size, newProps.menu, newProps.menuBreakpoint);
 
       if (displayMenu !== newDisplayMenu) {
-        newProps.requestUpdateHasMenu(newProps.index, newDisplayMenu);
+        newProps.registerNavigation(newProps.index, newDisplayMenu);
       } 
     }
   }
@@ -67,36 +69,14 @@ class Navigation extends React.Component {
     return !!menu && (BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menuBreakpoint));
   }
 
-  buildChildren() {
-    const { app, children, hasParentMenu, index, menu, openIndex, requestOpenHomeMenu, requestOpenParentMenu, requestToggleMenu, requestUpdateHasMenu, size } = this.props;
-
-    const newProps = {
-      app,
-      hasParentMenu: hasParentMenu || !!menu,
-      index: index + 1,
-      openIndex,
-      requestOpenHomeMenu,
-      requestOpenParentMenu,
-      requestToggleMenu,
-      requestUpdateHasMenu,
-      size,
-    };
-
+  buildChildren(children, newProps) {
     return React.Children.map(children, (child) => {
       return React.cloneElement(child, newProps);
     });
   }
 
-  buildMenu() {
-    const { app, hasParentMenu, menu, requestOpenHomeMenu, requestOpenParentMenu, requestToggleMenu, size } = this.props;
-
+  buildMenu(menu, newProps) {
     if (menu) {
-      const newProps = { app, requestToggleMenu, size };
-      if (hasParentMenu) {
-        newProps.requestOpenParentMenu = requestOpenParentMenu;
-        newProps.requestOpenHomeMenu = requestOpenHomeMenu;
-      }
-
       return React.cloneElement(menu, newProps);
     }
   }
@@ -105,16 +85,17 @@ class Navigation extends React.Component {
     const { 
       app,
       children,
+      deregisterNavigation,
       hasParentMenu,
       index,
       isOpenArray,
       menu,
       menuBreakpoint,
       openIndex,
+      registerNavigation,
       requestOpenHomeMenu,
       requestOpenParentMenu,
       requestToggleMenu,
-      requestUpdateHasMenu,
       size,
       ...customProps
     } = this.props;
@@ -124,9 +105,31 @@ class Navigation extends React.Component {
       customProps.className,
     ]);
 
+    let newMenuProps;
+    if (menu) {
+      newMenuProps = { app, requestToggleMenu, size };
+      if (hasParentMenu) {
+        newMenuProps.requestOpenParentMenu = requestOpenParentMenu;
+        newMenuProps.requestOpenHomeMenu = requestOpenHomeMenu;
+      }
+    }
+
+    const newChildProps = {
+      app,
+      deregisterNavigation,
+      hasParentMenu: hasParentMenu || !!menu,
+      index: index + 1,
+      openIndex,
+      registerNavigation,
+      requestOpenHomeMenu,
+      requestOpenParentMenu,
+      requestToggleMenu,
+      size,
+    };
+
     const isOpen = index >= 0 ? (index === openIndex) : false;
-    const menuContent = this.buildMenu();
-    const childContent = this.buildChildren();
+    const menuContent = this.buildMenu(menu, newMenuProps);
+    const childContent = this.buildChildren(children, newChildProps);
 
     return (
       <SlidePanel
