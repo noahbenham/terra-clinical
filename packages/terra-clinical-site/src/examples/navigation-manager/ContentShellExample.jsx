@@ -5,10 +5,11 @@ class ContentShellExample extends React.Component {
     const {
       app,
       children,
+      color,
     } = this.props;
 
     return (
-      <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+      <div style={{ height: '100%', width: '100%', position: 'relative', backgroundColor: color }}>
         {children}
       </div>
     );

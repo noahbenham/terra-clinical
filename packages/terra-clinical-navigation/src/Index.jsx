@@ -7,7 +7,7 @@ import { disclose } from './actions';
 
 const mapStateToProps = state => (
   (disclosureState => ({
-    contentComponentData: disclosureState.componentData,
+    contentComponentData: disclosureState ? disclosureState.componentData : null,
   }))(state.navigation)
 );
 

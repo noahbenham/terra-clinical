@@ -24,15 +24,19 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  contentComponentData: PropTypes.objectOf(PropTypes.shape({
+  contentComponentData: PropTypes.shape({
     key: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     props: PropTypes.object,
-  })),
+  }),
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  discloseContent: PropTypes.func.required,
+  contentParent: PropTypes.element,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   **/
+  discloseContent: PropTypes.func.isRequired,
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
@@ -44,15 +48,12 @@ const propTypes = {
   /**
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
-  routes: PropTypes.objectOf(PropTypes.shapeOf({
-    key: PropTypes.string,
-    reactComponent: PropTypes.func,
-  })),
+  routes: PropTypes.object,
 };
 
 const defaultProps = {
-  children: [],
   menuBreakpoint: 'tiny',
+  routes: {},
 };
 
 class Navigation extends React.Component {
@@ -88,6 +89,7 @@ class Navigation extends React.Component {
     const { 
       app,
       contentComponentData,
+      contentParent,
       deregisterNavigation,
       discloseContent,
       hasParentMenu,
@@ -118,7 +120,7 @@ class Navigation extends React.Component {
         newMenuProps.requestOpenParentMenu = requestOpenParentMenu;
         newMenuProps.requestOpenHomeMenu = requestOpenHomeMenu;
       }
-      menuElement = React.cloneElement(menu, newProps);
+      menuElement = React.cloneElement(menu, newMenuProps);
     }
 
     let contentElement;
@@ -138,16 +140,25 @@ class Navigation extends React.Component {
       
       const ContentClass = routes[contentComponentData.name];
       if (ContentClass) {
-        return <ComponentClass key={contentComponentData.key}  {...contentProps} />;
+        contentElement = <ContentClass key={contentComponentData.key}  {...contentProps} />;
       }
+    }
+
+    if (contentParent) {
+      const newParentProps = { app, requestToggleMenu, discloseContent, size, children: contentElement };
+      if (hasParentMenu) {
+        newParentProps.requestOpenParentMenu = requestOpenParentMenu;
+        newParentProps.requestOpenHomeMenu = requestOpenHomeMenu;
+      }
+      contentElement = React.cloneElement(contentParent, newParentProps);
     }
 
     return (
       <SlidePanel
         {...customProps}
         className={navigationClassNames}
-        mainContent={childContent}
-        panelContent={menuContent}
+        mainContent={contentElement}
+        panelContent={menuElement}
         panelSize="small"
         panelBehavior="overlay"
         panelPosition="start"

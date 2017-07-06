@@ -2,10 +2,6 @@ import {
   DISCLOSE_NAVIGATION_CONTENT,
 } from './actions';
 
-const defaultState = Object.freeze({
-  componentData: {},
-});
-
 const cloneDisclosureState = (state) => {
   return Object.assign({}, state);
 };
@@ -20,7 +16,7 @@ const discloseContent = (state, action) => {
   };
 };
 
-const navigationReducers = (state = defaultState, action) => {
+const navigationReducers = (state = null, action) => {
   const newState = cloneDisclosureState(state);
 
   switch (action.type) {
