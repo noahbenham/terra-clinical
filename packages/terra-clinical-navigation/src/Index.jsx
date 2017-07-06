@@ -5,9 +5,9 @@ import Navigation from './Navigation';
 import navigationReducers from './reducers';
 import { disclose } from './actions';
 
-const mapStateToProps = state => (
+const mapStateToProps = (state, ownProps) => (
   (disclosureState => ({
-    contentComponentData: disclosureState ? disclosureState.componentData : null,
+    contentComponentData: disclosureState[ownProps.index] ? disclosureState[ownProps.index].componentData : null,
   }))(state.navigation)
 );
 

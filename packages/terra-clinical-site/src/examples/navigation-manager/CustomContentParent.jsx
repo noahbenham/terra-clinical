@@ -12,34 +12,22 @@ class CustomContentParent extends React.Component {
 
   handleDisclosure1() {
     if (this.props.discloseContent) {
-      if (this.props.requestToggleMenu) {
-        this.props.requestToggleMenu();
-      }
-
       this.props.discloseContent(
       {
-        content: {
-          key: '1234-woooo',
-          name: 'contentStuff',
-          props: { color: 'orange' },
-        }
+        key: '1234-woooo',
+        name: 'contentStuff',
+        props: { color: 'orange' },
       });
     }
   }
 
   handleDisclosure2() {
     if (this.props.discloseContent) {
-      if (this.props.requestToggleMenu) {
-        this.props.requestToggleMenu();
-      }
-
       this.props.discloseContent(
       {
-        content: {
-          key: '4321-woooo',
-          name: 'contentStuff',
-          props: { color: 'purple' },
-        }
+        key: '4321-woooo',
+        name: 'contentStuff',
+        props: { color: 'purple' },
       });
     }
   }

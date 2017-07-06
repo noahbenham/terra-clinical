@@ -57,6 +57,10 @@ const defaultProps = {
 };
 
 class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
+  }
 
   componentDidMount() {
     if (this.props.registerNavigation) {
@@ -83,6 +87,10 @@ class Navigation extends React.Component {
 
   shouldDisplayMenu(size, menu, menuBreakpoint) {
     return !!menu && (BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menuBreakpoint));
+  }
+
+  handleDiscloseContent(data) {
+    this.props.discloseContent({ index: this.props.index, content: data });
   }
 
   render() {
@@ -115,7 +123,7 @@ class Navigation extends React.Component {
 
     let menuElement;
     if (menu) {
-      const newMenuProps = { app, requestToggleMenu, discloseContent, size };
+      const newMenuProps = { app, requestToggleMenu, discloseContent: this.handleDiscloseContent, size };
       if (hasParentMenu) {
         newMenuProps.requestOpenParentMenu = requestOpenParentMenu;
         newMenuProps.requestOpenHomeMenu = requestOpenHomeMenu;
@@ -135,7 +143,8 @@ class Navigation extends React.Component {
         registerNavigation,
         requestOpenHomeMenu,
         requestOpenParentMenu,
-        requestToggleMenu,        
+        requestToggleMenu,
+        size,      
       };
       
       const ContentClass = routes[contentComponentData.name];
@@ -145,7 +154,7 @@ class Navigation extends React.Component {
     }
 
     if (contentParent) {
-      const newParentProps = { app, requestToggleMenu, discloseContent, size, children: contentElement };
+      const newParentProps = { app, requestToggleMenu, discloseContent: this.handleDiscloseContent, size, children: contentElement };
       if (hasParentMenu) {
         newParentProps.requestOpenParentMenu = requestOpenParentMenu;
         newParentProps.requestOpenHomeMenu = requestOpenHomeMenu;

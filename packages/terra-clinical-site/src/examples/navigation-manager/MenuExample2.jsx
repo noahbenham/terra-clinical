@@ -21,11 +21,9 @@ class MenuExample extends React.Component {
 
       this.props.discloseContent(
       {
-        content: {
-          key: '1234-woooo',
-          name: 'contentStuff',
-          props: { color: 'orange' },
-        }
+        key: '1234-woooo',
+        name: 'contentStuff',
+        props: { color: 'orange' },
       });
     }
   }
@@ -38,11 +36,9 @@ class MenuExample extends React.Component {
 
       this.props.discloseContent(
       {
-        content: {
-          key: '4321-woooo',
-          name: 'contentStuff',
-          props: { color: 'purple' },
-        }
+        key: '4321-woooo',
+        name: 'contentStuff',
+        props: { color: 'purple' },
       });
     }
   }
