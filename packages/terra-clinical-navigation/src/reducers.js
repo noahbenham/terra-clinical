@@ -6,6 +6,10 @@ const defaultState = Object.freeze({
   componentData: {},
 });
 
+const cloneDisclosureState = (state) => {
+  return Object.assign({}, state);
+};
+
 const discloseContent = (state, action) => {
   return {
     componentData: {

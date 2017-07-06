@@ -1,5 +1,5 @@
 import React from 'react';
-import Navigation from 'terra-clinical-navigation';
+import Navigation, { reducers as navigationReducers } from 'terra-clinical-navigation';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import NavigationManager from 'terra-clinical-navigation-manager';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
@@ -20,7 +20,7 @@ const menuContent3 = <MenuExample style={{ backgroundColor: 'orange' }} />;
 const menuContent4 = <MenuExample style={{ backgroundColor: 'black' }} />;
 
 const manager = () => (
-  <Application app={AppDelegate.create({})}>
+  <Application app={AppDelegate.create({})} reducers={navigationReducers}>
     <NavigationManager
       toolbar={<NavigationToolbar utility={utility} logo={logo} />}
       style={{ border: '1px solid black', height: '400px' }}
