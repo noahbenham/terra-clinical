@@ -14,7 +14,7 @@ AppDelegate.registerComponentForDisclosure('UtilityMenuExample', UtilityMenuExam
 
 const logo = <NavigationToolbar.Logo accessory={<IconVisualization />} title={'Chart of My Awesomeness'} />;
 const utility = <NavigationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'Mr. Awesomeness'} />;
-const menuContent1 = <MenuExample1 style={{ backgroundColor: 'red' }} />;
+const menuContent1 = <MenuExample1 />;
 
 const manager = () => (
   <Application app={AppDelegate.create({})} reducers={[navigationReducers]}>

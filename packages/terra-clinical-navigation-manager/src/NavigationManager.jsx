@@ -10,6 +10,13 @@ import ContentContainer from 'terra-content-container';
 
 import './NavigationManager.scss';
 
+const BREAKPOINTS = [
+  'tiny',
+  'small',
+  'medium',
+  'large',
+  'huge',
+];
 
 const propTypes = {
   /**
@@ -34,14 +41,15 @@ class NavigationManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = { size: 'default', openIndex: -1, hasMenu: false };
+    this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
     this.handleOpenParentMenu = this.handleOpenParentMenu.bind(this);
     this.handleToggleMenu = this.handleToggleMenu.bind(this);
     this.handleRegisterNavigation = this.handleRegisterNavigation.bind(this);
     this.handleDeregisterNavigation = this.handleDeregisterNavigation.bind(this);
-    this.hasMenuArray = [];
-    this.isOpenArray = [];
+    this.menuStack = [];
+    this.menuRoutes = {};
   }
 
   componentDidMount() {
@@ -55,30 +63,30 @@ class NavigationManager extends React.Component {
   handleResize() {
     const size = this.getBreakpointSize();
     if (size !== this.state.size) {
-      this.isOpenArray.fill(false);
-      this.setState({ size: size, openIndex: -1 });
+      const newState = { size: size, openIndex: -1 };
+      const newHasMenu = this.hasMenu();
+      if (this.state.hasMenu !== newHasMenu) {
+        newState.hasMenu = newHasMenu;
+      }
+      this.setState(newState);
     }
   }
 
-  handleRegisterNavigation(index, hasMenu) {
-    if (this.hasMenuArray[index] !== hasMenu) {
-      this.hasMenuArray[index] = hasMenu;
-      this.isOpenArray[index] = false;
+  handleRegisterNavigation(index, menuData) {
+    this.menuStack[index] = menuData;
 
-      const newHasMenu= this.hasMenuArray.indexOf(true) >= 0;
-      if (this.state.hasMenu !== newHasMenu) {
-        this.setState({ hasMenu: newHasMenu});
-      }
+    const newHasMenu = this.hasMenu();
+    if (this.state.hasMenu !== newHasMenu) {
+      this.setState({ hasMenu: newHasMenu});
     }
   }
 
   handleDeregisterNavigation(index) {
-    if (this.hasMenuArray[index] || this.isOpenArray[index]) {
-      this.hasMenuArray.splice(index);
-      this.isOpenArray.splice(index);
+    if (this.menuStack[index]) {
+      this.menuStack.splice(index);
 
       let newState;
-      const newHasMenu= this.hasMenuArray.indexOf(true) >= 0;
+      const newHasMenu = this.hasMenu();
       if (this.state.hasMenu !== newHasMenu) {
         newState = { hasMenu: newHasMenu };
       }
@@ -92,44 +100,58 @@ class NavigationManager extends React.Component {
   }
 
   handleToggleMenu() {
-    if (this.isOpenArray.indexOf(true) >= 0) {
-      this.isOpenArray.fill(false);
+    if (this.state.openIndex >= 0) {
       this.setState({ openIndex: -1 });
     } else {
-      const hasMenuIndex = this.hasMenuArray.lastIndexOf(true);
-      this.isOpenArray[hasMenuIndex] = true;
-      this.setState({ openIndex: hasMenuIndex });
+      this.setState({ openIndex: this.lastValidIndex(this.menuStack.count) });
     }    
   }
 
   handleOpenHomeMenu() {
-    const openIndex = this.isOpenArray.indexOf(true);
-    const hasMenuIndex = this.hasMenuArray.indexOf(true);
-
-    this.traverseMenuStack(openIndex, hasMenuIndex);
+    this.traverseMenuStack(this.state.openIndex, this.firstValidIndex(0));
   }
 
   handleOpenParentMenu() {
-    const openIndex = this.isOpenArray.indexOf(true);
-    const hasMenuIndex = this.hasMenuArray.lastIndexOf(true, openIndex - 1);
-
-    this.traverseMenuStack(openIndex, hasMenuIndex);
+    this.traverseMenuStack(this.state.openIndex, this.lastValidIndex(this.state.openIndex - 1));
   }
 
   traverseMenuStack(previousIndex, nextIndex) {
     if (nextIndex >= 0 && previousIndex !== nextIndex) {
-      this.isOpenArray[previousIndex] = false;
-      this.isOpenArray[nextIndex] = true;
       this.setState({ openIndex: nextIndex });
     } else {
-      this.isOpenArray.fill(false);
       this.setState({ openIndex: -1 });
     }
   }
 
+  firstValidIndex(index) {
+    for (let i = index; i < this.menuStack.length; i += 1) {
+      if (this.shouldDisplayMenu(this.menuStack[i])) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  lastValidIndex(index) {
+    for (let i = index; i >= 0; i -= 1) {
+      if (this.shouldDisplayMenu(this.menuStack[i])) {
+        return true;
+      }
+    }
+    return -1;
+  }
+
+  hasMenu() {
+    return firstValidIndex(0) >= 0;
+  }
+
+  shouldDisplayMenu(menu) {
+    return menu && BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menu.breakpoint);
+  }
+
   buildToolbar(app, size, toolbar) {
     let toggle;
-    if (this.state.hasMenu && size === 'tiny') {
+    if (this.state.hasMenu) {
       toggle = this.handleToggleMenu;
     }
     if (toolbar) {
@@ -141,20 +163,37 @@ class NavigationManager extends React.Component {
   buildChildren(app, size, children) {
     const newChildProps = {
       app,
-      hasParentMenu: false,
-      index: 0,
-      openIndex: this.state.openIndex,
-      requestOpenHomeMenu: this.handleOpenHomeMenu,
-      requestOpenParentMenu: this.handleOpenParentMenu,
-      requestToggleMenu: this.handleToggleMenu,
-      registerNavigation: this.handleRegisterNavigation,
       deregisterNavigation: this.handleDeregisterNavigation,
+      index: 0,
+      registerNavigation: this.handleRegisterNavigation,
+      requestToggleMenu: this.handleToggleMenu,
       size,
     };
 
     return React.Children.map(children, (child) => {
       return React.cloneElement(child, newChildProps);
     });
+  }
+
+  buildMenu(app, size) {
+    const additionalProps = {
+      app,
+      requestOpenHomeMenu: this.handleOpenHomeMenu,
+      requestOpenParentMenu: this.handleOpenParentMenu,
+      requestToggleMenu: this.handleToggleMenu,
+      size,
+    };
+
+    let hasParentMenu = false;
+    const slideItems = this.menuStack.filter( (menu, index) => {
+      additionalProps.hasParentMenu = hasParentMenu;
+      if (shouldDisplayMenu(menu) && this.state.openIndex <= index) {
+        hasParentMenu = true;
+        return <menu.class {...menu.props} {...additionalProps} />;
+      }
+    });
+
+    return <SlideGroup items={slideItems} isAnimated />;
   }
 
   getBreakpointSize() {
@@ -188,10 +227,18 @@ class NavigationManager extends React.Component {
     const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
     const toolbarContent = this.buildToolbar(app, size, toolbar);
     const childContent = this.buildChildren(app, size, children);
-
+    const menuContent = this.buildMenu(app, size);
     return (
       <ContentContainer {...customProps} className={navigationClassNames} header={toolbarContent} fill>
-        {childContent}
+        <SlidePanel
+          mainContent={childContent}
+          panelContent={menuContent}
+          panelSize="small"
+          panelBehavior="overlay"
+          panelPosition="start"
+          isOpen={this.state.openIndex > 0}
+          fill
+        />
       </ContentContainer>
     );
   }

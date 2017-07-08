@@ -67,7 +67,7 @@ class MenuExample extends React.Component {
     );
 
     return (
-      <ContentContainer {...customProps} fill header={headerButtons} />
+      <ContentContainer {...customProps} fill header={headerButtons} style={{ backgroundColor: 'green' }} />
     );
   }
 }
