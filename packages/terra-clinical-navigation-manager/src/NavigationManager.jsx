@@ -179,11 +179,15 @@ class NavigationManager extends React.Component {
   }
 
   buildMenu(app, size) {
-    const additionalProps = {
+    const basicProps = {
       app,
-      requestOpenHomeMenu: this.handleOpenHomeMenu,
       requestToggleMenu: this.handleToggleMenu,
       size,
+    };
+
+    const additionalProps = {
+      requestOpenHomeMenu: this.handleOpenHomeMenu,
+      requestOpenParentMenu: this.handleOpenParentMenu,
     };
 
     const validMenus = this.menuStack.filter( (menu, index) => {
@@ -192,8 +196,10 @@ class NavigationManager extends React.Component {
 
     const slideItems = validMenus.map( (menu, index) => {
       const ComponentClass = menu.class;
-      const requestOpenParentMenu = index > 0 ? this.handleOpenParentMenu : null;
-      return <ComponentClass {...menu.props} {...additionalProps} requestOpenParentMenu={requestOpenParentMenu} key={`NavigationSlide ${index}`}/>;
+      if (index > 0) {
+        return <ComponentClass {...menu.props} {...basicProps} {...additionalProps} key={`NavigationSlide ${index}`} />;
+      }
+      return <ComponentClass {...menu.props} {...basicProps} key={`NavigationSlide ${index}`} />;
     });
 
     return <SlideGroup items={slideItems} isAnimated />;
