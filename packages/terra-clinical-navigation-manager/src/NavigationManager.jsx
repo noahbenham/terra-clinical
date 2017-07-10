@@ -42,7 +42,7 @@ const defaultProps = {
 class NavigationManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { size: 'default', openIndex: -1, hasMenu: false };
+    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: false };
     // this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
@@ -65,7 +65,7 @@ class NavigationManager extends React.Component {
   handleResize() {
     const size = this.getBreakpointSize();
     if (size !== this.state.size) {
-      const newState = { size: size, openIndex: -1 };
+      const newState = { size: size, isOpen: false };
       const newHasMenu = this.hasMenu();
       if (this.state.hasMenu !== newHasMenu) {
         newState.hasMenu = newHasMenu;
@@ -94,6 +94,7 @@ class NavigationManager extends React.Component {
       }
       if (this.state.openIndex >= index) {
         (newState || {}).openIndex = -1;
+        newState.isOpen = false;
       }
       if (newState) {
         this.setState(newState);
@@ -102,10 +103,10 @@ class NavigationManager extends React.Component {
   }
 
   handleToggleMenu() {
-    if (this.state.openIndex >= 0) {
-      this.setState({ openIndex: -1 });
+    if (this.state.isOpen) {
+      this.setState({ isOpen: false });
     } else {
-      this.setState({ openIndex: this.lastValidIndex(this.menuStack.length) });
+      this.setState({ isOpen: true, openIndex: this.lastValidIndex(this.menuStack.length) });
     }    
   }
 
@@ -121,7 +122,7 @@ class NavigationManager extends React.Component {
     if (nextIndex >= 0 && previousIndex !== nextIndex) {
       this.setState({ openIndex: nextIndex });
     } else {
-      this.setState({ openIndex: -1 });
+      this.setState({ isOpen: false, openIndex: -1 });
     }
   }
 
@@ -202,6 +203,10 @@ class NavigationManager extends React.Component {
       return <ComponentClass {...menu.props} {...basicProps} key={`NavigationSlide ${index}`} />;
     });
 
+    if (!this.state.isOpen && slideItems.length) {
+      return slideItems[slideItems.length - 1];
+    }
+
     return <SlideGroup items={slideItems} isAnimated />;
   }
 
@@ -245,7 +250,7 @@ class NavigationManager extends React.Component {
           panelSize="small"
           panelBehavior="overlay"
           panelPosition="start"
-          isOpen={this.state.openIndex >= 0}
+          isOpen={this.state.isOpen}
           fill
         />
       </ContentContainer>
