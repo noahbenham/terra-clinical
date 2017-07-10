@@ -42,7 +42,9 @@
     "terra-clinical-navigation-toolbar": "^0.x",
     "terra-content-container": "^1.0.0",
     "terra-mixins": "^1.0.0",
-    "terra-responsive-element": "^1.0.0"
+    "terra-responsive-element": "^1.0.0",
+    "terra-slide-group": "^1.0.0",
+    "terra-slide-panel": "^1.0.0"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",

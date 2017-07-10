@@ -7,6 +7,8 @@ import AppDelegate from 'terra-app-delegate';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import ContentContainer from 'terra-content-container';
+import SlideGroup from 'terra-slide-group';
+import SlidePanel from 'terra-slide-panel';
 
 import './NavigationManager.scss';
 
@@ -41,7 +43,7 @@ class NavigationManager extends React.Component {
   constructor(props) {
     super(props);
     this.state = { size: 'default', openIndex: -1, hasMenu: false };
-    this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
+    // this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
     this.handleOpenParentMenu = this.handleOpenParentMenu.bind(this);
@@ -103,7 +105,7 @@ class NavigationManager extends React.Component {
     if (this.state.openIndex >= 0) {
       this.setState({ openIndex: -1 });
     } else {
-      this.setState({ openIndex: this.lastValidIndex(this.menuStack.count) });
+      this.setState({ openIndex: this.lastValidIndex(this.menuStack.length) });
     }    
   }
 
@@ -135,17 +137,18 @@ class NavigationManager extends React.Component {
   lastValidIndex(index) {
     for (let i = index; i >= 0; i -= 1) {
       if (this.shouldDisplayMenu(this.menuStack[i])) {
-        return true;
+        return i;
       }
     }
     return -1;
   }
 
   hasMenu() {
-    return firstValidIndex(0) >= 0;
+    return this.firstValidIndex(0) >= 0;
   }
 
   shouldDisplayMenu(menu) {
+    const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
     return menu && BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menu.breakpoint);
   }
 
@@ -179,18 +182,18 @@ class NavigationManager extends React.Component {
     const additionalProps = {
       app,
       requestOpenHomeMenu: this.handleOpenHomeMenu,
-      requestOpenParentMenu: this.handleOpenParentMenu,
       requestToggleMenu: this.handleToggleMenu,
       size,
     };
 
-    let hasParentMenu = false;
-    const slideItems = this.menuStack.filter( (menu, index) => {
-      additionalProps.hasParentMenu = hasParentMenu;
-      if (shouldDisplayMenu(menu) && this.state.openIndex <= index) {
-        hasParentMenu = true;
-        return <menu.class {...menu.props} {...additionalProps} />;
-      }
+    const validMenus = this.menuStack.filter( (menu, index) => {
+      return this.shouldDisplayMenu(menu) && this.state.openIndex >= index;
+    });
+
+    const slideItems = validMenus.map( (menu, index) => {
+      const ComponentClass = menu.class;
+      const requestOpenParentMenu = index > 0 ? this.handleOpenParentMenu : null;
+      return <ComponentClass {...menu.props} {...additionalProps} requestOpenParentMenu={requestOpenParentMenu} key={`NavigationSlide ${index}`}/>;
     });
 
     return <SlideGroup items={slideItems} isAnimated />;
@@ -236,7 +239,7 @@ class NavigationManager extends React.Component {
           panelSize="small"
           panelBehavior="overlay"
           panelPosition="start"
-          isOpen={this.state.openIndex > 0}
+          isOpen={this.state.openIndex >= 0}
           fill
         />
       </ContentContainer>

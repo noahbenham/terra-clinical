@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-app-delegate';
-import SlidePanel from 'terra-slide-panel';
 
 import './Navigation.scss';
 
@@ -49,7 +48,7 @@ const propTypes = {
 
 const defaultProps = {
   menuBreakpoint: 'tiny',
-  routes: {},
+  menuRoutes: {},
 };
 
 class Navigation extends React.Component {
@@ -77,7 +76,6 @@ class Navigation extends React.Component {
       children,
       contentParent,
       deregisterNavigation,
-      discloseContent,
       index,
       menuBreakpoint,
       menuClass,
@@ -96,7 +94,7 @@ class Navigation extends React.Component {
 
     let childContent;
     if (children) {
-      const contentProps = {
+      const newChildProps = {
         app,
         deregisterNavigation,
         index: index + 1,
@@ -111,7 +109,7 @@ class Navigation extends React.Component {
     }
 
     if (contentParent) {
-      const newParentProps = { app, discloseContent, requestToggleMenu, size, children: childContent };
+      const newParentProps = { app, requestToggleMenu, size, children: childContent };
       childContent = React.cloneElement(contentParent, newParentProps);
     }
 
