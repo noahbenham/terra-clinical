@@ -1,4 +1,6 @@
 import React from 'react';
+import { createStore, combineReducers, compose } from 'redux';
+import { Provider } from 'react-redux';
 import Navigation from 'terra-clinical-navigation';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import NavigationManager from 'terra-clinical-navigation-manager';
@@ -7,7 +9,7 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import MenuExample1 from './MenuExample1';
 import MenuExample2 from './MenuExample2';
 import MenuExample3 from './MenuExample3';
-import Application from 'terra-clinical-application';
+import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
 import AppDelegate from 'terra-app-delegate';
 import UtilityMenuExample from './UtilityMenuExample';
 
@@ -44,15 +46,27 @@ const navigation1 = (
   </Navigation>
 );
 
+// eslint-disable-next-line no-underscore-dangle
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(
+  combineReducers(Object.assign({},
+    terraApplicationReducers,
+  )),
+  composeEnhancers(),
+);
+
 const manager = () => (
-  <Application app={AppDelegate.create({})}>
-    <NavigationManager
-      toolbar={<NavigationToolbar utility={utility} logo={logo} />}
-      style={{ border: '1px solid black', height: '400px' }}
-    >
-      {navigation1}
-    </NavigationManager>
-  </Application>
+  <Provider store={store}>
+    <Application app={AppDelegate.create({})}>
+      <NavigationManager
+        toolbar={<NavigationToolbar utility={utility} logo={logo} />}
+        style={{ border: '1px solid black', height: '400px' }}
+      >
+        {navigation1}
+      </NavigationManager>
+    </Application>
+  </Provider>
 );
 
 export default manager;

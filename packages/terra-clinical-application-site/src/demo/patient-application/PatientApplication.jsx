@@ -3,9 +3,8 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
-import Application from 'terra-clinical-application';
+import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
 import AppDelegate from 'terra-app-delegate';
-import ModalManager, { reducers as modalManagerReducers } from 'terra-modal-manager';
 
 import PanelManager, { reducers as panelManagerReducers } from '../panel-manager';
 import PatientListController, { reducers as patientListReducers } from '../patient-list/PatientListController';
@@ -20,7 +19,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   combineReducers(Object.assign({},
     patientListReducers,
-    modalManagerReducers,
+    terraApplicationReducers,
     panelManagerReducers,
   )),
   composeEnhancers(applyMiddleware(sagaMiddleware)),
@@ -36,14 +35,12 @@ class PatientApplication extends React.Component {
     return (
       <Provider store={store}>
         <Application locale="en-US">
-          <ModalManager>
-            <PanelManager>
-              <PatientListController
-                physicianId={physicianId}
-                key={'PATIENT_LIST_APP'}
-              />
-            </PanelManager>
-          </ModalManager>
+          <PanelManager>
+            <PatientListController
+              physicianId={physicianId}
+              key={'PATIENT_LIST_APP'}
+            />
+          </PanelManager>
         </Application>
       </Provider>
     );

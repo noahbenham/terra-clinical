@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import Base from 'terra-base';
 import AppDelegate from 'terra-app-delegate';
 import 'terra-base/lib/baseStyles';
-import { createStore, combineReducers } from 'redux';
-import { Provider } from 'react-redux';
 import ModalManager, { reducers as modalManagerReducers } from 'terra-modal-manager';
 
 import './Application.scss';
@@ -19,18 +17,13 @@ const propTypes = {
    * The components to display within the Application.
    **/
   children: PropTypes.node.isRequired,
-  /**
-   * The components to display within the Application.
-   **/
-  reducers: PropTypes.array,
 };
 
 const defaultProps = {
   children: [],
-  reducers: [],
 };
 
-const Application = ({ app, children, reducers, ...customProps }) => {
+const Application = ({ app, children, ...customProps }) => {
   let childrenToRender = children;
 
   if (app) {
@@ -40,13 +33,11 @@ const Application = ({ app, children, reducers, ...customProps }) => {
   }
 
   return (
-    <Provider store={createStore(combineReducers(Object.assign({}, modalManagerReducers, ...reducers)))}>
-      <Base {...customProps} className={classNames([customProps.className, 'terraClinical-Application'])}>
-        <ModalManager app={app}>
-          {childrenToRender}
-        </ModalManager>
-      </Base>
-    </Provider>
+    <Base {...customProps} className={classNames([customProps.className, 'terraClinical-Application'])}>
+      <ModalManager app={app}>
+        {childrenToRender}
+      </ModalManager>
+    </Base>
   );
 };
 
@@ -54,3 +45,7 @@ Application.propTypes = propTypes;
 Application.defaultProps = defaultProps;
 
 export default Application;
+
+const reducers = Object.assign({}, modalManagerReducers);
+export { reducers };
+
