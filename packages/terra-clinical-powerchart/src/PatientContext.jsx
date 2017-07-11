@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import 'terra-base/lib/baseStyles';
 import Navigation from 'terra-clinical-navigation';
 import ContentContainer from 'terra-content-container';
+import AppDelegate from 'terra-app-delegate';
 import PatientContextToolbar from './PatientContextToolbar';
+import PatientContextMenu from './PatientContextMenu';
 import PatientSchedule from './PatientSchedule';
 import PatientSearch from './PatientSearch';
-import AppDelegate from 'terra-app-delegate';
 
 import './PatientContext.scss';
 
@@ -18,15 +19,19 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  children: PropTypes.node,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
   deregisterNavigation: PropTypes.func,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
   index: PropTypes.number,
+  /**
+   * From `connect`. 
+   **/
+  patientContextData: PropTypes.shape({
+    patientId: PropTypes.string.isRequired,
+    encounterId: PropTypes.string,
+    ppr: PropTypes.object,
+  }),
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
@@ -42,7 +47,6 @@ const propTypes = {
 };
 
 const defaultProps = {
-  children: [],
   index: 0,
   size: 'tiny',
 };
@@ -56,40 +60,41 @@ class PatientContext extends React.Component {
     const { 
       app,
       children,
-      contentData,
       deregisterNavigation,
       index,
+      patientContextData,
       registerNavigation,
       requestToggleMenu,
       size,
     } = this.props;
 
-    const navProps = {
-      app,
-      deregisterNavigation,
-      index,
-      registerNavigation,
-      requestToggleMenu,
-      size,      
-    };
-
-    if (contentData) {
+    if (patientContextData) {
       let contextHeader;
       if (size !== 'tiny') {
         contextHeader = <PatientContextToolbar app={app} />;
       }
 
-      const contentParent = <ContentContainer header={contextHeader} fill />;
+      const navProps = {
+        app,
+        contentParent: <ContentContainer header={contextHeader} fill />,
+        deregisterNavigation,
+        index,
+        menuBreakpoint: 'tiny',
+        menuClass: PatientContextMenu,
+        menuProps: {},
+        registerNavigation,
+        requestToggleMenu,
+        size,      
+      };
+
       return (
-        <Navigation className="terraClinical-PatientContext" contentParent={contentParent} {...navProps}>
-          {children}
-        </Navigation>
+        <Navigation className="terraClinical-PatientContext" {...navProps} />
       );
     }
 
     return (
       <div className="terraClinical-PatientContext">
-        {children}
+        <PatientSearch app={app} />
       </div>
     );
   }
