@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import 'terra-base/lib/baseStyles';
 import Navigation from 'terra-clinical-navigation';
 import ContentContainer from 'terra-content-container';
-import PatientContextHeader from './PatientContextHeader';
+import PatientContextToolbar from './PatientContextToolbar';
 import PatientSchedule from './PatientSchedule';
 import PatientSearch from './PatientSearch';
 import AppDelegate from 'terra-app-delegate';
@@ -41,6 +41,12 @@ const propTypes = {
   size: PropTypes.oneOf(Navigation.breakpoints),
 };
 
+const defaultProps = {
+  children: [],
+  index: 0,
+  size: 'tiny',
+};
+
 AppDelegate.registerComponentForDisclosure('PatientSchedule', PatientSchedule);
 AppDelegate.registerComponentForDisclosure('PatientSearch', PatientSearch);
 
@@ -70,7 +76,7 @@ class PatientContext extends React.Component {
     if (contentData) {
       let contextHeader;
       if (size !== 'tiny') {
-        contextHeader = <PatientContextHeader app={app} discloseSchedule={this.discloseSchedule} discloseSearch={this.discloseSearch} />;
+        contextHeader = <PatientContextToolbar app={app} />;
       }
 
       const contentParent = <ContentContainer header={contextHeader} fill />;
@@ -90,5 +96,6 @@ class PatientContext extends React.Component {
 }
 
 PatientContext.propTypes = propTypes;
+PatientContext.defaultProps = defaultProps;
 
 export default PatientContext;

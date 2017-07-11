@@ -33,6 +33,10 @@ const propTypes = {
   size: PropTypes.oneOf(Navigation.breakpoints),
 };
 
+const defaultProps = {
+  size: 'tiny',
+};
+
 class PatientContextMenu extends React.Component {
 
   constructor(props) {
@@ -112,5 +116,6 @@ class PatientContextMenu extends React.Component {
 }
 
 PatientContextMenu.propTypes = propTypes;
+PatientContextMenu.defaultProps = defaultProps;
 
 export default PatientContextMenu;
