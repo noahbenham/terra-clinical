@@ -123,5 +123,6 @@ class Navigation extends React.Component {
 
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
+Navigation.breakpoints = BREAKPOINTS;
 
 export default Navigation;
