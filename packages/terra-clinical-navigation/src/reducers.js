@@ -15,7 +15,7 @@ const navigationReducers = (state = defaultState, action) => {
 
   switch (action.type) {
     case UPDATE:
-      newState[action.key] = action.data.navigationData;
+      newState[action.key] = action.data;
       return newState;
     default:
       return newState;

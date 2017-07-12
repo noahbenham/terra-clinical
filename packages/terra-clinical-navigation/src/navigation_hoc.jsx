@@ -19,7 +19,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 export { mapDispatchToProps };
 
 export default (Component) => {
-  connect(mapStateToProps, mapDispatchToProps)(Component);
+  return connect(mapStateToProps, mapDispatchToProps)(Component);
 };
 
 // Export necessary reducers

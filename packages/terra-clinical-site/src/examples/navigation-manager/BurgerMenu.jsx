@@ -6,24 +6,30 @@ import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 
-class MenuExample extends React.Component {
+class BurgerMenu extends React.Component {
   constructor(props) {
     super(props);
-    this.handleDisclosure1 = this.handleDisclosure1.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
 
-  handleDisclosure1() {
-    if (this.props.discloseContent) {
-      if (this.props.requestToggleMenu) {
-        this.props.requestToggleMenu();
-      }
+  // handleDisclosure1() {
+  //   if (this.props.discloseContent) {
+  //     if (this.props.requestToggleMenu) {
+  //       this.props.requestToggleMenu();
+  //     }
 
-      this.props.discloseContent(
-      {
-        key: '2525-woooo',
-        name: 'customStuff',
-      });
-    }
+  //     this.props.discloseContent(
+  //     {
+  //       key: '2525-woooo',
+  //       name: 'customStuff',
+  //     });
+  //   }
+  // }
+
+  handleUpdate(data) {
+    return () => {
+      this.props.updateNavigation(data);
+    };
   }
 
   render() {
@@ -34,7 +40,6 @@ class MenuExample extends React.Component {
       requestOpenParentMenu,
       requestToggleMenu,
       size,
-      ...customProps
     } = this.props;
 
     let button1;
@@ -50,11 +55,6 @@ class MenuExample extends React.Component {
       button3 = <Button style={{ display: 'inline-block', float: 'right' }} onClick={requestToggleMenu} icon={<IconClose />} />;
     }
 
-    let button4;
-    if (discloseContent && size === 'tiny') {
-      button4 = <Button text=" disclose 1" onClick={this.handleDisclosure1} isBlock icon={<IconProjects />} />;
-    }
-
     const headerButtons = (
       <div>
         <div>
@@ -62,14 +62,15 @@ class MenuExample extends React.Component {
           {button2}
           {button3}
         </div>
-        {button4}
+        {<Button text="Hamburger" onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })} isBlock icon={<IconProjects />} />};
+        {<Button text="Cheeseburger" onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })} isBlock icon={<IconProjects />} />};
       </div>
     );
 
     return (
-      <ContentContainer {...customProps} fill header={headerButtons} style={{ backgroundColor: 'green' }} />
+      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'green' }} />
     );
   }
 }
 
-export default MenuExample;
+export default BurgerMenu;
