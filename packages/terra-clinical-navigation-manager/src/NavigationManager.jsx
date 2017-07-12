@@ -79,7 +79,7 @@ class NavigationManager extends React.Component {
 
     const newHasMenu = this.hasMenu();
     if (this.state.hasMenu !== newHasMenu) {
-      this.setState({ hasMenu: newHasMenu});
+      this.setState({ hasMenu: newHasMenu });
     }
   }
 
@@ -248,7 +248,7 @@ class NavigationManager extends React.Component {
           mainContent={childContent}
           panelContent={menuContent}
           panelSize="small"
-          panelBehavior="overlay"
+          panelBehavior="squish"
           panelPosition="start"
           isOpen={this.state.isOpen}
           fill

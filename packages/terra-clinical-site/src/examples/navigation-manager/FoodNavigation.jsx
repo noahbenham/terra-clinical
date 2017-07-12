@@ -60,8 +60,6 @@ class FoodNavigation extends React.Component {
       updateNavigation: this.props.updateNavigation,
     };
 
-    debugger;
-
     return (
       <Navigation
         menuClass={FoodMenu}

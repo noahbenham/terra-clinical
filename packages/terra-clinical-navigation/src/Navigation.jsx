@@ -108,6 +108,8 @@ class Navigation extends React.Component {
         index: index + 1,
         requestToggleMenu,
         size,
+        registerNavigation,
+        deregisterNavigation,
       };
 
       childContent = React.Children.map(children, child => (
@@ -116,7 +118,7 @@ class Navigation extends React.Component {
     }
 
     if (contentParent) {
-      const newParentProps = { app, requestToggleMenu, size, children: childContent };
+      const newParentProps = { app, requestToggleMenu, size, children: childContent, registerNavigation, deregisterNavigation };
       childContent = React.cloneElement(contentParent, newParentProps);
     }
 

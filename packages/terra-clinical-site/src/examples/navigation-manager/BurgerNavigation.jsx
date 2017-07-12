@@ -56,8 +56,6 @@ class BurgerNavigation extends React.Component {
       updateNavigation: this.props.updateNavigation,
     };
 
-    debugger;
-
     return (
       <Navigation
         menuClass={BurgerMenu}
