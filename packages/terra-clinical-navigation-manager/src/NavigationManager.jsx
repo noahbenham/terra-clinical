@@ -107,7 +107,7 @@ class NavigationManager extends React.Component {
       this.setState({ isOpen: false });
     } else {
       this.setState({ isOpen: true, openIndex: this.lastValidIndex(this.menuStack.length) });
-    }    
+    }
   }
 
   handleOpenHomeMenu() {
@@ -212,8 +212,8 @@ class NavigationManager extends React.Component {
 
   getBreakpointSize() {
     const width = window.innerWidth;
-    const { tiny, small, medium, large, huge } = getBreakpoints();
-    
+    const { small, medium, large, huge } = getBreakpoints();
+
     if (width >= huge) {
       return 'huge';
     } else if (width >= large) {
@@ -236,7 +236,7 @@ class NavigationManager extends React.Component {
     const navigationClassNames = classNames([
       'terraClinical-NavigationManager',
       customProps.className,
-    ]); 
+    ]);
 
     const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
     const toolbarContent = this.buildToolbar(app, size, toolbar);

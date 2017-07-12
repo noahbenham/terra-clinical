@@ -44,6 +44,13 @@ const propTypes = {
    * Components that will receive the NavigationSecondary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    **/
   menuRoutes: PropTypes.object,
+  index: PropTypes.number,
+  requestToggleMenu: PropTypes.func,
+  size: PropTypes.string,
+  registerNavigation: PropTypes.func,
+  deregisterNavigation: PropTypes.func,
+  navigationKey: PropTypes.string,
+  navigationState: PropTypes.object,
 };
 
 const defaultProps = {
@@ -71,7 +78,7 @@ class Navigation extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       app,
       children,
       contentParent,
@@ -84,6 +91,8 @@ class Navigation extends React.Component {
       registerNavigation,
       requestToggleMenu,
       size,
+      navigationKey,
+      navigationState,
       ...customProps
     } = this.props;
 
@@ -96,16 +105,14 @@ class Navigation extends React.Component {
     if (children) {
       const newChildProps = {
         app,
-        deregisterNavigation,
         index: index + 1,
-        registerNavigation,
         requestToggleMenu,
-        size,      
+        size,
       };
 
-      childContent = React.Children.map(children, (child) => {
-        return React.cloneElement(child, newChildProps);
-      });
+      childContent = React.Children.map(children, child => (
+        React.cloneElement(child, newChildProps)
+      ));
     }
 
     if (contentParent) {

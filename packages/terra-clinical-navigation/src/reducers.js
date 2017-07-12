@@ -1,33 +1,22 @@
 import {
-  DISCLOSE_NAVIGATION_CONTENT,
-} from './actions';
+  UPDATE,
+} from './actionTypes';
 
-const defaultState = Object.freeze([]);
+const defaultState = Object.freeze({});
 
-const cloneDisclosureState = (state) => {
-  return Object.assign([], state);
-};
+const cloneState = (state) => {
+  const newState = Object.assign({}, state);
 
-const discloseContent = (state, action) => {
-  state[action.data.index] = {
-    componentData: {
-      name: action.data.content.name,
-      props: action.data.content.props,
-      key: action.data.content.key,
-    },
-  };
-  state.splice(action.data.index + 1);
-
-  return state;
+  return newState;
 };
 
 const navigationReducers = (state = defaultState, action) => {
-  const newState = cloneDisclosureState(state);
+  const newState = cloneState(state);
 
   switch (action.type) {
-    case DISCLOSE_NAVIGATION_CONTENT:
-      return discloseContent(newState, action);;
-
+    case UPDATE:
+      newState[action.key] = action.data.navigationData;
+      return newState;
     default:
       return newState;
   }

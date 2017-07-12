@@ -1,5 +1,5 @@
-export const DISCLOSE_NAVIGATION_CONTENT = 'DISCLOSE_NAVIGATION_CONTENT';
+import { UPDATE } from './actionTypes';
 
-export function disclose(data) {
-  return { type: DISCLOSE_NAVIGATION_CONTENT, data: data };
+export function update(key, data) {
+  return { type: UPDATE, key, data };
 }

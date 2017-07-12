@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
-
-import Navigation from './Navigation';
-
 import navigationReducers from './reducers';
 import { update } from './actions';
+
+// Create connected HOC
 
 const mapStateToProps = (state, ownProps) => (
   (navigationState => ({
@@ -13,13 +12,17 @@ const mapStateToProps = (state, ownProps) => (
 
 export { mapStateToProps };
 
-const mapDispatchToProps = dispatch => ({
-  updateNavigation: (data) => { dispatch(update(data)); },
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  updateNavigation: (data) => { dispatch(update(ownProps.navigationKey, data)); },
 });
 
 export { mapDispatchToProps };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation);
+export default (Component) => {
+  connect(mapStateToProps, mapDispatchToProps)(Component);
+};
+
+// Export necessary reducers
 
 const reducers = {
   navigation: navigationReducers,

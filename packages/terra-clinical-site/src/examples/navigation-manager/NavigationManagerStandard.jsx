@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStore, combineReducers, compose } from 'redux';
 import { Provider } from 'react-redux';
-import Navigation from 'terra-clinical-navigation';
+import Navigation, { reducers as navigationReducers } from 'terra-clinical-navigation';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import NavigationManager from 'terra-clinical-navigation-manager';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
@@ -52,6 +52,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   combineReducers(Object.assign({},
     terraApplicationReducers,
+    navigationReducers,
   )),
   composeEnhancers(),
 );

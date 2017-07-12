@@ -40,9 +40,9 @@
     "terra-button": "^1.0.0",
     "terra-content-container": "^1.0.0",
     "terra-clinical-application": "^1.0.0",
-    "terra-clinical-navigation": "^1.0.0",
-    "terra-clinical-navigation-manager": "^1.0.0",
-    "terra-clinical-navigation-toolbar": "^1.0.0",
+    "terra-clinical-navigation": "^0.x",
+    "terra-clinical-navigation-manager": "^0.x",
+    "terra-clinical-navigation-toolbar": "^0.x",
     "terra-icon": "^1.0.0",
     "terra-mixins": "^1.0.0"
   },

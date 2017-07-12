@@ -27,7 +27,7 @@ class MenuExample extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       app,
       discloseContent,
       requestOpenHomeMenu,
