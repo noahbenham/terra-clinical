@@ -14,15 +14,6 @@ class FoodNavigation extends React.Component {
     this.handleUpdate = this.handleUpdate.bind(this);
   }
 
-        //   <div>
-        //   <h2>FoodNavigation</h2>
-        //   <h3>Burgers</h3>
-        //   {(!navigationState || !navigationState.selectedContent) && <h4>Default</h4>}
-        //   <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'BURGERS' })}>View Burgers</Button>
-        //   <Button onClick={this.handleUpdate({ selectedContent: 'DRINKS' })}>View Drinks</Button>
-        // </div>
-
-
   getContent() {
     const { navigationState, updateNavigation } = this.props;
 

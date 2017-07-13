@@ -42,7 +42,7 @@ const defaultProps = {
 class NavigationManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: false };
+    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: true };
     // this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
     this.handleResize = this.handleResize.bind(this);
     this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
@@ -65,7 +65,7 @@ class NavigationManager extends React.Component {
   handleResize() {
     const size = this.getBreakpointSize();
     if (size !== this.state.size) {
-      const newState = { size: size, isOpen: false };
+      const newState = { size, isOpen: false };
       const newHasMenu = this.hasMenu();
       if (this.state.hasMenu !== newHasMenu) {
         newState.hasMenu = newHasMenu;
@@ -77,10 +77,18 @@ class NavigationManager extends React.Component {
   handleRegisterNavigation(index, menuData) {
     this.menuStack[index] = menuData;
 
+    const newState = {};
+
     const newHasMenu = this.hasMenu();
     if (this.state.hasMenu !== newHasMenu) {
-      this.setState({ hasMenu: newHasMenu });
+      newState.hasMenu = newHasMenu;
     }
+
+    if (this.state.isOpen) {
+      newState.openIndex = index;
+    }
+
+    this.setState(newState);
   }
 
   handleDeregisterNavigation(index) {
@@ -92,10 +100,14 @@ class NavigationManager extends React.Component {
       if (this.state.hasMenu !== newHasMenu) {
         newState = { hasMenu: newHasMenu };
       }
+
       if (this.state.openIndex >= index) {
-        (newState || {}).openIndex = -1;
-        newState.isOpen = false;
+        newState = {
+          openIndex: -1,
+          isOpen: false,
+        };
       }
+
       if (newState) {
         this.setState(newState);
       }
@@ -191,11 +203,11 @@ class NavigationManager extends React.Component {
       requestOpenParentMenu: this.handleOpenParentMenu,
     };
 
-    const validMenus = this.menuStack.filter( (menu, index) => {
+    const validMenus = this.menuStack.filter((menu, index) => {
       return this.shouldDisplayMenu(menu) && this.state.openIndex >= index;
     });
 
-    const slideItems = validMenus.map( (menu, index) => {
+    const slideItems = validMenus.map((menu, index) => {
       const ComponentClass = menu.class;
       if (index > 0) {
         return <ComponentClass {...menu.props} {...basicProps} {...additionalProps} key={`NavigationSlide ${index}`} />;

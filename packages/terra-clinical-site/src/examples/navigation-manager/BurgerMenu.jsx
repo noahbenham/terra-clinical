@@ -43,18 +43,23 @@ class BurgerMenu extends React.Component {
 
     const headerButtons = (
       <div>
-        <div>
-          {button1}
-          {button2}
-          {button3}
-        </div>
-        {<Button text="Hamburger" onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })} isBlock icon={<IconProjects />} />};
-        {<Button text="Cheeseburger" onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })} isBlock icon={<IconProjects />} />};
+        {button1}
+        {button2}
+        {button3}
       </div>
     );
 
     return (
-      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'green' }} />
+      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'lightblue' }}>
+        <div>
+          <h3>Burger Menu</h3>
+          <br />
+          <h4>Hamburger</h4>
+          <Button text="Hamburger" onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })} icon={<IconProjects />} />
+          <h4>Cheeseburger</h4>
+          <Button text="Cheeseburger" onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })} icon={<IconProjects />} />
+        </div>
+      </ContentContainer>
     );
   }
 }

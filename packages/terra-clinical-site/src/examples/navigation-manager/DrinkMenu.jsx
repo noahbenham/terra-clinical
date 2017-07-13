@@ -57,18 +57,23 @@ class DrinkMenu extends React.Component {
 
     const headerButtons = (
       <div>
-        <div>
-          {button1}
-          {button2}
-          {button3}
-        </div>
-        {<Button text="Coke" onClick={this.handleUpdate({ selectedContent: 'COKE' })} isBlock icon={<IconProjects />} />};
-        {<Button text="Water" onClick={this.handleUpdate({ selectedContent: 'WATER' })} isBlock icon={<IconProjects />} />};
+        {button1}
+        {button2}
+        {button3}
       </div>
     );
 
     return (
-      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'green' }} />
+      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'red' }}>
+        <div>
+          <h3>Drink Menu</h3>
+          <br />
+          <h4>Coke</h4>
+          <Button text="Coke" onClick={this.handleUpdate({ selectedContent: 'COKE' })}  icon={<IconProjects />} />
+          <h4>Water</h4>
+          <Button text="Water" onClick={this.handleUpdate({ selectedContent: 'WATER' })}  icon={<IconProjects />} />
+        </div>
+      </ContentContainer>
     );
   }
 }
