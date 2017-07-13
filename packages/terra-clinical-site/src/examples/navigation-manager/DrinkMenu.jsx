@@ -6,11 +6,25 @@ import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 
-class BurgerMenu extends React.Component {
+class DrinkMenu extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdate = this.handleUpdate.bind(this);
   }
+
+  // handleDisclosure1() {
+  //   if (this.props.discloseContent) {
+  //     if (this.props.requestToggleMenu) {
+  //       this.props.requestToggleMenu();
+  //     }
+
+  //     this.props.discloseContent(
+  //     {
+  //       key: '2525-woooo',
+  //       name: 'customStuff',
+  //     });
+  //   }
+  // }
 
   handleUpdate(data) {
     return () => {
@@ -48,8 +62,8 @@ class BurgerMenu extends React.Component {
           {button2}
           {button3}
         </div>
-        {<Button text="Hamburger" onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })} isBlock icon={<IconProjects />} />};
-        {<Button text="Cheeseburger" onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })} isBlock icon={<IconProjects />} />};
+        {<Button text="Coke" onClick={this.handleUpdate({ selectedContent: 'COKE' })} isBlock icon={<IconProjects />} />};
+        {<Button text="Water" onClick={this.handleUpdate({ selectedContent: 'WATER' })} isBlock icon={<IconProjects />} />};
       </div>
     );
 
@@ -59,4 +73,4 @@ class BurgerMenu extends React.Component {
   }
 }
 
-export default BurgerMenu;
+export default DrinkMenu;

@@ -50,6 +50,14 @@ class BurgerNavigation extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log('BURGER NAV - GETTING PROPS');
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+
+  }
+
   render() {
     const menuProps = {
       navigationKey: this.props.navigationKey,

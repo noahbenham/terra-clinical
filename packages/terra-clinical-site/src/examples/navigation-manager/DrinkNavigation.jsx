@@ -1,12 +1,10 @@
 import React from 'react';
 import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
-import FoodMenu from './FoodMenu';
-import BurgerNavigation from './BurgerNavigation';
-import DrinkNavigation from './DrinkNavigation';
+import DrinkMenu from './DrinkMenu';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
 
-class FoodNavigation extends React.Component {
+class DrinkNavigation extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,32 +12,34 @@ class FoodNavigation extends React.Component {
     this.handleUpdate = this.handleUpdate.bind(this);
   }
 
-        //   <div>
-        //   <h2>FoodNavigation</h2>
-        //   <h3>Burgers</h3>
-        //   {(!navigationState || !navigationState.selectedContent) && <h4>Default</h4>}
-        //   <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'BURGERS' })}>View Burgers</Button>
-        //   <Button onClick={this.handleUpdate({ selectedContent: 'DRINKS' })}>View Drinks</Button>
-        // </div>
-
-
   getContent() {
     const { navigationState, updateNavigation } = this.props;
 
-    if (navigationState && navigationState.selectedContent === 'BURGERS') {
+    if (!navigationState || !navigationState.selectedContent || navigationState.selectedContent === 'COKE') {
       return (
-        <BurgerNavigation navigationKey="BURGER_NAV_BOI" />
+        <div>
+          <h2>DrinkNavigation</h2>
+          <h3>Coke</h3>
+          {(!navigationState || !navigationState.selectedContent) && <h4>Default</h4>}
+          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'COKE' })}>View Coke</Button>
+          <Button onClick={this.handleUpdate({ selectedContent: 'WATER' })}>View Water</Button>
+        </div>
       );
-    } else if (navigationState && navigationState.selectedContent === 'DRINKS') {
+    } else if (navigationState.selectedContent === 'WATER') {
       return (
-        <DrinkNavigation navigationKey="DRINKS_YO" />
+        <div>
+          <h2>DrinkNavigation</h2>
+          <h3>Water</h3>
+          <Button onClick={this.handleUpdate({ selectedContent: 'COKE' })}>View Coke</Button>
+          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'WATER' })}>View Water</Button>
+        </div>
       );
     }
 
     return (
       <div>
-        <h2>FoodNavigation</h2>
-        <h3>Please pick a food type from the menu</h3>
+        <h2>DrinkNavigation</h2>
+        <h3>Unknown type {navigationState.selectedContent}</h3>
       </div>
     );
   }
@@ -51,7 +51,7 @@ class FoodNavigation extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('FOOD NAV - GETTING PROPS');
+    console.log('DRINK NAV - GETTING PROPS');
   }
 
   render() {
@@ -62,7 +62,7 @@ class FoodNavigation extends React.Component {
 
     return (
       <Navigation
-        menuClass={FoodMenu}
+        menuClass={DrinkMenu}
         menuBreakpoint="huge"
         menuProps={menuProps}
         size={this.props.size}
@@ -79,4 +79,4 @@ class FoodNavigation extends React.Component {
   }
 }
 
-export default navigation_hoc(FoodNavigation);
+export default navigation_hoc(DrinkNavigation);
