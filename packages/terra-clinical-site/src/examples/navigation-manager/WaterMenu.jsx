@@ -5,16 +5,30 @@ import IconReply from 'terra-icon/lib/icon/IconReply';
 import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
+import { disclosureName } from './WaterMenuModal';
 
 class WaterMenu extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.handleSecret = this.handleSecret.bind(this);
   }
 
   handleUpdate(data) {
     return () => {
       this.props.updateNavigation(data);
+    };
+  }
+
+  handleSecret() {
+    return () => {
+      this.props.app.disclose({
+        preferredType: 'modal',
+        content: {
+          key: 'WaterMenuModal',
+          name: disclosureName
+        }
+      })
     };
   }
 
@@ -60,6 +74,8 @@ class WaterMenu extends React.Component {
           <Button text="Fuji" onClick={this.handleUpdate({ selectedContent: 'FUJI' })}  icon={<IconProjects />} />
           <h4>Plain Ol' Tap</h4>
           <Button text="Plain Ol' Tap" onClick={this.handleUpdate({ selectedContent: 'PLAIN-OL-TAP' })}  icon={<IconProjects />} />
+          <h4>Top Secret</h4>
+          <Button text="Shhh" onClick={this.handleSecret()}  icon={<IconProjects />} />
         </div>
       </ContentContainer>
     );

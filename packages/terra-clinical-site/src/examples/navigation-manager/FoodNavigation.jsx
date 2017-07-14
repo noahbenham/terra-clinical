@@ -53,6 +53,7 @@ class FoodNavigation extends React.Component {
 
     return (
       <Navigation
+        app={this.props.app}
         menuClass={FoodMenu}
         menuBreakpoint="huge"
         menuProps={menuProps}

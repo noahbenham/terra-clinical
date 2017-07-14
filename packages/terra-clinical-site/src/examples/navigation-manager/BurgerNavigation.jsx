@@ -65,6 +65,7 @@ class BurgerNavigation extends React.Component {
   render() {
     return (
       <Navigation
+        app={this.props.app}
         menuClass={navigation_hoc('BURGER-NAV')(BurgerMenu)}
         menuBreakpoint="huge"
         menuProps={{}}

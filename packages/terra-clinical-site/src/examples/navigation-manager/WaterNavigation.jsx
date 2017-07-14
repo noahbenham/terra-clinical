@@ -25,7 +25,7 @@ class WaterNavigation extends React.Component {
           <h2>WaterNavigation</h2>
           <h3>Dasani</h3>
           <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'DASANI' })}>View Dasani</Button>
-          <Button onClick={this.handleUpdate({ selectedContent: 'FUGI' })}>View Fuji</Button>
+          <Button onClick={this.handleUpdate({ selectedContent: 'FUJI' })}>View Fuji</Button>
           <Button onClick={this.handleUpdate({ selectedContent: 'PLAIN-OL-TAP' })}>View Plain Ol' Tap</Button>
         </div>
       );
@@ -35,7 +35,7 @@ class WaterNavigation extends React.Component {
           <h2>WaterNavigation</h2>
           <h3>Fuji</h3>
           <Button onClick={this.handleUpdate({ selectedContent: 'DASANI' })}>View Dasani</Button>
-          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'FUGI' })}>View Fuji</Button>
+          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'FUJI' })}>View Fuji</Button>
           <Button onClick={this.handleUpdate({ selectedContent: 'PLAIN-OL-TAP' })}>View Plain Ol' Tap</Button>
         </div>
       );
@@ -45,7 +45,7 @@ class WaterNavigation extends React.Component {
           <h2>WaterNavigation</h2>
           <h3>Plain Ol' Tap</h3>
           <Button onClick={this.handleUpdate({ selectedContent: 'DASANI' })}>View Dasani</Button>
-          <Button onClick={this.handleUpdate({ selectedContent: 'FUGI' })}>View Fuji</Button>
+          <Button onClick={this.handleUpdate({ selectedContent: 'FUJI' })}>View Fuji</Button>
           <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'PLAIN-OL-TAP' })}>View Plain Ol' Tap</Button>
         </div>
       );
@@ -71,12 +71,14 @@ class WaterNavigation extends React.Component {
 
   render() {
     const menuProps = {
+      app: this.props.app,
       navigationKey: this.props.navigationKey,
       updateNavigation: this.props.updateNavigation,
     };
 
     return (
       <Navigation
+        app={this.props.app}
         menuClass={WaterMenu}
         menuBreakpoint="huge"
         menuProps={menuProps}
