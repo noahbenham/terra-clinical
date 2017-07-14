@@ -58,9 +58,6 @@ class FoodNavigation extends React.Component {
         menuProps={menuProps}
         size={this.props.size}
         index={this.props.index}
-        navigationKey={this.props.navigationKey}
-        navigationData={this.props.navigationData}
-        navigationUpdateId={this.props.navigationUpdateId}
         requestToggleMenu={this.props.requestToggleMenu}
         registerNavigation={this.props.registerNavigation}
         deregisterNavigation={this.props.deregisterNavigation}

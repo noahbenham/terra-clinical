@@ -6,6 +6,10 @@ import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 
+const defaultProps = {
+  navigationData: {},
+};
+
 class BurgerMenu extends React.Component {
   constructor(props) {
     super(props);
@@ -21,11 +25,11 @@ class BurgerMenu extends React.Component {
   render() {
     const {
       app,
-      discloseContent,
       requestOpenHomeMenu,
       requestOpenParentMenu,
       requestToggleMenu,
       size,
+      navigationData,
     } = this.props;
 
     let button1;
@@ -50,18 +54,20 @@ class BurgerMenu extends React.Component {
     );
 
     return (
-      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'lightblue' }}>
+      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'orange' }}>
         <div>
           <h3>Burger Menu</h3>
           <br />
           <h4>Hamburger</h4>
-          <Button text="Hamburger" onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })} icon={<IconProjects />} />
+          <Button isDisabled={navigationData.selectedContent === 'HAMBURGER'} text="Hamburger" onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })} icon={<IconProjects />} />
           <h4>Cheeseburger</h4>
-          <Button text="Cheeseburger" onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })} icon={<IconProjects />} />
+          <Button isDisabled={navigationData.selectedContent === 'CHEESEBURGER'} text="Cheeseburger" onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })} icon={<IconProjects />} />
         </div>
       </ContentContainer>
     );
   }
 }
+
+BurgerMenu.defaultProps = defaultProps;
 
 export default BurgerMenu;

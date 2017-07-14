@@ -6,7 +6,7 @@ import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 
-class DrinkMenu extends React.Component {
+class WaterMenu extends React.Component {
   constructor(props) {
     super(props);
     this.handleUpdate = this.handleUpdate.bind(this);
@@ -50,18 +50,20 @@ class DrinkMenu extends React.Component {
     );
 
     return (
-      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'red' }}>
+      <ContentContainer fill header={headerButtons} style={{ backgroundColor: 'lightblue' }}>
         <div>
           <h3>Drink Menu</h3>
           <br />
-          <h4>Coke</h4>
-          <Button text="Coke" onClick={this.handleUpdate({ selectedContent: 'COKE' })}  icon={<IconProjects />} />
-          <h4>Water</h4>
-          <Button text="Water" onClick={this.handleUpdate({ selectedContent: 'WATER' })}  icon={<IconProjects />} />
+          <h4>Dasani</h4>
+          <Button text="Dasani" onClick={this.handleUpdate({ selectedContent: 'DASANI' })}  icon={<IconProjects />} />
+          <h4>Fuji</h4>
+          <Button text="Fuji" onClick={this.handleUpdate({ selectedContent: 'FUJI' })}  icon={<IconProjects />} />
+          <h4>Plain Ol' Tap</h4>
+          <Button text="Plain Ol' Tap" onClick={this.handleUpdate({ selectedContent: 'PLAIN-OL-TAP' })}  icon={<IconProjects />} />
         </div>
       </ContentContainer>
     );
   }
 }
 
-export default DrinkMenu;
+export default WaterMenu;

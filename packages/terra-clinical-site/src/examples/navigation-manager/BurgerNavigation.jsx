@@ -4,6 +4,10 @@ import Button from 'terra-button';
 import BurgerMenu from './BurgerMenu';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
 
+const defaultProps = {
+  navigationData: {},
+};
+
 class BurgerNavigation extends React.Component {
   constructor(props) {
     super(props);
@@ -15,7 +19,7 @@ class BurgerNavigation extends React.Component {
   getContent() {
     const { navigationData, updateNavigation } = this.props;
 
-    if (!navigationData || !navigationData.selectedContent || navigationData.selectedContent === 'HAMBURGER') {
+    if (navigationData.selectedContent === 'HAMBURGER') {
       return (
         <div>
           <h2>BurgerNavigation</h2>
@@ -39,7 +43,7 @@ class BurgerNavigation extends React.Component {
     return (
       <div>
         <h2>BurgerNavigation</h2>
-        <h3>Unknown type {navigationData.selectedContent}</h3>
+        <h3>Please select a Burger from the menu</h3>
       </div>
     );
   }
@@ -59,21 +63,13 @@ class BurgerNavigation extends React.Component {
   }
 
   render() {
-    const menuProps = {
-      navigationKey: this.props.navigationKey,
-      updateNavigation: this.props.updateNavigation,
-    };
-
     return (
       <Navigation
-        menuClass={BurgerMenu}
+        menuClass={navigation_hoc('BURGER-NAV')(BurgerMenu)}
         menuBreakpoint="huge"
-        menuProps={menuProps}
+        menuProps={{}}
         size={this.props.size}
         index={this.props.index}
-        navigationKey={this.props.navigationKey}
-        navigationData={this.props.navigationData}
-        navigationUpdateId={this.props.navigationUpdateId}
         requestToggleMenu={this.props.requestToggleMenu}
         registerNavigation={this.props.registerNavigation}
         deregisterNavigation={this.props.deregisterNavigation}
@@ -83,5 +79,7 @@ class BurgerNavigation extends React.Component {
     );
   }
 }
+
+BurgerNavigation.defaultProps = defaultProps;
 
 export default navigation_hoc('BURGER-NAV')(BurgerNavigation);

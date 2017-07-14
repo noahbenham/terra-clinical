@@ -2,7 +2,12 @@ import React from 'react';
 import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
 import DrinkMenu from './DrinkMenu';
+import WaterNavigation from './WaterNavigation';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
+
+const defaultProps = {
+  navigationData: {},
+};
 
 class DrinkNavigation extends React.Component {
   constructor(props) {
@@ -13,9 +18,9 @@ class DrinkNavigation extends React.Component {
   }
 
   getContent() {
-    const { navigationData, updateNavigation } = this.props;
+    const { navigationData, navigationUpdateId, updateNavigation } = this.props;
 
-    if (!navigationData || !navigationData.selectedContent || navigationData.selectedContent === 'COKE') {
+    if (navigationData.selectedContent === 'COKE') {
       return (
         <div>
           <h2>DrinkNavigation</h2>
@@ -27,19 +32,14 @@ class DrinkNavigation extends React.Component {
       );
     } else if (navigationData.selectedContent === 'WATER') {
       return (
-        <div>
-          <h2>DrinkNavigation</h2>
-          <h3>Water</h3>
-          <Button onClick={this.handleUpdate({ selectedContent: 'COKE' })}>View Coke</Button>
-          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'WATER' })}>View Water</Button>
-        </div>
+        <WaterNavigation key={navigationUpdateId} />
       );
     }
 
     return (
       <div>
         <h2>DrinkNavigation</h2>
-        <h3>Unknown type {navigationData.selectedContent}</h3>
+        <h3>Please select a Drink from the menu</h3>
       </div>
     );
   }
@@ -67,9 +67,6 @@ class DrinkNavigation extends React.Component {
         menuProps={menuProps}
         size={this.props.size}
         index={this.props.index}
-        navigationKey={this.props.navigationKey}
-        navigationData={this.props.navigationData}
-        navigationUpdateId={this.props.navigationUpdateId}
         requestToggleMenu={this.props.requestToggleMenu}
         registerNavigation={this.props.registerNavigation}
         deregisterNavigation={this.props.deregisterNavigation}
@@ -79,5 +76,7 @@ class DrinkNavigation extends React.Component {
     );
   }
 }
+
+DrinkNavigation.defaultProps = defaultProps;
 
 export default navigation_hoc('DRINK-NAV')(DrinkNavigation);
