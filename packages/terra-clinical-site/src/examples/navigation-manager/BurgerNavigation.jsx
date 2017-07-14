@@ -13,19 +13,19 @@ class BurgerNavigation extends React.Component {
   }
 
   getContent() {
-    const { navigationState, updateNavigation } = this.props;
+    const { navigationData, updateNavigation } = this.props;
 
-    if (!navigationState || !navigationState.selectedContent || navigationState.selectedContent === 'HAMBURGER') {
+    if (!navigationData || !navigationData.selectedContent || navigationData.selectedContent === 'HAMBURGER') {
       return (
         <div>
           <h2>BurgerNavigation</h2>
           <h3>Hamburger</h3>
-          {(!navigationState || !navigationState.selectedContent) && <h4>Default</h4>}
+          {(!navigationData || !navigationData.selectedContent) && <h4>Default</h4>}
           <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })}>View Hamburger</Button>
           <Button onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })}>View Cheeseburger</Button>
         </div>
       );
-    } else if (navigationState.selectedContent === 'CHEESEBURGER') {
+    } else if (navigationData.selectedContent === 'CHEESEBURGER') {
       return (
         <div>
           <h2>BurgerNavigation</h2>
@@ -39,7 +39,7 @@ class BurgerNavigation extends React.Component {
     return (
       <div>
         <h2>BurgerNavigation</h2>
-        <h3>Unknown type {navigationState.selectedContent}</h3>
+        <h3>Unknown type {navigationData.selectedContent}</h3>
       </div>
     );
   }
@@ -72,7 +72,8 @@ class BurgerNavigation extends React.Component {
         size={this.props.size}
         index={this.props.index}
         navigationKey={this.props.navigationKey}
-        navigationState={this.props.navigationState}
+        navigationData={this.props.navigationData}
+        navigationUpdateId={this.props.navigationUpdateId}
         requestToggleMenu={this.props.requestToggleMenu}
         registerNavigation={this.props.registerNavigation}
         deregisterNavigation={this.props.deregisterNavigation}
@@ -83,4 +84,4 @@ class BurgerNavigation extends React.Component {
   }
 }
 
-export default navigation_hoc(BurgerNavigation);
+export default navigation_hoc('BURGER-NAV')(BurgerNavigation);

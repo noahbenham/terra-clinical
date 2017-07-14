@@ -13,19 +13,19 @@ class DrinkNavigation extends React.Component {
   }
 
   getContent() {
-    const { navigationState, updateNavigation } = this.props;
+    const { navigationData, updateNavigation } = this.props;
 
-    if (!navigationState || !navigationState.selectedContent || navigationState.selectedContent === 'COKE') {
+    if (!navigationData || !navigationData.selectedContent || navigationData.selectedContent === 'COKE') {
       return (
         <div>
           <h2>DrinkNavigation</h2>
           <h3>Coke</h3>
-          {(!navigationState || !navigationState.selectedContent) && <h4>Default</h4>}
+          {(!navigationData || !navigationData.selectedContent) && <h4>Default</h4>}
           <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'COKE' })}>View Coke</Button>
           <Button onClick={this.handleUpdate({ selectedContent: 'WATER' })}>View Water</Button>
         </div>
       );
-    } else if (navigationState.selectedContent === 'WATER') {
+    } else if (navigationData.selectedContent === 'WATER') {
       return (
         <div>
           <h2>DrinkNavigation</h2>
@@ -39,7 +39,7 @@ class DrinkNavigation extends React.Component {
     return (
       <div>
         <h2>DrinkNavigation</h2>
-        <h3>Unknown type {navigationState.selectedContent}</h3>
+        <h3>Unknown type {navigationData.selectedContent}</h3>
       </div>
     );
   }
@@ -68,7 +68,8 @@ class DrinkNavigation extends React.Component {
         size={this.props.size}
         index={this.props.index}
         navigationKey={this.props.navigationKey}
-        navigationState={this.props.navigationState}
+        navigationData={this.props.navigationData}
+        navigationUpdateId={this.props.navigationUpdateId}
         requestToggleMenu={this.props.requestToggleMenu}
         registerNavigation={this.props.registerNavigation}
         deregisterNavigation={this.props.deregisterNavigation}
@@ -79,4 +80,4 @@ class DrinkNavigation extends React.Component {
   }
 }
 
-export default navigation_hoc(DrinkNavigation);
+export default navigation_hoc('DRINK-NAV')(DrinkNavigation);

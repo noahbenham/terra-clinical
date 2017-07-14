@@ -15,15 +15,15 @@ class FoodNavigation extends React.Component {
   }
 
   getContent() {
-    const { navigationState, updateNavigation } = this.props;
+    const { navigationData, navigationUpdateId, updateNavigation } = this.props;
 
-    if (navigationState && navigationState.selectedContent === 'BURGERS') {
+    if (navigationData && navigationData.selectedContent === 'BURGERS') {
       return (
-        <BurgerNavigation navigationKey="BURGER_NAV_BOI" />
+        <BurgerNavigation key={navigationUpdateId} />
       );
-    } else if (navigationState && navigationState.selectedContent === 'DRINKS') {
+    } else if (navigationData && navigationData.selectedContent === 'DRINKS') {
       return (
-        <DrinkNavigation navigationKey="DRINKS_YO" />
+        <DrinkNavigation key={navigationUpdateId} />
       );
     }
 
@@ -59,7 +59,8 @@ class FoodNavigation extends React.Component {
         size={this.props.size}
         index={this.props.index}
         navigationKey={this.props.navigationKey}
-        navigationState={this.props.navigationState}
+        navigationData={this.props.navigationData}
+        navigationUpdateId={this.props.navigationUpdateId}
         requestToggleMenu={this.props.requestToggleMenu}
         registerNavigation={this.props.registerNavigation}
         deregisterNavigation={this.props.deregisterNavigation}
@@ -70,4 +71,4 @@ class FoodNavigation extends React.Component {
   }
 }
 
-export default navigation_hoc(FoodNavigation);
+export default navigation_hoc('FOOD-NAV')(FoodNavigation);
