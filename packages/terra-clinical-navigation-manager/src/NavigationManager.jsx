@@ -40,41 +40,54 @@ const defaultProps = {
 };
 
 class NavigationManager extends React.Component {
+  getBreakpointSize() {
+    const width = window.innerWidth;
+    const { small, medium, large, huge } = getBreakpoints();
+
+    if (width >= huge) {
+      return 'huge';
+    } else if (width >= large) {
+      return 'large';
+    } else if (width >= medium) {
+      return 'medium';
+    } else if (width >= small) {
+      return 'small';
+    }
+    return 'tiny';
+  }
+
   constructor(props) {
     super(props);
+
     this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: true };
-    // this.handleDiscloseContent = this.handleDiscloseContent.bind(this);
-    this.handleResize = this.handleResize.bind(this);
-    this.handleOpenHomeMenu = this.handleOpenHomeMenu.bind(this);
-    this.handleOpenParentMenu = this.handleOpenParentMenu.bind(this);
-    this.handleToggleMenu = this.handleToggleMenu.bind(this);
-    this.handleRegisterNavigation = this.handleRegisterNavigation.bind(this);
-    this.handleDeregisterNavigation = this.handleDeregisterNavigation.bind(this);
     this.menuStack = [];
-    this.menuRoutes = {};
+    this.getBreakpointSize = this.getBreakpointSize.bind(this);
+    this.registerNavigation = this.registerNavigation.bind(this);
+    this.deregisterNavigation = this.deregisterNavigation.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.presentRootMenu = this.presentRootMenu.bind(this);
+    this.presentParentMenu = this.presentParentMenu.bind(this);
+    this.presentMenuAtIndex = this.presentMenuAtIndex.bind(this);
+    this.firstValidMenuIndex = this.firstValidMenuIndex.bind(this);
+    this.lastValidMenuIndex = this.lastValidMenuIndex.bind(this);
+    this.hasMenu = this.hasMenu.bind(this);
+    this.shouldDisplayMenu = this.shouldDisplayMenu.bind(this);
+    this.buildToolbar = this.buildToolbar.bind(this);
+    this.buildChildren = this.buildChildren.bind(this);
+    this.buildMenu = this.buildMenu.bind(this);
+
+    this.validateMenusAtCurrentSize = this.validateMenusAtCurrentSize.bind(this);
   }
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener('resize', this.validateMenusAtCurrentSize);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener('resize', this.validateMenusAtCurrentSize);
   }
 
-  handleResize() {
-    const size = this.getBreakpointSize();
-    if (size !== this.state.size) {
-      const newState = { size, isOpen: false };
-      const newHasMenu = this.hasMenu();
-      if (this.state.hasMenu !== newHasMenu) {
-        newState.hasMenu = newHasMenu;
-      }
-      this.setState(newState);
-    }
-  }
-
-  handleRegisterNavigation(index, menuData) {
+  registerNavigation(index, menuData) {
     this.menuStack[index] = menuData;
 
     const newState = {};
@@ -91,7 +104,7 @@ class NavigationManager extends React.Component {
     this.setState(newState);
   }
 
-  handleDeregisterNavigation(index) {
+  deregisterNavigation(index) {
     if (this.menuStack[index]) {
       this.menuStack.splice(index);
 
@@ -114,32 +127,34 @@ class NavigationManager extends React.Component {
     }
   }
 
-  handleToggleMenu() {
+  toggleMenu() {
     if (this.state.isOpen) {
       this.setState({ isOpen: false });
     } else {
-      this.setState({ isOpen: true, openIndex: this.lastValidIndex(this.menuStack.length) });
+      this.setState({ isOpen: true, openIndex: this.lastValidMenuIndex(this.menuStack.length) });
     }
   }
 
-  handleOpenHomeMenu() {
-    this.traverseMenuStack(this.state.openIndex, this.firstValidIndex(0));
+  presentRootMenu() {
+    this.presentMenuAtIndex(this.firstValidMenuIndex(0));
   }
 
-  handleOpenParentMenu() {
-    this.traverseMenuStack(this.state.openIndex, this.lastValidIndex(this.state.openIndex - 1));
+  presentParentMenu() {
+    this.presentMenuAtIndex(this.lastValidMenuIndex(this.state.openIndex - 1));
   }
 
-  traverseMenuStack(previousIndex, nextIndex) {
-    if (nextIndex >= 0 && previousIndex !== nextIndex) {
+  presentMenuAtIndex(nextIndex) {
+    const currentIndex = this.state.openIndex;
+
+    if (nextIndex >= 0 && currentIndex !== nextIndex) {
       this.setState({ openIndex: nextIndex });
     } else {
       this.setState({ isOpen: false, openIndex: -1 });
     }
   }
 
-  firstValidIndex(index) {
-    for (let i = index; i < this.menuStack.length; i += 1) {
+  firstValidMenuIndex(startIndex) {
+    for (let i = startIndex; i < this.menuStack.length; i += 1) {
       if (this.shouldDisplayMenu(this.menuStack[i])) {
         return i;
       }
@@ -147,8 +162,8 @@ class NavigationManager extends React.Component {
     return -1;
   }
 
-  lastValidIndex(index) {
-    for (let i = index; i >= 0; i -= 1) {
+  lastValidMenuIndex(startIndex) {
+    for (let i = startIndex; i >= 0; i -= 1) {
       if (this.shouldDisplayMenu(this.menuStack[i])) {
         return i;
       }
@@ -157,7 +172,7 @@ class NavigationManager extends React.Component {
   }
 
   hasMenu() {
-    return this.firstValidIndex(0) >= 0;
+    return this.firstValidMenuIndex(0) >= 0;
   }
 
   shouldDisplayMenu(menu) {
@@ -168,7 +183,7 @@ class NavigationManager extends React.Component {
   buildToolbar(app, size, toolbar) {
     let toggle;
     if (this.state.hasMenu) {
-      toggle = this.handleToggleMenu;
+      toggle = this.toggleMenu;
     }
     if (toolbar) {
       return React.cloneElement(toolbar, { app, size, onToggleClick: toggle });
@@ -179,40 +194,41 @@ class NavigationManager extends React.Component {
   buildChildren(app, size, children) {
     const newChildProps = {
       app,
-      deregisterNavigation: this.handleDeregisterNavigation,
-      index: 0,
-      registerNavigation: this.handleRegisterNavigation,
-      requestToggleMenu: this.handleToggleMenu,
       size,
+      index: 0,
+      registerNavigation: this.registerNavigation,
+      deregisterNavigation: this.deregisterNavigation,
+      toggleMenu: this.toggleMenu,
     };
 
-    return React.Children.map(children, (child) => {
-      return React.cloneElement(child, newChildProps);
-    });
+    return React.Children.map(children, child => (
+      React.cloneElement(child, newChildProps)
+    ));
   }
 
   buildMenu(app, size) {
     const basicProps = {
       app,
-      requestToggleMenu: this.handleToggleMenu,
+      toggleMenu: this.toggleMenu,
       size,
     };
 
     const additionalProps = {
-      requestOpenHomeMenu: this.handleOpenHomeMenu,
-      requestOpenParentMenu: this.handleOpenParentMenu,
+      presentRootMenu: this.presentRootMenu,
+      presentParentMenu: this.presentParentMenu,
     };
 
-    const validMenus = this.menuStack.filter((menu, index) => {
-      return this.shouldDisplayMenu(menu) && this.state.openIndex >= index;
-    });
+    const validMenus = this.menuStack.filter((menu, index) => (
+      this.shouldDisplayMenu(menu) && this.state.openIndex >= index
+    ));
 
     const slideItems = validMenus.map((menu, index) => {
       const ComponentClass = menu.class;
+      const slideKey = `NavigationSlide-${index}`;
       if (index > 0) {
-        return <ComponentClass {...menu.props} {...basicProps} {...additionalProps} key={`NavigationSlide ${index}`} />;
+        return <ComponentClass {...menu.props} {...basicProps} {...additionalProps} key={slideKey} />;
       }
-      return <ComponentClass {...menu.props} {...basicProps} key={`NavigationSlide ${index}`} />;
+      return <ComponentClass {...menu.props} {...basicProps} key={slideKey} />;
     });
 
     if (!this.state.isOpen && slideItems.length) {
@@ -222,20 +238,16 @@ class NavigationManager extends React.Component {
     return <SlideGroup items={slideItems} isAnimated />;
   }
 
-  getBreakpointSize() {
-    const width = window.innerWidth;
-    const { small, medium, large, huge } = getBreakpoints();
-
-    if (width >= huge) {
-      return 'huge';
-    } else if (width >= large) {
-      return 'large';
-    } else if (width >= medium) {
-      return 'medium';
-    } else if (width >= small) {
-      return 'small';
+  validateMenusAtCurrentSize() {
+    const size = this.getBreakpointSize();
+    if (size !== this.state.size) {
+      const newState = { size, isOpen: false };
+      const newHasMenu = this.hasMenu();
+      if (this.state.hasMenu !== newHasMenu) {
+        newState.hasMenu = newHasMenu;
+      }
+      this.setState(newState);
     }
-    return 'tiny';
   }
 
   render() {

@@ -1,17 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
 import FoodMenu from './FoodMenu';
 import BurgerNavigation from './BurgerNavigation';
 import DrinkNavigation from './DrinkNavigation';
+import AppDelegate from 'terra-app-delegate';
+
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
+
+const propTypes = {
+  app: AppDelegate.propType,
+
+  index: PropTypes.number.isRequired,
+  size: PropTypes.string.isRequired,
+  toggleMenu: PropTypes.func.isRequired,
+  registerNavigation: PropTypes.func.isRequired,
+  deregisterNavigation: PropTypes.func.isRequired,
+
+  navigationData: PropTypes.object,
+  navigationUpdateId: PropTypes.string,
+  updateNavigation: PropTypes.func.isRequired,
+};
+
+const defaultProps = {
+  navigationData: {},
+};
 
 class FoodNavigation extends React.Component {
   constructor(props) {
     super(props);
 
     this.getContent = this.getContent.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+    this.changeFoodState = this.changeFoodState.bind(this);
   }
 
   getContent() {
@@ -35,33 +56,30 @@ class FoodNavigation extends React.Component {
     );
   }
 
-  handleUpdate(data) {
+  changeFoodState(data) {
     return () => {
       this.props.updateNavigation(data);
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('FOOD NAV - GETTING PROPS');
-  }
-
   render() {
+    const { app, size, index, toggleMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
+
     const menuProps = {
-      navigationKey: this.props.navigationKey,
       updateNavigation: this.props.updateNavigation,
     };
 
     return (
       <Navigation
-        app={this.props.app}
+        app={app}
         menuClass={FoodMenu}
         menuBreakpoint="huge"
         menuProps={menuProps}
-        size={this.props.size}
-        index={this.props.index}
-        requestToggleMenu={this.props.requestToggleMenu}
-        registerNavigation={this.props.registerNavigation}
-        deregisterNavigation={this.props.deregisterNavigation}
+        size={size}
+        index={index}
+        toggleMenu={toggleMenu}
+        registerNavigation={registerNavigation}
+        deregisterNavigation={deregisterNavigation}
       >
         {this.getContent()}
       </Navigation>

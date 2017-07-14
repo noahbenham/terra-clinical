@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
+import AppDelegate from 'terra-app-delegate';
+
 import BurgerMenu from './BurgerMenu';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
+
+const propTypes = {
+  app: AppDelegate.propType,
+
+  index: PropTypes.number.isRequired,
+  size: PropTypes.string.isRequired,
+  toggleMenu: PropTypes.func,
+  registerNavigation: PropTypes.func.isRequired,
+  deregisterNavigation: PropTypes.func.isRequired,
+
+  navigationData: PropTypes.object,
+  updateNavigation: PropTypes.func.isRequired,
+};
 
 const defaultProps = {
   navigationData: {},
@@ -13,7 +28,7 @@ class BurgerNavigation extends React.Component {
     super(props);
 
     this.getContent = this.getContent.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+    this.changeBurgerState = this.changeBurgerState.bind(this);
   }
 
   getContent() {
@@ -25,8 +40,8 @@ class BurgerNavigation extends React.Component {
           <h2>BurgerNavigation</h2>
           <h3>Hamburger</h3>
           {(!navigationData || !navigationData.selectedContent) && <h4>Default</h4>}
-          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })}>View Hamburger</Button>
-          <Button onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })}>View Cheeseburger</Button>
+          <Button isDisabled onClick={this.changeBurgerState({ selectedContent: 'HAMBURGER' })}>View Hamburger</Button>
+          <Button onClick={this.changeBurgerState({ selectedContent: 'CHEESEBURGER' })}>View Cheeseburger</Button>
         </div>
       );
     } else if (navigationData.selectedContent === 'CHEESEBURGER') {
@@ -34,8 +49,8 @@ class BurgerNavigation extends React.Component {
         <div>
           <h2>BurgerNavigation</h2>
           <h3>Cheeseburger</h3>
-          <Button onClick={this.handleUpdate({ selectedContent: 'HAMBURGER' })}>View Hamburger</Button>
-          <Button isDisabled onClick={this.handleUpdate({ selectedContent: 'CHEESEBURGER' })}>View Cheeseburger</Button>
+          <Button onClick={this.changeBurgerState({ selectedContent: 'HAMBURGER' })}>View Hamburger</Button>
+          <Button isDisabled onClick={this.changeBurgerState({ selectedContent: 'CHEESEBURGER' })}>View Cheeseburger</Button>
         </div>
       );
     }
@@ -48,32 +63,25 @@ class BurgerNavigation extends React.Component {
     );
   }
 
-  handleUpdate(data) {
+  changeBurgerState(data) {
     return () => {
       this.props.updateNavigation(data);
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log('BURGER NAV - GETTING PROPS');
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-
-  }
-
   render() {
+    const { app, size, index, toggleMenu, registerNavigation, deregisterNavigation } = this.props;
+
     return (
       <Navigation
-        app={this.props.app}
-        menuClass={navigation_hoc('BURGER-NAV')(BurgerMenu)}
+        app={app}
+        menuClass={BurgerMenu}
         menuBreakpoint="huge"
-        menuProps={{}}
-        size={this.props.size}
-        index={this.props.index}
-        requestToggleMenu={this.props.requestToggleMenu}
-        registerNavigation={this.props.registerNavigation}
-        deregisterNavigation={this.props.deregisterNavigation}
+        size={size}
+        index={index}
+        toggleMenu={toggleMenu}
+        registerNavigation={registerNavigation}
+        deregisterNavigation={deregisterNavigation}
       >
         {this.getContent()}
       </Navigation>
@@ -81,6 +89,7 @@ class BurgerNavigation extends React.Component {
   }
 }
 
+BurgerNavigation.propTypes = propTypes;
 BurgerNavigation.defaultProps = defaultProps;
 
 export default navigation_hoc('BURGER-NAV')(BurgerNavigation);

@@ -34,7 +34,7 @@ const manager = () => (
         toolbar={<NavigationToolbar utility={utility} logo={logo} />}
         style={{ border: '1px solid black', height: '400px' }}
       >
-        <FoodNavigation navigationKey="NAV_FOOD_OM_NOM_NOM" />
+        <FoodNavigation />
       </NavigationManager>
     </Application>
   </Provider>
