@@ -1,14 +1,13 @@
 import React, { PropTypes } from 'react';
 import Button from 'terra-button';
 import ContentContainer from 'terra-content-container';
-import IconReply from 'terra-icon/lib/icon/IconReply';
-import IconHouse from 'terra-icon/lib/icon/IconHouse';
-import IconClose from 'terra-icon/lib/icon/IconClose';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 import AppDelegate from 'terra-app-delegate';
+import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
 
 const propTypes = {
-  toggleMenu: PropTypes.func.isRequired,
+  closeMenu: PropTypes.func.isRequired,
+  openMenu: PropTypes.func,
   presentRootMenu: PropTypes.func,
   presentParentMenu: PropTypes.func,
   updateNavigation: PropTypes.func.isRequired,
@@ -34,29 +33,23 @@ class FoodMenu extends React.Component {
     const {
       presentRootMenu,
       presentParentMenu,
-      toggleMenu,
+      closeMenu,
+      openMenu,
+      pinMenu,
+      unpinMenu,
     } = this.props;
 
-    let button1;
-    if (presentParentMenu) {
-      button1 = <Button style={{ display: 'inline-block' }} onClick={presentParentMenu} icon={<IconReply />} />;
-    }
-    let button2;
-    if (presentRootMenu) {
-      button2 = <Button style={{ display: 'inline-block' }} onClick={presentRootMenu} icon={<IconHouse />} />;
-    }
-    let button3;
-    if (toggleMenu) {
-      button3 = <Button style={{ display: 'inline-block', float: 'right' }} onClick={toggleMenu} icon={<IconClose />} />;
-    }
+    const toolbarProps = {
+      presentRootMenu,
+      presentParentMenu,
+      closeMenu,
+      pinMenu,
+      unpinMenu,
+    };
 
     const headerButtons = (
       <div>
-        <div>
-          {button1}
-          {button2}
-          {button3}
-        </div>
+        <MenuToolbar {...toolbarProps} />
         {<Button text="Burgers" onClick={this.changeFoodState({ selectedContent: 'BURGERS' })} isBlock icon={<IconProjects />} />};
         {<Button text="Drinks" onClick={this.changeFoodState({ selectedContent: 'DRINKS' })} isBlock icon={<IconProjects />} />};
       </div>

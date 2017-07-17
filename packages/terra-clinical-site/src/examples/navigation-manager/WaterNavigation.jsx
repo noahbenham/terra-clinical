@@ -10,7 +10,8 @@ const propTypes = {
 
   index: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
+  closeMenu: PropTypes.func.isRequired,
+  openMenu: PropTypes.func,
   registerNavigation: PropTypes.func.isRequired,
   deregisterNavigation: PropTypes.func.isRequired,
 
@@ -81,7 +82,7 @@ class WaterNavigation extends React.Component {
   }
 
   render() {
-    const { app, size, index, toggleMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
+    const { app, size, index, closeMenu, openMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
 
     const menuProps = {
       app: this.props.app,
@@ -96,7 +97,8 @@ class WaterNavigation extends React.Component {
         menuProps={menuProps}
         size={size}
         index={index}
-        toggleMenu={toggleMenu}
+        closeMenu={closeMenu}
+        openMenu={openMenu}
         registerNavigation={registerNavigation}
         deregisterNavigation={deregisterNavigation}
       >

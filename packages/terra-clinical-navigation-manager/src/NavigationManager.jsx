@@ -59,12 +59,15 @@ class NavigationManager extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: true };
+    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: true, isPinned: false };
     this.menuStack = [];
     this.getBreakpointSize = this.getBreakpointSize.bind(this);
     this.registerNavigation = this.registerNavigation.bind(this);
     this.deregisterNavigation = this.deregisterNavigation.bind(this);
-    this.toggleMenu = this.toggleMenu.bind(this);
+    this.closeMenu = this.closeMenu.bind(this);
+    this.openMenu = this.openMenu.bind(this);
+    this.pinMenu = this.pinMenu.bind(this);
+    this.unpinMenu = this.unpinMenu.bind(this);
     this.presentRootMenu = this.presentRootMenu.bind(this);
     this.presentParentMenu = this.presentParentMenu.bind(this);
     this.presentMenuAtIndex = this.presentMenuAtIndex.bind(this);
@@ -75,7 +78,6 @@ class NavigationManager extends React.Component {
     this.buildToolbar = this.buildToolbar.bind(this);
     this.buildChildren = this.buildChildren.bind(this);
     this.buildMenu = this.buildMenu.bind(this);
-
     this.validateMenusAtCurrentSize = this.validateMenusAtCurrentSize.bind(this);
   }
 
@@ -127,11 +129,27 @@ class NavigationManager extends React.Component {
     }
   }
 
-  toggleMenu() {
-    if (this.state.isOpen) {
-      this.setState({ isOpen: false });
-    } else {
+  closeMenu() {
+    if (this.state.isOpen !== false) {
+      this.setState({ isOpen: false, isPinned: false });
+    }
+  }
+
+  openMenu() {
+    if (this.state.isOpen !== true) {
       this.setState({ isOpen: true, openIndex: this.lastValidMenuIndex(this.menuStack.length) });
+    }
+  }
+
+  pinMenu() {
+    if (this.state.isPinned !== true) {
+      this.setState({ isPinned: true });
+    }
+  }
+
+  unpinMenu() {
+    if (this.state.isPinned !== false) {
+      this.setState({ isPinned: false });
     }
   }
 
@@ -183,7 +201,7 @@ class NavigationManager extends React.Component {
   buildToolbar(app, size, toolbar) {
     let toggle;
     if (this.state.hasMenu) {
-      toggle = this.toggleMenu;
+      toggle = this.state.isOpen ? this.closeMenu : this.openMenu;
     }
     if (toolbar) {
       return React.cloneElement(toolbar, { app, size, onToggleClick: toggle });
@@ -198,7 +216,8 @@ class NavigationManager extends React.Component {
       index: 0,
       registerNavigation: this.registerNavigation,
       deregisterNavigation: this.deregisterNavigation,
-      toggleMenu: this.toggleMenu,
+      openMenu: this.openMenu,
+      closeMenu: this.closeMenu,
     };
 
     return React.Children.map(children, child => (
@@ -209,10 +228,18 @@ class NavigationManager extends React.Component {
   buildMenu(app, size) {
     const basicProps = {
       app,
-      toggleMenu: this.toggleMenu,
+      closeMenu: this.closeMenu,
       size,
     };
 
+    if (size !== 'tiny') {
+      if (this.state.isPinned) {
+        basicProps.unpinMenu = this.unpinMenu;
+      } else {
+        basicProps.pinMenu = this.pinMenu;
+      }
+    }
+    
     const additionalProps = {
       presentRootMenu: this.presentRootMenu,
       presentParentMenu: this.presentParentMenu,
@@ -266,13 +293,14 @@ class NavigationManager extends React.Component {
     const toolbarContent = this.buildToolbar(app, size, toolbar);
     const childContent = this.buildChildren(app, size, children);
     const menuContent = this.buildMenu(app, size);
+    const panelBehavior = this.state.isPinned ? 'squish' : 'overlay';
     return (
       <ContentContainer {...customProps} className={navigationClassNames} header={toolbarContent} fill>
         <SlidePanel
           mainContent={childContent}
           panelContent={menuContent}
           panelSize="small"
-          panelBehavior="squish"
+          panelBehavior={panelBehavior}
           panelPosition="start"
           isOpen={this.state.isOpen}
           fill

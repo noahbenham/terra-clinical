@@ -25,7 +25,8 @@ const propTypes = {
 
   index: PropTypes.number,
   size: PropTypes.string,
-  toggleMenu: PropTypes.func,
+  closeMenu: PropTypes.func,
+  openMenu: PropTypes.func,
   registerNavigation: PropTypes.func,
   deregisterNavigation: PropTypes.func,
 };
@@ -64,7 +65,8 @@ class Navigation extends React.Component {
       menuClass,
       menuProps,
       registerNavigation,
-      toggleMenu,
+      openMenu,
+      closeMenu,
       size,
       ...customProps
     } = this.props;
@@ -80,7 +82,8 @@ class Navigation extends React.Component {
         app,
         index: index + 1,
         size,
-        toggleMenu,
+        openMenu,
+        closeMenu,
         registerNavigation,
         deregisterNavigation,
       };
@@ -93,7 +96,8 @@ class Navigation extends React.Component {
     if (contentParent) {
       const newParentProps = {
         app,
-        toggleMenu,
+        openMenu,
+        closeMenu,
         size,
         children: childContent,
         registerNavigation,
