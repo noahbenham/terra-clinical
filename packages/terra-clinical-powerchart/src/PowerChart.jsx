@@ -5,7 +5,7 @@ import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import NavigationManager from 'terra-clinical-navigation-manager';
 import AppDelegate from 'terra-app-delegate';
 import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
-import PatientContext, { reducers as patientContextReducers }  from './PatientContext';
+import PatientContextNavigation, { reducers as patientContextReducers }  from './navigation/PatientContextNavigation';
 
 import UtilityMenu from './UtilityMenu';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
@@ -30,8 +30,8 @@ const store = createStore(
 const PowerChart = () => (
   <Provider store={store}>
     <Application app={AppDelegate.create({})}>
-      <NavigationManager toolbar={<NavigationToolbar utility={utility} logo={logo} />}>
-        <PatientContext />
+      <NavigationManager toolbar={<NavigationToolbar utility={utility} logo={logo} />} style={{ border: '1px solid black', height: '400px' }}>
+        <PatientContextNavigation />
       </NavigationManager>
     </Application>
   </Provider>

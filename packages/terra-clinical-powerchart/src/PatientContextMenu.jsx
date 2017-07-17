@@ -18,15 +18,15 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  requestOpenHomeMenu: PropTypes.func,
+  presentRootMenu: PropTypes.func,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  requestOpenParentMenu: PropTypes.func,
+  presentParentMenu: PropTypes.func,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  requestToggleMenu: PropTypes.func,
+  toggleMenu: PropTypes.func,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
@@ -72,26 +72,26 @@ class PatientContextMenu extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       app,
-      requestOpenHomeMenu,
-      requestOpenParentMenu,
-      requestToggleMenu,
+      presentRootMenu,
+      presentParentMenu,
+      toggleMenu,
       size,
       ...customProps
     } = this.props;
 
     let button1;
-    if (requestOpenParentMenu) {
-      button1 = <Button style={{ display: 'inline-block' }} onClick={requestOpenParentMenu} icon={<IconReply />} />;
+    if (presentParentMenu) {
+      button1 = <Button style={{ display: 'inline-block' }} onClick={presentParentMenu} icon={<IconReply />} />;
     }
     let button2;
-    if (requestOpenHomeMenu) {
-      button2 = <Button style={{ display: 'inline-block' }} onClick={requestOpenHomeMenu} icon={<IconHouse />} />;
+    if (presentRootMenu) {
+      button2 = <Button style={{ display: 'inline-block' }} onClick={presentRootMenu} icon={<IconHouse />} />;
     }
     let button3;
-    if (requestToggleMenu) {
-      button3 = <Button style={{ display: 'inline-block', float: 'right' }} onClick={requestToggleMenu} icon={<IconClose />} />;
+    if (toggleMenu) {
+      button3 = <Button style={{ display: 'inline-block', float: 'right' }} onClick={toggleMenu} icon={<IconClose />} />;
     }
 
     const headerButtons = (

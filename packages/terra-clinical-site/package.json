@@ -48,6 +48,7 @@
     "terra-clinical-navigation": "^0.x",
     "terra-clinical-navigation-manager": "^0.x",
     "terra-clinical-navigation-toolbar": "^0.x",
+    "terra-clinical-powerchart": "^0.x",
     "terra-grid": "^3.0.0",
     "terra-i18n": "^1.0.0",
     "terra-icon": "^1.0.0",

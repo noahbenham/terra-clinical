@@ -9,8 +9,8 @@ export default (navigationKey) => {
   const mapStateToProps = (state) => (
     (navigationState => ({
       navigationKey: navigationKey,
-      navigationData: navigationState[navigationKey] && navigationState[navigationKey].data,
-      navigationUpdateId: navigationState[navigationKey] && navigationState[navigationKey].updateId,
+      navigationData: navigationState && navigationState[navigationKey] && navigationState[navigationKey].data,
+      navigationUpdateId: navigationState && navigationState[navigationKey] && navigationState[navigationKey].updateId,
     }))(state.navigation)
   );
 

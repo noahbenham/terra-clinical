@@ -11,6 +11,7 @@ import NavigationManagerSrc from '!raw-loader!terra-clinical-navigation-manager/
 
 // Example Files
 import NavigationManagerStandard from './NavigationManagerStandard';
+import Powerchart from 'terra-clinical-powerchart/lib/PowerChart';
 
 const NavigationExamples = () => (
   <div>
@@ -19,6 +20,8 @@ const NavigationExamples = () => (
     <PropsTable id="props-navigationStandard" src={NavigationManagerSrc} />
     <h2 id="navigation-manager-standard">Navigation Manager with Navigation</h2>
     <NavigationManagerStandard />
+    <br />
+    <Powerchart />
   </div>
 );
 

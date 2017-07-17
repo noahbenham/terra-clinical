@@ -51,7 +51,7 @@ class PatientContextToolbar extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       app,
       ...customProps
     } = this.props;
