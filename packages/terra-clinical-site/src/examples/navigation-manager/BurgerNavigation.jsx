@@ -11,7 +11,8 @@ const propTypes = {
 
   index: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
-  toggleMenu: PropTypes.func,
+  closeMenu: PropTypes.func,
+  openMenu: PropTypes.func,
   registerNavigation: PropTypes.func.isRequired,
   deregisterNavigation: PropTypes.func.isRequired,
 
@@ -70,7 +71,7 @@ class BurgerNavigation extends React.Component {
   }
 
   render() {
-    const { app, size, index, toggleMenu, registerNavigation, deregisterNavigation } = this.props;
+    const { app, size, index, closeMenu, openMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
 
     return (
       <Navigation
@@ -79,7 +80,8 @@ class BurgerNavigation extends React.Component {
         menuBreakpoint="huge"
         size={size}
         index={index}
-        toggleMenu={toggleMenu}
+        closeMenu={closeMenu}
+        openMenu={openMenu}
         registerNavigation={registerNavigation}
         deregisterNavigation={deregisterNavigation}
       >

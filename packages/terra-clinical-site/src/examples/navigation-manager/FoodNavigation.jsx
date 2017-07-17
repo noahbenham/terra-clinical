@@ -5,6 +5,7 @@ import Button from 'terra-button';
 import FoodMenu from './FoodMenu';
 import BurgerNavigation from './BurgerNavigation';
 import DrinkNavigation from './DrinkNavigation';
+import FoodLandingPage from './FoodLandingPage';
 import AppDelegate from 'terra-app-delegate';
 
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
@@ -14,7 +15,8 @@ const propTypes = {
 
   index: PropTypes.number.isRequired,
   size: PropTypes.string.isRequired,
-  toggleMenu: PropTypes.func.isRequired,
+  closeMenu: PropTypes.func.isRequired,
+  openMenu: PropTypes.func,
   registerNavigation: PropTypes.func.isRequired,
   deregisterNavigation: PropTypes.func.isRequired,
 
@@ -49,10 +51,7 @@ class FoodNavigation extends React.Component {
     }
 
     return (
-      <div>
-        <h2>FoodNavigation</h2>
-        <h3>Please pick a food type from the menu</h3>
-      </div>
+      <FoodLandingPage />
     );
   }
 
@@ -63,7 +62,7 @@ class FoodNavigation extends React.Component {
   }
 
   render() {
-    const { app, size, index, toggleMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
+    const { app, size, index, closeMenu, openMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
 
     const menuProps = {
       updateNavigation: this.props.updateNavigation,
@@ -77,7 +76,8 @@ class FoodNavigation extends React.Component {
         menuProps={menuProps}
         size={size}
         index={index}
-        toggleMenu={toggleMenu}
+        closeMenu={closeMenu}
+        openMenu={openMenu}
         registerNavigation={registerNavigation}
         deregisterNavigation={deregisterNavigation}
       >
