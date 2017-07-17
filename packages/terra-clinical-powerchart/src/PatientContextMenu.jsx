@@ -7,6 +7,8 @@ import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
 import IconSearch from 'terra-icon/lib/icon/IconSearch';
 import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
+import ContentContainer from 'terra-content-container';
+import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
 
 import './PatientContextMenu.scss';
 
@@ -26,7 +28,9 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  toggleMenu: PropTypes.func,
+  closeMenu: PropTypes.func,
+  pinMenu: PropTypes.func,
+  unpinMenu: PropTypes.func,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
@@ -76,34 +80,23 @@ class PatientContextMenu extends React.Component {
       app,
       presentRootMenu,
       presentParentMenu,
-      toggleMenu,
+      closeMenu,
+      pinMenu,
+      unpinMenu,
       size,
       ...customProps
     } = this.props;
 
-    let button1;
-    if (presentParentMenu) {
-      button1 = <Button style={{ display: 'inline-block' }} onClick={presentParentMenu} icon={<IconReply />} />;
-    }
-    let button2;
-    if (presentRootMenu) {
-      button2 = <Button style={{ display: 'inline-block' }} onClick={presentRootMenu} icon={<IconHouse />} />;
-    }
-    let button3;
-    if (toggleMenu) {
-      button3 = <Button style={{ display: 'inline-block', float: 'right' }} onClick={toggleMenu} icon={<IconClose />} />;
-    }
-
-    const headerButtons = (
-      <div>
-        {button1}
-        {button2}
-        {button3}
-      </div>
-    );
+    const toolbarProps = {
+      presentRootMenu,
+      presentParentMenu,
+      closeMenu,
+      pinMenu,
+      unpinMenu,
+    };
 
     return (
-      <ContentContainer className="terraClinical-PatientContextMenu" header={headerButtons} fill>
+      <ContentContainer className="terraClinical-PatientContextMenu" header={<MenuToolbar {...toolbarProps } />} fill>
         <div className="terraClinical-PatientContextMenu-schedule">
           <Button icon={<IconSearch />} onClick={this.discloseSearch} isBlock />
         </div>

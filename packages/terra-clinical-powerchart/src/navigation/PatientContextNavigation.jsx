@@ -53,7 +53,6 @@ AppDelegate.registerComponentForDisclosure('PatientSchedule', PatientSchedule);
 AppDelegate.registerComponentForDisclosure('PatientSearch', PatientSearch);
 
 class PatientContentNavigation extends React.Component {
-
   render() {
     const {
       app,
@@ -69,7 +68,7 @@ class PatientContentNavigation extends React.Component {
       contentParent: <ContentContainer header={<PatientContextToolbar app={app} />} fill />,
       deregisterNavigation,
       index,
-      menuBreakpoint: 'tiny',
+      menuBreakpoint: 'huge',
       menuClass: PatientContextMenu,
       menuProps: {},
       registerNavigation,
