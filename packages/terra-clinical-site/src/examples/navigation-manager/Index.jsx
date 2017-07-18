@@ -10,7 +10,7 @@ import { version } from 'terra-clinical-navigation-manager/package.json';
 import NavigationManagerSrc from '!raw-loader!terra-clinical-navigation-manager/src/NavigationManager.jsx';
 
 // Example Files
-import NavigationManagerStandard from './NavigationManagerStandard';
+// import NavigationManagerStandard from './NavigationManagerStandard';
 import Powerchart from 'terra-clinical-powerchart/lib/PowerChart';
 
 const NavigationExamples = () => (
@@ -19,7 +19,6 @@ const NavigationExamples = () => (
     <Markdown id="readme" src={ReadMe} />
     <PropsTable id="props-navigationStandard" src={NavigationManagerSrc} />
     <h2 id="navigation-manager-standard">Navigation Manager with Navigation</h2>
-    <NavigationManagerStandard />
     <br />
     <Powerchart />
   </div>
