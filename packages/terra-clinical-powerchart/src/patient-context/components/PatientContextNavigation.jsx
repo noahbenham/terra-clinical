@@ -4,13 +4,14 @@ import 'terra-base/lib/baseStyles';
 import Navigation from 'terra-clinical-navigation';
 import ContentContainer from 'terra-content-container';
 import AppDelegate from 'terra-app-delegate';
-import PatientContextToolbar from '../PatientContextToolbar';
-import PatientContextMenu from '../PatientContextMenu';
-import PatientSchedule from '../PatientSchedule';
-import PatientSearch from '../PatientSearch';
-import PatientSelectionLanding from '../components/PatientSelectionLanding';
-
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
+
+import PatientContextToolbar from './PatientContextToolbar';
+import PatientContextMenu from './PatientContextMenu';
+import PatientSelectionLanding from './PatientSelectionLanding';
+import PatientSchedule from '../../PatientSchedule';
+import PatientSearch from '../../PatientSearch';
+import patient_context_hoc, { reducers as patientContextReducers } from './patient_context_hoc';
 
 import './PatientContextNavigation.scss';
 
@@ -40,19 +41,53 @@ const propTypes = {
    **/
   size: PropTypes.oneOf(Navigation.breakpoints),
   navigationUpdateId: PropTypes.string,
-  navigationData: PropTypes.string,
+  navigationData: PropTypes.object,
   updateNavigation: PropTypes.func,
 };
 
 const defaultProps = {
   index: 0,
   size: 'tiny',
+  navigationData: {},
 };
 
 AppDelegate.registerComponentForDisclosure('PatientSchedule', PatientSchedule);
 AppDelegate.registerComponentForDisclosure('PatientSearch', PatientSearch);
 
 class PatientContentNavigation extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.discloseSearch = this.discloseSearch.bind(this);
+    this.discloseSchedule = this.discloseSchedule.bind(this);
+  }
+
+  discloseSearch() {
+    if (this.props.app && this.props.app.disclose) {
+      this.props.app.disclose({
+        preferredType: 'modal',
+        size: 'tiny',
+        content: {
+          key: `PatientSearch-${Date.now()}`,
+          name: 'PatientSearch',
+        },
+      });
+    }
+  }
+
+  discloseSchedule() {
+    if (this.props.app && this.props.app.disclose) {
+      this.props.app.disclose({
+        preferredType: 'modal',
+        size: 'tiny',
+        content: {
+          key: `PatientSearch-${Date.now()}`,
+          name: 'PatientSearch',
+        },
+      });
+    }
+  }
+
   render() {
     const {
       app,
@@ -61,11 +96,14 @@ class PatientContentNavigation extends React.Component {
       index,
       toggleMenu,
       size,
+      navigationData,
+      navigationUpdateId,
+      updateNavigation,
     } = this.props;
 
     const navProps = {
       app,
-      contentParent: <ContentContainer header={<PatientContextToolbar app={app} />} fill />,
+      contentParent: <ContentContainer header={<PatientContextToolbar app={app} onSelectSearch={this.discloseSearch} onSelectSchedule={this.discloseSchedule} />} fill />,
       deregisterNavigation,
       index,
       menuBreakpoint: 'huge',
@@ -76,36 +114,21 @@ class PatientContentNavigation extends React.Component {
       size,
     };
 
-
-    // if (navigationData.patient) {
-    //   let contextHeader;
-    //   if (size !== 'tiny') {
-    //     contextHeader = <PatientContextToolbar app={app} />;
-    //   }
-
-    //   const navProps = {
-    //     app,
-    //     contentParent: <ContentContainer header={contextHeader} fill />,
-    //     deregisterNavigation,
-    //     index,
-    //     menuBreakpoint: 'tiny',
-    //     menuClass: PatientContextMenu,
-    //     menuProps: {},
-    //     registerNavigation,
-    //     toggleMenu,
-    //     size,
-    //   };
-
-    //   return (
-    //     <Navigation className="terraClinical-PatientContext" {...navProps}>
-    //       <PatientSelectionLanding />
-    //     </Navigation>
-    //   );
-    // }
+    let content;
+    if (navigationData.patient) {
+      content = <PatientSelectionLanding />;
+      // content = (
+      //   <DemographicsManager patient={navigationData.patient}>
+      //     <PatientChartNavigation key={navigationUpdateId} />
+      //   </DemographicsManager>
+      // );
+    } else {
+      content = <PatientSelectionLanding />;
+    }
 
     return (
       <Navigation className="terraClinical-PatientContext" {...navProps}>
-        <PatientSelectionLanding />
+        {content}
       </Navigation>
     );
   }
@@ -114,4 +137,7 @@ class PatientContentNavigation extends React.Component {
 PatientContentNavigation.propTypes = propTypes;
 PatientContentNavigation.defaultProps = defaultProps;
 
-export default navigation_hoc('PatientContent')(PatientContentNavigation);
+export default navigation_hoc('PatientContext')(PatientContentNavigation);
+
+const reducers = Object.assign({}, patientContextReducers, navigationReducers);
+export { reducers };

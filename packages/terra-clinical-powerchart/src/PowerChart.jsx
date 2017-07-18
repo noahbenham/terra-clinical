@@ -5,7 +5,7 @@ import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import NavigationManager from 'terra-clinical-navigation-manager';
 import AppDelegate from 'terra-app-delegate';
 import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
-import PatientContextNavigation, { reducers as patientContextReducers }  from './navigation/PatientContextNavigation';
+import PatientContextNavigation, { reducers as patientContextReducers }  from './patient-context/components/PatientContextNavigation';
 
 import UtilityMenu from './UtilityMenu';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';

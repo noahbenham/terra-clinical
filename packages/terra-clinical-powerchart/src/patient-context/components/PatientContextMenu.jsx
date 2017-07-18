@@ -5,7 +5,6 @@ import 'terra-base/lib/baseStyles';
 import AppDelegate from 'terra-app-delegate';
 import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
 import IconSearch from 'terra-icon/lib/icon/IconSearch';
-import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
 import ContentContainer from 'terra-content-container';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
@@ -31,10 +30,6 @@ const propTypes = {
   closeMenu: PropTypes.func,
   pinMenu: PropTypes.func,
   unpinMenu: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  size: PropTypes.oneOf(Navigation.breakpoints),
 };
 
 const defaultProps = {
@@ -77,14 +72,11 @@ class PatientContextMenu extends React.Component {
 
   render() {
     const {
-      app,
       presentRootMenu,
       presentParentMenu,
       closeMenu,
       pinMenu,
       unpinMenu,
-      size,
-      ...customProps
     } = this.props;
 
     const toolbarProps = {
@@ -96,7 +88,7 @@ class PatientContextMenu extends React.Component {
     };
 
     return (
-      <ContentContainer className="terraClinical-PatientContextMenu" header={<MenuToolbar {...toolbarProps } />} fill>
+      <ContentContainer className="terraClinical-PatientContextMenu" header={<MenuToolbar {...toolbarProps} />} fill>
         <div className="terraClinical-PatientContextMenu-schedule">
           <Button icon={<IconSearch />} onClick={this.discloseSearch} isBlock />
         </div>
