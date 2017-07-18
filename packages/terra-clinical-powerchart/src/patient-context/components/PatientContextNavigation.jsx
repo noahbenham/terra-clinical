@@ -6,12 +6,14 @@ import ContentContainer from 'terra-content-container';
 import AppDelegate from 'terra-app-delegate';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
 
+
 import PatientContextToolbar from './PatientContextToolbar';
 import PatientContextMenu from './PatientContextMenu';
 import PatientSelectionLanding from './PatientSelectionLanding';
 import PatientSchedule from '../../PatientSchedule';
 import PatientSearch from '../../PatientSearch';
-import patient_context_hoc, { reducers as patientContextReducers } from './patient_context_hoc';
+import PatientChartNavigation from './PatientChartNavigation';
+
 
 import './PatientContextNavigation.scss';
 
@@ -60,6 +62,7 @@ class PatientContentNavigation extends React.Component {
 
     this.discloseSearch = this.discloseSearch.bind(this);
     this.discloseSchedule = this.discloseSchedule.bind(this);
+    this.loadPatient = this.loadPatient.bind(this);
   }
 
   discloseSearch() {
@@ -88,6 +91,10 @@ class PatientContentNavigation extends React.Component {
     }
   }
 
+  loadPatient() {
+    this.props.updateNavigation({ patient: { id: 1, name: 'Pete' } });
+  }
+
   render() {
     const {
       app,
@@ -101,14 +108,19 @@ class PatientContentNavigation extends React.Component {
       updateNavigation,
     } = this.props;
 
+    let searchToolbar;
+    if (size !== 'small' || size !== 'tiny' || size !== 'default') {
+      searchToolbar = <PatientContextToolbar app={app} onSelectSearch={this.loadPatient} onSelectSchedule={this.discloseSchedule} />;
+    }
+
     const navProps = {
       app,
-      contentParent: <ContentContainer header={<PatientContextToolbar app={app} onSelectSearch={this.discloseSearch} onSelectSchedule={this.discloseSchedule} />} fill />,
+      contentParent: <ContentContainer header={searchToolbar} fill />,
       deregisterNavigation,
       index,
-      menuBreakpoint: 'huge',
+      menuBreakpoint: 'small',
       menuClass: PatientContextMenu,
-      menuProps: {},
+      menuProps: { updateNavigation },
       registerNavigation,
       toggleMenu,
       size,
@@ -116,14 +128,12 @@ class PatientContentNavigation extends React.Component {
 
     let content;
     if (navigationData.patient) {
-      content = <PatientSelectionLanding />;
-      // content = (
-      //   <DemographicsManager patient={navigationData.patient}>
-      //     <PatientChartNavigation key={navigationUpdateId} />
-      //   </DemographicsManager>
-      // );
+      // content = <PatientSelectionLanding />;
+      content = (
+        <PatientChartNavigation patient={navigationData.patient} key={navigationUpdateId} />
+      );
     } else {
-      content = <PatientSelectionLanding />;
+      content = <PatientSelectionLanding onPatientSearchSelected={this.loadPatient} />;
     }
 
     return (
@@ -139,5 +149,5 @@ PatientContentNavigation.defaultProps = defaultProps;
 
 export default navigation_hoc('PatientContext')(PatientContentNavigation);
 
-const reducers = Object.assign({}, patientContextReducers, navigationReducers);
+const reducers = Object.assign({}, navigationReducers);
 export { reducers };

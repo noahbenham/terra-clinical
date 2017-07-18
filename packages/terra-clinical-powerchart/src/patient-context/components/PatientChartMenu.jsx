@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-app-delegate';
-import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
-import IconSearch from 'terra-icon/lib/icon/IconSearch';
+import IconPill from 'terra-icon/lib/icon/IconPill';
+import IconList from 'terra-icon/lib/icon/IconList';
+import IconDocuments from 'terra-icon/lib/icon/IconDocuments';
+
 import Button from 'terra-button';
 import ContentContainer from 'terra-content-container';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
@@ -30,7 +32,6 @@ const propTypes = {
   closeMenu: PropTypes.func,
   pinMenu: PropTypes.func,
   unpinMenu: PropTypes.func,
-  updateNavigation: PropTypes.func,
 };
 
 const defaultProps = {
@@ -41,36 +42,6 @@ class PatientContextMenu extends React.Component {
 
   constructor(props) {
     super(props);
-    this.discloseSearch = this.discloseSearch.bind(this);
-    this.discloseSchedule = this.discloseSchedule.bind(this);
-  }
-
-  discloseSchedule() {
-    if (this.props.app && this.props.app.disclose) {
-      this.props.app.disclose({
-        preferredType: 'modal',
-        size: 'tiny',
-        content: {
-          key: `PatientSchedule-${Date.now()}`,
-          name: 'PatientSchedule',
-        },
-      });
-    }
-  }
-
-  discloseSearch() {
-    this.props.updateNavigation({ patient: { id: 1, name: 'Pete' } });
-
-    // if (this.props.app && this.props.app.disclose) {
-    //   this.props.app.disclose({
-    //     preferredType: 'modal',
-    //     size: 'tiny',
-    //     content: {
-    //       key: `PatientSearch-${Date.now()}`,
-    //       name: 'PatientSearch',
-    //     },
-    //   });
-    // }
   }
 
   render() {
@@ -92,11 +63,10 @@ class PatientContextMenu extends React.Component {
 
     return (
       <ContentContainer className="terraClinical-PatientContextMenu" header={<MenuToolbar {...toolbarProps} />} fill>
-        <div className="terraClinical-PatientContextMenu-schedule">
-          <Button icon={<IconSearch />} onClick={this.discloseSearch} isBlock />
-        </div>
-        <div className="terraClinical-PatientContextMenu-search">
-          <Button icon={<IconCalendar />} onClick={this.discloseSchedule} isBlock />
+        <div>
+          <Button icon={<IconList />} onClick={this.discloseSearch} text="Chart Summary" />
+          <Button icon={<IconPill />} onClick={this.discloseSearch} text="Orders" />
+          <Button icon={<IconDocuments />} onClick={this.discloseSearch} text="Doc" />
         </div>
       </ContentContainer>
     );

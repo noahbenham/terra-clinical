@@ -59,7 +59,7 @@ class NavigationManager extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: true, isPinned: false };
+    this.state = { size: 'default', openIndex: -1, hasMenu: false, isOpen: false, isPinned: false };
     this.menuStack = [];
     this.getBreakpointSize = this.getBreakpointSize.bind(this);
     this.registerNavigation = this.registerNavigation.bind(this);
@@ -239,7 +239,7 @@ class NavigationManager extends React.Component {
         basicProps.pinMenu = this.pinMenu;
       }
     }
-    
+
     const additionalProps = {
       presentRootMenu: this.presentRootMenu,
       presentParentMenu: this.presentParentMenu,
