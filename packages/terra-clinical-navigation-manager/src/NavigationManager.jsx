@@ -94,7 +94,7 @@ class NavigationManager extends React.Component {
 
     const newState = {};
 
-    const newHasMenu = this.hasMenu();
+    const newHasMenu = this.hasMenu(this.state.size);
     if (this.state.hasMenu !== newHasMenu) {
       newState.hasMenu = newHasMenu;
     }
@@ -111,7 +111,7 @@ class NavigationManager extends React.Component {
       this.menuStack.splice(index);
 
       let newState;
-      const newHasMenu = this.hasMenu();
+      const newHasMenu = this.hasMenu(this.state.size);
       if (this.state.hasMenu !== newHasMenu) {
         newState = { hasMenu: newHasMenu };
       }
@@ -137,7 +137,7 @@ class NavigationManager extends React.Component {
 
   openMenu() {
     if (this.state.isOpen !== true) {
-      this.setState({ isOpen: true, openIndex: this.lastValidMenuIndex(this.menuStack.length) });
+      this.setState({ isOpen: true, openIndex: this.lastValidMenuIndex(this.menuStack.length, this.state.size) });
     }
   }
 
@@ -154,11 +154,11 @@ class NavigationManager extends React.Component {
   }
 
   presentRootMenu() {
-    this.presentMenuAtIndex(this.firstValidMenuIndex(0));
+    this.presentMenuAtIndex(this.firstValidMenuIndex(0, this.state.size));
   }
 
   presentParentMenu() {
-    this.presentMenuAtIndex(this.lastValidMenuIndex(this.state.openIndex - 1));
+    this.presentMenuAtIndex(this.lastValidMenuIndex(this.state.openIndex - 1, this.state.size));
   }
 
   presentMenuAtIndex(nextIndex) {
@@ -171,30 +171,30 @@ class NavigationManager extends React.Component {
     }
   }
 
-  firstValidMenuIndex(startIndex) {
+  firstValidMenuIndex(startIndex, size) {
     for (let i = startIndex; i < this.menuStack.length; i += 1) {
-      if (this.shouldDisplayMenu(this.menuStack[i])) {
+      if (this.shouldDisplayMenu(this.menuStack[i], size)) {
         return i;
       }
     }
     return -1;
   }
 
-  lastValidMenuIndex(startIndex) {
+  lastValidMenuIndex(startIndex, size) {
     for (let i = startIndex; i >= 0; i -= 1) {
-      if (this.shouldDisplayMenu(this.menuStack[i])) {
+      if (this.shouldDisplayMenu(this.menuStack[i], size)) {
         return i;
       }
     }
     return -1;
   }
 
-  hasMenu() {
-    return this.firstValidMenuIndex(0) >= 0;
+  hasMenu(size) {
+    return this.firstValidMenuIndex(0, size) >= 0;
   }
 
-  shouldDisplayMenu(menu) {
-    const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
+  shouldDisplayMenu(menu, size) {
+    // const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
     return menu && BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menu.breakpoint);
   }
 
@@ -246,7 +246,7 @@ class NavigationManager extends React.Component {
     };
 
     const validMenus = this.menuStack.filter((menu, index) => (
-      this.shouldDisplayMenu(menu) && this.state.openIndex >= index
+      this.shouldDisplayMenu(menu, size) && this.state.openIndex >= index
     ));
 
     const slideItems = validMenus.map((menu, index) => {
@@ -262,14 +262,14 @@ class NavigationManager extends React.Component {
       return slideItems[slideItems.length - 1];
     }
 
-    return <SlideGroup items={slideItems} isAnimated />;
+    return slideItems.length ? <SlideGroup items={slideItems} isAnimated /> : null;
   }
 
   validateMenusAtCurrentSize() {
     const size = this.getBreakpointSize();
     if (size !== this.state.size) {
       const newState = { size, isOpen: false };
-      const newHasMenu = this.hasMenu();
+      const newHasMenu = this.hasMenu(size);
       if (this.state.hasMenu !== newHasMenu) {
         newState.hasMenu = newHasMenu;
       }
@@ -302,7 +302,7 @@ class NavigationManager extends React.Component {
           panelSize="small"
           panelBehavior={panelBehavior}
           panelPosition="start"
-          isOpen={this.state.isOpen}
+          isOpen={this.state.isOpen && menuContent}
           fill
         />
       </ContentContainer>
