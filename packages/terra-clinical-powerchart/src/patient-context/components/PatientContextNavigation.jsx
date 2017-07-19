@@ -5,7 +5,7 @@ import Navigation from 'terra-clinical-navigation';
 import ContentContainer from 'terra-content-container';
 import AppDelegate from 'terra-app-delegate';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
-
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 import PatientContextToolbar from './PatientContextToolbar';
 import PatientContextMenu from './PatientContextMenu';
@@ -22,34 +22,13 @@ const propTypes = {
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
   app: AppDelegate.propType,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  deregisterNavigation: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  index: PropTypes.number,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  registerNavigation: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  toggleMenu: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  size: PropTypes.oneOf(Navigation.breakpoints),
+  navManager: NavManagerDelegate.propType,
   navigationUpdateId: PropTypes.string,
   navigationData: PropTypes.object,
   updateNavigation: PropTypes.func,
 };
 
 const defaultProps = {
-  index: 0,
-  size: 'tiny',
   navigationData: {},
 };
 
@@ -98,32 +77,24 @@ class PatientContentNavigation extends React.Component {
   render() {
     const {
       app,
-      registerNavigation,
-      deregisterNavigation,
-      index,
-      toggleMenu,
-      size,
+      navManager,
       navigationData,
       navigationUpdateId,
       updateNavigation,
     } = this.props;
 
     let searchToolbar;
-    if (size !== 'small' || size !== 'tiny') {
+    if (navManager.size !== 'small' || navManager.size !== 'tiny') {
       searchToolbar = <PatientContextToolbar app={app} onSelectSearch={this.loadPatient} onSelectSchedule={this.discloseSchedule} />;
     }
 
     const navProps = {
       app,
       contentParent: <ContentContainer header={searchToolbar} fill />,
-      deregisterNavigation,
-      index,
       menuBreakpoint: 'small',
       menuClass: PatientContextMenu,
       menuProps: { updateNavigation },
-      registerNavigation,
-      toggleMenu,
-      size,
+      navManager,
     };
 
     let content;

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import AppDelegate from 'terra-app-delegate';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 import 'terra-base/lib/baseStyles';
 import './Navigation.scss';
@@ -18,17 +19,10 @@ const propTypes = {
   app: AppDelegate.propType,
   children: PropTypes.node,
   contentParent: PropTypes.element,
-
   menuBreakpoint: PropTypes.oneOf(BREAKPOINTS),
   menuClass: PropTypes.func,
   menuProps: PropTypes.object,
-
-  index: PropTypes.number,
-  size: PropTypes.string,
-  closeMenu: PropTypes.func,
-  openMenu: PropTypes.func,
-  registerNavigation: PropTypes.func,
-  deregisterNavigation: PropTypes.func,
+  navManager: NavManagerDelegate.propType,
 };
 
 const defaultProps = {
@@ -38,19 +32,19 @@ const defaultProps = {
 class Navigation extends React.Component {
 
   componentDidMount() {
-    if (this.props.registerNavigation) {
+    if (this.props.navManager.registerNavigation) {
       const menuData = {
         breakpoint: this.props.menuBreakpoint,
         class: this.props.menuClass,
         props: this.props.menuProps,
       };
-      this.props.registerNavigation(this.props.index, menuData);
+      this.props.navManager.registerNavigation(this.props.navManager.index, menuData);
     }
   }
 
   componentWillUnmount() {
-    if (this.props.deregisterNavigation) {
-      this.props.deregisterNavigation(this.props.index);
+    if (this.props.navManager.deregisterNavigation) {
+      this.props.navManager.deregisterNavigation(this.props.navManager.index);
     }
   }
 
@@ -59,15 +53,7 @@ class Navigation extends React.Component {
       app,
       children,
       contentParent,
-      deregisterNavigation,
-      index,
-      menuBreakpoint,
-      menuClass,
-      menuProps,
-      registerNavigation,
-      openMenu,
-      closeMenu,
-      size,
+      navManager,
       ...customProps
     } = this.props;
 
@@ -76,16 +62,13 @@ class Navigation extends React.Component {
       customProps.className,
     ]);
 
+    const newManager = Object.assign({}, navManager, { index: navManager.index + 1});
+
     let childContent;
     if (children) {
       const newChildProps = {
         app,
-        index: index + 1,
-        size,
-        openMenu,
-        closeMenu,
-        registerNavigation,
-        deregisterNavigation,
+        navManager: newManager,
       };
 
       childContent = React.Children.map(children, child => (
@@ -96,12 +79,8 @@ class Navigation extends React.Component {
     if (contentParent) {
       const newParentProps = {
         app,
-        openMenu,
-        closeMenu,
-        size,
         children: childContent,
-        registerNavigation,
-        deregisterNavigation,
+        navManager: newManager,
       };
       childContent = React.cloneElement(contentParent, newParentProps);
     }

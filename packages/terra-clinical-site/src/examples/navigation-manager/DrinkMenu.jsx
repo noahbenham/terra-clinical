@@ -4,15 +4,11 @@ import ContentContainer from 'terra-content-container';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 import AppDelegate from 'terra-app-delegate';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 const propTypes = {
   app: AppDelegate.propType,
-
-  size: PropTypes.string.isRequired,
-  closeMenu: PropTypes.func.isRequired,
-  openMenu: PropTypes.func,
-  presentRootMenu: PropTypes.func,
-  presentParentMenu: PropTypes.func,
+  navManager: NavManagerDelegate.propType,
 };
 
 class DrinkMenu extends React.Component {
@@ -30,25 +26,11 @@ class DrinkMenu extends React.Component {
   render() {
     const {
       app,
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      openMenu,
-      pinMenu,
-      unpinMenu,
-      size,
+      navManager,
     } = this.props;
 
-    const toolbarProps = {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      pinMenu,
-      unpinMenu,
-    };
-
     return (
-      <ContentContainer fill header={<MenuToolbar {...toolbarProps} />} style={{ backgroundColor: 'red' }}>
+      <ContentContainer fill header={<MenuToolbar navManager={navManager} />} style={{ backgroundColor: 'red' }}>
         <div>
           <h3>Drink Menu</h3>
           <br />

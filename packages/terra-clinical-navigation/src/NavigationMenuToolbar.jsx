@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-app-delegate';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 import IconReply from 'terra-icon/lib/icon/IconReply';
 import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconClose from 'terra-icon/lib/icon/IconClose';
@@ -19,25 +20,9 @@ const propTypes = {
    **/
   app: AppDelegate.propType,
   /**
-   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  closeMenu: PropTypes.func,
-  /**
-   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
-  pinMenu: PropTypes.func,  
-  /**
-   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
-  presentParentMenu: PropTypes.func,
-  /**
-   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
-  presentRootMenu: PropTypes.func,
-  /**
-   * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
-  unpinMenu: PropTypes.func,
+  navManager: NavManagerDelegate.propType,
 };
 
 class NavigationMenuToolbar extends React.Component {
@@ -45,11 +30,7 @@ class NavigationMenuToolbar extends React.Component {
   render() {
     const { 
       app,
-      closeMenu,
-      pinMenu,
-      presentParentMenu,
-      presentRootMenu,
-      unpinMenu,
+      navManager,
       ...customProps
     } = this.props;
 
@@ -59,24 +40,24 @@ class NavigationMenuToolbar extends React.Component {
     ]); 
 
     let backButton;
-    if (presentParentMenu) {
-      backButton = <Button onClick={presentParentMenu} icon={<IconReply />} />;
+    if (navManager.presentParentMenu) {
+      backButton = <Button onClick={navManager.presentParentMenu} icon={<IconReply />} />;
     }
     let rootButton;
-    if (presentRootMenu) {
-      rootButton = <Button onClick={presentRootMenu} icon={<IconHouse />} />;
+    if (navManager.presentRootMenu) {
+      rootButton = <Button onClick={navManager.presentRootMenu} icon={<IconHouse />} />;
     }
     let pinButton;
-    if (pinMenu) {
-      pinButton = <Button onClick={pinMenu} icon={<IconUnlock />} />;
+    if (navManager.pinMenu) {
+      pinButton = <Button onClick={navManager.pinMenu} icon={<IconUnlock />} />;
     }
     let unpinButton;
-    if (unpinMenu) {
-      unpinButton = <Button onClick={unpinMenu} icon={<IconPadlock />} />;
+    if (navManager.unpinMenu) {
+      unpinButton = <Button onClick={navManager.unpinMenu} icon={<IconPadlock />} />;
     }
     let closeButton;
-    if (closeMenu) {
-      closeButton = <Button onClick={closeMenu} icon={<IconClose />} />;
+    if (navManager.closeMenu) {
+      closeButton = <Button onClick={navManager.closeMenu} icon={<IconClose />} />;
     }
 
     let toolbarBody;

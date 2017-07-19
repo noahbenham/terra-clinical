@@ -194,8 +194,8 @@ class NavigationManager extends React.Component {
   }
 
   shouldDisplayMenu(menu, size) {
-    // const size = this.state.size === 'default' ? this.getBreakpointSize() : this.state.size;
-    return menu && BREAKPOINTS.indexOf(size) <= BREAKPOINTS.indexOf(menu.breakpoint);
+    const managerSize = size === 'default' ? this.getBreakpointSize() : size;
+    return menu && BREAKPOINTS.indexOf(managerSize) <= BREAKPOINTS.indexOf(menu.breakpoint);
   }
 
   buildToolbar(app, size, toolbar) {
@@ -212,12 +212,14 @@ class NavigationManager extends React.Component {
   buildChildren(app, size, children) {
     const newChildProps = {
       app,
-      size,
-      index: 0,
-      registerNavigation: this.registerNavigation,
-      deregisterNavigation: this.deregisterNavigation,
-      openMenu: this.openMenu,
-      closeMenu: this.closeMenu,
+      navManager: {
+        size,
+        index: 0,
+        registerNavigation: this.registerNavigation,
+        deregisterNavigation: this.deregisterNavigation,
+        openMenu: this.openMenu,
+        closeMenu: this.closeMenu,
+      },
     };
 
     return React.Children.map(children, child => (
@@ -226,21 +228,20 @@ class NavigationManager extends React.Component {
   }
 
   buildMenu(app, size) {
-    const basicProps = {
-      app,
+    const basicValues = {
       closeMenu: this.closeMenu,
       size,
     };
 
     if (size !== 'tiny') {
       if (this.state.isPinned) {
-        basicProps.unpinMenu = this.unpinMenu;
+        basicValues.unpinMenu = this.unpinMenu;
       } else {
-        basicProps.pinMenu = this.pinMenu;
+        basicValues.pinMenu = this.pinMenu;
       }
     }
 
-    const additionalProps = {
+    const childValues = {
       presentRootMenu: this.presentRootMenu,
       presentParentMenu: this.presentParentMenu,
     };
@@ -253,9 +254,9 @@ class NavigationManager extends React.Component {
       const ComponentClass = menu.class;
       const slideKey = `NavigationSlide-${index}`;
       if (index > 0) {
-        return <ComponentClass {...menu.props} {...basicProps} {...additionalProps} key={slideKey} />;
+        return <ComponentClass {...menu.props} app={app} navManager={{ index, ...basicValues, ...childValues }} key={slideKey} />;
       }
-      return <ComponentClass {...menu.props} {...basicProps} key={slideKey} />;
+      return <ComponentClass {...menu.props} app={app} navManager={{ index, ...basicValues }} key={slideKey} />;
     });
 
     if (!this.state.isOpen && slideItems.length) {
@@ -302,7 +303,7 @@ class NavigationManager extends React.Component {
           panelSize="small"
           panelBehavior={panelBehavior}
           panelPosition="start"
-          isOpen={this.state.isOpen && menuContent}
+          isOpen={this.state.isOpen && !!menuContent}
           fill
         />
       </ContentContainer>

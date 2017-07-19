@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppDelegate from 'terra-app-delegate';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 class WaterMenuModal extends React.Component {
   constructor(props) {

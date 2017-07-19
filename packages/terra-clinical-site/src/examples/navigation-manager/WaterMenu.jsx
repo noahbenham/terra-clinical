@@ -4,18 +4,13 @@ import ContentContainer from 'terra-content-container';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 import AppDelegate from 'terra-app-delegate';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 import { disclosureName } from './WaterMenuModal';
 
 const propTypes = {
   app: AppDelegate.propType,
-
-  size: PropTypes.string.isRequired,
-  closeMenu: PropTypes.func,
-  openMenu: PropTypes.func,
-  presentRootMenu: PropTypes.func,
-  presentParentMenu: PropTypes.func.isRequired,
-
+  navManager: NavManagerDelegate.propType,
   updateNavigation: PropTypes.func.isRequired,
 };
 
@@ -47,25 +42,11 @@ class WaterMenu extends React.Component {
   render() {
     const {
       app,
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      openMenu,
-      pinMenu,
-      unpinMenu,
-      size,
+      navManager,
     } = this.props;
 
-    const toolbarProps = {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      pinMenu,
-      unpinMenu,
-    };
-
     return (
-      <ContentContainer fill header={<MenuToolbar {...toolbarProps} />} style={{ backgroundColor: 'lightblue' }}>
+      <ContentContainer fill header={<MenuToolbar navManager={navManager} />} style={{ backgroundColor: 'lightblue' }}>
         <div>
           <h3>Drink Menu</h3>
           <br />

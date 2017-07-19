@@ -2,20 +2,14 @@ import React, { PropTypes } from 'react';
 import Navigation from 'terra-clinical-navigation';
 import Button from 'terra-button';
 import AppDelegate from 'terra-app-delegate';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 import BurgerMenu from './BurgerMenu';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
 
 const propTypes = {
   app: AppDelegate.propType,
-
-  index: PropTypes.number.isRequired,
-  size: PropTypes.string.isRequired,
-  closeMenu: PropTypes.func,
-  openMenu: PropTypes.func,
-  registerNavigation: PropTypes.func.isRequired,
-  deregisterNavigation: PropTypes.func.isRequired,
-
+  navManager: NavManagerDelegate.propType,
   navigationData: PropTypes.object,
   updateNavigation: PropTypes.func.isRequired,
 };

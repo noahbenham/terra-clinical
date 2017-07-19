@@ -43,6 +43,7 @@
     "prop-types": "^15.5.8",
     "terra-base": "^1.0.0",
     "terra-button": "^1.0.0",
+    "terra-clinical-navigation-manager": "^0.x",
     "terra-mixins": "^1.0.0",
     "terra-icon": "^1.0.0"
   },

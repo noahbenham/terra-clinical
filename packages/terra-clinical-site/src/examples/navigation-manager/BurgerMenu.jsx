@@ -5,16 +5,11 @@ import IconProjects from 'terra-icon/lib/icon/IconProjects';
 import AppDelegate from 'terra-app-delegate';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 const propTypes = {
   app: AppDelegate.propType,
-
-  size: PropTypes.string.isRequired,
-  closeMenu: PropTypes.func.isRequired,
-  openMenu: PropTypes.func,
-  presentRootMenu: PropTypes.func,
-  presentParentMenu: PropTypes.func,
-
+  navManager: NavManagerDelegate.propType,
   navigationData: PropTypes.object,
   updateNavigation: PropTypes.func.isRequired,
 };
@@ -38,26 +33,12 @@ class BurgerMenu extends React.Component {
   render() {
     const {
       app,
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      openMenu,
-      pinMenu,
-      unpinMenu,
-      size,
+      navManager,
       navigationData,
     } = this.props;
 
-    const toolbarProps = {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      pinMenu,
-      unpinMenu,
-    };
-
     return (
-      <ContentContainer fill header={<MenuToolbar {...toolbarProps} />} style={{ backgroundColor: 'orange' }}>
+      <ContentContainer fill header={<MenuToolbar navManager={navManager} />} style={{ backgroundColor: 'orange' }}>
         <div>
           <h3>Burger Menu</h3>
           <br />

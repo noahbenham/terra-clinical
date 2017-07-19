@@ -4,17 +4,11 @@ import Button from 'terra-button';
 import AppDelegate from 'terra-app-delegate';
 import WaterMenu from './WaterMenu';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 const propTypes = {
   app: AppDelegate.propType,
-
-  index: PropTypes.number.isRequired,
-  size: PropTypes.string.isRequired,
-  closeMenu: PropTypes.func.isRequired,
-  openMenu: PropTypes.func,
-  registerNavigation: PropTypes.func.isRequired,
-  deregisterNavigation: PropTypes.func.isRequired,
-
+  navManager: NavManagerDelegate.propType,
   navigationData: PropTypes.object,
   navigationUpdateId: PropTypes.string,
   updateNavigation: PropTypes.func.isRequired,
@@ -82,7 +76,7 @@ class WaterNavigation extends React.Component {
   }
 
   render() {
-    const { app, size, index, closeMenu, openMenu, registerNavigation, deregisterNavigation, updateNavigation } = this.props;
+    const { app, navManager, updateNavigation } = this.props;
 
     const menuProps = {
       app: this.props.app,
@@ -95,12 +89,7 @@ class WaterNavigation extends React.Component {
         menuClass={WaterMenu}
         menuBreakpoint="huge"
         menuProps={menuProps}
-        size={size}
-        index={index}
-        closeMenu={closeMenu}
-        openMenu={openMenu}
-        registerNavigation={registerNavigation}
-        deregisterNavigation={deregisterNavigation}
+        navManager={navManager}
       >
         {this.getContent()}
       </Navigation>

@@ -8,6 +8,7 @@ import IconSearch from 'terra-icon/lib/icon/IconSearch';
 import Button from 'terra-button';
 import ContentContainer from 'terra-content-container';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 import './PatientContextMenu.scss';
 
@@ -19,22 +20,11 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  presentRootMenu: PropTypes.func,
+  navManager: NavManagerDelegate.propType,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  presentParentMenu: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  closeMenu: PropTypes.func,
-  pinMenu: PropTypes.func,
-  unpinMenu: PropTypes.func,
   updateNavigation: PropTypes.func,
-};
-
-const defaultProps = {
-  size: 'tiny',
 };
 
 class PatientContextMenu extends React.Component {
@@ -75,23 +65,11 @@ class PatientContextMenu extends React.Component {
 
   render() {
     const {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      pinMenu,
-      unpinMenu,
+      navManager,
     } = this.props;
 
-    const toolbarProps = {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      pinMenu,
-      unpinMenu,
-    };
-
     return (
-      <ContentContainer className="terraClinical-PatientContextMenu" header={<MenuToolbar {...toolbarProps} />} fill>
+      <ContentContainer className="terraClinical-PatientContextMenu" header={<MenuToolbar navManager={navManager} />} fill>
         <div className="terraClinical-PatientContextMenu-schedule">
           <Button icon={<IconSearch />} onClick={this.discloseSearch} isBlock />
         </div>
@@ -104,6 +82,5 @@ class PatientContextMenu extends React.Component {
 }
 
 PatientContextMenu.propTypes = propTypes;
-PatientContextMenu.defaultProps = defaultProps;
 
 export default PatientContextMenu;

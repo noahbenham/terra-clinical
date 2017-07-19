@@ -5,6 +5,7 @@ import Navigation from 'terra-clinical-navigation';
 import ContentContainer from 'terra-content-container';
 import AppDelegate from 'terra-app-delegate';
 import navigation_hoc, { reducers as navigationReducers } from 'terra-clinical-navigation/lib/navigation_hoc';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 import PatientChartMenu from './PatientChartMenu';
 
@@ -16,31 +17,14 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
-  deregisterNavigation: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  index: PropTypes.number,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  registerNavigation: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  toggleMenu: PropTypes.func,
-  /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
-  size: PropTypes.oneOf(Navigation.breakpoints),
-  navigationUpdateId: PropTypes.string,
   navigationData: PropTypes.object,
-  updateNavigation: PropTypes.func,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   **/
+  navManager: NavManagerDelegate.propType,
 };
 
 const defaultProps = {
-  index: 0,
-  size: 'tiny',
   navigationData: {},
 };
 
@@ -52,14 +36,8 @@ class PatientChartNavigation extends React.Component {
   render() {
     const {
       app,
-      registerNavigation,
-      deregisterNavigation,
-      index,
-      toggleMenu,
-      size,
       navigationData,
-      navigationUpdateId,
-      updateNavigation,
+      navManager,
     } = this.props;
 
     const demo = <div style={{ height: '40px', backgroundColor: 'blue', color: 'white' }}>DEMOGRAPHICS</div>;
@@ -67,14 +45,10 @@ class PatientChartNavigation extends React.Component {
     const navProps = {
       app,
       contentParent: <ContentContainer header={demo} fill />,
-      deregisterNavigation,
-      index,
       menuBreakpoint: 'huge',
       menuClass: PatientChartMenu,
       menuProps: {},
-      registerNavigation,
-      toggleMenu,
-      size,
+      navManager,
     };
 
     return (

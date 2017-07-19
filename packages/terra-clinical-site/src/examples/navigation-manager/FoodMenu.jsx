@@ -4,12 +4,10 @@ import ContentContainer from 'terra-content-container';
 import IconProjects from 'terra-icon/lib/icon/IconProjects';
 import AppDelegate from 'terra-app-delegate';
 import MenuToolbar from 'terra-clinical-navigation/lib/NavigationMenuToolbar';
+import NavManagerDelegate from 'terra-clinical-navigation-manager/lib/NavManagerDelegate';
 
 const propTypes = {
-  closeMenu: PropTypes.func.isRequired,
-  openMenu: PropTypes.func,
-  presentRootMenu: PropTypes.func,
-  presentParentMenu: PropTypes.func,
+  navManager: NavManagerDelegate.propType,
   updateNavigation: PropTypes.func.isRequired,
 };
 
@@ -31,25 +29,12 @@ class FoodMenu extends React.Component {
 
   render() {
     const {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      openMenu,
-      pinMenu,
-      unpinMenu,
+      navManager,
     } = this.props;
-
-    const toolbarProps = {
-      presentRootMenu,
-      presentParentMenu,
-      closeMenu,
-      pinMenu,
-      unpinMenu,
-    };
 
     const headerButtons = (
       <div>
-        <MenuToolbar {...toolbarProps} />
+        <MenuToolbar navManager={navManager} />
         {<Button text="Burgers" onClick={this.changeFoodState({ selectedContent: 'BURGERS' })} isBlock icon={<IconProjects />} />};
         {<Button text="Drinks" onClick={this.changeFoodState({ selectedContent: 'DRINKS' })} isBlock icon={<IconProjects />} />};
       </div>
