@@ -84,7 +84,7 @@ class PatientContentNavigation extends React.Component {
     } = this.props;
 
     let searchToolbar;
-    if (navManager.size !== 'small' || navManager.size !== 'tiny') {
+    if (navManager.size !== 'small' && navManager.size !== 'tiny') {
       searchToolbar = <PatientContextToolbar app={app} onSelectSearch={this.loadPatient} onSelectSchedule={this.discloseSchedule} />;
     }
 
