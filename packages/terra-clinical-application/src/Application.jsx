@@ -1,21 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import Base from 'terra-base';
 import AppDelegate from 'terra-app-delegate';
-import 'terra-base/lib/baseStyles';
 import ModalManager, { reducers as modalManagerReducers } from 'terra-modal-manager';
 
-import './Application.scss';
+import 'terra-base/lib/baseStyles';
+import styles from './Application.scss';
+
+const cx = classNames.bind(styles);
 
 const propTypes = {
   /**
    * The AppDelegate instance that will be propagated to the Application's children.
-   **/
+   */
   app: AppDelegate.propType,
   /**
    * The components to display within the Application.
-   **/
+   */
   children: PropTypes.node.isRequired,
 };
 
@@ -33,7 +35,7 @@ const Application = ({ app, children, ...customProps }) => {
   }
 
   return (
-    <Base {...customProps} className={classNames([customProps.className, 'terraClinical-Application'])}>
+    <Base {...customProps} className={cx(['application', customProps.className])}>
       <ModalManager app={app}>
         {childrenToRender}
       </ModalManager>
