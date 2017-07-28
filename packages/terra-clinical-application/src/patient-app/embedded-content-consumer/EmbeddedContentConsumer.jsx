@@ -24,6 +24,20 @@ class EmbeddedContentConsumer extends React.Component {
     this.providerMaximize = this.providerMaximize.bind(this);
   }
 
+  /*
+    componentDidMount() {
+      this.xfcFrame = Consumer.mount(this.target, this.props.src);
+      
+      this.xfcFrame.on('providerMessage', (message) => {
+         if (this.props.callbacks[message.event]) {
+           this.props.callbacks[message.event](message.data);
+         } else if (this.props.isUnsafe) {
+           document.dispatchEvent(new Event(message.event, message.data));
+         }
+      });
+    };
+  */
+  
   componentDidMount() {
     if (this.embeddedContentWrapper) {
       this.xfcFrame = Consumer.mount(this.embeddedContentWrapper, this.props.src);
