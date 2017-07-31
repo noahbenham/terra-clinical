@@ -10,81 +10,10 @@ import Button from 'terra-button';
 import routeConfig from './routeConfig';
 
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom';
-
-const propTypes = {
-  app: AppDelegate.propType,
-};
-
-class RootNav extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.displayParentMenu = this.displayParentMenu.bind(this);
-    this.linkTo = this.linkTo.bind(this);
-  }
-
-  displayParentMenu() {
-    this.props.onBack(this.props.location.pathname);
-  }
-
-  linkTo(data) {
-
-  }
-
-  render() {
-    const menuRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
-      const route = routeConfig.routes[routeKey];
-      return (
-        <Route
-          exact={route.exact}
-          path={route.path}
-          key={route.path}
-          render={(props) => {
-            const Component = route.menuComponent;
-            return <Component {...props} goBack={this.displayParentMenu} linkTo={this.linkTo} />;
-          }}
-        />
-      );
-    });
-
-    return (
-      <div>
-        <Switch location={(this.props.backPathname && { pathname: this.props.backPathname }) || this.props.location}>
-          {menuRoutes}
-        </Switch>
-      </div>
-    );
-  }
-}
-
-const Root = () => {
-  const routes = Object.keys(routeConfig.routes).map((routeKey) => {
-    const route = routeConfig.routes[routeKey];
-    return (
-      <Route
-        exact={route.exact}
-        path={route.path}
-        key={route.path}
-        render={(props) => {
-          const Component = route.component;
-          return <Component {...props} />;
-        }}
-      />
-    );
-  });
-
-  return (
-    <div style={{ height: '100%' }}>
-      <Switch>
-        {routes}
-      </Switch>
-    </div>
-  );
-};
 
 class NavRoot extends React.Component {
   constructor(props) {
@@ -100,16 +29,14 @@ class NavRoot extends React.Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.setState({
-        backPathname: undefined,
-      });
-    }
+  componentWillReceiveProps() {
+    this.setState({
+      backPathname: undefined,
+    });
   }
 
-  onBack(currentPath) {
-    const parentPath = this.routeConfig.routes[currentPath].parentPath;
+  onBack() {
+    const parentPath = this.routeConfig.routes[this.props.location.pathname].parentPath;
 
     if (parentPath) {
       this.setState({
@@ -121,13 +48,46 @@ class NavRoot extends React.Component {
   toggleNav() {
     const newState = {
       navIsOpen: !this.state.navIsOpen,
-      backPathname: undefined,
     };
+
+    if (newState.navIsOpen) {
+      newState.backPathname = undefined;
+    }
 
     this.setState(newState);
   }
 
   render() {
+    const contentRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
+      const route = routeConfig.routes[routeKey];
+      return (
+        <Route
+          exact={route.exact}
+          path={route.path}
+          key={route.path}
+          render={(props) => {
+            const Component = route.component;
+            return <Component {...props} />;
+          }}
+        />
+      );
+    });
+
+    const menuRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
+      const route = routeConfig.routes[routeKey];
+      return (
+        <Route
+          exact={route.exact}
+          path={route.path}
+          key={route.path}
+          render={(props) => {
+            const Component = route.menuComponent;
+            return <Component {...props} goBack={this.onBack} />;
+          }}
+        />
+      );
+    });
+
     return (
       <div style={{ height: '100%' }}>
         <ContentContainer
@@ -139,8 +99,20 @@ class NavRoot extends React.Component {
             panelBehavior="squish"
             panelPosition="start"
             fill
-            panelContent={<RootNav location={this.props.location} key={this.props.location.pathname} config={this.routeConfig} backPathname={this.state.backPathname} onBack={this.onBack} />}
-            mainContent={<Root />}
+            panelContent={(
+              <div style={{ height: '100%' }} key={this.props.location}>
+                <Switch location={(this.state.backPathname && { pathname: this.state.backPathname }) || this.props.location}>
+                  {menuRoutes}
+                </Switch>
+              </div>
+            )}
+            mainContent={(
+              <div style={{ height: '100%' }}>
+                <Switch>
+                  {contentRoutes}
+                </Switch>
+              </div>
+            )}
           />
         </ContentContainer>
       </div>
@@ -161,8 +133,6 @@ class PatientNavigation extends React.Component {
     );
   }
 }
-
-PatientNavigation.propTypes = propTypes;
 
 export default PatientNavigation;
 

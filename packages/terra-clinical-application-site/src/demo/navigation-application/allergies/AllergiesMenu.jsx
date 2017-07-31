@@ -6,8 +6,7 @@ const AllergiesMenu = ({ match, location, goBack }) => {
   return (
     <div style={{ height: '100%', backgroundColor: 'red' }}>
       <ul>
-        {goBack && <Button onClick={goBack} text="Managed Back" />}
-        {location && location.query && <li><Link to={location.query.backPath}>Back</Link></li>}
+        {goBack && <Button onClick={goBack} text="Back" />}
       </ul>
     </div>
   );
