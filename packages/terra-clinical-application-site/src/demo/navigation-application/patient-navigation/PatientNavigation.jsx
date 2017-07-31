@@ -8,6 +8,8 @@ import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import Button from 'terra-button';
 
+import routeConfig from './routeConfig';
+
 import {
   HashRouter as Router,
   Route,
@@ -19,101 +21,36 @@ const propTypes = {
   app: AppDelegate.propType,
 };
 
-const Home = () => (
-  <div>HOME</div>
-);
-
-const HomeNav = () => (
-  <div style={{ height: '100%', backgroundColor: 'green'}}>
-    <ul>
-      <li><Link to="/allergies">Allergies</Link></li>
-      <li><Link to="/orders">Orders</Link></li>
-    </ul>
-  </div>
-)
-
-const Allergies = ({ match, location }) => (
-  <div>
-    <h2>Allergies</h2>
-    <Route path="/allergies/stuff" component={AllergiesStuff}/>
-  </div>
-);
-
-const AllergiesNav = ({ match, location }) => {
-  console.log('AllergiesNav');
-  console.log(match);
-  console.log(location);
-
-  return (
-    <div style={{ height: '100%', backgroundColor: 'red'}}>
-      <ul>
-        <li><Link to={match.url.substring(0, match.url.lastIndexOf('/allergies'))}>Back</Link></li>
-        <li><Link to="/allergies/stuff">Stuff</Link></li>
-      </ul>
-      <Route path="/allergies/stuff" component={AllergiesStuffNav} />
-    </div>
-  );
-};
-
-const AllergiesStuff = () => (
-  <div>
-    <h2>Stuff</h2>
-  </div>
-);
-
-const AllergiesStuffNav = ({ match, location }) => {
-  console.log('AllergiesStuffNav');
-  console.log(match);
-  console.log(location);
-
-  return (
-    <div style={{ height: '100%', backgroundColor: 'orange'}}>
-      <ul>
-        <li><Link to={match.url.substring(0, match.url.lastIndexOf('/stuff'))}>Back</Link></li>
-      </ul>
-    </div>
-  );
-};
-
-const Orders = () => (
-  <div>Orders</div>
-);
-
-const OrdersNav = ({ match }) => (
-  <div style={{ height: '100%', backgroundColor: 'yellow'}}>
-    <ul>
-      <li><Link to={match.url.substring(0, match.url.lastIndexOf('/orders'))}>Back</Link></li>
-    </ul>
-  </div>
-)
-
 const RootNav = () => {
+  const menuRoutes = routeConfig.routes.map((route) => {
+    return <Route exact={route.exact} path={route.path} key={route.path} render={({...props}) => {
+      const Component = route.menuComponent;
+      return <Component {...props} goBack={() => { console.log('Goin back')}} />;
+    }} />
+  });
+
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={HomeNav}/>
-        <Route path="/allergies" component={AllergiesNav}/>
-        <Route path="/orders" component={OrdersNav}/>
+        {menuRoutes}
       </Switch>
     </div>
   )
 }
 
 const Root = () => {
+  const routes = routeConfig.routes.map((route) => {
+    return <Route exact={route.exact} path={route.path} key={route.path} render={({...props}) => {
+      const Component = route.component;
+      return <Component {...props} testProp={'HEYO'} />;
+    }} />
+  });
+
   return (
     <div style={{height: '100%'}}>
-      <Route render={({ location }) => (
-          <CSSTransitionGroup transitionName="fade" transitionEnterTimeout={500} transitionLeaveTimeout={500}>
-            <Route location={location} key={location.pathname}>
-              <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/allergies" component={Allergies} />
-                <Route path="/orders" component={Orders} />
-              </Switch>
-            </Route>
-          </CSSTransitionGroup>
-        )}
-      />
+      <Switch>
+        {routes}
+      </Switch>
     </div>
   );
 }
