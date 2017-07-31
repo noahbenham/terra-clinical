@@ -29,10 +29,10 @@ class NavRoot extends React.Component {
     });
   }
 
-  onBack() {
+  onBack(sourcePath) {
     const { routeConfig, location } = this.props;
 
-    const parentPath = routeConfig.routes[this.state.backPathname || location.pathname].parentPath;
+    const parentPath = routeConfig.routes[this.state.backPathname || sourcePath || location.pathname].parentPath;
     if (parentPath) {
       this.setState({
         backPathname: parentPath,

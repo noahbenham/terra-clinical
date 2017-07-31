@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const HomeMenu = ({ match, location, linkTo }) => (
+const HomeMenu = () => (
   <div style={{ height: '100%', backgroundColor: 'green' }}>
     <ul>
       <li><Link to={{ pathname: '/allergies' }}>Allergies</Link></li>
