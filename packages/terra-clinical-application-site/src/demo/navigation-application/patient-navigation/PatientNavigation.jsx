@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
-import { connect } from 'react-redux';
 import AppDelegate from 'terra-app-delegate';
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
@@ -11,83 +10,153 @@ import Button from 'terra-button';
 import routeConfig from './routeConfig';
 
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Route,
-  Link,
-  Switch
-} from 'react-router-dom'
+  Switch,
+} from 'react-router-dom';
 
 const propTypes = {
   app: AppDelegate.propType,
 };
 
-const RootNav = () => {
-  const menuRoutes = routeConfig.routes.map((route) => {
-    return <Route exact={route.exact} path={route.path} key={route.path} render={({...props}) => {
-      const Component = route.menuComponent;
-      return <Component {...props} goBack={() => { console.log('Goin back')}} />;
-    }} />
-  });
+class RootNav extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <div>
-      <Switch>
-        {menuRoutes}
-      </Switch>
-    </div>
-  )
+    this.displayParentMenu = this.displayParentMenu.bind(this);
+    this.linkTo = this.linkTo.bind(this);
+  }
+
+  displayParentMenu() {
+    this.props.onBack(this.props.location.pathname);
+  }
+
+  linkTo(data) {
+
+  }
+
+  render() {
+    const menuRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
+      const route = routeConfig.routes[routeKey];
+      return (
+        <Route
+          exact={route.exact}
+          path={route.path}
+          key={route.path}
+          render={(props) => {
+            const Component = route.menuComponent;
+            return <Component {...props} goBack={this.displayParentMenu} linkTo={this.linkTo} />;
+          }}
+        />
+      );
+    });
+
+    return (
+      <div>
+        <Switch location={(this.props.backPathname && { pathname: this.props.backPathname }) || this.props.location}>
+          {menuRoutes}
+        </Switch>
+      </div>
+    );
+  }
 }
 
 const Root = () => {
-  const routes = routeConfig.routes.map((route) => {
-    return <Route exact={route.exact} path={route.path} key={route.path} render={({...props}) => {
-      const Component = route.component;
-      return <Component {...props} testProp={'HEYO'} />;
-    }} />
+  const routes = Object.keys(routeConfig.routes).map((routeKey) => {
+    const route = routeConfig.routes[routeKey];
+    return (
+      <Route
+        exact={route.exact}
+        path={route.path}
+        key={route.path}
+        render={(props) => {
+          const Component = route.component;
+          return <Component {...props} />;
+        }}
+      />
+    );
   });
 
   return (
-    <div style={{height: '100%'}}>
+    <div style={{ height: '100%' }}>
       <Switch>
         {routes}
       </Switch>
     </div>
   );
-}
+};
 
-class PatientNavigation extends React.Component {
+class NavRoot extends React.Component {
   constructor(props) {
     super(props);
 
     this.toggleNav = this.toggleNav.bind(this);
+    this.onBack = this.onBack.bind(this);
+    this.routeConfig = routeConfig;
 
-    this.state = { navIsOpen: true };
+    this.state = {
+      navIsOpen: true,
+      backPathname: undefined,
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.pathname !== this.props.location.pathname) {
+      this.setState({
+        backPathname: undefined,
+      });
+    }
+  }
+
+  onBack(currentPath) {
+    const parentPath = this.routeConfig.routes[currentPath].parentPath;
+
+    if (parentPath) {
+      this.setState({
+        backPathname: parentPath,
+      });
+    }
   }
 
   toggleNav() {
-    this.setState({ navIsOpen: !this.state.navIsOpen });
+    const newState = {
+      navIsOpen: !this.state.navIsOpen,
+      backPathname: undefined,
+    };
+
+    this.setState(newState);
   }
 
   render() {
-    const { app } = this.props;
+    return (
+      <div style={{ height: '100%' }}>
+        <ContentContainer
+          fill
+          header={(<div style={{ height: '44px', backgroundColor: 'lightblue' }}><Button text="Toggle" onClick={this.toggleNav} /></div>)}
+        >
+          <SlidePanel
+            isOpen={this.state.navIsOpen}
+            panelBehavior="squish"
+            panelPosition="start"
+            fill
+            panelContent={<RootNav location={this.props.location} key={this.props.location.pathname} config={this.routeConfig} backPathname={this.state.backPathname} onBack={this.onBack} />}
+            mainContent={<Root />}
+          />
+        </ContentContainer>
+      </div>
+    );
+  }
+}
 
+class PatientNavigation extends React.Component {
+  render() {
     return (
       <Router>
-        <div style={{ height: '100%' }}>
-          <ContentContainer
-            fill
-            header={(<div style={{ height: '44px', backgroundColor: 'lightblue'}}><Button text="Toggle" onClick={this.toggleNav} /></div>)}
-          >
-            <SlidePanel
-              isOpen={this.state.navIsOpen}
-              panelBehavior="squish"
-              panelPosition="start"
-              fill
-              panelContent={<RootNav />}
-              mainContent={<Root />}
-            />
-          </ContentContainer>
-        </div>
+        <Route
+          render={props => (
+            <NavRoot {...props} />
+          )}
+        />
       </Router>
     );
   }

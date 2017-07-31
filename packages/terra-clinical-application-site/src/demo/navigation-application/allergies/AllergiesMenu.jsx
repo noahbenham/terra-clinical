@@ -3,10 +3,6 @@ import { Link } from 'react-router-dom';
 import Button from 'terra-button';
 
 const AllergiesMenu = ({ match, location, goBack }) => {
-  console.log('AllergiesNav');
-  console.log(match);
-  console.log(location);
-
   return (
     <div style={{ height: '100%', backgroundColor: 'red' }}>
       <ul>
