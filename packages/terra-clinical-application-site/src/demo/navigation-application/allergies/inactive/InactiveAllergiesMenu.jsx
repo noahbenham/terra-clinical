@@ -6,8 +6,12 @@ const InactiveAllergiesMenu = ({ match, location, goBack }) => {
   return (
     <div style={{ height: '100%', backgroundColor: 'red' }}>
       {goBack && <Button onClick={goBack} text="Back" />}
-      <Button text="Sort A->Z" />
-      <Button text="Sort Z->A" />
+      <Link to="/allergies/inactive/alpha_sort">
+        <Button text="Sort" />
+      </Link>
+      <Link to="/allergies/inactive/reverse_sort">
+        <Button text="Reverse Sort" />
+      </Link>
     </div>
   );
 };
