@@ -36,8 +36,7 @@ class NavRoot extends React.Component {
   }
 
   onBack() {
-    const parentPath = this.routeConfig.routes[this.props.location.pathname].parentPath;
-
+    const parentPath = this.routeConfig.routes[this.state.backPathname || this.props.location.pathname].parentPath;
     if (parentPath) {
       this.setState({
         backPathname: parentPath,
