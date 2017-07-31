@@ -19,3 +19,13 @@ body {
 .terraClinical-ItemView-accessory {
   max-width: 70%;
 }
+
+.fade-enter {
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
