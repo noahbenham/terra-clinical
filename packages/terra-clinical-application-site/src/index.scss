@@ -20,22 +20,35 @@ body {
   max-width: 70%;
 }
 
-.fade-enter {
-  opacity: 0.7;
+.menu-fade-enter {
+  opacity: 0.5;
   z-index: 1;
 }
 
-.fade-enter.fade-enter-active {
+.menu-fade-enter.menu-fade-enter-active {
   opacity: 1;
   transition: opacity 300ms ease-out;
 }
 
-.fade-leave {
-  opacity: 0.5;
+.menu-fade-leave {
   z-index: 0;
 }
 
-.fade-leave.fade-leave-active {
-  opacity: 0;
+.content-fade-enter {
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.content-fade-enter.content-fade-enter-active {
+  opacity: 1;
   transition: opacity 300ms ease-out;
 }
+
+.content-fade-leave {
+  z-index: 0;
+}
+
+// .fade-leave.fade-leave-active {
+//   opacity: 0;
+//   transition: opacity 1000ms ease-out;
+// }

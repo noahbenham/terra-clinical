@@ -105,7 +105,7 @@ class NavRoot extends React.Component {
             panelContent={(
               <div style={{ height: '100%' }}>
                 <CSSTransitionGroup
-                  transitionName="fade"
+                  transitionName="menu-fade"
                   transitionEnterTimeout={300}
                   transitionLeaveTimeout={300}
                   transitionEnter={!!routeConfig.routes[menuLocation.pathname]}
@@ -122,7 +122,7 @@ class NavRoot extends React.Component {
             mainContent={(
               <div style={{ height: '100%' }}>
                 <CSSTransitionGroup
-                  transitionName="fade"
+                  transitionName="content-fade"
                   transitionEnterTimeout={300}
                   transitionLeaveTimeout={300}
                   transitionEnter={!!routeConfig.routes[location.pathname]}
