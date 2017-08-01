@@ -10,6 +10,7 @@ import InactiveAllergies from '../allergies/inactive/InactiveAllergies';
 import InactiveAllergiesMenu from '../allergies/inactive/InactiveAllergiesMenu';
 
 const config = {
+  rootRoute: '/',
   routes: {
     '/': {
       exact: true,

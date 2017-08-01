@@ -9,6 +9,7 @@ import Button from 'terra-button';
 import {
   Route,
   Switch,
+  Redirect,
   withRouter,
 } from 'react-router-dom';
 
@@ -96,6 +97,8 @@ class RoutingManager extends React.Component {
     });
 
     const menuLocation = (this.state.menuPathname && { pathname: this.state.menuPathname }) || location;
+    const currentRouteConfig = routeConfig.routes[location.pathname];
+    const menuRouteConfig = routeConfig.routes[menuLocation.pathname];
 
     return (
       <div style={{ height: '100%', backgroundColor: 'lightgrey' }}>
@@ -114,8 +117,8 @@ class RoutingManager extends React.Component {
                   transitionName="menu-fade"
                   transitionEnterTimeout={300}
                   transitionLeaveTimeout={300}
-                  transitionEnter={!!routeConfig.routes[menuLocation.pathname]}
-                  transitionLeave={!!routeConfig.routes[menuLocation.pathname]}
+                  transitionEnter={!!menuRouteConfig}
+                  transitionLeave={!!menuRouteConfig}
                 >
                   <Route location={menuLocation} key={menuLocation.pathname}>
                     <Switch>
@@ -131,12 +134,13 @@ class RoutingManager extends React.Component {
                   transitionName="content-fade"
                   transitionEnterTimeout={300}
                   transitionLeaveTimeout={300}
-                  transitionEnter={!!routeConfig.routes[location.pathname]}
-                  transitionLeave={!!routeConfig.routes[location.pathname]}
+                  transitionEnter={!!currentRouteConfig}
+                  transitionLeave={!!currentRouteConfig}
                 >
                   <Route location={location} key={location.pathname}>
                     <Switch>
                       {contentRoutes}
+                      <Redirect to={routeConfig.rootRoute} />
                     </Switch>
                   </Route>
                 </CSSTransitionGroup>
