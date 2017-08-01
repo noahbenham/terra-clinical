@@ -1,8 +1,10 @@
 import React from 'react';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import Button from 'terra-button';
+import SlideGroup from 'terra-slide-group';
 
 import {
   Route,
@@ -85,6 +87,8 @@ class NavRoot extends React.Component {
       );
     });
 
+    const menuLocation = (this.state.backPathname && { pathname: this.state.backPathname }) || location;
+
     return (
       <div style={{ height: '100%' }}>
         <ContentContainer
@@ -98,9 +102,13 @@ class NavRoot extends React.Component {
             fill
             panelContent={(
               <div style={{ height: '100%' }} key={location}>
-                <Switch location={(this.state.backPathname && { pathname: this.state.backPathname }) || location}>
-                  {menuRoutes}
-                </Switch>
+                <CSSTransitionGroup transitionName="fade" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
+                  <Route location={menuLocation} key={menuLocation.pathname}>
+                    <Switch>
+                      {menuRoutes}
+                    </Switch>
+                  </Route>
+                </CSSTransitionGroup>
               </div>
             )}
             mainContent={(

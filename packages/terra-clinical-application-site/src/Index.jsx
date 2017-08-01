@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // import PatientApplication from './demo/patient-application/PatientApplication';
-import NavigationApplication from './demo/navigation-application/NavigationApplication';
+import PatientApplication from './demo/navigation-application/PatientApplication';
 
 import './index.scss';
 
-ReactDOM.render(<NavigationApplication />, document.getElementById('terra-ApplicationMount'));
+ReactDOM.render(<PatientApplication />, document.getElementById('terra-ApplicationMount'));
 
