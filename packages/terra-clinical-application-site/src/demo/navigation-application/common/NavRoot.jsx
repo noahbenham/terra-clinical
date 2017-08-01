@@ -21,23 +21,23 @@ class NavRoot extends React.Component {
 
     this.state = {
       navIsOpen: true,
-      backPathname: undefined,
+      menuPathname: undefined,
     };
   }
 
   componentWillReceiveProps() {
     this.setState({
-      backPathname: undefined,
+      menuPathname: undefined,
     });
   }
 
   onBack(sourcePath) {
-    const { routeConfig, location } = this.props;
+    const { routeConfig } = this.props;
 
-    const parentPath = routeConfig.routes[this.state.backPathname || sourcePath || location.pathname].parentPath;
-    if (parentPath) {
+    const menueRoute = routeConfig.routes[this.state.menuPathname || sourcePath];
+    if (menueRoute.parentPath) {
       this.setState({
-        backPathname: parentPath,
+        menuPathname: menueRoute.parentPath,
       });
     }
   }
@@ -47,8 +47,10 @@ class NavRoot extends React.Component {
       navIsOpen: !this.state.navIsOpen,
     };
 
+    // Clear the current menu path when menu is opening (and not before,
+    // to prevent the default menu presenting during menu close)
     if (newState.navIsOpen) {
-      newState.backPathname = undefined;
+      newState.menuPathname = undefined;
     }
 
     this.setState(newState);
@@ -87,7 +89,7 @@ class NavRoot extends React.Component {
       );
     });
 
-    const menuLocation = (this.state.backPathname && { pathname: this.state.backPathname }) || location;
+    const menuLocation = (this.state.menuPathname && { pathname: this.state.menuPathname }) || location;
 
     return (
       <div style={{ height: '100%' }}>
@@ -101,9 +103,15 @@ class NavRoot extends React.Component {
             panelPosition="start"
             fill
             panelContent={(
-              <div style={{ height: '100%' }} key={location}>
-                <CSSTransitionGroup transitionName="fade" transitionEnterTimeout={300} transitionLeaveTimeout={300}>
-                  <Route location={menuLocation} key={menuLocation.pathname}>
+              <div style={{ height: '100%' }}>
+                <CSSTransitionGroup
+                  transitionName="fade"
+                  transitionEnterTimeout={300}
+                  transitionLeaveTimeout={300}
+                  transitionEnter={!!routeConfig.routes[menuLocation.pathname]}
+                  transitionLeave={!!routeConfig.routes[menuLocation.pathname]}
+                >
+                  <Route path={menuLocation.pathname} location={menuLocation} key={menuLocation.pathname}>
                     <Switch>
                       {menuRoutes}
                     </Switch>
