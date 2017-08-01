@@ -111,7 +111,7 @@ class NavRoot extends React.Component {
                   transitionEnter={!!routeConfig.routes[menuLocation.pathname]}
                   transitionLeave={!!routeConfig.routes[menuLocation.pathname]}
                 >
-                  <Route path={menuLocation.pathname} location={menuLocation} key={menuLocation.pathname}>
+                  <Route location={menuLocation} key={menuLocation.pathname}>
                     <Switch>
                       {menuRoutes}
                     </Switch>
@@ -121,9 +121,19 @@ class NavRoot extends React.Component {
             )}
             mainContent={(
               <div style={{ height: '100%' }}>
-                <Switch>
-                  {contentRoutes}
-                </Switch>
+                <CSSTransitionGroup
+                  transitionName="fade"
+                  transitionEnterTimeout={300}
+                  transitionLeaveTimeout={300}
+                  transitionEnter={!!routeConfig.routes[location.pathname]}
+                  transitionLeave={!!routeConfig.routes[location.pathname]}
+                >
+                  <Route location={location} key={location.pathname}>
+                    <Switch>
+                      {contentRoutes}
+                    </Switch>
+                  </Route>
+                </CSSTransitionGroup>
               </div>
             )}
           />

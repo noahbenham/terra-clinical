@@ -8,7 +8,7 @@ const goBackWrapper = (path, goBack) => (
 
 const ActiveAllergiesMenu = ({ match, location, goBack }) => {
   return (
-    <div style={{ height: '100%', backgroundColor: 'fuchsia' }}>
+    <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'fuchsia' }}>
       {goBack && <Button onClick={goBackWrapper(match.url, goBack)} text="Back" />}
       <hr />
       <p>The ActiveAllergiesMenu uses location state to change the sort type. The URL does not change, and no new history entry is created.</p>

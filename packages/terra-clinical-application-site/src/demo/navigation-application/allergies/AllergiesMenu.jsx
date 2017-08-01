@@ -8,7 +8,7 @@ const goBackWrapper = (path, goBack) => (
 
 const AllergiesMenu = ({ match, location, goBack }) => {
   return (
-    <div style={{ height: '100%', backgroundColor: 'red' }}>
+    <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'red' }}>
       {goBack && <Button onClick={goBackWrapper(match.url, goBack)} text="Back" />}
       <ul>
         <li><Link to={'/allergies/active'}>Active Allergies</Link></li>

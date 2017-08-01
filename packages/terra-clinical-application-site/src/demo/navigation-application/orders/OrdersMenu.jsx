@@ -7,7 +7,7 @@ const goBackWrapper = (path, goBack) => (
 );
 
 const OrdersMenu = ({ match, goBack }) => (
-  <div style={{ height: '100%', backgroundColor: 'yellow' }}>
+  <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'yellow' }}>
     <ul>
       {goBack && <Button onClick={goBackWrapper(match.url, goBack)} text="Back" />}
     </ul>

@@ -1,9 +1,8 @@
 import React from 'react';
 
 const Allergies = ({ match, location }) => (
-  <div>
+  <div style={{ height: '100%', width: '100%', position: 'absolute' }}>
     <h2>Allergies</h2>
-    {match.substring}
   </div>
 );
 
