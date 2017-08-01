@@ -2,7 +2,7 @@ import React from 'react';
 
 import AppDelegate from 'terra-app-delegate';
 
-import NavRoot from '../common/NavRoot';
+import RoutingManager from '../common/RoutingManager';
 import routeConfig from './routeConfig';
 
 import {
@@ -13,7 +13,7 @@ class PatientNavigation extends React.Component {
   render() {
     return (
       <Router>
-        <NavRoot routeConfig={routeConfig} />
+        <RoutingManager routeConfig={routeConfig} />
       </Router>
     );
   }

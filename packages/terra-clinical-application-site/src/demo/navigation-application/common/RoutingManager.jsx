@@ -18,7 +18,7 @@ const propTypes = {
   routeConfig: PropTypes.object,
 };
 
-class NavRoot extends React.Component {
+class RoutingManager extends React.Component {
   constructor(props) {
     super(props);
 
@@ -149,6 +149,6 @@ class NavRoot extends React.Component {
   }
 }
 
-NavRoot.propTypes = propTypes;
+RoutingManager.propTypes = propTypes;
 
-export default withRouter(NavRoot);
+export default withRouter(RoutingManager);
