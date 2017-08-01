@@ -1,16 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import Button from 'terra-button';
-import SlideGroup from 'terra-slide-group';
 
 import {
   Route,
   Switch,
   withRouter,
 } from 'react-router-dom';
+
+
+const propTypes = {
+  location: PropTypes.object,
+  routeConfig: PropTypes.object,
+};
 
 class NavRoot extends React.Component {
   constructor(props) {
@@ -92,7 +98,7 @@ class NavRoot extends React.Component {
     const menuLocation = (this.state.menuPathname && { pathname: this.state.menuPathname }) || location;
 
     return (
-      <div style={{ height: '100%' }}>
+      <div style={{ height: '100%', backgroundColor: 'lightgrey' }}>
         <ContentContainer
           fill
           header={(<div style={{ height: '44px', backgroundColor: 'lightblue' }}><Button text="Toggle" onClick={this.toggleNav} /></div>)}
@@ -142,5 +148,7 @@ class NavRoot extends React.Component {
     );
   }
 }
+
+NavRoot.propTypes = propTypes;
 
 export default withRouter(NavRoot);

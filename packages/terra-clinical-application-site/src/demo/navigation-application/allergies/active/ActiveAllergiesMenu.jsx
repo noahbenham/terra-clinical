@@ -13,7 +13,7 @@ const ActiveAllergiesMenu = ({ match, location, goBack }) => {
       <hr />
       <p>The ActiveAllergiesMenu uses location state to change the sort type. The URL does not change, and no new history entry is created.</p>
       <br />
-      <p>This is state is not persisted between navigations.</p>
+      <p>This state is not persisted between navigations.</p>
       <hr />
       <Link
         replace
