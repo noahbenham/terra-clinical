@@ -42,7 +42,7 @@ class NavigationToolbar extends React.Component {
   }
 
   render() {
-    const { 
+    const {
       app,
       content,
       onToggleClick,
@@ -55,7 +55,7 @@ class NavigationToolbar extends React.Component {
     const toolbarClassNames = classNames([
       'terraClinical-NavigationToolbar',
       customProps.className,
-    ]); 
+    ]);
 
     let logoElement;
     if (logo) {

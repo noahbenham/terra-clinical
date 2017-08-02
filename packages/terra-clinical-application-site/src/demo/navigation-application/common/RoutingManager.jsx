@@ -6,6 +6,9 @@ import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import Button from 'terra-button';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
+import NavigationToolbar from 'terra-clinical-navigation-toolbar';
+import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
+import IconProvider from 'terra-icon/lib/icon/IconProvider';
 
 import {
   Route,
@@ -130,12 +133,12 @@ class RoutingManager extends React.Component {
       const route = routeConfig.routes[routeKey];
       const routingManager = {
         size: this.state.size,
-        closeMenu: this.state.navIsOpen && this.toggleNav,
-        openMenu: !this.state.navIsOpen && this.toggleNav,
-        pinMenu: !this.state.navIsPinned && this.toggleNavPin,
-        unpinMenu: this.state.navIsPinned && this.toggleNavPin,
-        presentRootMenu: location.pathname !== routeConfig.rootRoute && this.presentRootMenu,
-        presentParentMenu: route.parentPath && (() => { this.onBack(route.path); }),
+        closeMenu: this.state.navIsOpen ? this.toggleNav : undefined,
+        openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
+        pinMenu: !this.state.navIsPinned ? this.toggleNavPin : undefined,
+        unpinMenu: this.state.navIsPinned ? this.toggleNavPin : undefined,
+        presentRootMenu: location.pathname !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
+        presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
       return (
@@ -155,12 +158,12 @@ class RoutingManager extends React.Component {
       const route = routeConfig.routes[routeKey];
       const routingManager = {
         size: this.state.size,
-        closeMenu: this.state.navIsOpen && this.toggleNav,
-        openMenu: !this.state.navIsOpen && this.toggleNav,
-        pinMenu: !this.state.navIsPinned && this.toggleNavPin,
-        unpinMenu: this.state.navIsPinned && this.toggleNavPin,
-        presentRootMenu: menuLocation.pathname !== routeConfig.rootRoute && this.presentRootMenu,
-        presentParentMenu: route.parentPath && (() => { this.onBack(route.path); }),
+        closeMenu: this.state.navIsOpen ? this.toggleNav : undefined,
+        openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
+        pinMenu: !this.state.navIsPinned ? this.toggleNavPin : undefined,
+        unpinMenu: this.state.navIsPinned ? this.toggleNavPin : undefined,
+        presentRootMenu: menuLocation.pathname !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
+        presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
       return (
@@ -176,11 +179,14 @@ class RoutingManager extends React.Component {
       );
     });
 
+    const logo = <NavigationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
+    const utility = <NavigationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
+
     return (
       <div style={{ height: '100%', backgroundColor: 'lightgrey' }}>
         <ContentContainer
           fill
-          header={(<div style={{ height: '44px', backgroundColor: 'lightblue' }}><Button text="Toggle" onClick={this.toggleNav} /></div>)}
+          header={<NavigationToolbar utility={utility} logo={logo} onToggleClick={this.toggleNav} />}
         >
           <SlidePanel
             isOpen={this.state.navIsOpen}

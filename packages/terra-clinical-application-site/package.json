@@ -56,7 +56,8 @@
     "terra-responsive-element": "^1.0.0",
     "terra-slide-group": "^1.0.0",
     "terra-slide-panel": "^1.0.0",
-    "react-transition-group": "^1.1.3"
+    "react-transition-group": "^1.1.3",
+    "terra-clinical-navigation-toolbar": "^0.x"
   },
   "peerDependencies": {
     "react": "^15.4.2",
