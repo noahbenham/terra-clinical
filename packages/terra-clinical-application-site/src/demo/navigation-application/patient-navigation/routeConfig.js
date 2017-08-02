@@ -4,10 +4,12 @@ import Allergies from '../allergies/Allergies';
 import AllergiesMenu from '../allergies/AllergiesMenu';
 import Orders from '../orders/Orders';
 import OrdersMenu from '../orders/OrdersMenu';
-import ActiveAllergies from '../allergies/active/ActiveAllergies';
-import ActiveAllergiesMenu from '../allergies/active/ActiveAllergiesMenu';
+import ActiveAllergies, { activeAllergies } from '../allergies/active/ActiveAllergies';
+import ActiveAllergiesMenu, { activeAllergiesMenu } from '../allergies/active/ActiveAllergiesMenu';
 import InactiveAllergies from '../allergies/inactive/InactiveAllergies';
 import InactiveAllergiesMenu from '../allergies/inactive/InactiveAllergiesMenu';
+import Patients from '../patients/Patients';
+import PatientsMenu from '../patients/PatientsMenu';
 
 const config = {
   rootRoute: '/',
@@ -42,11 +44,26 @@ const config = {
       menuComponent: InactiveAllergiesMenu,
     },
     '/orders': {
+      exact: true,
       path: '/orders',
       name: 'Orders',
       parentPath: '/',
       component: Orders,
-      menuComponent: OrdersMenu
+      menuComponent: OrdersMenu,
+    },
+    '/orders/allergies/active': {
+      path: '/orders/allergies/active',
+      name: 'ActiveAllergies(Orders)',
+      parentPath: '/orders',
+      component: activeAllergies('/orders/allergies/active'),
+      menuComponent: activeAllergiesMenu('/orders/allergies/active'),
+    },
+    '/patients': {
+      path: '/patients',
+      name: 'Patients',
+      parentPath: '/',
+      component: Patients,
+      menuComponent: PatientsMenu,
     },
   },
 };
