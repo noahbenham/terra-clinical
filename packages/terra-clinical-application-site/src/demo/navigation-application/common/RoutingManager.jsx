@@ -48,9 +48,8 @@ class RoutingManager extends React.Component {
     this.state = {
       navIsOpen: true,
       togglerEnabled: true,
-      pinMenu: false,
       menuPathname: undefined,
-      navIsPinned: false,
+      navIsPinned: true,
       size: RoutingManager.getBreakpointSize(),
     };
   }
