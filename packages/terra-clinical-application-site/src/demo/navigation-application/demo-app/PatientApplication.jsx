@@ -2,11 +2,15 @@ import React from 'react';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
+import {
+  HashRouter as Router,
+} from 'react-router-dom';
 
 import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
 import AppDelegate from 'terra-app-delegate';
 
-import PatientNavigation from './patient-navigation/PatientNavigation';
+import RoutingManager from '../common/RoutingManager';
+import routeConfig from './routeConfig';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -26,7 +30,9 @@ class PatientApplication extends React.Component {
     return (
       <Provider store={store}>
         <Application locale="en-US">
-          <PatientNavigation />
+          <Router>
+            <RoutingManager routeConfig={routeConfig} />
+          </Router>
         </Application>
       </Provider>
     );

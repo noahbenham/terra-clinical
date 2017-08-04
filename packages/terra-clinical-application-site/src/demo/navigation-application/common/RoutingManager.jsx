@@ -4,7 +4,6 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
-import Button from 'terra-button';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
@@ -126,7 +125,6 @@ class RoutingManager extends React.Component {
     const { routeConfig, location } = this.props;
 
     const menuLocation = (this.state.menuPathname && { pathname: this.state.menuPathname }) || location;
-    const currentRouteConfig = routeConfig.routes[location.pathname];
     const menuRouteConfig = routeConfig.routes[menuLocation.pathname];
 
     const contentRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
@@ -212,20 +210,12 @@ class RoutingManager extends React.Component {
             )}
             mainContent={(
               <div style={{ height: '100%' }}>
-                <CSSTransitionGroup
-                  transitionName="content-fade"
-                  transitionEnterTimeout={300}
-                  transitionLeaveTimeout={300}
-                  transitionEnter={!!currentRouteConfig}
-                  transitionLeave={!!currentRouteConfig}
-                >
-                  <Route location={location} key={location.pathname}>
-                    <Switch>
-                      {contentRoutes}
-                      <Redirect to={routeConfig.rootRoute} />
-                    </Switch>
-                  </Route>
-                </CSSTransitionGroup>
+                <Route location={location} key={location.pathname}>
+                  <Switch>
+                    {contentRoutes}
+                    <Redirect to={routeConfig.rootRoute} />
+                  </Switch>
+                </Route>
               </div>
             )}
           />

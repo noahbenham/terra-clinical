@@ -17,9 +17,10 @@ const propTypes = {
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    **/
   routingManager: RoutingManagerDelegate.propType,
+  backButtonOverride: PropTypes.node,
 };
 
-const MenuToolbar = ({ routingManager, ...customProps }) => {
+const MenuToolbar = ({ routingManager, backButtonOverride, ...customProps }) => {
   const toolbarClassNames = classNames([
     'terraClinical-MenuToolbar',
     customProps.className,
@@ -29,6 +30,10 @@ const MenuToolbar = ({ routingManager, ...customProps }) => {
   if (routingManager.presentParentMenu) {
     backButton = <Button onClick={routingManager.presentParentMenu} icon={<IconReply />} />;
   }
+  if (backButtonOverride) {
+    backButton = backButtonOverride;
+  }
+
   let rootButton;
   if (routingManager.presentRootMenu) {
     rootButton = <Button onClick={routingManager.presentRootMenu} icon={<IconHouse />} />;

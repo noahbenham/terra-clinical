@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuToolbar from '../common/MenuToolbar';
+import MenuToolbar from '../../common/MenuToolbar';
 import { Link } from 'react-router-dom';
 
 const OrdersMenu = ({ match, routingManager }) => (

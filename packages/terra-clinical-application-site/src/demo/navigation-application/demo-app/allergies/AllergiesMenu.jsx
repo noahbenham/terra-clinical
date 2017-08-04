@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MenuToolbar from '../common/MenuToolbar';
+import MenuToolbar from '../../common/MenuToolbar';
 
 const AllergiesMenu = ({ match, location, routingManager }) => {
   return (

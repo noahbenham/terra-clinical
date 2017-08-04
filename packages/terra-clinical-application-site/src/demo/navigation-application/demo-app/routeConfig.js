@@ -1,18 +1,45 @@
-import Home from '../home/Home';
-import HomeMenu from '../home/HomeMenu';
-import Allergies from '../allergies/Allergies';
-import AllergiesMenu from '../allergies/AllergiesMenu';
-import Orders from '../orders/Orders';
-import OrdersMenu from '../orders/OrdersMenu';
-import ActiveAllergies, { activeAllergies } from '../allergies/active/ActiveAllergies';
-import ActiveAllergiesMenu, { activeAllergiesMenu } from '../allergies/active/ActiveAllergiesMenu';
-import InactiveAllergies from '../allergies/inactive/InactiveAllergies';
-import InactiveAllergiesMenu from '../allergies/inactive/InactiveAllergiesMenu';
-import Patients from '../patients/Patients';
-import PatientsMenu from '../patients/PatientsMenu';
+import Home from './home/Home';
+import HomeMenu from './home/HomeMenu';
+import Allergies from './allergies/Allergies';
+import AllergiesMenu from './allergies/AllergiesMenu';
+import Orders from './orders/Orders';
+import OrdersMenu from './orders/OrdersMenu';
+import ActiveAllergies, { activeAllergies } from './allergies/active/ActiveAllergies';
+import ActiveAllergiesMenu, { activeAllergiesMenu } from './allergies/active/ActiveAllergiesMenu';
+import InactiveAllergies from './allergies/inactive/InactiveAllergies';
+import InactiveAllergiesMenu from './allergies/inactive/InactiveAllergiesMenu';
+import Patients from './patients/Patients';
+import PatientsMenu from './patients/PatientsMenu';
 
 const config = {
   rootRoute: '/',
+  menuRoutes: {
+    '/': {
+      exact: true,
+      path: '/',
+      name: 'HomeMenu',
+      component: HomeMenu,
+      backPath: undefined,
+    },
+    '/allergies': {
+      path: '/allergies',
+      name: 'AllergiesMenu',
+      component: AllergiesMenu,
+      backPath: '/',
+    },
+    '/orders': {
+      path: '/orders',
+      name: 'OrdersMenu',
+      component: OrdersMenu,
+      backPath: '/',
+    },
+    '/patients': {
+      path: '/patients',
+      name: 'PatientsMenu',
+      component: PatientsMenu,
+      backPath: '/',
+    },
+  },
   routes: {
     '/': {
       exact: true,
