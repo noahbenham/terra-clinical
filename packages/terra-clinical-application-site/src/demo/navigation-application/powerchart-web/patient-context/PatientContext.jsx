@@ -1,6 +1,15 @@
 import React from 'react';
 import { Route, Switch, Link, Redirect } from 'react-router-dom';
 import Button from 'terra-button';
+import DemographicsBanner from 'terra-demographics-banner';
+import Image from 'terra-image';
+import IconChecklist from 'terra-icon/lib/icon/IconChecklist';
+import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
+import IconSearch from 'terra-icon/lib/icon/IconSearch';
+import IconClose from 'terra-icon/lib/icon/IconClose';
+
+import SkinnyToolbar from './SkinnyToolbar';
+import Chart from './chart/Chart';
 
 class PatientContext extends React.Component {
   constructor(props) {
@@ -9,14 +18,9 @@ class PatientContext extends React.Component {
     this.launchPatientSearch = this.launchPatientSearch.bind(this);
     this.launchPatientSchedule = this.launchPatientSchedule.bind(this);
 
-    console.log('PatientContextConstructor');
     this.state = {
       patientContext: undefined,
     };
-  }
-
-  componentDidMount() {
-    console.log('PatientContextMounted');
   }
 
   launchPatientSearch() {
@@ -38,28 +42,46 @@ class PatientContext extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'lightgrey' }}>
-        <h2>Patients</h2>
-        <br />
+      <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
+        <SkinnyToolbar
+          buttons={
+            <div style={{ display: 'inline-block' }}>
+              <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
+              {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
+            </div>
+          }
+        />
         <Switch>
           <Route
             path="/patients/chart"
             render={({ match }) => (
               <div>
-                <h3>Patient Chart</h3>
-                <p>Name: {this.state.patientContext && this.state.patientContext.name}</p>
+                {!this.state.patientContext && <Redirect to="/patients" />}
+                <DemographicsBanner
+                  age="25 Years"
+                  dateOfBirth="May 9, 1993"
+                  gender="Male"
+                  gestationalAge="April 5, 2016"
+                  identifiers={{ MRN: 12343, REA: '3JSDA' }}
+                  photo={<Image alt="My Cat" src="http://lorempixel.com/50/50/animals/7/" />}
+                  personName={this.state.patientContext && this.state.patientContext.name}
+                />
+                <Chart />
               </div>
             )}
           />
           <Route
             render={() => (
-              <div>
+              <div style={{ height: '100%' }}>
                 { this.state.patientContext && <Redirect to="/patients/chart" /> }
-                <h3>Please select a patient.</h3>
-                <Button text="Search" onClick={this.launchPatientSearch} />
-                <Button text="Schedule" onClick={this.launchPatientSchedule} />
+                <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)', }}>
+                    <h2>No Patient Selected</h2>
+                  </div>
+                </div>
               </div>
             )}
           />

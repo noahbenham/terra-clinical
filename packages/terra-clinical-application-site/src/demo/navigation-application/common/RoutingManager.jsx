@@ -9,13 +9,13 @@ import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
 import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import {
-  Route,
   Switch,
   Redirect,
   withRouter,
 } from 'react-router-dom';
 
 import { createRoute } from './RouteConfigHelpers';
+import ApplicationToolbar from './ApplicationToolbar';
 
 const propTypes = {
   location: PropTypes.object,
@@ -125,19 +125,12 @@ class RoutingManager extends React.Component {
   render() {
     const { routeConfig, location } = this.props;
 
-    const menuLocation = (this.state.menuPathname && { pathname: this.state.menuPathname }) || location;
-    const menuRouteConfig = routeConfig.menuRoutes[menuLocation.pathname];
-
     const contentRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
       const route = routeConfig.routes[routeKey];
       const routingManager = {
         size: this.state.size,
         closeMenu: this.state.navIsOpen ? this.toggleNav : undefined,
         openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
-        pinMenu: !this.state.navIsPinned ? this.toggleNavPin : undefined,
-        unpinMenu: this.state.navIsPinned ? this.toggleNavPin : undefined,
-        presentRootMenu: location.pathname !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
-        presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
       return createRoute(route, { routingManager });
@@ -174,29 +167,17 @@ class RoutingManager extends React.Component {
             fill
             panelContent={(
               <div style={{ height: '100%' }}>
-                <CSSTransitionGroup
-                  transitionName="menu-fade"
-                  transitionEnterTimeout={300}
-                  transitionLeaveTimeout={300}
-                  transitionEnter={!!menuRouteConfig}
-                  transitionLeave={!!menuRouteConfig}
-                >
-                  <Route location={menuLocation} key={menuLocation.pathname}>
-                    <Switch>
-                      {menuRoutes}
-                    </Switch>
-                  </Route>
-                </CSSTransitionGroup>
+                <Switch>
+                  {menuRoutes}
+                </Switch>
               </div>
             )}
             mainContent={(
               <div style={{ height: '100%' }}>
-                <Route location={location} key={location.pathname}>
-                  <Switch>
-                    {contentRoutes}
-                    <Redirect to={routeConfig.rootRoute} />
-                  </Switch>
-                </Route>
+                <Switch>
+                  {contentRoutes}
+                  <Redirect to={routeConfig.rootRoute} />
+                </Switch>
               </div>
             )}
           />

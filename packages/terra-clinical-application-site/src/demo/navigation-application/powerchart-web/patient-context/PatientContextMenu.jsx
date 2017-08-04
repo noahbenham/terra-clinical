@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 import MenuToolbar from '../../common/MenuToolbar';
 import ChartMenu from './chart/ChartMenu';
+import RoutingManagerDelegate from '../../common/RoutingManagerDelegate';
 
 const PatientContextMenu = ({ match, routingManager, path }) => (
   <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'yellow' }}>
@@ -9,7 +10,14 @@ const PatientContextMenu = ({ match, routingManager, path }) => (
       <Route
         path={`${path}/chart`}
         render={(props) => {
-          return <ChartMenu {...props} routingManager={{ size: routingManager.size }} />;
+          return (
+            <ChartMenu
+              {...props}
+              routingManager={RoutingManagerDelegate.clone(routingManager, {
+                size: routingManager.size,
+              })}
+            />
+          );
         }}
       />
       <Route
