@@ -18,6 +18,9 @@ const RoutingManagerDelegate = {
     presentRootMenu: PropTypes.func,
     presentParentMenu: PropTypes.func,
   }),
+  clone: (source, overrides) => (
+    Object.assign({}, source, overrides)
+  ),
 };
 
 export default RoutingManagerDelegate;

@@ -9,7 +9,7 @@ import {
 import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
 import AppDelegate from 'terra-app-delegate';
 
-import RoutingManager from './common/RoutingManager';
+import RoutingManager from '../common/RoutingManager';
 import routeConfig from './routeConfig';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -25,7 +25,7 @@ const store = createStore(
 );
 
 // eslint-disable-next-line react/prefer-stateless-function
-class PatientApplication extends React.Component {
+class PowerchartWebApplication extends React.Component {
   render() {
     return (
       <Provider store={store}>
@@ -39,9 +39,9 @@ class PatientApplication extends React.Component {
   }
 }
 
-PatientApplication.propTypes = {
+PowerchartWebApplication.propTypes = {
   app: AppDelegate.propType,
 };
 
-export default PatientApplication;
+export default PowerchartWebApplication;
 

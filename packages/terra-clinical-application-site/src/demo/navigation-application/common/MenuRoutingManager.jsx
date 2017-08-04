@@ -8,14 +8,15 @@ import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
 import IconProvider from 'terra-icon/lib/icon/IconProvider';
+
+import { createRoute } from './RouteConfigHelpers';
+
 import {
   Route,
   Switch,
   Redirect,
   withRouter,
 } from 'react-router-dom';
-
-import { createRoute } from './RouteConfigHelpers';
 
 const propTypes = {
   location: PropTypes.object,

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // import PatientApplication from './demo/patient-application/PatientApplication';
-import PatientApplication from './demo/navigation-application/demo-app/PatientApplication';
+import PatientApplication from './demo/navigation-application/powerchart-web/PowerchartWebApplication';
 
 import './index.scss';
 

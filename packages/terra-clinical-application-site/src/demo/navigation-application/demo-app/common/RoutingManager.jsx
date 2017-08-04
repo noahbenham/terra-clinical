@@ -8,14 +8,13 @@ import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
 import IconProvider from 'terra-icon/lib/icon/IconProvider';
+
 import {
   Route,
   Switch,
   Redirect,
   withRouter,
 } from 'react-router-dom';
-
-import { createRoute } from './RouteConfigHelpers';
 
 const propTypes = {
   location: PropTypes.object,
@@ -74,7 +73,7 @@ class RoutingManager extends React.Component {
   onBack(sourcePath) {
     const { routeConfig } = this.props;
 
-    const menueRoute = routeConfig.menuRoutes[sourcePath];
+    const menueRoute = routeConfig.routes[sourcePath];
     if (menueRoute.parentPath) {
       this.setState({
         menuPathname: menueRoute.parentPath,
@@ -126,7 +125,7 @@ class RoutingManager extends React.Component {
     const { routeConfig, location } = this.props;
 
     const menuLocation = (this.state.menuPathname && { pathname: this.state.menuPathname }) || location;
-    const menuRouteConfig = routeConfig.menuRoutes[menuLocation.pathname];
+    const menuRouteConfig = routeConfig.routes[menuLocation.pathname];
 
     const contentRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
       const route = routeConfig.routes[routeKey];
@@ -140,22 +139,42 @@ class RoutingManager extends React.Component {
         presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
-      return createRoute(route, { routingManager });
+      return (
+        <Route
+          exact={route.exact}
+          path={route.path}
+          key={route.path}
+          render={(props) => {
+            const Component = route.component;
+            return <Component {...props} routingManager={routingManager} />;
+          }}
+        />
+      );
     });
 
-    const menuRoutes = Object.keys(routeConfig.menuRoutes).map((routeKey) => {
-      const route = routeConfig.menuRoutes[routeKey];
+    const menuRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
+      const route = routeConfig.routes[routeKey];
       const routingManager = {
         size: this.state.size,
         closeMenu: this.state.navIsOpen ? this.toggleNav : undefined,
         openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
         pinMenu: !this.state.navIsPinned ? this.toggleNavPin : undefined,
         unpinMenu: this.state.navIsPinned ? this.toggleNavPin : undefined,
-        presentRootMenu: route && route.parentPath && route.parentPath !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
+        presentRootMenu: menuLocation.pathname !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
         presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
-      return createRoute(route, { routingManager });
+      return (
+        <Route
+          exact={route.exact}
+          path={route.path}
+          key={route.path}
+          render={(props) => {
+            const Component = route.menuComponent;
+            return <Component {...props} routingManager={routingManager} />;
+          }}
+        />
+      );
     });
 
     const logo = <NavigationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
