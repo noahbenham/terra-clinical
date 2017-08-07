@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
@@ -14,8 +13,7 @@ import {
   withRouter,
 } from 'react-router-dom';
 
-import { createRoute } from './RouteConfigHelpers';
-import ApplicationToolbar from './ApplicationToolbar';
+import { createRoute, NoMenuComponent } from './RouteConfigHelpers';
 
 const propTypes = {
   location: PropTypes.object,
@@ -49,7 +47,8 @@ class RoutingManager extends React.Component {
     this.validateMenusAtCurrentSize = this.validateMenusAtCurrentSize.bind(this);
 
     this.state = {
-      navIsOpen: true,
+      navIsOpen: false,
+      hasMenu: true,
       togglerEnabled: true,
       menuPathname: undefined,
       navIsPinned: true,
@@ -62,10 +61,16 @@ class RoutingManager extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    this.setState({
+    const newHasMenu = props.location && props.location.state && props.location.state.routingManagerNoMenu ? false : this.state.hasMenu;
+    const newNavIsOpen = !newHasMenu ? false : this.state.navIsOpen;
+
+    const state = {
       menuPathname: undefined,
-      navIsOpen: (props.location && props.location.state && props.location.state.routingManagerNoMenu ? false : this.state.navIsOpen),
-    });
+      navIsOpen: newNavIsOpen,
+      hasMenu: newHasMenu,
+    };
+
+    this.setState(state);
   }
 
   componentWillUnmount() {
@@ -118,7 +123,14 @@ class RoutingManager extends React.Component {
   validateMenusAtCurrentSize() {
     const size = RoutingManager.getBreakpointSize();
     if (size !== this.state.size) {
-      const newState = { size, navIsOpen: false };
+      const newState = {
+        size,
+        navIsOpen: false,
+        hasMenu: true,
+      };
+
+      console.log(newState);
+
       this.setState(newState);
     }
   }
@@ -134,7 +146,7 @@ class RoutingManager extends React.Component {
         openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
       };
 
-      return createRoute(route, { routingManager });
+      return createRoute(route, this.state.size, { routingManager });
     });
 
     const menuRoutes = Object.keys(routeConfig.menuRoutes).map((routeKey) => {
@@ -149,7 +161,7 @@ class RoutingManager extends React.Component {
         presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
-      return createRoute(route, { routingManager });
+      return createRoute(route, this.state.size, { routingManager });
     });
 
     const logo = <NavigationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
@@ -159,7 +171,7 @@ class RoutingManager extends React.Component {
       <div style={{ height: '100%', backgroundColor: 'lightgrey' }}>
         <ContentContainer
           fill
-          header={<NavigationToolbar utility={utility} logo={logo} onToggleClick={(!location.state || location.state && !!location.state.routingManagerNoMenu) && this.toggleNav} />}
+          header={<NavigationToolbar utility={utility} logo={logo} onToggleClick={this.state.hasMenu ? this.toggleNav : undefined} />}
         >
           <SlidePanel
             isOpen={this.state.navIsOpen}
@@ -173,7 +185,7 @@ class RoutingManager extends React.Component {
                   <Redirect
                     to={{
                       pathname: location.pathname,
-                      state: { routingManagerNoMenu: false },
+                      state: { routingManagerNoMenu: true },
                     }}
                   />
                 </Switch>

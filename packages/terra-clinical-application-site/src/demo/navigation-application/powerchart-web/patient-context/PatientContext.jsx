@@ -7,6 +7,7 @@ import IconChecklist from 'terra-icon/lib/icon/IconChecklist';
 import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
 import IconSearch from 'terra-icon/lib/icon/IconSearch';
 import IconClose from 'terra-icon/lib/icon/IconClose';
+import ContentContainer from 'terra-content-container';
 
 import SkinnyToolbar from './SkinnyToolbar';
 import Chart from './chart/Chart';
@@ -44,48 +45,59 @@ class PatientContext extends React.Component {
   render() {
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
-        <SkinnyToolbar
-          buttons={
-            <div style={{ display: 'inline-block' }}>
-              <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-              <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-              <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
-              {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
-            </div>
+        <ContentContainer
+          fill
+          header={
+            <SkinnyToolbar
+              buttons={
+                <div style={{ display: 'inline-block' }}>
+                  <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+                  <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+                  <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
+                  {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
+                </div>
+              }
+            />
           }
-        />
-        <Switch>
-          <Route
-            path="/patients/chart"
-            render={({ match }) => (
-              <div>
-                {!this.state.patientContext && <Redirect to="/patients" />}
-                <DemographicsBanner
-                  age="25 Years"
-                  dateOfBirth="May 9, 1993"
-                  gender="Male"
-                  gestationalAge="April 5, 2016"
-                  identifiers={{ MRN: 12343, REA: '3JSDA' }}
-                  photo={<Image alt="My Cat" src="http://lorempixel.com/50/50/animals/7/" />}
-                  personName={this.state.patientContext && this.state.patientContext.name}
-                />
-                <Chart />
-              </div>
-            )}
-          />
-          <Route
-            render={() => (
-              <div style={{ height: '100%' }}>
-                { this.state.patientContext && <Redirect to="/patients/chart" /> }
-                <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)', }}>
-                    <h2>No Patient Selected</h2>
+        >
+          <Switch>
+            <Route
+              path="/patients/chart"
+              render={({ match }) => (
+                this.state.patientContext ? (
+                  <ContentContainer
+                    fill
+                    header={
+                      <DemographicsBanner
+                        age="25 Years"
+                        dateOfBirth="May 9, 1993"
+                        gender="Male"
+                        gestationalAge="April 5, 2016"
+                        identifiers={{ MRN: 12343, REA: '3JSDA' }}
+                        photo={<Image alt="My Cat" src="http://lorempixel.com/50/50/animals/7/" />}
+                        personName={this.state.patientContext && this.state.patientContext.name}
+                      />
+                    }
+                  >
+                    <Chart />
+                  </ContentContainer>
+                ) : <Redirect to="/patients" />
+              )}
+            />
+            <Route
+              render={() => (
+                <div style={{ height: '100%' }}>
+                  { this.state.patientContext && <Redirect to="/patients/chart" /> }
+                  <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+                      <h2>No Patient Selected</h2>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-          />
-        </Switch>
+              )}
+            />
+          </Switch>
+        </ContentContainer>
       </div>
     );
   }
