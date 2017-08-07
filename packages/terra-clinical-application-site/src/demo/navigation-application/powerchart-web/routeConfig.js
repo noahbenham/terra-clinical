@@ -7,14 +7,23 @@ const config = {
     '/patients': {
       path: '/patients',
       name: 'PatientContextMenu',
-      component: {
+      component: [{
         type: PatientContextMenu,
+        description: 'Regular PatientContextMenu',
         breakpoints: ['tiny', 'small', 'medium', 'large'],
         props: {
           path: '/patients',
-          customProp: 'Prop from config',
+          customProp: 'NOT HUGE',
         },
-      },
+      }, {
+        type: PatientContextMenu,
+        description: 'Huge PatientContextMenu',
+        breakpoints: ['huge'],
+        props: {
+          path: '/patients',
+          customProp: 'HUGE',
+        },
+      }],
       parentPath: undefined,
     },
   },

@@ -17,7 +17,6 @@ import {
 import { createRoute, createMenuRoute, NoMenuComponent } from './RouteConfigHelpers';
 
 const propTypes = {
-  location: PropTypes.object,
   routeConfig: PropTypes.object,
 };
 
@@ -183,24 +182,20 @@ class RoutingManager extends React.Component {
             panelPosition="start"
             fill
             panelContent={(
-              <div style={{ height: '100%' }}>
-                <Switch>
-                  {menuRoutes}
-                  <Route
-                    render={() => (
-                      <NoMenuComponent routingManagerCallback={this.handleMenuMount} />
-                    )}
-                  />
-                </Switch>
-              </div>
+              <Switch>
+                {menuRoutes}
+                <Route
+                  render={() => (
+                    <NoMenuComponent routingManagerCallback={this.handleMenuMount} />
+                  )}
+                />
+              </Switch>
             )}
             mainContent={(
-              <div style={{ height: '100%' }}>
-                <Switch>
-                  {contentRoutes}
-                  <Redirect to={routeConfig.rootRoute} />
-                </Switch>
-              </div>
+              <Switch>
+                {contentRoutes}
+                <Redirect to={routeConfig.rootRoute} />
+              </Switch>
             )}
           />
         </ContentContainer>

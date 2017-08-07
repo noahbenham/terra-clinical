@@ -14,15 +14,19 @@ const createMenuRoute = (routeConfig, size, routingManagerCallback, customProps)
   let componentProps;
   let supportedSizes;
 
-  if (typeof routeConfig.component === 'object') {
-    ComponentClass = routeConfig.component.type;
-    componentProps = routeConfig.component.props;
-    supportedSizes = routeConfig.component.breakpoints;
-  } else {
-    ComponentClass = routeConfig.component;
+  if (Array.isArray(routeConfig.component)) {
+    for (var i = 0, len = routeConfig.component.length; i < len; i++) {
+      let componentData = routeConfig.component[i];
+
+      if (componentData.breakpoints && componentData.breakpoints.indexOf(size) >= 0) {
+        ComponentClass = componentData.type;
+        componentProps = componentData.props;
+        supportedSizes = componentData.breakpoints;
+      }
+    }
   }
 
-  if (supportedSizes && supportedSizes.length && supportedSizes.indexOf(size) < 0) {
+  if (!ComponentClass) {
     return undefined;
   }
 
