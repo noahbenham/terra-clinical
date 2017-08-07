@@ -10,10 +10,11 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import {
   Switch,
   Redirect,
+  Route,
   withRouter,
 } from 'react-router-dom';
 
-import { createRoute, NoMenuComponent } from './RouteConfigHelpers';
+import { createRoute, createMenuRoute, NoMenuComponent } from './RouteConfigHelpers';
 
 const propTypes = {
   location: PropTypes.object,
@@ -45,10 +46,11 @@ class RoutingManager extends React.Component {
     this.onBack = this.onBack.bind(this);
     this.presentRootMenu = this.presentRootMenu.bind(this);
     this.validateMenusAtCurrentSize = this.validateMenusAtCurrentSize.bind(this);
+    this.handleMenuMount = this.handleMenuMount.bind(this);
 
     this.state = {
       navIsOpen: false,
-      hasMenu: true,
+      hasMenu: false,
       togglerEnabled: true,
       menuPathname: undefined,
       navIsPinned: true,
@@ -60,14 +62,9 @@ class RoutingManager extends React.Component {
     window.addEventListener('resize', this.validateMenusAtCurrentSize);
   }
 
-  componentWillReceiveProps(props) {
-    const newHasMenu = props.location && props.location.state && props.location.state.routingManagerNoMenu ? false : this.state.hasMenu;
-    const newNavIsOpen = !newHasMenu ? false : this.state.navIsOpen;
-
+  componentWillReceiveProps() {
     const state = {
       menuPathname: undefined,
-      navIsOpen: newNavIsOpen,
-      hasMenu: newHasMenu,
     };
 
     this.setState(state);
@@ -126,17 +123,24 @@ class RoutingManager extends React.Component {
       const newState = {
         size,
         navIsOpen: false,
-        hasMenu: true,
       };
-
-      console.log(newState);
 
       this.setState(newState);
     }
   }
 
+  handleMenuMount(mountState) {
+    const newHasMenu = mountState === 'menu';
+
+    if (this.state.hasMenu !== newHasMenu) {
+      this.setState({
+        hasMenu: newHasMenu,
+      });
+    }
+  }
+
   render() {
-    const { routeConfig, location } = this.props;
+    const { routeConfig } = this.props;
 
     const contentRoutes = Object.keys(routeConfig.routes).map((routeKey) => {
       const route = routeConfig.routes[routeKey];
@@ -161,7 +165,7 @@ class RoutingManager extends React.Component {
         presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
 
-      return createRoute(route, this.state.size, { routingManager });
+      return createMenuRoute(route, this.state.size, this.handleMenuMount, { routingManager });
     });
 
     const logo = <NavigationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
@@ -182,11 +186,10 @@ class RoutingManager extends React.Component {
               <div style={{ height: '100%' }}>
                 <Switch>
                   {menuRoutes}
-                  <Redirect
-                    to={{
-                      pathname: location.pathname,
-                      state: { routingManagerNoMenu: true },
-                    }}
+                  <Route
+                    render={() => (
+                      <NoMenuComponent routingManagerCallback={this.handleMenuMount} />
+                    )}
                   />
                 </Switch>
               </div>

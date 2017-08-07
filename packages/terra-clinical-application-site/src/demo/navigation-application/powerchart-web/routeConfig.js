@@ -9,7 +9,7 @@ const config = {
       name: 'PatientContextMenu',
       component: {
         type: PatientContextMenu,
-        breakpoints: ['tiny', 'small', 'medium', 'large', 'huge'],
+        breakpoints: ['tiny', 'small', 'medium', 'large'],
         props: {
           path: '/patients',
           customProp: 'Prop from config',

@@ -5,6 +5,40 @@ import {
   Route,
 } from 'react-router-dom';
 
+const createMenuRoute = (routeConfig, size, routingManagerCallback, customProps) => {
+  if (!routeConfig) {
+    return undefined;
+  }
+
+  let ComponentClass;
+  let componentProps;
+  let supportedSizes;
+
+  if (typeof routeConfig.component === 'object') {
+    ComponentClass = routeConfig.component.type;
+    componentProps = routeConfig.component.props;
+    supportedSizes = routeConfig.component.breakpoints;
+  } else {
+    ComponentClass = routeConfig.component;
+  }
+
+  if (supportedSizes && supportedSizes.length && supportedSizes.indexOf(size) < 0) {
+    return undefined;
+  }
+
+  return (
+    <Route
+      exact={routeConfig.exact}
+      path={routeConfig.path}
+      key={routeConfig.path}
+      render={(props) => {
+        const Component = menuComponent(ComponentClass);
+        return <Component {...props} {...componentProps} {...customProps} routingManagerCallback={routingManagerCallback} />;
+      }}
+    />
+  );
+};
+
 const createRoute = (routeConfig, size, customProps) => {
   if (!routeConfig) {
     return undefined;
@@ -32,8 +66,8 @@ const createRoute = (routeConfig, size, customProps) => {
       path={routeConfig.path}
       key={routeConfig.path}
       render={(props) => {
-        const Component = routeConfig.component;
-        return <ComponentClass {...props} {...componentProps} {...customProps} />;
+        const Component = ComponentClass;
+        return <Component {...props} {...componentProps} {...customProps} />;
       }}
     />
   );
@@ -45,7 +79,7 @@ class NoMenuComponent extends React.Component {
   }
 
   render() {
-    return undefined;
+    return null;
   }
 }
 
@@ -67,4 +101,4 @@ const menuComponent = (Component) => (
 const RouteConfigHelpers = { createRoute };
 
 export default RouteConfigHelpers;
-export { createRoute, menuComponent, NoMenuComponent };
+export { createRoute, createMenuRoute, menuComponent, NoMenuComponent };
