@@ -1,26 +1,26 @@
 import PatientContext from './patient-context/PatientContext';
-import PatientContextMenu from './patient-context/PatientContextMenu';
+import ChartMenu from './patient-context/chart/ChartMenu';
 
 const config = {
   rootRoute: '/patients',
   menuRoutes: {
-    '/patients': {
-      path: '/patients',
+    '/patients/chart': {
+      path: '/patients/chart',
       name: 'PatientContextMenu',
       component: [{
-        type: PatientContextMenu,
-        description: 'Regular PatientContextMenu',
+        type: ChartMenu,
+        description: 'Regular ChartMenu',
         breakpoints: ['tiny', 'small', 'medium', 'large'],
         props: {
-          path: '/patients',
+          path: '/patients/chart',
           customProp: 'NOT HUGE',
         },
       }, {
-        type: PatientContextMenu,
-        description: 'Huge PatientContextMenu',
+        type: ChartMenu,
+        description: 'Huge ChartMenu',
         breakpoints: ['huge'],
         props: {
-          path: '/patients',
+          path: '/patients/chart',
           customProp: 'HUGE',
         },
       }],

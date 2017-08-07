@@ -9,7 +9,7 @@ import IconUnlock from 'terra-icon/lib/icon/IconUnlock';
 import IconPadlock from 'terra-icon/lib/icon/IconPadlock';
 import Button from 'terra-button';
 
-import RoutingManagerDelegate from './RoutingManagerDelegate';
+import RoutingManagerDelegate from '../RoutingManagerDelegate';
 import './MenuToolbar.scss';
 
 const propTypes = {

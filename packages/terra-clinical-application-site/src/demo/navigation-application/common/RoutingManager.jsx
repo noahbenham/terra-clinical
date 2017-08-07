@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
-import NavigationToolbar from 'terra-clinical-navigation-toolbar';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
 import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import {
@@ -15,6 +14,7 @@ import {
 } from 'react-router-dom';
 
 import { createRoute, createMenuRoute, NoMenuComponent } from './RouteConfigHelpers';
+import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -134,6 +134,7 @@ class RoutingManager extends React.Component {
     if (this.state.hasMenu !== newHasMenu) {
       this.setState({
         hasMenu: newHasMenu,
+        navIsOpen: newHasMenu,
       });
     }
   }
@@ -167,14 +168,14 @@ class RoutingManager extends React.Component {
       return createMenuRoute(route, this.state.size, this.handleMenuMount, { routingManager });
     });
 
-    const logo = <NavigationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
-    const utility = <NavigationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
+    const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
+    const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
 
     return (
-      <div style={{ height: '100%', backgroundColor: 'lightgrey' }}>
+      <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={<NavigationToolbar utility={utility} logo={logo} onToggleClick={this.state.hasMenu ? this.toggleNav : undefined} />}
+          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={this.state.hasMenu ? this.toggleNav : undefined} />}
         >
           <SlidePanel
             isOpen={this.state.navIsOpen}

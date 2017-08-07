@@ -9,7 +9,7 @@ import IconSearch from 'terra-icon/lib/icon/IconSearch';
 import IconClose from 'terra-icon/lib/icon/IconClose';
 import ContentContainer from 'terra-content-container';
 
-import SkinnyToolbar from './SkinnyToolbar';
+import SkinnyToolbar from '../../common/skinny-toolbar/SkinnyToolbar';
 import Chart from './chart/Chart';
 
 class PatientContext extends React.Component {

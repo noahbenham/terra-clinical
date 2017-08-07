@@ -1,0 +1,55 @@
+@import '~terra-mixins';
+
+.terraClinical-ApplicationToolbar {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid lightgrey;
+  display: flex;
+  justify-content: space-between;
+  height: 45px;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-ApplicationToolbar-button {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.terraClinical-ApplicationToolbar-body {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-between;
+  max-height: 100%;
+  min-width: 0;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-ApplicationToolbar-start {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  max-width: 50%;
+  position: relative;
+}
+
+.terraClinical-ApplicationToolbar-end {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  max-width: 50%;
+  position: relative;
+}
+
+.terraClinical-ApplicationToolbar-content {
+  align-items: center;
+  display: flex;
+  flex: 1 1 auto;
+  min-width: 0;
+  position: relative;
+}
