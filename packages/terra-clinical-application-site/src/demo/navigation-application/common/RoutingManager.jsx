@@ -159,8 +159,8 @@ class RoutingManager extends React.Component {
         size: this.state.size,
         closeMenu: this.state.navIsOpen ? this.toggleNav : undefined,
         openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
-        pinMenu: !this.state.navIsPinned ? this.toggleNavPin : undefined,
-        unpinMenu: this.state.navIsPinned ? this.toggleNavPin : undefined,
+        pinMenu: !this.state.navIsPinned && ['tiny', 'small'].indexOf(this.state.size) < 0 ? this.toggleNavPin : undefined,
+        unpinMenu: this.state.navIsPinned && ['tiny', 'small'].indexOf(this.state.size) < 0 ? this.toggleNavPin : undefined,
         presentRootMenu: route && route.parentPath && route.parentPath !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
         presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
       };
