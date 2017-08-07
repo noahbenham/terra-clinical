@@ -61,9 +61,10 @@ class RoutingManager extends React.Component {
     window.addEventListener('resize', this.validateMenusAtCurrentSize);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(props) {
     this.setState({
       menuPathname: undefined,
+      navIsOpen: (props.location && props.location.state && props.location.state.routingManagerNoMenu ? false : this.state.navIsOpen),
     });
   }
 
@@ -158,7 +159,7 @@ class RoutingManager extends React.Component {
       <div style={{ height: '100%', backgroundColor: 'lightgrey' }}>
         <ContentContainer
           fill
-          header={<NavigationToolbar utility={utility} logo={logo} onToggleClick={this.toggleNav} />}
+          header={<NavigationToolbar utility={utility} logo={logo} onToggleClick={(!location.state || location.state && !!location.state.routingManagerNoMenu) && this.toggleNav} />}
         >
           <SlidePanel
             isOpen={this.state.navIsOpen}
@@ -169,6 +170,12 @@ class RoutingManager extends React.Component {
               <div style={{ height: '100%' }}>
                 <Switch>
                   {menuRoutes}
+                  <Redirect
+                    to={{
+                      pathname: location.pathname,
+                      state: { routingManagerNoMenu: false },
+                    }}
+                  />
                 </Switch>
               </div>
             )}

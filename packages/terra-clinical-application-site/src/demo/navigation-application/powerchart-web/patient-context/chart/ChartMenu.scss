@@ -1,0 +1,22 @@
+.vertical-toolbar {
+  height: 100%;
+  width: 32px;
+  background-color: #eeeeef;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid grey;
+}
+
+.cm-container {
+  height: 100%;
+
+  display: flex;
+  align-content: stretch;
+
+  .cm-backRegion {
+    flex: 0 1 auto;
+  }
+
+  .cm-contentRegion {
+    flex: 1 1 auto;
+  }
+}
