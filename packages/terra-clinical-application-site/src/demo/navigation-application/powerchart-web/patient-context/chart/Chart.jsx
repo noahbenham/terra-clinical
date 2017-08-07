@@ -11,7 +11,7 @@ const Chart = ({ match, routingManager, path }) => (
       <Route path="/patients/chart/orders" render={() => {
         return <div>Orders</div>
       }} />
-      <Route path="/patients/orders/documents" render={() => {
+      <Route path="/patients/chart/documents" render={() => {
         return <div>Documents</div>
       }} />
       <Redirect to="/patients/chart/review" />

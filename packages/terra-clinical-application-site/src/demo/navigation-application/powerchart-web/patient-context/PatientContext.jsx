@@ -43,22 +43,27 @@ class PatientContext extends React.Component {
   }
 
   render() {
+    let toolbarContent;
+    if (['tiny', 'small'].indexOf(this.props.routingManager.size) === -1 || !this.state.patientContext) {
+      toolbarContent = (
+        <SkinnyToolbar
+          buttons={
+            <div style={{ display: 'inline-block' }}>
+              <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
+              {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
+            </div>
+          }
+        />
+      );
+    }
+
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
         <ContentContainer
           fill
-          header={
-            <SkinnyToolbar
-              buttons={
-                <div style={{ display: 'inline-block' }}>
-                  <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-                  <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-                  <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
-                  {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
-                </div>
-              }
-            />
-          }
+          header={toolbarContent}
         >
           <Switch>
             <Route
