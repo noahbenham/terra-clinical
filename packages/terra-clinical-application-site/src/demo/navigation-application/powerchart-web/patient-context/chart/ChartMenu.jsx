@@ -9,15 +9,8 @@ import IconChecklist from 'terra-icon/lib/icon/IconChecklist';
 import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
 import IconSearch from 'terra-icon/lib/icon/IconSearch';
 
+import VerticalToolbar from '../../../common/vertical-toolbar/VerticalToolbar';
 import './ChartMenu.scss';
-
-const VerticalToolbar = (props) => {
-  return (
-    <div className="vertical-toolbar">
-      {props.children}
-    </div>
-  );
-};
 
 const ChartMenu = ({ match, routingManager, path }) => {
   let sidebarContent;
@@ -49,8 +42,8 @@ const ChartMenu = ({ match, routingManager, path }) => {
                     <Link to={match.path}>
                       <Button icon={<IconLeft />} variant="link" />
                     </Link>
-                    <h3 style={{ paddingBottom: '5px', borderBottom: '1px solid lightgrey', display: 'inline' }}>Summary</h3>
-                    <br />
+                    <h3 style={{ paddingBottom: '5px', display: 'inline' }}>Summary</h3>
+                    <hr />
                     <br />
                     <NavLink
                       to={`${match.path}/review/section1`}
@@ -76,7 +69,8 @@ const ChartMenu = ({ match, routingManager, path }) => {
               <Route
                 path={match.path} render={() => (
                   <div style={{ padding: '10px' }}>
-                    <h3 style={{ paddingBottom: '5px', borderBottom: '1px solid lightgrey' }}>Menu</h3>
+                    <h3 style={{ paddingBottom: '5px' }}>Menu</h3>
+                    <hr />
                     <br />
                     <NavLink
                       to={`${match.path}/review`}
