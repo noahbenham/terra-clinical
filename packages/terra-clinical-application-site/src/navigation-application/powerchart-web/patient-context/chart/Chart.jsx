@@ -14,28 +14,39 @@ class Chart extends React.Component {
   }
 
   render() {
+    const ReviewComponent = ({ location }) => (
+      <div>
+        <h2>Review</h2>
+        <hr />
+        {location.state && location.state.selectedSection && <p>Selected Section: {location.state.selectedSection}</p>}
+      </div>
+    );
+
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'fuschia' }}>
         <Switch>
-          <Route path="/patients/chart/review" render={({ location }) => {
-            return (
-              <div>
-                <h2>Chart</h2>
-                <hr />
-                {location.state && location.state.selectedSection && <p>Selected Section: {location.state.selectedSection}</p>}
-              </div>
-            );
-          }} />
-          <Route path="/patients/chart/orders" render={() => {
-            return <div>Orders</div>
-          }} />
-          <Route path="/patients/chart/documents" render={() => {
-            return <div>Documents</div>
-          }} />
-          {this.redirect && <Redirect to="/patients/chart/review" />}
+          <Route
+            path="/patients/chart/review"
+            component={ReviewComponent}
+          />
+          <Route
+            path="/patients/chart/orders"
+            render={() => (
+              <div>Orders</div>
+            )}
+          />
+          <Route
+            path="/patients/chart/documents"
+            render={() => (
+              <div>Documents</div>
+            )}
+          />
+          <Route
+            component={ReviewComponent}
+          />
         </Switch>
       </div>
-    )
+    );
   }
 }
 
