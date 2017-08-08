@@ -17,8 +17,14 @@ class Chart extends React.Component {
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'fuschia' }}>
         <Switch>
-          <Route path="/patients/chart/review" render={() => {
-            return <div>Chart</div>
+          <Route path="/patients/chart/review" render={({ location }) => {
+            return (
+              <div>
+                <h2>Chart</h2>
+                <hr />
+                {location.state && location.state.selectedSection && <p>Selected Section: {location.state.selectedSection}</p>}
+              </div>
+            );
           }} />
           <Route path="/patients/chart/orders" render={() => {
             return <div>Orders</div>

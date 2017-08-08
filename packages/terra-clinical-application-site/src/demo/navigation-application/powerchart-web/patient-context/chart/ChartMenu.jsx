@@ -46,7 +46,13 @@ const ChartMenu = ({ match, routingManager, path }) => {
                     <hr />
                     <br />
                     <NavLink
-                      to={`${match.path}/review/section1`}
+                      replace
+                      to={{
+                        pathname: `${match.path}/review`,
+                        state: {
+                          selectedSection: 'Section 1',
+                        },
+                      }}
                       activeStyle={{
                         fontWeight: 'bold',
                       }}
@@ -56,7 +62,13 @@ const ChartMenu = ({ match, routingManager, path }) => {
                     <br />
                     <br />
                     <NavLink
-                      to={`${match.path}/review/section2`}
+                      replace
+                      to={{
+                        pathname: `${match.path}/review`,
+                        state: {
+                          selectedSection: 'Section 2',
+                        },
+                      }}
                       activeStyle={{
                         fontWeight: 'bold',
                       }}

@@ -43,8 +43,10 @@ class PatientContext extends React.Component {
   }
 
   render() {
+    const { routingManager } = this.props;
+
     let toolbarContent;
-    if (['tiny', 'small'].indexOf(this.props.routingManager.size) === -1 || !this.state.patientContext) {
+    if (['tiny', 'small'].indexOf(routingManager.size) === -1 || !this.state.patientContext) {
       toolbarContent = (
         <SkinnyToolbar
           buttons={
@@ -68,7 +70,7 @@ class PatientContext extends React.Component {
           <Switch>
             <Route
               path="/patients/chart"
-              render={({ match }) => (
+              render={({ match, location }) => (
                 this.state.patientContext ? (
                   <ContentContainer
                     fill
@@ -84,7 +86,7 @@ class PatientContext extends React.Component {
                       />
                     }
                   >
-                    <Chart />
+                    <Chart routingManager={routingManager} match={match} location={location} />
                   </ContentContainer>
                 ) : <Redirect to="/patients" />
               )}
