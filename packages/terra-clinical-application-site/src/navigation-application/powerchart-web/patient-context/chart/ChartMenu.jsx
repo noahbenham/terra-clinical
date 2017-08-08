@@ -45,7 +45,7 @@ const ChartMenu = ({ match, routingManager, path }) => {
                     <h3 style={{ paddingBottom: '5px', display: 'inline' }}>Summary</h3>
                     <hr />
                     <br />
-                    <NavLink
+                    <Link
                       replace
                       to={{
                         pathname: `${match.path}/review`,
@@ -53,15 +53,12 @@ const ChartMenu = ({ match, routingManager, path }) => {
                           selectedSection: 'Section 1',
                         },
                       }}
-                      activeStyle={{
-                        fontWeight: 'bold',
-                      }}
                     >
                       Section 1
-                    </NavLink>
+                    </Link>
                     <br />
                     <br />
-                    <NavLink
+                    <Link
                       replace
                       to={{
                         pathname: `${match.path}/review`,
@@ -69,12 +66,9 @@ const ChartMenu = ({ match, routingManager, path }) => {
                           selectedSection: 'Section 2',
                         },
                       }}
-                      activeStyle={{
-                        fontWeight: 'bold',
-                      }}
                     >
                       Section 2
-                    </NavLink>
+                    </Link>
                   </div>
                 )}
               />
