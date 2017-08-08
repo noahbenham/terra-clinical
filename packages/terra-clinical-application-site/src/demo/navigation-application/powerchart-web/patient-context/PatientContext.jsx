@@ -18,6 +18,7 @@ class PatientContext extends React.Component {
 
     this.launchPatientSearch = this.launchPatientSearch.bind(this);
     this.launchPatientSchedule = this.launchPatientSchedule.bind(this);
+    this.launchPatientList = this.launchPatientList.bind(this);
 
     this.state = {
       patientContext: undefined,
@@ -29,6 +30,15 @@ class PatientContext extends React.Component {
       patientContext: {
         id: 1,
         name: 'Rambo, John',
+      },
+    });
+  }
+
+  launchPatientList() {
+    this.setState({
+      patientContext: {
+        id: 1,
+        name: 'Johnson, Don',
       },
     });
   }
@@ -51,7 +61,7 @@ class PatientContext extends React.Component {
         <SkinnyToolbar
           buttons={
             <div style={{ display: 'inline-block' }}>
-              <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientList} />
               <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
               <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
               {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
