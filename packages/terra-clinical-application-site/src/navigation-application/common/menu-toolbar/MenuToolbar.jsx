@@ -20,23 +20,20 @@ const propTypes = {
   backButtonOverride: PropTypes.node,
 };
 
-const MenuToolbar = ({ routingManager, backButtonOverride, ...customProps }) => {
+const MenuToolbar = ({ routingManager, ...customProps }) => {
   const toolbarClassNames = classNames([
     'terraClinical-MenuToolbar',
     customProps.className,
   ]);
 
   let backButton;
-  if (routingManager.presentParentMenu) {
-    backButton = <Button onClick={routingManager.presentParentMenu} icon={<IconReply />} />;
-  }
-  if (backButtonOverride) {
-    backButton = backButtonOverride;
+  if (routingManager.goBack) {
+    backButton = <Button onClick={routingManager.goBack} icon={<IconReply />} />;
   }
 
   let rootButton;
-  if (routingManager.presentRootMenu) {
-    rootButton = <Button onClick={routingManager.presentRootMenu} icon={<IconHouse />} />;
+  if (routingManager.goToRoot) {
+    rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} />;
   }
   let pinButton;
   if (routingManager.pinMenu) {

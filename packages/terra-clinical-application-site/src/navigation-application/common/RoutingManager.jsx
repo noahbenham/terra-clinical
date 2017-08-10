@@ -15,6 +15,7 @@ import {
 
 import { createRoute, createMenuRoute, NoMenuComponent } from './RouteConfigHelpers';
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
+import RoutingStack from './RoutingStack';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -48,8 +49,8 @@ class RoutingManager extends React.Component {
     this.handleMenuMount = this.handleMenuMount.bind(this);
 
     this.state = {
-      navIsOpen: false,
-      hasMenu: false,
+      navIsOpen: true,
+      hasMenu: true,
       togglerEnabled: true,
       menuPathname: undefined,
       navIsPinned: true,
@@ -153,21 +154,6 @@ class RoutingManager extends React.Component {
       return createRoute(route, this.state.size, { routingManager });
     });
 
-    const menuRoutes = Object.keys(routeConfig.menuRoutes).map((routeKey) => {
-      const route = routeConfig.menuRoutes[routeKey];
-      const routingManager = {
-        size: this.state.size,
-        closeMenu: this.state.navIsOpen ? this.toggleNav : undefined,
-        openMenu: !this.state.navIsOpen ? this.toggleNav : undefined,
-        pinMenu: !this.state.navIsPinned && ['tiny', 'small'].indexOf(this.state.size) < 0 ? this.toggleNavPin : undefined,
-        unpinMenu: this.state.navIsPinned && ['tiny', 'small'].indexOf(this.state.size) < 0 ? this.toggleNavPin : undefined,
-        presentRootMenu: route && route.parentPath && route.parentPath !== routeConfig.rootRoute ? this.presentRootMenu : undefined,
-        presentParentMenu: route.parentPath ? (() => { this.onBack(route.path); }) : undefined,
-      };
-
-      return createMenuRoute(route, this.state.size, this.handleMenuMount, { routingManager });
-    });
-
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
 
@@ -183,19 +169,12 @@ class RoutingManager extends React.Component {
             panelPosition="start"
             fill
             panelContent={(
-              <Switch>
-                {menuRoutes}
-                <Route
-                  render={() => (
-                    <NoMenuComponent routingManagerCallback={this.handleMenuMount} />
-                  )}
-                />
-              </Switch>
+              <RoutingStack routeConfig={routeConfig.nestedMenuRoutes} key={location.pathname} />
             )}
             mainContent={(
               <Switch>
                 {contentRoutes}
-                <Redirect to={routeConfig.rootRoute} />
+                <Redirect to={routeConfig.defaultRoute} />
               </Switch>
             )}
           />

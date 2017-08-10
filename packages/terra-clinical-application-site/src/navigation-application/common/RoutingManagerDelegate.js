@@ -15,8 +15,8 @@ const RoutingManagerDelegate = {
     openMenu: PropTypes.func,
     pinMenu: PropTypes.func,
     unpinMenu: PropTypes.func,
-    presentRootMenu: PropTypes.func,
-    presentParentMenu: PropTypes.func,
+    goToRoot: PropTypes.func,
+    goBack: PropTypes.func,
   }),
   clone: (source, overrides) => (
     Object.assign({}, source, overrides)

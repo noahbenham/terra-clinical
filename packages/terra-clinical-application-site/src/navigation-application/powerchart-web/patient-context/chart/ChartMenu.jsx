@@ -32,7 +32,7 @@ const ChartMenu = ({ match, routingManager, path }) => {
       >
         <div className="cm-container">
           <div className="cm-backRegion">
-            {sidebarContent}
+            {}
           </div>
           <div className="cm-contentRegion">
             <Switch>

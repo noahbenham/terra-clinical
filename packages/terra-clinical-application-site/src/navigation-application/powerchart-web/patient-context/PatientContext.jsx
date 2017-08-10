@@ -25,6 +25,18 @@ class PatientContext extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.addEventListener('showPatientList', this.launchPatientList);
+    document.addEventListener('showPatientSchedule', this.launchPatientSchedule);
+    document.addEventListener('showPatientSearch', this.launchPatientSearch);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('showPatientList', this.launchPatientList);
+    document.removeEventListener('showPatientSchedule', this.launchPatientSchedule);
+    document.removeEventListener('showPatientSearch', this.launchPatientSearch);
+  }
+
   launchPatientSearch() {
     this.setState({
       patientContext: {
@@ -56,7 +68,7 @@ class PatientContext extends React.Component {
     const { routingManager } = this.props;
 
     let toolbarContent;
-    if (['tiny', 'small'].indexOf(routingManager.size) === -1 || !this.state.patientContext) {
+    if (['tiny', 'small'].indexOf(routingManager.size) === -1) {
       toolbarContent = (
         <SkinnyToolbar
           buttons={
