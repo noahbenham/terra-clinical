@@ -36,8 +36,8 @@ const config = {
         huge: null,
       },
       childRoutes: {
-        '/patients/chart': {
-          path: '/patients/chart',
+        '/chart': {
+          path: '/chart',
           name: 'ChartMenu',
           component: {
             default: {
@@ -49,8 +49,8 @@ const config = {
             },
           },
           childRoutes: {
-            '/patients/chart/review': {
-              path: '/patients/chart/review',
+            '/review': {
+              path: '/review',
               name: 'ChartReview',
               component: {
                 default: {

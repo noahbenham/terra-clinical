@@ -14,7 +14,7 @@ class Chart extends React.Component {
   }
 
   render() {
-    const ReviewComponent = ({ location }) => (
+    const ReviewComponent = ({ match, location }) => (
       <div>
         <h2>Review</h2>
         <hr />

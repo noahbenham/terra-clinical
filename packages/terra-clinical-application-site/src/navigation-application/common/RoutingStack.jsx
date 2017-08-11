@@ -82,15 +82,14 @@ class RoutingStack extends React.Component {
     }
   }
 
-  createMenuRoutes(routeConfig, parentPaths) {
+  createMenuRoutes(routeConfig, baseUrl, parentPaths) {
     const { size } = this.state;
-
-    debugger;
 
     if (!routeConfig) {
       return undefined;
     }
 
+    const constructedUrl = (baseUrl || '').concat(routeConfig.path);
     let componentConfig;
 
     if (typeof (routeConfig.component) === 'object') {
@@ -114,18 +113,19 @@ class RoutingStack extends React.Component {
     }
 
     let childRoutes = [];
+
     if (routeConfig.childRoutes) {
-      const updatedParentPaths = [];
+      let updatedParentPaths = [];
       if (parentPaths) {
-        updatedParentPaths.concat(parentPaths);
+        updatedParentPaths = updatedParentPaths.concat(parentPaths);
       }
 
       if (componentConfig) {
-        updatedParentPaths.push(routeConfig.path);
+        updatedParentPaths.push(constructedUrl);
       }
 
       Object.keys(routeConfig.childRoutes).forEach((childRoute) => {
-        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.childRoutes[childRoute], updatedParentPaths));
+        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.childRoutes[childRoute], constructedUrl, updatedParentPaths));
       });
     }
 
@@ -142,8 +142,8 @@ class RoutingStack extends React.Component {
       routes.push((
         <Route
           exact={routeConfig.exact}
-          path={routeConfig.path}
-          key={routeConfig.key || routeConfig.path}
+          path={constructedUrl}
+          key={routeConfig.key || constructedUrl}
           render={(routeProps) => {
             const Component = ComponentClass;
             return (
@@ -167,9 +167,8 @@ class RoutingStack extends React.Component {
       ));
     }
 
-    debugger;
     return routes;
-  };
+  }
 
   render() {
     const { routeConfig, location } = this.props;
@@ -178,7 +177,7 @@ class RoutingStack extends React.Component {
     const menuRoutes = Object.keys(routeConfig).forEach((routeKey) => {
       routes = routes.concat(this.createMenuRoutes(routeConfig[routeKey]));
     });
-    debugger;
+
     return (
       <Switch location={this.state.stackLocation || location}>
         {routes}
