@@ -171,8 +171,6 @@ class RoutingStack extends React.Component {
   render() {
     const { routeConfig, location, children } = this.props;
 
-    console.log('rendering stack');
-
     let routes = [];
     Object.keys(routeConfig).forEach((routeKey) => {
       routes = routes.concat(this.createMenuRoutes(routeConfig[routeKey]));

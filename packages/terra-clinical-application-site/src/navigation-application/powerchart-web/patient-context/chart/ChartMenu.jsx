@@ -75,7 +75,7 @@ const ChartMenu = ({ match, routingManager, path }) => {
               <Route
                 path={match.path} render={() => (
                   <div style={{ padding: '10px' }}>
-                    <h3 style={{ paddingBottom: '5px' }}>Menu</h3>
+                    <h3 style={{ paddingBottom: '5px' }}>Chart Menu</h3>
                     <hr />
                     <br />
                     <NavLink

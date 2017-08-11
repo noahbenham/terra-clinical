@@ -20,19 +20,65 @@ const propTypes = {
 };
 
 class RoutingManager extends React.Component {
+  static getBreakpointSize() {
+    const width = window.innerWidth;
+    const { small, medium, large, huge } = getBreakpoints();
+
+    if (width >= huge) {
+      return 'huge';
+    } else if (width >= large) {
+      return 'large';
+    } else if (width >= medium) {
+      return 'medium';
+    } else if (width >= small) {
+      return 'small';
+    }
+    return 'tiny';
+  }
+
   constructor(props) {
     super(props);
 
     this.toggleNav = this.toggleNav.bind(this);
     this.toggleNavPin = this.toggleNavPin.bind(this);
     this.handleMenuMount = this.handleMenuMount.bind(this);
+    this.updateSize = this.updateSize.bind(this);
 
     this.state = {
       navIsOpen: true,
       hasMenu: true,
       togglerEnabled: true,
       navIsPinned: true,
+      size: RoutingManager.getBreakpointSize(),
     };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.updateSize);
+  }
+
+  componentWillReceiveProps() {
+    if (['tiny'].indexOf(this.state.size) >= 0) {
+      if (this.state.navIsOpen) {
+        this.setState({
+          navIsOpen: false,
+        });
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateSize);
+  }
+
+  updateSize() {
+    const newSize = RoutingManager.getBreakpointSize();
+
+    if (this.state.size !== newSize) {
+      this.setState({
+        size: newSize,
+      });
+    }
   }
 
   toggleNav() {
@@ -73,8 +119,6 @@ class RoutingManager extends React.Component {
 
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
-
-    console.log('rendering manager');
 
     return (
       <div style={{ height: '100%' }}>
