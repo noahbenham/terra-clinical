@@ -4,15 +4,20 @@ import ChartMenu from './patient-context/chart/ChartMenu';
 import ChartReviewMenu from './patient-context/chart/review/ChartReviewMenu';
 
 const config = {
-  defaultRoute: '/patients',
-  routes: {
+  index: '/patients',
+  contentRoutes: {
     '/patients': {
       path: '/patients',
       name: 'PatientsContext',
-      component: PatientContext,
+      component: {
+        default: {
+          type: PatientContext,
+          description: 'Default PatientContext',
+        },
+      },
     },
   },
-  nestedMenuRoutes: {
+  menuRoutes: {
     '/patients': {
       path: '/patients',
       name: 'PatientContextMenu',

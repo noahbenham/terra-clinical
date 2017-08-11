@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 
 import {
   Switch,
-  Redirect,
   Route,
   withRouter,
 } from 'react-router-dom';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
-import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 
 const propTypes = {
   routeConfig: PropTypes.object,
+  enableNav: PropTypes.bool,
   toggleOpen: PropTypes.bool,
   isOpen: PropTypes.bool,
   togglePin: PropTypes.bool,
@@ -48,16 +47,16 @@ class RoutingStack extends React.Component {
     };
   }
 
+  componentWillMount() {
+    window.addEventListener('resize', this.validateMenus);
+  }
+
   componentWillReceiveProps() {
     const state = {
       stackLocation: undefined,
     };
 
     this.setState(state);
-  }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.validateMenus);
   }
 
   componentWillUnmount() {
@@ -84,6 +83,7 @@ class RoutingStack extends React.Component {
 
   createMenuRoutes(routeConfig, baseUrl, parentPaths) {
     const { size } = this.state;
+    const { navEnabled } = this.props;
 
     if (!routeConfig) {
       return undefined;
@@ -106,14 +106,12 @@ class RoutingStack extends React.Component {
 
     let ComponentClass;
     let componentProps;
-
     if (componentConfig) {
       ComponentClass = componentConfig.type;
       componentProps = componentConfig.props;
     }
 
     let childRoutes = [];
-
     if (routeConfig.childRoutes) {
       let updatedParentPaths = [];
       if (parentPaths) {
@@ -153,10 +151,10 @@ class RoutingStack extends React.Component {
                 routeConfig={routeConfig}
                 routingManager={{
                   size,
-                  goBack: parentPaths && parentPaths.length ? () => {
+                  goBack: navEnabled && parentPaths && parentPaths.length ? () => {
                     this.updateMenuLocation(parentPaths[parentPaths.length - 1]);
                   } : undefined,
-                  goToRoot: parentPaths && parentPaths.length > 1 ? () => {
+                  goToRoot: navEnabled && parentPaths && parentPaths.length > 1 ? () => {
                     this.updateMenuLocation(parentPaths[0]);
                   } : undefined,
                 }}
@@ -171,16 +169,19 @@ class RoutingStack extends React.Component {
   }
 
   render() {
-    const { routeConfig, location } = this.props;
+    const { routeConfig, location, children } = this.props;
+
+    console.log('rendering stack');
 
     let routes = [];
-    const menuRoutes = Object.keys(routeConfig).forEach((routeKey) => {
+    Object.keys(routeConfig).forEach((routeKey) => {
       routes = routes.concat(this.createMenuRoutes(routeConfig[routeKey]));
     });
 
     return (
       <Switch location={this.state.stackLocation || location}>
         {routes}
+        {children}
       </Switch>
     );
   }
