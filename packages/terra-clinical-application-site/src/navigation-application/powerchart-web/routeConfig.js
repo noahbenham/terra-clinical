@@ -18,8 +18,8 @@ const config = {
         },
       },
       childRoutes: {
-        'patients': {
-          path: 'patients',
+        '/patients': {
+          path: '/patients',
           name: 'PatientsContext',
           component: {
             default: {
@@ -41,8 +41,8 @@ const config = {
         },
       },
       childRoutes: {
-        'patients': {
-          path: 'patients',
+        '/patients': {
+          path: '/patients',
           name: 'PatientContextMenu',
           component: {
             default: {
@@ -64,8 +64,8 @@ const config = {
             huge: null,
           },
           childRoutes: {
-            '/chart': {
-              path: '/chart',
+            '/patients/chart': {
+              path: '/patients/chart',
               name: 'ChartMenu',
               component: {
                 default: {
@@ -77,8 +77,8 @@ const config = {
                 },
               },
               childRoutes: {
-                '/review': {
-                  path: '/review',
+                '/patients/chart/review': {
+                  path: '/patients/chart/review',
                   name: 'ChartReview',
                   component: {
                     default: {

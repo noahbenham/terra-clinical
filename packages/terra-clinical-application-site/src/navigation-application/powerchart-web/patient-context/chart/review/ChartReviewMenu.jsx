@@ -1,56 +1,65 @@
 import React from 'react';
-import classNames from 'classnames';
-import { Switch, Route, NavLink, Link } from 'react-router-dom';
-import IconLeft from 'terra-icon/lib/icon/IconLeft';
 import Button from 'terra-button';
 import ContentContainer from 'terra-content-container';
 import MenuToolbar from '../../../../common/menu-toolbar/MenuToolbar';
-import IconChecklist from 'terra-icon/lib/icon/IconChecklist';
-import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
-import IconSearch from 'terra-icon/lib/icon/IconSearch';
-
-import VerticalToolbar from '../../../../common/vertical-toolbar/VerticalToolbar';
 // import './ChartMenu.scss';
 
-const ChartReviewMenu = ({ match, routingManager, path }) => {
-  return (
-    <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
-      <ContentContainer
-        header={<MenuToolbar routingManager={routingManager} />}
-        fill
-      >
-        <div style={{ padding: '10px' }}>
-          <h3 style={{ paddingBottom: '5px', display: 'inline' }}>Summary</h3>
-          <hr />
-          <br />
-          <Link
-            replace
-            to={{
-              pathname: match.path,
-              state: {
-                selectedSection: 'Section 1',
-              },
-            }}
-          >
-            Section 1
-          </Link>
-          <br />
-          <br />
-          <Link
-            replace
-            to={{
-              pathname: match.path,
-              state: {
-                selectedSection: 'Section 2',
-              },
-            }}
-          >
-            Section 2
-          </Link>
-        </div>
-      </ContentContainer>
-    </div>
-  );
-};
+class ChartReviewMenu extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.updateSelectedSection = this.updateSelectedSection.bind(this);
+    this.state = {};
+  }
+
+  componentDidMount() {
+    document.addEventListener('chartReviewSectionSelected', this.updateSelectedSection);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('chartReviewSectionSelected', this.updateSelectedSection);
+  }
+
+  updateSelectedSection(event) {
+    this.setState({
+      selectedSection: event.detail.section,
+    });
+  }
+
+  render() {
+    const { routingManager } = this.props;
+
+    return (
+      <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
+        <ContentContainer
+          header={<MenuToolbar routingManager={routingManager} />}
+          fill
+        >
+          <div style={{ padding: '10px' }}>
+            <h3 style={{ paddingBottom: '5px', display: 'inline' }}>Summary</h3>
+            <hr />
+            <br />
+            <p>Selected Section: {this.state && this.state.selectedSection}</p>
+            <br />
+            <Button
+              text="Section 1"
+              onClick={() => {
+                document.dispatchEvent(new CustomEvent('chartReviewSectionSelected', { detail: { section: 'Section 1' } }));
+              }}
+            />
+            <br />
+            <br />
+            <Button
+              text="Section 2"
+              onClick={() => {
+                document.dispatchEvent(new CustomEvent('chartReviewSectionSelected', { detail: { section: 'Section 2' } }));
+              }}
+            />
+          </div>
+        </ContentContainer>
+      </div>
+    );
+  }
+}
 
 export default ChartReviewMenu;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route, Link, Redirect } from 'react-router-dom';
-import MenuToolbar from '../../../common/menu-toolbar/MenuToolbar';
+import ChartReview from './review/ChartReview';
 
 class Chart extends React.Component {
   constructor(props) {
@@ -14,20 +14,12 @@ class Chart extends React.Component {
   }
 
   render() {
-    const ReviewComponent = ({ match, location }) => (
-      <div>
-        <h2>Review</h2>
-        <hr />
-        {location.state && location.state.selectedSection && <p>Selected Section: {location.state.selectedSection}</p>}
-      </div>
-    );
-
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'fuschia' }}>
         <Switch>
           <Route
             path="/patients/chart/review"
-            component={ReviewComponent}
+            component={ChartReview}
           />
           <Route
             path="/patients/chart/orders"
@@ -42,7 +34,7 @@ class Chart extends React.Component {
             )}
           />
           <Route
-            component={ReviewComponent}
+            component={ChartReview}
           />
         </Switch>
       </div>

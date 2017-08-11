@@ -81,7 +81,7 @@ class RoutingStack extends React.Component {
     }
   }
 
-  createMenuRoutes(routeConfig, baseUrl, parentPaths) {
+  createMenuRoutes(routeConfig, parentPaths) {
     const { size } = this.state;
     const { navEnabled } = this.props;
 
@@ -89,7 +89,6 @@ class RoutingStack extends React.Component {
       return undefined;
     }
 
-    const constructedUrl = (baseUrl || '').concat(routeConfig.path);
     let componentConfig;
 
     if (typeof (routeConfig.component) === 'object') {
@@ -119,11 +118,11 @@ class RoutingStack extends React.Component {
       }
 
       if (componentConfig) {
-        updatedParentPaths.push(constructedUrl);
+        updatedParentPaths.push(routeConfig.path);
       }
 
       Object.keys(routeConfig.childRoutes).forEach((childRoute) => {
-        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.childRoutes[childRoute], constructedUrl, updatedParentPaths));
+        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.childRoutes[childRoute], updatedParentPaths));
       });
     }
 
@@ -140,8 +139,8 @@ class RoutingStack extends React.Component {
       routes.push((
         <Route
           exact={routeConfig.exact}
-          path={constructedUrl}
-          key={routeConfig.key || constructedUrl}
+          path={routeConfig.path}
+          key={routeConfig.key || routeConfig.path}
           render={(routeProps) => {
             const Component = ComponentClass;
             return (
