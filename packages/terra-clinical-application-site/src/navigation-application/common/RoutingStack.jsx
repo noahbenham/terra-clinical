@@ -6,11 +6,11 @@ import {
   Route,
   withRouter,
 } from 'react-router-dom';
-import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 
 const propTypes = {
   routeConfig: PropTypes.object,
-  enableNav: PropTypes.bool,
+  navEnabled: PropTypes.bool,
+
   toggleOpen: PropTypes.bool,
   isOpen: PropTypes.bool,
   togglePin: PropTypes.bool,
@@ -18,49 +18,21 @@ const propTypes = {
 };
 
 class RoutingStack extends React.Component {
-  static getBreakpointSize() {
-    const width = window.innerWidth;
-    const { small, medium, large, huge } = getBreakpoints();
-
-    if (width >= huge) {
-      return 'huge';
-    } else if (width >= large) {
-      return 'large';
-    } else if (width >= medium) {
-      return 'medium';
-    } else if (width >= small) {
-      return 'small';
-    }
-    return 'tiny';
-  }
-
   constructor(props) {
     super(props);
 
     this.updateMenuLocation = this.updateMenuLocation.bind(this);
-    this.validateMenus = this.validateMenus.bind(this);
     this.createMenuRoutes = this.createMenuRoutes.bind(this);
 
     this.state = {
       stackLocation: undefined,
-      size: RoutingStack.getBreakpointSize(),
     };
-  }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.validateMenus);
   }
 
   componentWillReceiveProps() {
-    const state = {
-      stackLocation: undefined,
-    };
-
-    this.setState(state);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.validateMenus);
+    this.setState({
+      stackLocation: undefined, // We reset the stack location whenever new props are received to reset its position.
+    });
   }
 
   updateMenuLocation(path) {
@@ -69,21 +41,8 @@ class RoutingStack extends React.Component {
     });
   }
 
-  validateMenus() {
-    const size = RoutingStack.getBreakpointSize();
-    if (size !== this.state.size) {
-      const newState = {
-        size,
-        navIsOpen: false,
-      };
-
-      this.setState(newState);
-    }
-  }
-
   createMenuRoutes(routeConfig, parentPaths) {
-    const { size } = this.state;
-    const { navEnabled } = this.props;
+    const { navEnabled, size } = this.props;
 
     if (!routeConfig) {
       return undefined;

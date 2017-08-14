@@ -45,8 +45,8 @@ class RoutingManager extends React.Component {
     this.updateSize = this.updateSize.bind(this);
 
     this.state = {
-      navIsOpen: true,
-      hasMenu: true,
+      navIsOpen: false,
+      menuHidden: false,
       togglerEnabled: true,
       navIsPinned: true,
       size: RoutingManager.getBreakpointSize(),
@@ -57,13 +57,23 @@ class RoutingManager extends React.Component {
     window.addEventListener('resize', this.updateSize);
   }
 
-  componentWillReceiveProps() {
+  componentWillReceiveProps(nextProps) {
+    const newState = {};
+
     if (['tiny'].indexOf(this.state.size) >= 0) {
       if (this.state.navIsOpen) {
-        this.setState({
-          navIsOpen: false,
-        });
+        newState.navIsOpen = false;
       }
+    }
+
+    if (nextProps.location && nextProps.location.state && nextProps.location.state.noMenuMatch) {
+      newState.menuHidden = true;
+    } else {
+      newState.menuHidden = false;
+    }
+
+    if (newState.navIsOpen !== this.state.navIsOpen || newState.menuHidden !== this.state.menuHidden) {
+      this.setState(newState);
     }
   }
 
@@ -77,6 +87,7 @@ class RoutingManager extends React.Component {
     if (this.state.size !== newSize) {
       this.setState({
         size: newSize,
+        menuHidden: false, // We need to reset this in case menus exist at the next size
       });
     }
   }
@@ -115,7 +126,7 @@ class RoutingManager extends React.Component {
   }
 
   render() {
-    const { routeConfig } = this.props;
+    const { routeConfig, location } = this.props;
 
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
@@ -124,24 +135,33 @@ class RoutingManager extends React.Component {
       <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={this.state.hasMenu ? this.toggleNav : undefined} />}
+          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={!this.state.menuHidden ? this.toggleNav : undefined} />}
         >
           <SlidePanel
-            isOpen={this.state.navIsOpen}
+            isOpen={this.state.navIsOpen && !this.state.menuHidden}
             panelBehavior={this.state.navIsPinned ? 'squish' : 'overlay'}
             panelPosition="start"
             fill
             panelContent={(
               <RoutingStack
                 navEnabled
+                size={this.state.size}
                 routeConfig={routeConfig.menuRoutes}
-                key={location.pathname}
-              />
+              >
+                { !this.state.menuHidden ? (
+                  <Redirect
+                    to={{
+                      pathname: location.pathname,
+                      state: { noMenuMatch: true },
+                    }}
+                  />
+                ) : null}
+              </RoutingStack>
             )}
             mainContent={(
               <RoutingStack
+                size={this.state.size}
                 routeConfig={routeConfig.contentRoutes}
-                key={location.pathname}
               >
                 <Redirect to={routeConfig.index} />
               </RoutingStack>

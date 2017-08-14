@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, Link, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Button from 'terra-button';
 import DemographicsBanner from 'terra-demographics-banner';
 import Image from 'terra-image';
@@ -72,6 +72,8 @@ class PatientContext extends React.Component {
 
   render() {
     const { routingManager } = this.props;
+
+    debugger;
 
     if (this.forceRedirect) {
       this.forceRedirect = false;
