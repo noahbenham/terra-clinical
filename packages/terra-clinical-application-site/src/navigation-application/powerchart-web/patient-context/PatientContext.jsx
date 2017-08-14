@@ -38,6 +38,8 @@ class PatientContext extends React.Component {
   }
 
   launchPatientSearch() {
+    this.forceRedirect = true;
+
     this.setState({
       patientContext: {
         id: 1,
@@ -47,6 +49,8 @@ class PatientContext extends React.Component {
   }
 
   launchPatientList() {
+    this.forceRedirect = true;
+
     this.setState({
       patientContext: {
         id: 1,
@@ -56,6 +60,8 @@ class PatientContext extends React.Component {
   }
 
   launchPatientSchedule() {
+    this.forceRedirect = true;
+
     this.setState({
       patientContext: {
         id: 2,
@@ -66,6 +72,14 @@ class PatientContext extends React.Component {
 
   render() {
     const { routingManager } = this.props;
+
+    if (this.forceRedirect) {
+      this.forceRedirect = false;
+
+      return (
+        <Redirect to="/patients" />
+      );
+    }
 
     let toolbarContent;
     if (['tiny', 'small'].indexOf(routingManager.size) === -1) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Link, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import ChartReview from './review/ChartReview';
 
 class Chart extends React.Component {
@@ -33,9 +33,7 @@ class Chart extends React.Component {
               <div>Documents</div>
             )}
           />
-          <Route
-            component={ChartReview}
-          />
+          {this.redirect && <Redirect to="/patients/chart/review" />}
         </Switch>
       </div>
     );
