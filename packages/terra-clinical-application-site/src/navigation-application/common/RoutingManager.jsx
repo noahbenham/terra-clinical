@@ -45,11 +45,14 @@ class RoutingManager extends React.Component {
     this.togglePin = this.togglePin.bind(this);
     this.updateSize = this.updateSize.bind(this);
 
+    const initialSize = RoutingManager.getBreakpointSize();
+    const initialMenuIsOpen = ['tiny', 'small'].indexOf(initialSize) < 0;
+
     this.state = {
-      menuIsOpen: false,
+      menuIsOpen: initialMenuIsOpen,
       menuIsPinned: true,
       menuHidden: false,
-      size: RoutingManager.getBreakpointSize(),
+      size: initialSize,
     };
   }
 
@@ -69,6 +72,7 @@ class RoutingManager extends React.Component {
 
     if (nextProps.location && nextProps.location.state && nextProps.location.state.noMenuMatch) {
       newState.menuIsHidden = true;
+      newState.menuIsOpen = false;
     } else {
       newState.menuIsHidden = false;
     }

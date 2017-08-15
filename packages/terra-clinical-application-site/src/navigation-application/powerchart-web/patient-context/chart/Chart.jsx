@@ -26,13 +26,25 @@ class Chart extends React.Component {
           <Route
             path="/patients/chart/orders"
             render={() => (
-              <div>Orders</div>
+              <div style={{ height: '100%' }}>
+                <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+                    <h2>No Orders</h2>
+                  </div>
+                </div>
+              </div>
             )}
           />
           <Route
             path="/patients/chart/documents"
             render={() => (
-              <div>Documents</div>
+              <div style={{ height: '100%' }}>
+                <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+                    <h2>No Documents</h2>
+                  </div>
+                </div>
+              </div>
             )}
           />
           {this.redirect && <Redirect to="/patients/chart/review" />}

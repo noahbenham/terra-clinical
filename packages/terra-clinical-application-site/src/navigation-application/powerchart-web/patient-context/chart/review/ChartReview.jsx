@@ -48,7 +48,7 @@ class ChartReview extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%', overflow: 'auto' }} ref={(el) => {this.root = el;}}>
+      <div style={{ height: '100%', overflow: 'auto', padding: '10px' }} ref={(el) => {this.root = el;}}>
         <h2>Review</h2>
         <br />
         <Button
