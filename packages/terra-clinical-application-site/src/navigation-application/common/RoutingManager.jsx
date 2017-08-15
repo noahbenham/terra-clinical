@@ -123,7 +123,7 @@ class RoutingManager extends React.Component {
       <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={!this.state.menuIsHidden ? this.toggleMenu : undefined} />}
+          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={!this.state.menuIsHidden ? this.toggleMenu : undefined} toggleIsActive={this.state.menuIsOpen} />}
         >
           <SlidePanel
             isOpen={this.state.menuIsOpen && !this.state.menuIsHidden}

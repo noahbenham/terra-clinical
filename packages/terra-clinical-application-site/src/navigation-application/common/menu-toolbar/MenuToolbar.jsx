@@ -36,12 +36,12 @@ const MenuToolbar = ({ routingManager, ...customProps }) => {
     rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} />;
   }
   let pinButton;
-  if (routingManager.pinMenu) {
-    pinButton = <Button onClick={routingManager.pinMenu} icon={<IconPadlock />} />;
+  if (routingManager.togglePin && !routingManager.menuIsPinned) {
+    pinButton = <Button onClick={routingManager.togglePin} icon={<IconPadlock />} />;
   }
   let unpinButton;
-  if (routingManager.unpinMenu) {
-    unpinButton = <Button onClick={routingManager.unpinMenu} icon={<IconUnlock />} />;
+  if (routingManager.togglePin && routingManager.menuIsPinned) {
+    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} />;
   }
 
   let toolbarBody;
