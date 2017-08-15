@@ -19,7 +19,9 @@ class Chart extends React.Component {
         <Switch>
           <Route
             path="/patients/chart/review"
-            component={ChartReview}
+            render={props => (
+              <ChartReview routingManager={this.props.routingManager} {...props} />
+            )}
           />
           <Route
             path="/patients/chart/orders"

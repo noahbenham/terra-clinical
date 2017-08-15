@@ -39,16 +39,15 @@ class RoutingManager extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleNav = this.toggleNav.bind(this);
-    this.toggleNavPin = this.toggleNavPin.bind(this);
-    this.handleMenuMount = this.handleMenuMount.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+    this.togglePin = this.togglePin.bind(this);
     this.updateSize = this.updateSize.bind(this);
 
     this.state = {
-      navIsOpen: false,
+      menuIsOpen: false,
+      menuIsPinned: true,
       menuHidden: false,
-      togglerEnabled: true,
-      navIsPinned: true,
+      // togglerEnabled: true,
       size: RoutingManager.getBreakpointSize(),
     };
   }
@@ -60,19 +59,20 @@ class RoutingManager extends React.Component {
   componentWillReceiveProps(nextProps) {
     const newState = {};
 
+    // Hide menu when location changes at the tiny breakpoint
     if (['tiny'].indexOf(this.state.size) >= 0) {
-      if (this.state.navIsOpen) {
-        newState.navIsOpen = false;
+      if (this.state.menuIsOpen) {
+        newState.menuIsOpen = false;
       }
     }
 
     if (nextProps.location && nextProps.location.state && nextProps.location.state.noMenuMatch) {
-      newState.menuHidden = true;
+      newState.menuIsHidden = true;
     } else {
-      newState.menuHidden = false;
+      newState.menuIsHidden = false;
     }
 
-    if (newState.navIsOpen !== this.state.navIsOpen || newState.menuHidden !== this.state.menuHidden) {
+    if (newState.menuIsOpen !== this.state.menuIsOpen || newState.menuIsHidden !== this.state.menuIsHidden) {
       this.setState(newState);
     }
   }
@@ -87,42 +87,25 @@ class RoutingManager extends React.Component {
     if (this.state.size !== newSize) {
       this.setState({
         size: newSize,
-        menuHidden: false, // We need to reset this in case menus exist at the next size
+        menuIsHidden: false, // We need to reset this in case menus exist at the next size
       });
     }
   }
 
-  toggleNav() {
+  toggleMenu() {
     const newState = {
-      navIsOpen: !this.state.navIsOpen,
-    };
-
-    // Clear the current menu path when menu is opening (and not before,
-    // to prevent the default menu presenting during menu close)
-    if (newState.navIsOpen) {
-      newState.menuPathname = undefined;
-    }
-
-    this.setState(newState);
-  }
-
-  toggleNavPin() {
-    const newState = {
-      navIsPinned: !this.state.navIsPinned,
+      menuIsOpen: !this.state.menuIsOpen,
     };
 
     this.setState(newState);
   }
 
-  handleMenuMount(mountState) {
-    const newHasMenu = mountState === 'menu';
+  togglePin() {
+    const newState = {
+      menuIsPinned: !this.state.menuIsPinned,
+    };
 
-    if (this.state.hasMenu !== newHasMenu) {
-      this.setState({
-        hasMenu: newHasMenu,
-        navIsOpen: newHasMenu,
-      });
-    }
+    this.setState(newState);
   }
 
   render() {
@@ -135,11 +118,11 @@ class RoutingManager extends React.Component {
       <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={!this.state.menuHidden ? this.toggleNav : undefined} />}
+          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={!this.state.menuIsHidden ? this.toggleMenu : undefined} />}
         >
           <SlidePanel
-            isOpen={this.state.navIsOpen && !this.state.menuHidden}
-            panelBehavior={this.state.navIsPinned ? 'squish' : 'overlay'}
+            isOpen={this.state.menuIsOpen && !this.state.menuIsHidden}
+            panelBehavior={this.state.menuIsPinned ? 'squish' : 'overlay'}
             panelPosition="start"
             fill
             panelContent={(
@@ -149,6 +132,10 @@ class RoutingManager extends React.Component {
                 routeConfig={routeConfig.menuRoutes}
                 routingManager={{
                   size: this.state.size,
+                  toggleMenu: this.toggleMenu,
+                  togglePin: this.togglePin,
+                  menuIsOpen: this.state.menuIsOpen,
+                  menuIsPinned: this.state.menuIsPinned,
                 }}
               >
                 { !this.state.menuHidden ? (
@@ -158,7 +145,7 @@ class RoutingManager extends React.Component {
                       state: { noMenuMatch: true },
                     }}
                   />
-                ) : null}
+                ) : null }
               </RoutingStack>
             )}
             mainContent={(
@@ -167,6 +154,10 @@ class RoutingManager extends React.Component {
                 routeConfig={routeConfig.contentRoutes}
                 routingManager={{
                   size: this.state.size,
+                  toggleMenu: this.toggleMenu,
+                  togglePin: this.togglePin,
+                  menuIsOpen: this.state.menuIsOpen,
+                  menuIsPinned: this.state.menuIsPinned,
                 }}
               >
                 <Redirect to={routeConfig.index} />

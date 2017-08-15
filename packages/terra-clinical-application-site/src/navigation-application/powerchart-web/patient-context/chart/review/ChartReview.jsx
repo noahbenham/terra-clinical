@@ -21,6 +21,10 @@ class ChartReview extends React.Component {
     this.setState({
       selectedSection: event.detail.section,
     })
+
+    if (this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
