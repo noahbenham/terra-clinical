@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import {
   HashRouter as Router,
+  Route,
 } from 'react-router-dom';
 
 import Application, { reducers as terraApplicationReducers } from 'terra-clinical-application';
@@ -29,11 +30,15 @@ class PowerchartWebApplication extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Application locale="en-US">
-          <Router>
-            <RoutingManager routeConfig={routeConfig} />
-          </Router>
-        </Application>
+        <Router>
+          <Route
+            render={routeProps => (
+              <Application locale="en-US">
+                <RoutingManager {...routeProps} routeConfig={routeConfig} />
+              </Application>
+            )}
+          />
+        </Router>
       </Provider>
     );
   }

@@ -1,4 +1,17 @@
 import React from 'react';
+import AppDelegate from 'terra-app-delegate';
+import Button from 'terra-button';
+
+const ChartReviewModal = ({ app }) => {
+  return (
+    <div>
+      <h3>Hurray!</h3>
+      <Button text="Close" onClick={app.closeDisclosure} />
+    </div>
+  )
+}
+
+AppDelegate.registerComponentForDisclosure('ChartReviewModal', ChartReviewModal);
 
 class ChartReview extends React.Component {
   constructor(props) {
@@ -37,6 +50,19 @@ class ChartReview extends React.Component {
     return (
       <div style={{ height: '100%', overflow: 'auto' }} ref={(el) => {this.root = el;}}>
         <h2>Review</h2>
+        <br />
+        <Button
+          text="Modal"
+          onClick={() => {
+            this.props.app.disclose({
+              preferredType: 'modal',
+              content: {
+                key: 'CHART_REVIEW_MODAL',
+                name: 'ChartReviewModal',
+              },
+            })
+          }}
+        />
         <p>Selected Section: {this.state.selectedSection}</p>
         <br />
         <hr />

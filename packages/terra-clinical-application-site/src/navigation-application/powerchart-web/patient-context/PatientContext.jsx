@@ -71,7 +71,7 @@ class PatientContext extends React.Component {
   }
 
   render() {
-    const { routingManager } = this.props;
+    const { routingManager, location } = this.props;
 
     if (this.forceRedirect) {
       this.forceRedirect = false;
@@ -106,7 +106,7 @@ class PatientContext extends React.Component {
           <Switch>
             <Route
               path="/patients/chart"
-              render={({ match, location }) => (
+              render={({ match, chartLocation }) => (
                 this.state.patientContext ? (
                   <ContentContainer
                     fill
@@ -122,7 +122,7 @@ class PatientContext extends React.Component {
                       />
                     }
                   >
-                    <Chart routingManager={routingManager} match={match} location={location} />
+                    <Chart routingManager={routingManager} app={this.props.app} match={match} location={chartLocation} />
                   </ContentContainer>
                 ) : <Redirect to="/patients" />
               )}

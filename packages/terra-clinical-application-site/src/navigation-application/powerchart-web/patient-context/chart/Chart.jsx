@@ -20,7 +20,7 @@ class Chart extends React.Component {
           <Route
             path="/patients/chart/review"
             render={props => (
-              <ChartReview routingManager={this.props.routingManager} {...props} />
+              <ChartReview routingManager={this.props.routingManager} app={this.props.app} {...props} />
             )}
           />
           <Route
