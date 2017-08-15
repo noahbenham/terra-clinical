@@ -73,8 +73,6 @@ class PatientContext extends React.Component {
   render() {
     const { routingManager } = this.props;
 
-    debugger;
-
     if (this.forceRedirect) {
       this.forceRedirect = false;
 

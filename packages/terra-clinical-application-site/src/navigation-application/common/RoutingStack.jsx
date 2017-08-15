@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import {
   Switch,
   Route,
   withRouter,
 } from 'react-router-dom';
+
+import RoutingManagerDelegate from './RoutingManagerDelegate';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -41,6 +42,7 @@ class RoutingStack extends React.Component {
     });
   }
 
+  // TODO: Clean up this function cause it's pretty ugly
   createMenuRoutes(routeConfig, parentPaths) {
     const { navEnabled, size } = this.props;
 
@@ -95,6 +97,17 @@ class RoutingStack extends React.Component {
     }
 
     if (ComponentClass) {
+      const routingManagerDelegate = RoutingManagerDelegate.clone(this.props.routingManager, {
+        browserLocation: this.props.location,
+        managerLocation: this.state.stackLocation,
+        goBack: navEnabled && parentPaths && parentPaths.length ? () => {
+          this.updateMenuLocation(parentPaths[parentPaths.length - 1]);
+        } : undefined,
+        goToRoot: navEnabled && parentPaths && parentPaths.length > 1 ? () => {
+          this.updateMenuLocation(parentPaths[0]);
+        } : undefined,
+      });
+
       routes.push((
         <Route
           exact={routeConfig.exact}
@@ -107,15 +120,7 @@ class RoutingStack extends React.Component {
                 {...routeProps}
                 {...componentProps}
                 routeConfig={routeConfig}
-                routingManager={{
-                  size,
-                  goBack: navEnabled && parentPaths && parentPaths.length ? () => {
-                    this.updateMenuLocation(parentPaths[parentPaths.length - 1]);
-                  } : undefined,
-                  goToRoot: navEnabled && parentPaths && parentPaths.length > 1 ? () => {
-                    this.updateMenuLocation(parentPaths[0]);
-                  } : undefined,
-                }}
+                routingManager={routingManagerDelegate}
               />
             );
           }}

@@ -147,6 +147,9 @@ class RoutingManager extends React.Component {
                 navEnabled
                 size={this.state.size}
                 routeConfig={routeConfig.menuRoutes}
+                routingManager={{
+                  size: this.state.size,
+                }}
               >
                 { !this.state.menuHidden ? (
                   <Redirect
@@ -162,6 +165,9 @@ class RoutingManager extends React.Component {
               <RoutingStack
                 size={this.state.size}
                 routeConfig={routeConfig.contentRoutes}
+                routingManager={{
+                  size: this.state.size,
+                }}
               >
                 <Redirect to={routeConfig.index} />
               </RoutingStack>

@@ -18,6 +18,7 @@ const RootMenu = ({ match, routingManager, path }) => {
           <hr />
           <br />
           <NavLink
+            location={routingManager.browserLocation}
             to={`${match.path}patients`}
             activeStyle={{
               fontWeight: 'bold',
@@ -28,6 +29,7 @@ const RootMenu = ({ match, routingManager, path }) => {
           <br />
           <br />
           <NavLink
+            location={routingManager.browserLocation}
             to={`${match.path}messages`}
             activeStyle={{
               fontWeight: 'bold',
@@ -38,6 +40,7 @@ const RootMenu = ({ match, routingManager, path }) => {
           <br />
           <br />
           <NavLink
+            location={routingManager.browserLocation}
             to={`${match.path}alerts`}
             activeStyle={{
               fontWeight: 'bold',

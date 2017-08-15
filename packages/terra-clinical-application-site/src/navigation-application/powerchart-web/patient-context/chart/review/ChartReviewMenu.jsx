@@ -55,6 +55,22 @@ class ChartReviewMenu extends React.Component {
                 document.dispatchEvent(new CustomEvent('chartReviewSectionSelected', { detail: { section: 'Section 2' } }));
               }}
             />
+            <br />
+            <br />
+            <Button
+              text="Section 3"
+              onClick={() => {
+                document.dispatchEvent(new CustomEvent('chartReviewSectionSelected', { detail: { section: 'Section 3' } }));
+              }}
+            />
+            <br />
+            <br />
+            <Button
+              text="Section 4"
+              onClick={() => {
+                document.dispatchEvent(new CustomEvent('chartReviewSectionSelected', { detail: { section: 'Section 4' } }));
+              }}
+            />
           </div>
         </ContentContainer>
       </div>

@@ -11,6 +11,7 @@ const BREAKPOINTS = [
 const RoutingManagerDelegate = {
   propType: PropTypes.shape({
     size: PropTypes.oneOf(BREAKPOINTS).isRequired,
+    managerLocation: PropTypes.object,
     closeMenu: PropTypes.func,
     openMenu: PropTypes.func,
     pinMenu: PropTypes.func,
