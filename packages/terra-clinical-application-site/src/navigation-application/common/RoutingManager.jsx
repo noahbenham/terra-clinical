@@ -10,13 +10,15 @@ import {
   Redirect,
   withRouter,
 } from 'react-router-dom';
+import AppDelegate from 'terra-app-delegate';
 
-import { NoMenuComponent } from './RouteConfigHelpers';
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 import RoutingStack from './RoutingStack';
 
 const propTypes = {
   routeConfig: PropTypes.object,
+  location: PropTypes.object,
+  app: AppDelegate.propType,
 };
 
 class RoutingManager extends React.Component {
@@ -47,7 +49,6 @@ class RoutingManager extends React.Component {
       menuIsOpen: false,
       menuIsPinned: true,
       menuHidden: false,
-      // togglerEnabled: true,
       size: RoutingManager.getBreakpointSize(),
     };
   }
@@ -109,7 +110,7 @@ class RoutingManager extends React.Component {
   }
 
   render() {
-    const { routeConfig, location } = this.props;
+    const { routeConfig, location, app } = this.props;
 
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
@@ -128,8 +129,9 @@ class RoutingManager extends React.Component {
             panelContent={(
               <RoutingStack
                 navEnabled
-                size={this.state.size}
+                app={app}
                 routeConfig={routeConfig.menuRoutes}
+                location={this.props.location}
                 routingManager={{
                   size: this.state.size,
                   toggleMenu: this.toggleMenu,
@@ -150,8 +152,9 @@ class RoutingManager extends React.Component {
             )}
             mainContent={(
               <RoutingStack
-                size={this.state.size}
+                app={app}
                 routeConfig={routeConfig.contentRoutes}
+                location={this.props.location}
                 routingManager={{
                   size: this.state.size,
                   toggleMenu: this.toggleMenu,

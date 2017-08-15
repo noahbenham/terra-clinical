@@ -97,8 +97,6 @@ class PatientContext extends React.Component {
       );
     }
 
-    debugger;
-
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
         <ContentContainer

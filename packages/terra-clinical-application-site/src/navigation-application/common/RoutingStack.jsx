@@ -5,17 +5,17 @@ import {
   Route,
   withRouter,
 } from 'react-router-dom';
+import AppDelegate from 'terra-app-delegate';
 
 import RoutingManagerDelegate from './RoutingManagerDelegate';
 
 const propTypes = {
   routeConfig: PropTypes.object,
   navEnabled: PropTypes.bool,
-
-  toggleOpen: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  togglePin: PropTypes.bool,
-  isPinned: PropTypes.bool,
+  location: PropTypes.object,
+  routingManager: RoutingManagerDelegate.propType,
+  app: AppDelegate.propType,
+  children: PropTypes.node,
 };
 
 class RoutingStack extends React.Component {
@@ -44,7 +44,7 @@ class RoutingStack extends React.Component {
 
   // TODO: Clean up this function cause it's pretty ugly
   createMenuRoutes(routeConfig, parentPaths) {
-    const { navEnabled, size } = this.props;
+    const { navEnabled, routingManager } = this.props;
 
     if (!routeConfig) {
       return undefined;
@@ -53,7 +53,7 @@ class RoutingStack extends React.Component {
     let componentConfig;
 
     if (typeof (routeConfig.component) === 'object') {
-      const configForSize = routeConfig.component[size];
+      const configForSize = routeConfig.component[routingManager.size];
 
       if (configForSize) {
         componentConfig = configForSize;
@@ -97,6 +97,8 @@ class RoutingStack extends React.Component {
     }
 
     if (ComponentClass) {
+      // Merging the stack-related delegate data with the manager-related delegate data. I don't know how much
+      // I like how multi-featured the delegate is...
       const routingManagerDelegate = RoutingManagerDelegate.clone(this.props.routingManager, {
         browserLocation: this.props.location,
         managerLocation: this.state.stackLocation,
@@ -121,6 +123,7 @@ class RoutingStack extends React.Component {
                 {...componentProps}
                 routeConfig={routeConfig}
                 routingManager={routingManagerDelegate}
+                app={this.props.app}
               />
             );
           }}
