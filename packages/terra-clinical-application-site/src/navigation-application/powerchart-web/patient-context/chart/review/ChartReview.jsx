@@ -6,13 +6,26 @@ import Header from 'terra-clinical-header';
 import ContentContainer from 'terra-content-container';
 import { loadChartReview, focusChartReviewSection } from './actions';
 
-const ChartReviewModal = ({ app }) => {
-  return (
-    <div>
-      <h3>Hurray!</h3>
-      <Button text="Close" onClick={app.closeDisclosure} />
-    </div>
-  )
+class ChartReviewModal extends React.Component {
+  componentDidMount() {
+    document.dispatchEvent(new CustomEvent('chartReviewModalOpened'));
+  }
+
+  render() {
+    const { app } = this.props;
+    return (
+      <div>
+        <h3>Hurray!</h3>
+        <Button
+          text="Close"
+          onClick={() => {
+            document.dispatchEvent(new CustomEvent('chartReviewModalClosed'));
+            app.closeDisclosure();
+          }}
+        />
+      </div>
+    );
+  }
 }
 
 AppDelegate.registerComponentForDisclosure('ChartReviewModal', ChartReviewModal);
@@ -22,17 +35,36 @@ class ChartReview extends React.Component {
     super(props);
 
     this.refresh = this.refresh.bind(this);
+    this.updateModalOpenedCount = this.updateModalOpenedCount.bind(this);
+    this.updateModalClosedCount = this.updateModalClosedCount.bind(this);
 
     this.sectionMapping = {};
-    this.state = {};
+    this.state = {
+      modalOpenedCount: 0,
+      modalClosedCount: 0,
+    };
   }
 
   componentDidMount() {
-    document.addEventListener('chartReviewSectionSelected', this.updateSelectedSection);
+    document.addEventListener('chartReviewModalOpened', this.updateModalOpenedCount);
+    document.addEventListener('chartReviewModalClosed', this.updateModalClosedCount);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('chartReviewSectionSelected', this.updateSelectedSection);
+    document.removeEventListener('chartReviewModalOpened', this.updateModalOpenedCount);
+    document.removeEventListener('chartReviewModalClosed', this.updateModalClosedCount);
+  }
+
+  updateModalOpenedCount() {
+    this.setState({
+      modalOpenedCount: ++this.state.modalOpenedCount,
+    })
+  }
+
+  updateModalClosedCount() {
+    this.setState({
+      modalClosedCount: ++this.state.modalClosedCount,
+    })
   }
 
   refresh() {
@@ -85,7 +117,9 @@ class ChartReview extends React.Component {
             })
           }}
         />
-        <p>Selected Section: {this.state.selectedSection}</p>
+        <p>Modal Opened {this.state.modalOpenedCount} times</p>
+        <p>Modal Closed {this.state.modalClosedCount} times</p>
+        <br />
         <br />
         <hr />
         {content}
