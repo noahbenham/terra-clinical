@@ -43,6 +43,7 @@ class ChartReviewMenu extends React.Component {
       sectionButtons.push((
         <Button
           isBlock
+          variant="link"
           key={sections[sectionId].id}
           text={sections[sectionId].name}
           onClick={() => {
