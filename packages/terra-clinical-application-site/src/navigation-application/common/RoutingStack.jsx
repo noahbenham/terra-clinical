@@ -59,7 +59,7 @@ class RoutingStack extends React.Component {
         componentConfig = configForSize;
       }
 
-      if (configForSize !== null && routeConfig.component.default) {
+      if (configForSize === undefined && routeConfig.component.default) {
         componentConfig = routeConfig.component.default;
       }
     }

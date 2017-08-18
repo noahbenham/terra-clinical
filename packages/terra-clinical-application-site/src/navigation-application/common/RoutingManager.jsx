@@ -63,13 +63,6 @@ class RoutingManager extends React.Component {
   componentWillReceiveProps(nextProps) {
     const newState = {};
 
-    // Hide menu when location changes at the tiny breakpoint
-    if (['tiny'].indexOf(this.state.size) >= 0) {
-      if (this.state.menuIsOpen) {
-        newState.menuIsOpen = false;
-      }
-    }
-
     if (nextProps.location && nextProps.location.state && nextProps.location.state.noMenuMatch) {
       newState.menuIsHidden = true;
       newState.menuIsOpen = false;

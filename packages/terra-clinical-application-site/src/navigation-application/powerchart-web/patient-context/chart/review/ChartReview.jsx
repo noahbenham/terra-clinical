@@ -58,13 +58,13 @@ class ChartReview extends React.Component {
   updateModalOpenedCount() {
     this.setState({
       modalOpenedCount: ++this.state.modalOpenedCount,
-    })
+    });
   }
 
   updateModalClosedCount() {
     this.setState({
       modalClosedCount: ++this.state.modalClosedCount,
-    })
+    });
   }
 
   refresh() {
@@ -79,7 +79,7 @@ class ChartReview extends React.Component {
   }
 
   render() {
-    const { sections, sectionSequence } = this.props
+    const { app, sections, sectionSequence } = this.props;
 
     const content = [];
     (sectionSequence || []).forEach((sectionId) => {
@@ -102,19 +102,19 @@ class ChartReview extends React.Component {
     });
 
     return (
-      <div style={{ height: '100%', overflow: 'auto', padding: '10px' }} ref={(el) => {this.root = el;}}>
+      <div style={{ height: '100%', overflow: 'auto', padding: '10px' }} ref={(el) => { this.root = el; }}>
         <h2>Review</h2>
         <br />
         <Button
           text="Modal"
           onClick={() => {
-            this.props.app.disclose({
+            app.disclose({
               preferredType: 'modal',
               content: {
                 key: 'CHART_REVIEW_MODAL',
                 name: 'ChartReviewModal',
               },
-            })
+            });
           }}
         />
         <p>Modal Opened {this.state.modalOpenedCount} times</p>

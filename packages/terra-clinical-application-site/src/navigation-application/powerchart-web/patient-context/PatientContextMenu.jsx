@@ -5,6 +5,7 @@ import ContentContainer from 'terra-content-container';
 import IconChecklist from 'terra-icon/lib/icon/IconChecklist';
 import IconCalendar from 'terra-icon/lib/icon/IconCalendar';
 import IconSearch from 'terra-icon/lib/icon/IconSearch';
+
 import RoutingManagerDelegate from '../../common/RoutingManagerDelegate';
 import MenuToolbar from '../../common/menu-toolbar/MenuToolbar';
 
