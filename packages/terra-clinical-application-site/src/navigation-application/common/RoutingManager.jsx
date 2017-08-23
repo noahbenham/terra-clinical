@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Button from 'terra-button';
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
@@ -9,11 +10,13 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import {
   Redirect,
   withRouter,
+  NavLink,
 } from 'react-router-dom';
 import AppDelegate from 'terra-app-delegate';
 
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 import RoutingStack from './RoutingStack';
+import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -46,10 +49,9 @@ class RoutingManager extends React.Component {
     this.updateSize = this.updateSize.bind(this);
 
     const initialSize = RoutingManager.getBreakpointSize();
-    const initialMenuIsOpen = ['tiny', 'small'].indexOf(initialSize) < 0;
 
     this.state = {
-      menuIsOpen: initialMenuIsOpen,
+      menuIsOpen: false,
       menuIsPinned: true,
       menuHidden: false,
       size: initialSize,
@@ -112,41 +114,116 @@ class RoutingManager extends React.Component {
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
 
+    const primaryNavButtons = [];
+    if (['tiny'].indexOf(this.state.size) < 0) {
+      routeConfig.primaryNav.links.forEach((link) => {
+        primaryNavButtons.push((
+          <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
+            {link.name}
+          </NavLink>
+        ));
+      });
+    }
+
+    const verticalNavItems = [];
+    if (['tiny'].indexOf(this.state.size) >= 0) {
+      routeConfig.primaryNav.links.forEach((link) => {
+        const Component = link.component;
+        verticalNavItems.push((
+          <div>
+            <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
+              <Component />
+            </NavLink>
+          </div>
+        ));
+      });
+    }
+
+    let menuComponent;
+    if (['tiny'].indexOf(this.state.size) >= 0) {
+      console.log('DOING SMALL MENU');
+      menuComponent = (
+        <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
+          <div style={{ flex: '0 0 auto' }}>
+            <VerticalToolbar>
+              {verticalNavItems}
+            </VerticalToolbar>
+          </div>
+          <div style={{ flex: '1 1 auto', position: 'relative' }}>
+            <RoutingStack
+              navEnabled
+              app={app}
+              routeConfig={routeConfig.menuRoutes}
+              location={this.props.location}
+              routingManager={{
+                size: this.state.size,
+                toggleMenu: this.toggleMenu,
+                togglePin: this.togglePin,
+                menuIsOpen: this.state.menuIsOpen,
+                menuIsPinned: this.state.menuIsPinned,
+              }}
+            >
+              { !this.state.menuIsHidden ? (
+                <Redirect
+                  to={{
+                    pathname: location.pathname,
+                    state: { noMenuMatch: true },
+                  }}
+                />
+              ) : null }
+            </RoutingStack>
+          </div>
+        </div>
+      );
+    } else {
+      menuComponent = (
+        <RoutingStack
+          navEnabled
+          app={app}
+          routeConfig={routeConfig.menuRoutes}
+          location={this.props.location}
+          routingManager={{
+            size: this.state.size,
+            toggleMenu: this.toggleMenu,
+            togglePin: this.togglePin,
+            menuIsOpen: this.state.menuIsOpen,
+            menuIsPinned: this.state.menuIsPinned,
+          }}
+        >
+          { !this.state.menuIsHidden ? (
+            <Redirect
+              to={{
+                pathname: location.pathname,
+                state: { noMenuMatch: true },
+              }}
+            />
+          ) : null }
+        </RoutingStack>
+      );
+    }
+
+    const shouldDisplayMenuToggle = ['tiny'].indexOf(this.state.size) >= 0 || !this.state.menuIsHidden;
+
     return (
       <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={<ApplicationToolbar utility={utility} logo={logo} onToggleClick={!this.state.menuIsHidden ? this.toggleMenu : undefined} toggleIsActive={this.state.menuIsOpen} />}
+          header={(
+            <ApplicationToolbar
+              utility={utility}
+              logo={logo}
+              content={<div style={{ margin: '0 5px 0 5px' }}>{primaryNavButtons}</div>}
+              onToggleClick={shouldDisplayMenuToggle ? this.toggleMenu : undefined}
+              toggleIsActive={this.state.menuIsOpen}
+            />
+          )}
         >
           <SlidePanel
-            isOpen={this.state.menuIsOpen && !this.state.menuIsHidden}
+            isOpen={this.state.menuIsOpen}
             panelBehavior={this.state.menuIsPinned ? 'squish' : 'overlay'}
             panelPosition="start"
             fill
-            panelContent={(
-              <RoutingStack
-                navEnabled
-                app={app}
-                routeConfig={routeConfig.menuRoutes}
-                location={this.props.location}
-                routingManager={{
-                  size: this.state.size,
-                  toggleMenu: this.toggleMenu,
-                  togglePin: this.togglePin,
-                  menuIsOpen: this.state.menuIsOpen,
-                  menuIsPinned: this.state.menuIsPinned,
-                }}
-              >
-                { !this.state.menuHidden ? (
-                  <Redirect
-                    to={{
-                      pathname: location.pathname,
-                      state: { noMenuMatch: true },
-                    }}
-                  />
-                ) : null }
-              </RoutingStack>
-            )}
+            panelContent={menuComponent}
             mainContent={(
               <RoutingStack
                 app={app}
@@ -160,7 +237,7 @@ class RoutingManager extends React.Component {
                   menuIsPinned: this.state.menuIsPinned,
                 }}
               >
-                <Redirect to={routeConfig.index} />
+                <Redirect to={routeConfig.primaryNav.index} />
               </RoutingStack>
             )}
           />

@@ -14,32 +14,33 @@ import './ApplicationToolbar.scss';
 const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
+   * */
   app: AppDelegate.propType,
   /**
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
+   * */
   content: PropTypes.element,
   /**
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
+   * */
   onToggleClick: PropTypes.func,
   toggleIsActive: PropTypes.bool,
   /**
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
+   * */
   logo: PropTypes.element,
   /**
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
-   **/
+   * */
   utility: PropTypes.element,
+  size: PropTypes.string,
 };
 
 class ApplicationToolbar extends React.Component {
 
   appendPropsToElement(element) {
     const { app, size } = this.props;
-    return React.cloneElement(element, {app, size});
+    return React.cloneElement(element, { app, size });
   }
 
   render() {

@@ -187,7 +187,7 @@ class PatientContext extends React.Component {
     const componentForDisclosure = this.getComponentForDisclosureType();
 
     let toolbarContent;
-    if (['tiny', 'small'].indexOf(routingManager.size) === -1) {
+    if (['tiny'].indexOf(routingManager.size) === -1) {
       toolbarContent = (
         <SkinnyToolbar
           buttons={
