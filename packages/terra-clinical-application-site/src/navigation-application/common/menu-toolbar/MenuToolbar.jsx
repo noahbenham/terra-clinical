@@ -15,7 +15,7 @@ import './MenuToolbar.scss';
 const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
+   * */
   routingManager: RoutingManagerDelegate.propType,
   backButtonOverride: PropTypes.node,
 };
@@ -28,20 +28,20 @@ const MenuToolbar = ({ routingManager, ...customProps }) => {
 
   let backButton;
   if (routingManager.goBack) {
-    backButton = <Button onClick={routingManager.goBack} icon={<IconReply />} />;
+    backButton = <Button onClick={routingManager.goBack} icon={<IconReply />} variant="link" style={{ color: 'white' }} />;
   }
 
   let rootButton;
   if (routingManager.goToRoot) {
-    rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} />;
+    rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} variant="link" style={{ color: 'white' }} />;
   }
   let pinButton;
   if (routingManager.togglePin && !routingManager.menuIsPinned) {
-    pinButton = <Button onClick={routingManager.togglePin} icon={<IconPadlock />} />;
+    pinButton = <Button onClick={routingManager.togglePin} icon={<IconPadlock />} variant="link" style={{ color: 'white' }} />;
   }
   let unpinButton;
   if (routingManager.togglePin && routingManager.menuIsPinned) {
-    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} />;
+    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} variant="link" style={{ color: 'white' }} />;
   }
 
   let toolbarBody;

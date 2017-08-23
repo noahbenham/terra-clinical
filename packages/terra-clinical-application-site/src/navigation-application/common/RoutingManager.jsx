@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Button from 'terra-button';
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
@@ -158,9 +157,7 @@ class RoutingManager extends React.Component {
               routingManager={{
                 size: this.state.size,
                 toggleMenu: this.toggleMenu,
-                togglePin: this.togglePin,
                 menuIsOpen: this.state.menuIsOpen,
-                menuIsPinned: this.state.menuIsPinned,
               }}
             >
               { !this.state.menuIsHidden ? (
