@@ -7,6 +7,7 @@ import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
 import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import {
+  Route,
   Redirect,
   withRouter,
   NavLink,
@@ -124,80 +125,63 @@ class RoutingManager extends React.Component {
       });
     }
 
-    const verticalNavItems = [];
+    let primaryNavMenu;
     if (['tiny'].indexOf(this.state.size) >= 0) {
+      const verticalNavItems = [];
       routeConfig.primaryNav.links.forEach((link) => {
         const Component = link.component;
         verticalNavItems.push((
           <div>
-            <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
+            <NavLink to={link.path} key={link.path} activeStyle={{ color: 'white' }} style={{ paddingLeft: '5px' }}>
               <Component />
             </NavLink>
           </div>
         ));
       });
+
+      primaryNavMenu = (
+        <VerticalToolbar>
+          {verticalNavItems}
+        </VerticalToolbar>
+      );
     }
 
-    let menuComponent;
-    if (['tiny'].indexOf(this.state.size) >= 0) {
-      console.log('DOING SMALL MENU');
-      menuComponent = (
-        <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
-          <div style={{ flex: '0 0 auto' }}>
-            <VerticalToolbar>
-              {verticalNavItems}
-            </VerticalToolbar>
-          </div>
-          <div style={{ flex: '1 1 auto', position: 'relative' }}>
-            <RoutingStack
-              navEnabled
-              app={app}
-              routeConfig={routeConfig.menuRoutes}
-              location={this.props.location}
-              routingManager={{
-                size: this.state.size,
-                toggleMenu: this.toggleMenu,
-                menuIsOpen: this.state.menuIsOpen,
-              }}
-            >
-              { !this.state.menuIsHidden ? (
-                <Redirect
-                  to={{
-                    pathname: location.pathname,
-                    state: { noMenuMatch: true },
-                  }}
-                />
-              ) : null }
-            </RoutingStack>
-          </div>
+    const menuComponent = (
+      <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
+        <div style={{ flex: '0 0 auto' }}>
+          {primaryNavMenu}
         </div>
-      );
-    } else {
-      menuComponent = (
-        <RoutingStack
-          navEnabled
-          app={app}
-          routeConfig={routeConfig.menuRoutes}
-          location={this.props.location}
-          routingManager={{
-            size: this.state.size,
-            toggleMenu: this.toggleMenu,
-            togglePin: this.togglePin,
-            menuIsOpen: this.state.menuIsOpen,
-            menuIsPinned: this.state.menuIsPinned,
-          }}
-        >
-          { !this.state.menuIsHidden ? (
-            <Redirect
-              to={{
-                pathname: location.pathname,
-                state: { noMenuMatch: true },
-              }}
+        <div style={{ flex: '1 1 auto', position: 'relative' }}>
+          <RoutingStack
+            navEnabled
+            app={app}
+            routeConfig={routeConfig.menuRoutes}
+            location={this.props.location}
+            routingManager={{
+              size: this.state.size,
+              toggleMenu: this.toggleMenu,
+              menuIsOpen: this.state.menuIsOpen,
+            }}
+          >
+            { !this.state.menuIsHidden ? (
+              <Redirect
+                to={{
+                  pathname: location.pathname,
+                  state: { noMenuMatch: true },
+                }}
+              />
+            ) : null }
+            <Route
+              render={() => (
+                <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+                  <h2>Chart App</h2>
+                </div>
+              )}
             />
-          ) : null }
-        </RoutingStack>
-      );
-    }
+          </RoutingStack>
+        </div>
+      </div>
+    );
 
     const shouldDisplayMenuToggle = ['tiny'].indexOf(this.state.size) >= 0 || !this.state.menuIsHidden;
 

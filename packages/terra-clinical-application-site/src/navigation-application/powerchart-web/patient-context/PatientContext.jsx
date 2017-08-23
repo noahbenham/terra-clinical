@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+
 import Button from 'terra-button';
 import DemographicsBanner from 'terra-demographics-banner';
 import Image from 'terra-image';
@@ -225,4 +226,4 @@ class PatientContext extends React.Component {
 
 PatientContext.propTypes = propTypes;
 
-export default PatientContext;
+export default withRouter(PatientContext);
