@@ -42,13 +42,13 @@ class ChartReviewMenu extends React.Component {
     (sectionSequence || []).forEach((sectionId) => {
       sectionButtons.push((
         <Button
-          isBlock
           variant="link"
           key={sections[sectionId].id}
           text={sections[sectionId].name}
           onClick={() => {
             focusSection(sections[sectionId].id);
           }}
+          style={{ display: 'block' }}
         />
       ));
     });
@@ -56,13 +56,10 @@ class ChartReviewMenu extends React.Component {
     return (
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
         <ContentContainer
-          header={<MenuToolbar routingManager={routingManager} />}
+          header={<MenuToolbar text="Summary" routingManager={routingManager} />}
           fill
         >
           <div style={{ padding: '10px' }}>
-            <h3 style={{ paddingBottom: '5px', display: 'inline' }}>Summary</h3>
-            <hr />
-            <br />
             {sectionButtons}
           </div>
         </ContentContainer>

@@ -83,13 +83,6 @@ const config = {
             customProp: 'DEFAULT CONFIG',
           },
         },
-        tiny: {
-          type: PatientContextMenu,
-          description: 'Tiny PatientContextMenu',
-          props: {
-            isTiny: true,
-          },
-        },
         small: null,
         medium: null,
         large: null,

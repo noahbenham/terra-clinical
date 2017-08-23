@@ -14,10 +14,10 @@ const propTypes = {
   isTiny: PropTypes.bool,
 };
 
-const PatientContextMenu = ({ routingManager, isTiny }) => (
+const PatientContextMenu = ({ routingManager }) => (
   <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
     <ContentContainer
-      header={<MenuToolbar routingManager={routingManager} />}
+      header={<MenuToolbar text="Patients" routingManager={routingManager} />}
       fill
     >
       <Button
@@ -39,7 +39,6 @@ const PatientContextMenu = ({ routingManager, isTiny }) => (
       />
       <br />
       <hr />
-      {isTiny && <h2>I AM TINY</h2>}
     </ContentContainer>
   </div>
 );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
-import IconReply from 'terra-icon/lib/icon/IconReply';
+import IconLeft from 'terra-icon/lib/icon/IconLeft';
 import IconHouse from 'terra-icon/lib/icon/IconHouse';
 import IconUnlock from 'terra-icon/lib/icon/IconUnlock';
 import IconPadlock from 'terra-icon/lib/icon/IconPadlock';
@@ -20,7 +20,7 @@ const propTypes = {
   backButtonOverride: PropTypes.node,
 };
 
-const MenuToolbar = ({ routingManager, ...customProps }) => {
+const MenuToolbar = ({ routingManager, text, ...customProps }) => {
   const toolbarClassNames = classNames([
     'terraClinical-MenuToolbar',
     customProps.className,
@@ -28,28 +28,36 @@ const MenuToolbar = ({ routingManager, ...customProps }) => {
 
   let backButton;
   if (routingManager.goBack) {
-    backButton = <Button onClick={routingManager.goBack} icon={<IconReply />} variant="link" style={{ color: 'white' }} />;
+    backButton = <Button onClick={routingManager.goBack} icon={<IconLeft />} variant="link" style={{ color: 'black' }} />;
   }
 
   let rootButton;
   if (routingManager.goToRoot) {
-    rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} variant="link" style={{ color: 'white' }} />;
+    rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} variant="link" style={{ color: 'black' }} />;
   }
   let pinButton;
   if (routingManager.togglePin && !routingManager.menuIsPinned) {
-    pinButton = <Button onClick={routingManager.togglePin} icon={<IconPadlock />} variant="link" style={{ color: 'white' }} />;
+    pinButton = <Button onClick={routingManager.togglePin} icon={<IconPadlock />} variant="link" style={{ color: 'black' }} />;
   }
   let unpinButton;
   if (routingManager.togglePin && routingManager.menuIsPinned) {
-    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} variant="link" style={{ color: 'white' }} />;
+    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} variant="link" style={{ color: 'black' }} />;
   }
 
-  let toolbarBody;
-  if (backButton || rootButton || pinButton || unpinButton) {
-    toolbarBody = (
-      <div className="terraClinical-MenuToolbar-body">
+  let toolbarStart;
+  if (backButton || rootButton) {
+    toolbarStart = (
+      <div className="terraClinical-MenuToolbar-start">
         {backButton}
         {rootButton}
+      </div>
+    );
+  }
+
+  let toolbarEnd;
+  if (pinButton || unpinButton) {
+    toolbarStart = (
+      <div className="terraClinical-MenuToolbar-end">
         {pinButton}
         {unpinButton}
       </div>
@@ -58,7 +66,11 @@ const MenuToolbar = ({ routingManager, ...customProps }) => {
 
   return (
     <div {...customProps} className={toolbarClassNames}>
-      {toolbarBody}
+      {toolbarStart}
+      <div className="terraClinical-MenuToolbar-body">
+        <h3>{text}</h3>
+      </div>
+      {toolbarEnd}
     </div>
   );
 };
