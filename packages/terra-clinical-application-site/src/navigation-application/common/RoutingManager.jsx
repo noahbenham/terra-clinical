@@ -203,30 +203,44 @@ class RoutingManager extends React.Component {
       />
     );
 
+    let menuHeader;
+    if (isCompactLayout) {
+      menuHeader = (
+        <div style={{ height: '45px', padding: '5px', backgroundColor: '#f7f7f7', borderBottom: '1px solid lightgrey', display: 'flex', alignItems: 'center' }}>
+          <h2>Chart App</h2>
+        </div>
+      );
+    }
+
     return (
-      <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
-        <div style={{ flex: '0 0 auto' }}>
-          {verticalNavToolbar}
+      <ContentContainer
+        fill
+        header={menuHeader}
+      >
+        <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
+          <div style={{ flex: '0 0 auto' }}>
+            {verticalNavToolbar}
+          </div>
+          <div style={{ flex: '1 1 auto', position: 'relative' }}>
+            <RoutingStack
+              navEnabled
+              app={app}
+              routeConfig={routeConfig.menuRoutes}
+              location={location}
+              routingManager={{
+                size,
+                toggleMenu: this.toggleMenu,
+                togglePin: !isCompactLayout && this.togglePin,
+                menuIsOpen,
+                menuIsPinned: !isCompactLayout && menuIsPinned,
+              }}
+            >
+              {noMenuDetector}
+              {menuPlaceholder}
+            </RoutingStack>
+          </div>
         </div>
-        <div style={{ flex: '1 1 auto', position: 'relative' }}>
-          <RoutingStack
-            navEnabled
-            app={app}
-            routeConfig={routeConfig.menuRoutes}
-            location={location}
-            routingManager={{
-              size,
-              toggleMenu: this.toggleMenu,
-              togglePin: !isCompactLayout && this.togglePin,
-              menuIsOpen,
-              menuIsPinned: !isCompactLayout && menuIsPinned,
-            }}
-          >
-            {noMenuDetector}
-            {menuPlaceholder}
-          </RoutingStack>
-        </div>
-      </div>
+      </ContentContainer>
     );
   }
 
