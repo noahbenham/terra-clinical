@@ -235,20 +235,25 @@ class RoutingManager extends React.Component {
     const { size, menuIsOpen, menuIsPinned } = this.state;
 
     return (
-      <RoutingStack
-        app={app}
-        routeConfig={routeConfig.contentRoutes}
-        location={this.props.location}
-        routingManager={{
-          size,
-          toggleMenu: this.toggleMenu,
-          togglePin: this.togglePin,
-          menuIsOpen,
-          menuIsPinned,
-        }}
+      <ContentContainer
+        fill
+        header={this.isCompactLayout() && this.renderApplicationToolbar()}
       >
-        <Redirect to={routeConfig.primaryNav.index} />
-      </RoutingStack>
+        <RoutingStack
+          app={app}
+          routeConfig={routeConfig.contentRoutes}
+          location={this.props.location}
+          routingManager={{
+            size,
+            toggleMenu: this.toggleMenu,
+            togglePin: this.togglePin,
+            menuIsOpen,
+            menuIsPinned,
+          }}
+        >
+          <Redirect to={routeConfig.primaryNav.index} />
+        </RoutingStack>
+      </ContentContainer>
     );
   }
 
@@ -259,7 +264,7 @@ class RoutingManager extends React.Component {
       <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={this.renderApplicationToolbar()}
+          header={!this.isCompactLayout() && this.renderApplicationToolbar()}
         >
           <McPanel
             isAnimated
