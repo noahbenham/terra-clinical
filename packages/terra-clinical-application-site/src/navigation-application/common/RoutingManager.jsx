@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 
 import AppDelegate from 'terra-app-delegate';
-import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
@@ -17,6 +16,7 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
 import RoutingStack from './RoutingStack';
+import McPanel from './mc-panel/McPanel';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -253,7 +253,7 @@ class RoutingManager extends React.Component {
   }
 
   render() {
-    const { menuIsOpen, menuIsPinned } = this.state;
+    const { menuIsOpen, menuIsPinned, size } = this.state;
 
     return (
       <div style={{ height: '100%' }}>
@@ -261,13 +261,15 @@ class RoutingManager extends React.Component {
           fill
           header={this.renderApplicationToolbar()}
         >
-          <SlidePanel
+          <McPanel
+            isAnimated
             isOpen={menuIsOpen}
+            onRequestClose={this.toggleMenu}
             panelBehavior={menuIsPinned ? 'squish' : 'overlay'}
-            panelPosition="start"
-            fill
             panelContent={this.renderMenuPanel()}
             mainContent={this.renderContent()}
+            size={size}
+            style={{ backgroundColor: 'lightgrey' }}
           />
         </ContentContainer>
       </div>
