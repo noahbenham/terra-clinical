@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'terra-button';
 import AppDelegate from 'terra-app-delegate';
 
-class PatientSearchModal extends React.Component {
+class PatientSearch extends React.Component {
   constructor(props) {
     super(props);
 
@@ -22,6 +22,19 @@ class PatientSearchModal extends React.Component {
 
   render() {
     const { app } = this.props;
+
+    let closeButton;
+    if (app && app.dismiss) {
+      closeButton = (
+        <Button
+          text="Close"
+          onClick={() => {
+            app.dismiss();
+          }}
+        />
+      );
+    }
+
     return (
       <div style={{ padding: '10px' }}>
         <h3>Patient Search</h3>
@@ -39,19 +52,14 @@ class PatientSearchModal extends React.Component {
           onClick={this.selectPatient({ id: 1, name: 'Johnson, Don' })}
         />
         <br />
-        <Button
-          text="Close"
-          onClick={() => {
-            app.dismiss();
-          }}
-        />
+        {closeButton}
       </div>
     );
   }
 }
 
-const disclosureKey = 'PatientSearchModal';
-AppDelegate.registerComponentForDisclosure(disclosureKey, PatientSearchModal);
+const disclosureKey = 'PatientSearch';
+AppDelegate.registerComponentForDisclosure(disclosureKey, PatientSearch);
 
-export default PatientSearchModal;
+export default PatientSearch;
 export { disclosureKey };

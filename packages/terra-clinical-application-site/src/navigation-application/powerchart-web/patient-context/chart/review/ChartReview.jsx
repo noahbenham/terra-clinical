@@ -48,6 +48,10 @@ class ChartReview extends React.Component {
   componentDidMount() {
     document.addEventListener('chartReviewModalOpened', this.updateModalOpenedCount);
     document.addEventListener('chartReviewModalClosed', this.updateModalClosedCount);
+
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
   }
 
   componentWillUnmount() {

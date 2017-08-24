@@ -1,28 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Route,
+  Redirect,
+  NavLink,
+  withRouter,
+} from 'react-router-dom';
 
+import AppDelegate from 'terra-app-delegate';
 import SlidePanel from 'terra-slide-panel';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
 import IconProvider from 'terra-icon/lib/icon/IconProvider';
-import {
-  Route,
-  Redirect,
-  withRouter,
-  NavLink,
-} from 'react-router-dom';
-import AppDelegate from 'terra-app-delegate';
 
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
-import RoutingStack from './RoutingStack';
 import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
+import RoutingStack from './RoutingStack';
 
 const propTypes = {
   routeConfig: PropTypes.object,
   location: PropTypes.object,
   app: AppDelegate.propType,
 };
+
+class NoMenuComponent extends React.Component {
+  componentDidMount() {
+    this.props.mountCallback();
+  }
+
+  render() {
+    return null;
+  }
+}
 
 class RoutingManager extends React.Component {
   static getBreakpointSize() {
@@ -47,14 +57,18 @@ class RoutingManager extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.togglePin = this.togglePin.bind(this);
     this.updateSize = this.updateSize.bind(this);
-
-    const initialSize = RoutingManager.getBreakpointSize();
+    this.hideMenuToggle = this.hideMenuToggle.bind(this);
+    this.showMenuToggle = this.hideMenuToggle.bind(this);
+    this.isCompactLayout = this.isCompactLayout.bind(this);
+    this.renderApplicationToolbar = this.renderApplicationToolbar.bind(this);
+    this.renderMenuPanel = this.renderMenuPanel.bind(this);
+    this.renderContent = this.renderContent.bind(this);
 
     this.state = {
       menuIsOpen: false,
       menuIsPinned: true,
       menuHidden: false,
-      size: initialSize,
+      size: RoutingManager.getBreakpointSize(),
     };
   }
 
@@ -62,19 +76,10 @@ class RoutingManager extends React.Component {
     window.addEventListener('resize', this.updateSize);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const newState = {};
-
-    if (nextProps.location && nextProps.location.state && nextProps.location.state.noMenuMatch) {
-      newState.menuIsHidden = true;
-      newState.menuIsOpen = false;
-    } else {
-      newState.menuIsHidden = false;
-    }
-
-    if (newState.menuIsOpen !== this.state.menuIsOpen || newState.menuIsHidden !== this.state.menuIsHidden) {
-      this.setState(newState);
-    }
+  componentWillReceiveProps() {
+    this.setState({
+      menuIsHidden: false,
+    });
   }
 
   componentWillUnmount() {
@@ -92,30 +97,45 @@ class RoutingManager extends React.Component {
     }
   }
 
-  toggleMenu() {
-    const newState = {
-      menuIsOpen: !this.state.menuIsOpen,
-    };
+  hideMenuToggle() {
+    this.setState({
+      menuIsHidden: true,
+      menuIsOpen: false,
+    });
+  }
 
-    this.setState(newState);
+  showMenuToggle() {
+    this.setState({
+      menuIsHidden: false,
+    });
+  }
+
+  toggleMenu() {
+    this.setState({
+      menuIsOpen: !this.state.menuIsOpen,
+    });
   }
 
   togglePin() {
-    const newState = {
+    this.setState({
       menuIsPinned: !this.state.menuIsPinned,
-    };
-
-    this.setState(newState);
+    });
   }
 
-  render() {
-    const { routeConfig, location, app } = this.props;
+  isCompactLayout() {
+    return this.state.size === 'tiny';
+  }
+
+  renderApplicationToolbar() {
+    const { routeConfig } = this.props;
 
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
 
+    const shouldDisplayMenuToggle = this.isCompactLayout() || !this.state.menuIsHidden;
+
     const primaryNavButtons = [];
-    if (['tiny'].indexOf(this.state.size) < 0) {
+    if (!this.isCompactLayout()) {
       routeConfig.primaryNav.links.forEach((link) => {
         primaryNavButtons.push((
           <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
@@ -125,102 +145,129 @@ class RoutingManager extends React.Component {
       });
     }
 
-    let primaryNavMenu;
-    if (['tiny'].indexOf(this.state.size) >= 0) {
+    return (
+      <ApplicationToolbar
+        utility={utility}
+        logo={logo}
+        content={<div style={{ margin: '0 5px 0 5px' }}>{primaryNavButtons}</div>}
+        onToggleClick={shouldDisplayMenuToggle ? this.toggleMenu : undefined}
+        toggleIsActive={this.state.menuIsOpen}
+      />
+    );
+  }
+
+  renderMenuPanel() {
+    const { app, location, routeConfig } = this.props;
+    const { size, menuIsOpen, menuIsPinned } = this.state;
+
+    const isCompactLayout = this.isCompactLayout();
+
+    let verticalNavToolbar;
+    if (isCompactLayout) {
       const verticalNavItems = [];
       routeConfig.primaryNav.links.forEach((link) => {
         const Component = link.component;
         verticalNavItems.push((
-          <div>
-            <NavLink to={link.path} key={link.path} activeStyle={{ color: 'white' }} style={{ paddingLeft: '5px' }}>
+          <div key={link.path}>
+            <NavLink to={link.path} activeStyle={{ color: 'white' }} style={{ paddingLeft: '5px' }}>
               <Component />
             </NavLink>
           </div>
         ));
       });
 
-      primaryNavMenu = (
+      verticalNavToolbar = (
         <VerticalToolbar>
           {verticalNavItems}
         </VerticalToolbar>
       );
     }
 
-    const menuComponent = (
+    // TODO: Investigate pre-matching the menu routes to the current location to see if a menu toggle should be displayed vs. re-rendering with this callback
+    let noMenuDetector;
+    if (!this.state.menuIsHidden) {
+      noMenuDetector = (
+        <Route
+          render={() => <NoMenuComponent mountCallback={this.hideMenuToggle} />}
+        />
+      );
+    }
+
+    const menuPlaceholder = (
+      <Route
+        render={() => (
+          <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+            <h2>Chart App</h2>
+          </div>
+        )}
+      />
+    );
+
+    return (
       <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
         <div style={{ flex: '0 0 auto' }}>
-          {primaryNavMenu}
+          {verticalNavToolbar}
         </div>
         <div style={{ flex: '1 1 auto', position: 'relative' }}>
           <RoutingStack
             navEnabled
             app={app}
             routeConfig={routeConfig.menuRoutes}
-            location={this.props.location}
+            location={location}
             routingManager={{
-              size: this.state.size,
+              size,
               toggleMenu: this.toggleMenu,
-              menuIsOpen: this.state.menuIsOpen,
+              togglePin: !isCompactLayout && this.togglePin,
+              menuIsOpen,
+              menuIsPinned: !isCompactLayout && menuIsPinned,
             }}
           >
-            { !this.state.menuIsHidden ? (
-              <Redirect
-                to={{
-                  pathname: location.pathname,
-                  state: { noMenuMatch: true },
-                }}
-              />
-            ) : null }
-            <Route
-              render={() => (
-                <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
-                  <h2>Chart App</h2>
-                </div>
-              )}
-            />
+            {noMenuDetector}
+            {menuPlaceholder}
           </RoutingStack>
         </div>
       </div>
     );
+  }
 
-    const shouldDisplayMenuToggle = ['tiny'].indexOf(this.state.size) >= 0 || !this.state.menuIsHidden;
+  renderContent() {
+    const { app, routeConfig } = this.props;
+    const { size, menuIsOpen, menuIsPinned } = this.state;
+
+    return (
+      <RoutingStack
+        app={app}
+        routeConfig={routeConfig.contentRoutes}
+        location={this.props.location}
+        routingManager={{
+          size,
+          toggleMenu: this.toggleMenu,
+          togglePin: this.togglePin,
+          menuIsOpen,
+          menuIsPinned,
+        }}
+      >
+        <Redirect to={routeConfig.primaryNav.index} />
+      </RoutingStack>
+    );
+  }
+
+  render() {
+    const { menuIsOpen, menuIsPinned } = this.state;
 
     return (
       <div style={{ height: '100%' }}>
         <ContentContainer
           fill
-          header={(
-            <ApplicationToolbar
-              utility={utility}
-              logo={logo}
-              content={<div style={{ margin: '0 5px 0 5px' }}>{primaryNavButtons}</div>}
-              onToggleClick={shouldDisplayMenuToggle ? this.toggleMenu : undefined}
-              toggleIsActive={this.state.menuIsOpen}
-            />
-          )}
+          header={this.renderApplicationToolbar()}
         >
           <SlidePanel
-            isOpen={this.state.menuIsOpen}
-            panelBehavior={this.state.menuIsPinned ? 'squish' : 'overlay'}
+            isOpen={menuIsOpen}
+            panelBehavior={menuIsPinned ? 'squish' : 'overlay'}
             panelPosition="start"
             fill
-            panelContent={menuComponent}
-            mainContent={(
-              <RoutingStack
-                app={app}
-                routeConfig={routeConfig.contentRoutes}
-                location={this.props.location}
-                routingManager={{
-                  size: this.state.size,
-                  toggleMenu: this.toggleMenu,
-                  togglePin: this.togglePin,
-                  menuIsOpen: this.state.menuIsOpen,
-                  menuIsPinned: this.state.menuIsPinned,
-                }}
-              >
-                <Redirect to={routeConfig.primaryNav.index} />
-              </RoutingStack>
-            )}
+            panelContent={this.renderMenuPanel()}
+            mainContent={this.renderContent()}
           />
         </ContentContainer>
       </div>

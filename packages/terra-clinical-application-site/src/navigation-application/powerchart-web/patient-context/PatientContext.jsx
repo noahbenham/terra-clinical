@@ -15,8 +15,9 @@ import SkinnyToolbar from '../../common/skinny-toolbar/SkinnyToolbar';
 import Chart from './chart/Chart';
 import RoutingManagerDelegate from '../../common/RoutingManagerDelegate';
 
-import { disclosureKey as patientSearchModalDisclosureKey } from './patient-search/PatientSearchModal';
+import { disclosureKey as patientSearchDisclosureKey } from './patient-search/PatientSearch';
 import PatientList from './patient-list/PatientList';
+import PatientSchedule from './patient-schedule/PatientSchedule';
 
 const propTypes = {
   app: AppDelegate.propType,
@@ -67,21 +68,24 @@ class PatientContext extends React.Component {
       preferredType: 'modal',
       content: {
         key: 'PATIENT_SEARCH_MODAL',
-        name: patientSearchModalDisclosureKey,
+        name: patientSearchDisclosureKey,
       },
     });
   }
 
   launchPatientList() {
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
+
     this.setState({
       currentDisclosureType: 'patientList',
     });
   }
 
   launchPatientSchedule() {
-    this.updateSelectedPatient({
-      id: 2,
-      name: 'Williams, Ash',
+    this.setState({
+      currentDisclosureType: 'patientSchedule',
     });
   }
 
@@ -123,7 +127,31 @@ class PatientContext extends React.Component {
           />
         </div>
       );
+    } else if (currentDisclosureType === 'patientSchedule') {
+      return (
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            bottom: '10px',
+            left: '10px',
+            right: '10px',
+            backgroundColor: 'rgba(255,255,255,0.9)',
+            borderRadius: '5px',
+            border: '1px solid white',
+          }}
+        >
+          <PatientSchedule
+            dismissPatientContextDisclosure={() => {
+              this.setState({
+                currentDisclosureType: undefined,
+              });
+            }}
+          />
+        </div>
+      );
     }
+
 
     return undefined;
   }

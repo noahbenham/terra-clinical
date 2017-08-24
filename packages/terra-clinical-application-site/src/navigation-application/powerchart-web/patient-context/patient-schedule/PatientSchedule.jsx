@@ -1,8 +1,7 @@
 import React from 'react';
 import Button from 'terra-button';
-import AppDelegate from 'terra-app-delegate';
 
-class PatientList extends React.Component {
+class PatientSchedule extends React.Component {
   static selectPatient(patientData) {
     return () => {
       document.dispatchEvent(new CustomEvent('patientContext:patientSelected', {
@@ -28,19 +27,19 @@ class PatientList extends React.Component {
 
     return (
       <div style={{ padding: '10px' }}>
-        <h3>Patient List</h3>
+        <h3>Patient Schedule</h3>
         <hr />
         <Button
           text="Select: John Rambo"
-          onClick={PatientList.selectPatient({ id: 3, name: 'Rambo, John' })}
+          onClick={PatientSchedule.selectPatient({ id: 3, name: 'Rambo, John' })}
         />
         <Button
           text="Select: Ash Williams"
-          onClick={PatientList.selectPatient({ id: 2, name: 'Williams, Ash' })}
+          onClick={PatientSchedule.selectPatient({ id: 2, name: 'Williams, Ash' })}
         />
         <Button
           text="Select: Don Johnson"
-          onClick={PatientList.selectPatient({ id: 1, name: 'Johnson, Don' })}
+          onClick={PatientSchedule.selectPatient({ id: 1, name: 'Johnson, Don' })}
         />
         <br />
         {closeButton}
@@ -49,4 +48,4 @@ class PatientList extends React.Component {
   }
 }
 
-export default PatientList;
+export default PatientSchedule;

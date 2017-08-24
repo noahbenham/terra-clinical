@@ -18,6 +18,7 @@ const propTypes = {
    * */
   routingManager: RoutingManagerDelegate.propType,
   backButtonOverride: PropTypes.node,
+  text: PropTypes.string,
 };
 
 const MenuToolbar = ({ routingManager, text, ...customProps }) => {
@@ -44,25 +45,19 @@ const MenuToolbar = ({ routingManager, text, ...customProps }) => {
     unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} variant="link" style={{ color: 'black' }} />;
   }
 
-  let toolbarStart;
-  if (backButton || rootButton) {
-    toolbarStart = (
-      <div className="terraClinical-MenuToolbar-start">
-        {backButton}
-        {rootButton}
-      </div>
-    );
-  }
+  const toolbarStart = (
+    <div className="terraClinical-MenuToolbar-start">
+      {backButton}
+      {rootButton}
+    </div>
+  );
 
-  let toolbarEnd;
-  if (pinButton || unpinButton) {
-    toolbarStart = (
-      <div className="terraClinical-MenuToolbar-end">
-        {pinButton}
-        {unpinButton}
-      </div>
-    );
-  }
+  const toolbarEnd = (
+    <div className="terraClinical-MenuToolbar-end">
+      {pinButton}
+      {unpinButton}
+    </div>
+  );
 
   return (
     <div {...customProps} className={toolbarClassNames}>
