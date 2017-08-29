@@ -59,7 +59,7 @@ const processRouteConfig = (routeConfig, size, parentPaths) => {
     return routeData;
   });
 
-  return Object.assign([], ...routes);
+  return [].concat(...routes);
 };
 
 export { processRouteConfig };

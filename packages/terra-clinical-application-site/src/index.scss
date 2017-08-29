@@ -1,19 +1,8 @@
 // Styles specific to development only
 // stylelint-disable
 
-body {
-  height: 100%;
-  margin: 0;
-  overflow: auto;
-  width: 100vw;
-}
-
-#terra-ApplicationMount {
-  height: 100%;
-}
-
 #terra-ApplicationMount > div[data-reactroot] {
-  height: 100%;
+  height: 100vh;
 }
 
 .terraClinical-ItemView-accessory {

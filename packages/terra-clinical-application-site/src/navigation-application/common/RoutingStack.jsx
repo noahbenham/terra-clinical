@@ -8,6 +8,7 @@ import {
 import AppDelegate from 'terra-app-delegate';
 
 import RoutingManagerDelegate from './RoutingManagerDelegate';
+import { processRouteConfig } from './RoutingConfigUtils';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -42,110 +43,49 @@ class RoutingStack extends React.Component {
     });
   }
 
-  // TODO: Clean up this function cause it's pretty ugly
-  createMenuRoutes(routeConfig, parentPaths) {
-    const { navEnabled, routingManager } = this.props;
+  createMenuRoutes(routeConfig) {
+    const { navEnabled, routingManager, app, location } = this.props;
 
-    if (!routeConfig) {
-      return undefined;
-    }
-
-    let componentConfig;
-
-    if (typeof (routeConfig.component) === 'object') {
-      const configForSize = routeConfig.component[routingManager.size];
-
-      if (configForSize) {
-        componentConfig = configForSize;
-      }
-
-      if (configForSize === undefined && routeConfig.component.default) {
-        componentConfig = routeConfig.component.default;
-      }
-    }
-
-    let ComponentClass;
-    let componentProps;
-    if (componentConfig) {
-      ComponentClass = componentConfig.componentClass;
-      componentProps = componentConfig.props;
-    }
-
-    let childRoutes = [];
-    if (routeConfig.children) {
-      let updatedParentPaths = [];
-      if (parentPaths) {
-        updatedParentPaths = updatedParentPaths.concat(parentPaths);
-      }
-
-      if (componentConfig) {
-        updatedParentPaths.push(routeConfig.path);
-      }
-
-      Object.keys(routeConfig.children).forEach((childRoute) => {
-        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.children[childRoute], updatedParentPaths));
-      });
-    }
-
-    if (!componentConfig && (!childRoutes || !childRoutes.length)) {
-      return undefined;
-    }
-
-    let routes = [];
-    if (childRoutes && childRoutes.length) {
-      routes = routes.concat(childRoutes);
-    }
-
-    if (ComponentClass) {
-      // Merging the stack-related delegate data with the manager-related delegate data. I don't know how much
-      // I like how multi-featured the delegate is...
-      const routingManagerDelegate = RoutingManagerDelegate.clone(this.props.routingManager, {
-        browserLocation: this.props.location,
+    return processRouteConfig(routeConfig).map((routeData) => {
+      const routingManagerDelegate = RoutingManagerDelegate.clone(routingManager, {
+        browserLocation: location,
         managerLocation: this.state.stackLocation,
-        goBack: navEnabled && parentPaths && parentPaths.length ? () => {
-          this.updateMenuLocation(parentPaths[parentPaths.length - 1]);
+        goBack: navEnabled && routeData.parentPaths && routeData.parentPaths.length ? () => {
+          this.updateMenuLocation(routeData.parentPaths[routeData.parentPaths.length - 1]);
         } : undefined,
-        goToRoot: navEnabled && parentPaths && parentPaths.length > 1 ? () => {
-          this.updateMenuLocation(parentPaths[0]);
+        goToRoot: navEnabled && routeData.parentPaths && routeData.parentPaths.length > 1 ? () => {
+          this.updateMenuLocation(routeData.parentPaths[0]);
         } : undefined,
       });
 
-      routes.push((
-        <Route
-          exact={routeConfig.exact}
-          strict={routeConfig.strict}
-          path={routeConfig.path}
-          key={routeConfig.key || routeConfig.path}
-          render={(routeProps) => {
-            const Component = ComponentClass;
-            return (
-              <Component
-                {...routeProps}
-                {...componentProps}
-                routeConfig={routeConfig}
-                routingManager={routingManagerDelegate}
-                app={this.props.app}
-              />
-            );
-          }}
-        />
-      ));
-    }
+      const ComponentClass = routeData.componentClass;
 
-    return routes;
+      return (
+        <Route
+          exact={routeData.exact}
+          strict={routeData.strict}
+          path={routeData.path}
+          key={routeData.key}
+          render={routeProps => (
+            <ComponentClass
+              {...routeProps}
+              {...routeData.componentProps}
+              meta={routeData.meta}
+              routingManager={routingManagerDelegate}
+              app={app}
+            />
+          )}
+        />
+      );
+    });
   }
 
   render() {
     const { routeConfig, location, children } = this.props;
 
-    let routes = [];
-    Object.keys(routeConfig).forEach((routeKey) => {
-      routes = routes.concat(this.createMenuRoutes(routeConfig[routeKey]));
-    });
-
     return (
       <Switch location={this.state.stackLocation || location}>
-        {routes}
+        {this.createMenuRoutes(routeConfig)}
         {children}
       </Switch>
     );

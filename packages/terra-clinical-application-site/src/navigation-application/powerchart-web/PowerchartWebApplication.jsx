@@ -38,9 +38,9 @@ class PowerchartWebApplication extends React.Component {
       <Provider store={store}>
         <Router>
           <Route
-            render={routeProps => (
+            render={() => (
               <Application locale="en-US">
-                <RoutingManager {...routeProps} routeConfig={routeConfig} />
+                <RoutingManager routeConfig={routeConfig} />
               </Application>
             )}
           />
