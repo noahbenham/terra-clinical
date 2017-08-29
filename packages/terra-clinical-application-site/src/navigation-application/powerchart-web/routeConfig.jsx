@@ -23,50 +23,47 @@ const AlertsMenuIcon = () => (
 );
 
 const config = {
-  primaryNav: {
+  navigation: {
     index: '/patients',
     links: [{
       path: '/patients',
-      name: 'Chart',
+      text: 'Chart',
       component: ChartMenuIcon,
     }, {
       path: '/messages',
-      name: 'Messages',
+      text: 'Messages',
       component: MessagesMenuIcon,
     }, {
       path: '/alerts',
-      name: 'Alerts',
+      text: 'Alerts',
       component: AlertsMenuIcon,
     }],
   },
-  contentRoutes: {
+  appRoutes: {
     '/patients': {
       path: '/patients',
-      name: 'PatientsContext',
       component: {
         default: {
-          type: PatientContext,
-          description: 'Default PatientContext',
+          componentClass: PatientContext,
         },
+      },
+      meta: {
+        arbitrary: 'value',
       },
     },
     '/messages': {
       path: '/messages',
-      name: 'Messages',
       component: {
         default: {
-          type: Root,
-          description: 'Default Messages',
+          componentClass: Root,
         },
       },
     },
     '/alerts': {
       path: '/alerts',
-      name: 'Alerts',
       component: {
         default: {
-          type: Root,
-          description: 'Default Messages',
+          componentClass: Root,
         },
       },
     },
@@ -74,11 +71,9 @@ const config = {
   menuRoutes: {
     '/patients': {
       path: '/patients',
-      name: 'PatientContextMenu',
       component: {
         default: {
-          type: PatientContextMenu,
-          description: 'Default PatientContextMenu',
+          componentClass: PatientContextMenu,
           props: {
             customProp: 'DEFAULT CONFIG',
           },
@@ -88,27 +83,23 @@ const config = {
         large: null,
         huge: null,
       },
-      childRoutes: {
+      children: {
         '/patients/chart': {
           path: '/patients/chart',
-          name: 'ChartMenu',
           component: {
             default: {
-              type: ChartMenu,
-              description: 'Chart Menu',
+              componentClass: ChartMenu,
               props: {
                 customProp: 'IM A CHART MENU CONFIG',
               },
             },
           },
-          childRoutes: {
+          children: {
             '/patients/chart/review': {
               path: '/patients/chart/review',
-              name: 'ChartReview',
               component: {
                 default: {
-                  type: ChartReviewMenu,
-                  description: 'Review Menu',
+                  componentClass: ChartReviewMenu,
                   props: {
                     customProp: 'Prop from config',
                   },

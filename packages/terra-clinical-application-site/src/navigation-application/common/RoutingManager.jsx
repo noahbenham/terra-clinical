@@ -5,6 +5,7 @@ import {
   Redirect,
   NavLink,
   withRouter,
+  matchPath,
 } from 'react-router-dom';
 
 import AppDelegate from 'terra-app-delegate';
@@ -16,6 +17,8 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
 import RoutingStack from './RoutingStack';
+import { processRouteConfig } from './RoutingConfigUtils';
+
 import McPanel from './mc-panel/McPanel';
 
 const propTypes = {
@@ -23,16 +26,6 @@ const propTypes = {
   location: PropTypes.object,
   app: AppDelegate.propType,
 };
-
-class NoMenuComponent extends React.Component {
-  componentDidMount() {
-    this.props.mountCallback();
-  }
-
-  render() {
-    return null;
-  }
-}
 
 class RoutingManager extends React.Component {
   static getBreakpointSize() {
@@ -51,6 +44,24 @@ class RoutingManager extends React.Component {
     return 'tiny';
   }
 
+  static hasMatchingMenuRoute(pathname, routeConfig, size) {
+    const processedRoutes = processRouteConfig(routeConfig.menuRoutes, size);
+
+    if (!processedRoutes) {
+      return false;
+    }
+
+    for (let i = 0, length = processedRoutes.length; i < length; i++) {
+      const match = matchPath(pathname, { path: processedRoutes[i].path, exact: processedRoutes[i].exact, strict: processedRoutes[i].strict });
+
+      if (match) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   constructor(props) {
     super(props);
 
@@ -64,11 +75,13 @@ class RoutingManager extends React.Component {
     this.renderMenuPanel = this.renderMenuPanel.bind(this);
     this.renderContent = this.renderContent.bind(this);
 
+    const initialSize = RoutingManager.getBreakpointSize();
+
     this.state = {
       menuIsOpen: false,
       menuIsPinned: true,
-      menuHidden: false,
-      size: RoutingManager.getBreakpointSize(),
+      toggleIsAvailable: RoutingManager.hasMatchingMenuRoute(props.location.pathname, props.routeConfig, initialSize),
+      size: initialSize,
     };
   }
 
@@ -76,10 +89,12 @@ class RoutingManager extends React.Component {
     window.addEventListener('resize', this.updateSize);
   }
 
-  componentWillReceiveProps() {
-    this.setState({
-      menuIsHidden: false,
-    });
+  componentWillReceiveProps(nextProps) {
+    const toggleIsAvailable = RoutingManager.hasMatchingMenuRoute(nextProps.location.pathname, nextProps.routeConfig, this.state.size);
+
+    if (toggleIsAvailable !== this.state.toggleIsAvailable) {
+      this.setState({ toggleIsAvailable });
+    }
   }
 
   componentWillUnmount() {
@@ -92,21 +107,21 @@ class RoutingManager extends React.Component {
     if (this.state.size !== newSize) {
       this.setState({
         size: newSize,
-        menuIsHidden: false, // We need to reset this in case menus exist at the next size
+        toggleIsAvailable: RoutingManager.hasMatchingMenuRoute(this.props.location.pathname, this.props.routeConfig, newSize),
       });
     }
   }
 
   hideMenuToggle() {
     this.setState({
-      menuIsHidden: true,
+      toggleIsAvailable: false,
       menuIsOpen: false,
     });
   }
 
   showMenuToggle() {
     this.setState({
-      menuIsHidden: false,
+      toggleIsAvailable: true,
     });
   }
 
@@ -132,14 +147,14 @@ class RoutingManager extends React.Component {
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
 
-    const shouldDisplayMenuToggle = this.isCompactLayout() || !this.state.menuIsHidden;
+    const shouldDisplayMenuToggle = this.isCompactLayout() || this.state.toggleIsAvailable;
 
     const primaryNavButtons = [];
     if (!this.isCompactLayout()) {
-      routeConfig.primaryNav.links.forEach((link) => {
+      routeConfig.navigation.links.forEach((link) => {
         primaryNavButtons.push((
           <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
-            {link.name}
+            {link.text}
           </NavLink>
         ));
       });
@@ -165,7 +180,7 @@ class RoutingManager extends React.Component {
     let verticalNavToolbar;
     if (isCompactLayout) {
       const verticalNavItems = [];
-      routeConfig.primaryNav.links.forEach((link) => {
+      routeConfig.navigation.links.forEach((link) => {
         const Component = link.component;
         verticalNavItems.push((
           <div key={link.path}>
@@ -180,16 +195,6 @@ class RoutingManager extends React.Component {
         <VerticalToolbar>
           {verticalNavItems}
         </VerticalToolbar>
-      );
-    }
-
-    // TODO: Investigate pre-matching the menu routes to the current location to see if a menu toggle should be displayed vs. re-rendering with this callback
-    let noMenuDetector;
-    if (!this.state.menuIsHidden) {
-      noMenuDetector = (
-        <Route
-          render={() => <NoMenuComponent mountCallback={this.hideMenuToggle} />}
-        />
       );
     }
 
@@ -235,7 +240,6 @@ class RoutingManager extends React.Component {
                 menuIsPinned: !isCompactLayout && menuIsPinned,
               }}
             >
-              {noMenuDetector}
               {menuPlaceholder}
             </RoutingStack>
           </div>
@@ -255,7 +259,7 @@ class RoutingManager extends React.Component {
       >
         <RoutingStack
           app={app}
-          routeConfig={routeConfig.contentRoutes}
+          routeConfig={routeConfig.appRoutes}
           location={this.props.location}
           routingManager={{
             size,
@@ -265,7 +269,7 @@ class RoutingManager extends React.Component {
             menuIsPinned,
           }}
         >
-          <Redirect to={routeConfig.primaryNav.index} />
+          <Redirect to={routeConfig.navigation.index} />
         </RoutingStack>
       </ContentContainer>
     );

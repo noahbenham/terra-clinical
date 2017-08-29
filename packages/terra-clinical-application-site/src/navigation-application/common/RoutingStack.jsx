@@ -67,12 +67,12 @@ class RoutingStack extends React.Component {
     let ComponentClass;
     let componentProps;
     if (componentConfig) {
-      ComponentClass = componentConfig.type;
+      ComponentClass = componentConfig.componentClass;
       componentProps = componentConfig.props;
     }
 
     let childRoutes = [];
-    if (routeConfig.childRoutes) {
+    if (routeConfig.children) {
       let updatedParentPaths = [];
       if (parentPaths) {
         updatedParentPaths = updatedParentPaths.concat(parentPaths);
@@ -82,8 +82,8 @@ class RoutingStack extends React.Component {
         updatedParentPaths.push(routeConfig.path);
       }
 
-      Object.keys(routeConfig.childRoutes).forEach((childRoute) => {
-        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.childRoutes[childRoute], updatedParentPaths));
+      Object.keys(routeConfig.children).forEach((childRoute) => {
+        childRoutes = childRoutes.concat(this.createMenuRoutes(routeConfig.children[childRoute], updatedParentPaths));
       });
     }
 
@@ -113,6 +113,7 @@ class RoutingStack extends React.Component {
       routes.push((
         <Route
           exact={routeConfig.exact}
+          strict={routeConfig.strict}
           path={routeConfig.path}
           key={routeConfig.key || routeConfig.path}
           render={(routeProps) => {
