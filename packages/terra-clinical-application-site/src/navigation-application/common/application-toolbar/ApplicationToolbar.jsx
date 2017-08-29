@@ -24,7 +24,7 @@ const propTypes = {
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    * */
   onToggleClick: PropTypes.func,
-  toggleIsActive: PropTypes.bool,
+  menuIsOpen: PropTypes.bool,
   /**
    * Components that will receive the Primary's AppDelegate configuration. Components given as children must appropriately handle an `app` prop.
    * */
@@ -48,7 +48,7 @@ class ApplicationToolbar extends React.Component {
       app,
       content,
       onToggleClick,
-      toggleIsActive,
+      menuIsOpen,
       logo,
       size,
       utility,
@@ -80,7 +80,7 @@ class ApplicationToolbar extends React.Component {
 
     let headerButton;
     if (onToggleClick) {
-      const toggleButtonStyles = toggleIsActive ? {
+      const toggleButtonStyles = menuIsOpen ? {
         backgroundColor: '#888888',
         color: 'white',
       } : null;

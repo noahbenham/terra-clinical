@@ -25,6 +25,7 @@ const propTypes = {
   routeConfig: PropTypes.object,
   location: PropTypes.object,
   app: AppDelegate.propType,
+  applicationToolbar: PropTypes.element,
 };
 
 class RoutingManager extends React.Component {
@@ -68,8 +69,6 @@ class RoutingManager extends React.Component {
     this.toggleMenu = this.toggleMenu.bind(this);
     this.togglePin = this.togglePin.bind(this);
     this.updateSize = this.updateSize.bind(this);
-    this.hideMenuToggle = this.hideMenuToggle.bind(this);
-    this.showMenuToggle = this.hideMenuToggle.bind(this);
     this.isCompactLayout = this.isCompactLayout.bind(this);
     this.renderApplicationToolbar = this.renderApplicationToolbar.bind(this);
     this.renderMenuPanel = this.renderMenuPanel.bind(this);
@@ -112,19 +111,6 @@ class RoutingManager extends React.Component {
     }
   }
 
-  hideMenuToggle() {
-    this.setState({
-      toggleIsAvailable: false,
-      menuIsOpen: false,
-    });
-  }
-
-  showMenuToggle() {
-    this.setState({
-      toggleIsAvailable: true,
-    });
-  }
-
   toggleMenu() {
     this.setState({
       menuIsOpen: !this.state.menuIsOpen,
@@ -142,12 +128,21 @@ class RoutingManager extends React.Component {
   }
 
   renderApplicationToolbar() {
-    const { routeConfig } = this.props;
+    const { app, routeConfig, applicationToolbar } = this.props;
+    const shouldDisplayMenuToggle = this.isCompactLayout() || this.state.toggleIsAvailable;
+
+    if (applicationToolbar) {
+      return React.cloneElement(applicationToolbar, {
+        app,
+        size: this.state.size,
+        navigationLinks: routeConfig.navigation.links,
+        onToggleClick: shouldDisplayMenuToggle ? this.toggleMenu : undefined,
+        menuIsOpen: this.state.menuIsOpen,
+      });
+    }
 
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
-
-    const shouldDisplayMenuToggle = this.isCompactLayout() || this.state.toggleIsAvailable;
 
     const primaryNavButtons = [];
     if (!this.isCompactLayout()) {
@@ -162,11 +157,13 @@ class RoutingManager extends React.Component {
 
     return (
       <ApplicationToolbar
+        app={app}
         utility={utility}
         logo={logo}
+        size={this.state.size}
         content={<div style={{ margin: '0 5px 0 5px' }}>{primaryNavButtons}</div>}
         onToggleClick={shouldDisplayMenuToggle ? this.toggleMenu : undefined}
-        toggleIsActive={this.state.menuIsOpen}
+        menuIsOpen={this.state.menuIsOpen}
       />
     );
   }
