@@ -8,7 +8,7 @@ import {
 import AppDelegate from 'terra-app-delegate';
 
 import RoutingManagerDelegate from './RoutingManagerDelegate';
-import { processRouteConfig } from './RoutingConfigUtils';
+import { flattenRouteConfig } from './RoutingConfigUtils';
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -46,7 +46,7 @@ class RoutingStack extends React.Component {
   createMenuRoutes(routeConfig) {
     const { navEnabled, routingManager, app, location } = this.props;
 
-    return processRouteConfig(routeConfig).map((routeData) => {
+    return flattenRouteConfig(routeConfig).map((routeData) => {
       const routingManagerDelegate = RoutingManagerDelegate.clone(routingManager, {
         browserLocation: location,
         managerLocation: this.state.stackLocation,

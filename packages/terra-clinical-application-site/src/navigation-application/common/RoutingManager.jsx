@@ -17,7 +17,7 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
 import RoutingStack from './RoutingStack';
-import { processRouteConfig } from './RoutingConfigUtils';
+import { flattenRouteConfig } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
 
@@ -46,7 +46,7 @@ class RoutingManager extends React.Component {
   }
 
   static hasMatchingMenuRoute(pathname, routeConfig, size) {
-    const processedRoutes = processRouteConfig(routeConfig.menuRoutes, size);
+    const processedRoutes = flattenRouteConfig(routeConfig.menuRoutes, size);
 
     if (!processedRoutes) {
       return false;

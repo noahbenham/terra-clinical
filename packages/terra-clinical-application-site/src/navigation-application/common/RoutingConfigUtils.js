@@ -2,7 +2,7 @@
  * Given a route configuration and size, returns an Array of ordered routing data objects
  * representing the routes available at that size.
  */
-const processRouteConfig = (routeConfig, size, parentPaths) => {
+const flattenRouteConfig = (routeConfig, size, parentPaths) => {
   if (!routeConfig) {
     return undefined;
   }
@@ -35,7 +35,7 @@ const processRouteConfig = (routeConfig, size, parentPaths) => {
         updatedParentPaths.push(config.path);
       }
 
-      routeData = processRouteConfig(config.children, size, updatedParentPaths);
+      routeData = flattenRouteConfig(config.children, size, updatedParentPaths);
     }
 
     // If a component does not exist for the route, and if the route has no child routes, then we can ignore it.
@@ -62,4 +62,4 @@ const processRouteConfig = (routeConfig, size, parentPaths) => {
   return [].concat(...routes);
 };
 
-export { processRouteConfig };
+export { flattenRouteConfig };
