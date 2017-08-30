@@ -17,12 +17,12 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
 import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
 import RoutingStack from './RoutingStack';
-import { flattenRouteConfig } from './RoutingConfigUtils';
+import { flattenRouteConfig, navigationConfigPropType } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
 
 const propTypes = {
-  routeConfig: PropTypes.object,
+  routeConfig: navigationConfigPropType,
   location: PropTypes.object,
   app: AppDelegate.propType,
   applicationToolbar: PropTypes.element,
@@ -52,7 +52,7 @@ class RoutingManager extends React.Component {
       return false;
     }
 
-    for (let i = 0, length = processedRoutes.length; i < length; i++) {
+    for (let i = 0, length = processedRoutes.length; i < length; i += 1) {
       const match = matchPath(pathname, { path: processedRoutes[i].path, exact: processedRoutes[i].exact, strict: processedRoutes[i].strict });
 
       if (match) {
@@ -256,7 +256,7 @@ class RoutingManager extends React.Component {
       >
         <RoutingStack
           app={app}
-          routeConfig={routeConfig.appRoutes}
+          routeConfig={routeConfig.contentRoutes}
           location={this.props.location}
           routingManager={{
             size,

@@ -39,7 +39,7 @@ const config = {
       component: AlertsMenuIcon,
     }],
   },
-  appRoutes: {
+  contentRoutes: {
     '/patients': {
       path: '/patients',
       component: {

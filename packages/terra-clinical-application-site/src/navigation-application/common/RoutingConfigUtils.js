@@ -1,6 +1,51 @@
+import PropTypes from 'prop-types';
+
+const supportedComponentBreakpoints = ['tiny', 'small', 'medium', 'large', 'huge'];
+
+const componentConfigPropType = PropTypes.objectOf((propValue, key, componentName, location, propFullName) => {
+  const keyIsValid = key === 'default' || supportedComponentBreakpoints.indexOf(key) >= 0;
+
+  if (!keyIsValid) {
+    return new Error(`Invalid prop '${propFullName}' supplied to '${componentName}'. Validation failed.`);
+  }
+
+  const value = propValue[key];
+
+  let valueIsValid = true;
+  if (value !== null) {
+    if (typeof (value) !== 'object') {
+      valueIsValid = false;
+    } else if (!value.componentClass || (typeof (value.props) !== 'object' && value.props !== null && value.props !== undefined)) {
+      valueIsValid = false;
+    }
+  }
+
+  if (!valueIsValid) {
+    return new Error(`Invalid prop '${propFullName}' supplied to '${componentName}'. Validation failed.`);
+  }
+});
+
+const routePropType = PropTypes.shape({
+  path: PropTypes.string.isRequired,
+  component: componentConfigPropType.isRequired,
+  meta: PropTypes.object,
+});
+routePropType.children = PropTypes.objectOf(PropTypes.objectOf(routePropType)); // Recursive PropTypes are funky
+
+const routeConfigPropType = PropTypes.objectOf(routePropType);
+
+const navigationConfigPropType = PropTypes.shape({
+  navigation: PropTypes.object,
+  menuRoutes: routeConfigPropType,
+  contentRoutes: routeConfigPropType,
+});
+
+export { navigationConfigPropType, routeConfigPropType, routePropType, componentConfigPropType };
+
 /**
  * Given a route configuration and size, returns an Array of ordered routing data objects
  * representing the routes available at that size.
+ * @param {Object} routeConfig The route configuration to flatten. The expected shape matches that of the routeConfigPropType.
  */
 const flattenRouteConfig = (routeConfig, size, parentPaths) => {
   if (!routeConfig) {
@@ -59,7 +104,8 @@ const flattenRouteConfig = (routeConfig, size, parentPaths) => {
     return routeData;
   });
 
-  return [].concat(...routes);
+  // Flatten nested arrays and remove undefined entries
+  return [].concat(...(routes.filter(n => n)));
 };
 
 export { flattenRouteConfig };
