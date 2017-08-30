@@ -229,6 +229,7 @@ class RoutingManager extends React.Component {
               app={app}
               routeConfig={routeConfig.menuRoutes}
               location={location}
+              size={size}
               routingManager={{
                 size,
                 toggleMenu: this.toggleMenu,

@@ -14,6 +14,7 @@ const propTypes = {
   routeConfig: PropTypes.object,
   navEnabled: PropTypes.bool,
   location: PropTypes.object,
+  size: PropTypes.string,
   routingManager: RoutingManagerDelegate.propType,
   app: AppDelegate.propType,
   children: PropTypes.node,
@@ -44,9 +45,9 @@ class RoutingStack extends React.Component {
   }
 
   createMenuRoutes(routeConfig) {
-    const { navEnabled, routingManager, app, location } = this.props;
+    const { navEnabled, routingManager, app, location, size } = this.props;
 
-    return flattenRouteConfig(routeConfig).map((routeData) => {
+    return flattenRouteConfig(routeConfig, size).map((routeData) => {
       const routingManagerDelegate = RoutingManagerDelegate.clone(routingManager, {
         browserLocation: location,
         managerLocation: this.state.stackLocation,
