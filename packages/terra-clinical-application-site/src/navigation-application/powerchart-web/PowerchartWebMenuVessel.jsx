@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Route,
   NavLink,
 } from 'react-router-dom';
 
 import AppDelegate from 'terra-app-delegate';
-import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
-import IconProvider from 'terra-icon/lib/icon/IconProvider';
 import ContentContainer from 'terra-content-container';
 
 import VerticalToolbar from '../common/vertical-toolbar/VerticalToolbar';
+import RoutingStack from '../common/RoutingStack';
 
 const propTypes = {
   app: AppDelegate.propType,
@@ -20,14 +18,14 @@ const propTypes = {
 
 class PowerchartWebMenuVessel extends React.Component {
   render() {
-    const { app, routeConfig, size, routes } = this.props;
+    const { app, routingManager } = this.props;
 
-    const isCompactLayout = size === 'tiny';
+    const isCompactLayout = routingManager.size === 'tiny';
 
     let verticalNavToolbar;
     if (isCompactLayout) {
       const verticalNavItems = [];
-      routeConfig.navigation.links.forEach((link) => {
+      routingManager.routeConfig.navigation.links.forEach((link) => {
         const Component = link.component;
         verticalNavItems.push((
           <div key={link.path}>
@@ -53,6 +51,22 @@ class PowerchartWebMenuVessel extends React.Component {
         </div>
       );
     }
+
+    const placeholder = (
+      <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+        <h2>Powerchart Web</h2>
+      </div>
+    );
+
+    const routes = (
+      <RoutingStack
+        navEnabled
+        app={app}
+        routeConfig={routingManager.routeConfig.menuRoutes}
+        location={location}
+        routingManager={routingManager}
+      />
+    );
 
     return (
       <ContentContainer

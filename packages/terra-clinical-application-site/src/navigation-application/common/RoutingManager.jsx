@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Redirect,
   withRouter,
   matchPath,
 } from 'react-router-dom';
@@ -10,7 +9,6 @@ import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
 
-import RoutingStack from './RoutingStack';
 import { flattenRouteConfig } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
@@ -20,6 +18,8 @@ const propTypes = {
   location: PropTypes.object,
   app: AppDelegate.propType,
   applicationToolbar: PropTypes.element,
+  menuRoutingVessel: PropTypes.element,
+  contentRoutingVessel: PropTypes.element,
 };
 
 class RoutingManager extends React.Component {
@@ -140,68 +140,54 @@ class RoutingManager extends React.Component {
   }
 
   renderMenu() {
-    const { app, location, routeConfig, menuPlaceholderRoute, menuRoutingVessel } = this.props;
+    const { app, routeConfig, menuRoutingVessel } = this.props;
     const { size, menuIsOpen, menuIsPinned } = this.state;
 
     const isCompactLayout = this.isCompactLayout();
 
-    const menuRoutes = (
-      <RoutingStack
-        navEnabled
-        app={app}
-        routeConfig={routeConfig.menuRoutes}
-        location={location}
-        routingManager={{
-          size,
-          toggleMenu: this.toggleMenu,
-          togglePin: !isCompactLayout && this.togglePin,
-          menuIsOpen,
-          menuIsPinned: !isCompactLayout && menuIsPinned,
-        }}
-      >
-        {menuPlaceholderRoute}
-      </RoutingStack>
-    );
-
-    if (menuRoutingVessel) {
-      return React.cloneElement(menuRoutingVessel, {
-        routes: menuRoutes,
-        app,
-        routeConfig,
-        size,
-      });
+    if (!menuRoutingVessel) {
+      return null;
     }
 
-    return (
-      <div style={{ height: '100%' }}>
-        {menuRoutes}
-      </div>
-    );
+    return React.cloneElement(menuRoutingVessel, {
+      app,
+      routingManager: {
+        size,
+        toggleMenu: this.toggleMenu,
+        menuIsOpen,
+        togglePin: !isCompactLayout ? this.togglePin : undefined,
+        menuIsPinned: !isCompactLayout ? menuIsPinned : undefined,
+        location,
+        routeConfig,
+      },
+    });
   }
 
   renderContent() {
-    const { app, routeConfig } = this.props;
-    const { size, menuIsOpen, menuIsPinned } = this.state;
+    const { app, routeConfig, contentRoutingVessel } = this.props;
+    const { size, menuIsOpen } = this.state;
+
+    if (!contentRoutingVessel) {
+      return null;
+    }
 
     return (
       <ContentContainer
         fill
         header={this.isCompactLayout() && this.renderApplicationToolbar()}
       >
-        <RoutingStack
-          app={app}
-          routeConfig={routeConfig.appRoutes}
-          location={this.props.location}
-          routingManager={{
-            size,
-            toggleMenu: this.toggleMenu,
-            togglePin: this.togglePin,
-            menuIsOpen,
-            menuIsPinned,
-          }}
-        >
-          <Redirect to={routeConfig.navigation.index} />
-        </RoutingStack>
+        {(
+          React.cloneElement(contentRoutingVessel, {
+            app,
+            routingManager: {
+              size,
+              toggleMenu: this.toggleMenu,
+              menuIsOpen,
+              location,
+              routeConfig,
+            },
+          })
+        )}
       </ContentContainer>
     );
   }
