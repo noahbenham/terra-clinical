@@ -118,24 +118,31 @@ class RoutingManager extends React.Component {
   }
 
   isCompactLayout() {
-    return this.state.size === 'tiny';
+    return this.state.size === 'tiny' || this.state.size === 'small';
   }
 
   renderApplicationToolbar() {
     const { app, routeConfig, applicationToolbar } = this.props;
-    const shouldDisplayMenuToggle = this.isCompactLayout() || this.state.toggleIsAvailable;
+    const { size, menuIsOpen } = this.state;
 
     if (!applicationToolbar) {
       return null;
     }
 
+    const isCompactLayout = this.isCompactLayout();
+    const shouldDisplayMenuToggle = isCompactLayout || this.state.toggleIsAvailable;
+
     return React.cloneElement(applicationToolbar, {
       app,
-      routeConfig,
-      size: this.state.size,
-      navigationLinks: routeConfig.navigation.links,
+      routingManager: {
+        size,
+        location,
+        routeConfig,
+        isCompactLayout,
+        toggleMenu: shouldDisplayMenuToggle && this.toggleMenu,
+        menuIsOpen,
+      },
       onToggleClick: shouldDisplayMenuToggle ? this.toggleMenu : undefined,
-      menuIsOpen: this.state.menuIsOpen,
     });
   }
 
@@ -143,22 +150,23 @@ class RoutingManager extends React.Component {
     const { app, routeConfig, menuRoutingVessel } = this.props;
     const { size, menuIsOpen, menuIsPinned } = this.state;
 
-    const isCompactLayout = this.isCompactLayout();
-
     if (!menuRoutingVessel) {
       return null;
     }
+
+    const isCompactLayout = this.isCompactLayout();
 
     return React.cloneElement(menuRoutingVessel, {
       app,
       routingManager: {
         size,
+        location,
+        routeConfig,
+        isCompactLayout,
         toggleMenu: this.toggleMenu,
         menuIsOpen,
         togglePin: !isCompactLayout ? this.togglePin : undefined,
         menuIsPinned: !isCompactLayout ? menuIsPinned : undefined,
-        location,
-        routeConfig,
       },
     });
   }
@@ -171,20 +179,23 @@ class RoutingManager extends React.Component {
       return null;
     }
 
+    const isCompactLayout = this.isCompactLayout();
+
     return (
       <ContentContainer
         fill
-        header={this.isCompactLayout() && this.renderApplicationToolbar()}
+        header={isCompactLayout && this.renderApplicationToolbar()}
       >
         {(
           React.cloneElement(contentRoutingVessel, {
             app,
             routingManager: {
               size,
-              toggleMenu: this.toggleMenu,
-              menuIsOpen,
               location,
               routeConfig,
+              isCompactLayout,
+              toggleMenu: this.toggleMenu,
+              menuIsOpen,
             },
           })
         )}

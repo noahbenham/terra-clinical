@@ -20,13 +20,14 @@ const propTypes = {
 
 class PowerchartWebApplicationToolbar extends React.Component {
   render() {
-    const { app, routeConfig, size, onToggleClick, menuIsOpen } = this.props;
+    const { app, routingManager, onToggleClick } = this.props;
+    const { size, menuIsOpen, routeConfig, isCompactLayout } = routingManager;
 
     const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
     const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
 
     const primaryNavButtons = [];
-    if (size !== 'tiny') {
+    if (!isCompactLayout) {
       routeConfig.navigation.links.forEach((link) => {
         primaryNavButtons.push((
           <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
