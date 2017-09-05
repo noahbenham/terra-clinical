@@ -67,7 +67,7 @@ class McContainer extends React.Component {
     if (this.props.isHoverEnabled) {
       return this.addListenersToNode(node);
     } else if (!this.props.isHoverEnabled) {
-      return removeListenersFromNode(node);
+      return this.removeListenersFromNode(node);
     }
     return false;
   }
