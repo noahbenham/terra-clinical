@@ -53,7 +53,7 @@ class RoutingManager extends React.Component {
 
     this.state = {
       menuIsOpen: false,
-      menuIsPinned: true,
+      menuIsPinned: false,
       toggleIsAvailable: configHasMatchingRoute(props.location.pathname, props.routeConfig.menuRoutes, initialSize) || props.forceToggleAvailable,
       size: initialSize,
     };
@@ -70,6 +70,7 @@ class RoutingManager extends React.Component {
       this.setState({
         toggleIsAvailable,
         menuIsOpen: toggleIsAvailable && this.state.menuIsOpen,
+        menuIsPinned: toggleIsAvailable && this.state.menuIsPinned,
       });
     }
   }
@@ -88,14 +89,17 @@ class RoutingManager extends React.Component {
         size: newSize,
         toggleIsAvailable: newToggleIsAvailable,
         menuIsOpen: newToggleIsAvailable && this.state.menuIsOpen,
+        menuIsPinned: newToggleIsAvailable && this.state.menuIsPinned,
       });
     }
   }
 
   toggleMenu() {
-    this.setState({
-      menuIsOpen: !this.state.menuIsOpen,
-    });
+    if (!this.state.menuIsPinned) {
+      this.setState({
+        menuIsOpen: !this.state.menuIsOpen,
+      });
+    }
   }
 
   togglePin() {

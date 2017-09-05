@@ -79,7 +79,7 @@ class ApplicationToolbar extends React.Component {
     }
 
     let headerButton;
-    if (onToggleClick) {
+    if (onToggleClick && size !== 'tiny' && size !== 'small') {
       const toggleButtonStyles = menuIsOpen ? {
         backgroundColor: '#888888',
         color: 'white',
