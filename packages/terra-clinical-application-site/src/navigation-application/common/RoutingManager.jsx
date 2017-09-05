@@ -208,6 +208,7 @@ class RoutingManager extends React.Component {
             mainContent={this.renderContent()}
             size={size}
             style={{ backgroundColor: 'lightgrey' }}
+            toggleMenu={this.toggleMenu}
           />
         </ContentContainer>
       </div>

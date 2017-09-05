@@ -9,18 +9,11 @@
 
   .main,
   .panel {
-    background-color: #fff;
+    background-color: var(--mc-panel-background-color, #fff);
     box-sizing: border-box;
-
     height: 100%;
-
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-    overflow-y: auto;
-
+    overflow: hidden;
     transition: none;
-
-    width: 100%;
   }
 
   .is-animated {
@@ -30,50 +23,49 @@
   .main {
     float: right;
     position: relative;
+    width: 100%;
     z-index: 0;
   }
 
   .panel {
     position: absolute;
     transform: translate3d(-100%, 0, 0);
-    z-index: 500; // z-index used to set master above detail in visual stacking context.
+    width: var(--mc-panel-panel-width, 320px);
+    z-index: 5000;
   }
 
-  // Prevent z-index issues with nesting
-  /* stylelint-disable selector-max-compound-selectors */
-  .mc-panel .mc-panel > .panel {
-    z-index: 499;
+  .use-widescreen-style {
+    > .main {
+      width: calc(100% - var(--mc-panel-hover-width, 30px));// allow for hover bar
+    }
+
+    > .panel {
+      transform: translate3d(calc(-100% + var(--mc-panel-hover-width, 30px)), 0, 0);// allow for hover bar
+    }  
   }
-  /* stylelint-enable selector-max-compound-selectors */
 
   // Move the slider back to its origin when its on-screen.
   .is-open > .panel {
     transform: translate3d(0, 0, 0);
   }
 
-  .panel.compact {
-    width: calc(100% - var(--panel-stripe, 50px));
-  }
-
-  .panel.expanded {
-    width: var(--panel-width, 320px);
+  .panel.is-tiny {
+    width: calc(100% - var(--mc-panel-panel-stripe, 50px));
   }
 
   // Overlay
-  .is-open[data-mc-panel-panel-behavior='overlay'] {
-    .panel.expanded {
-      box-shadow: 1px 0 5px var(--terra-slide-panel-shadow-color, #bcbfc0);
-    }
+  .is-open.is-overlay > .panel {
+    box-shadow: 1px 0 5px var(--mc-panel-panel-shadow-color, #bcbfc0);
   }
 
   // Squish
-  .is-open[data-mc-panel-panel-behavior='squish'] {
-    .main {
-      width: calc(100% - #{var(--panel-width, 320px)});
+  .is-open.is-squish {
+    > .main {
+      width: calc(100% - #{var(--mc-panel-panel-width, 320px)});
     }
 
-    .panel {
-      border-right: 1px solid var(--terra-slide-panel-panel-border-color, #d3d4d5);
+    > .panel {
+      border-right: 1px solid var(--mc-panel-panel-border-color, #d3d4d5);
     }
   }
 }

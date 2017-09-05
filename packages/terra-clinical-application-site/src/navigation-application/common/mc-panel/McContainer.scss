@@ -1,0 +1,43 @@
+/* stylelint-disable selector-class-pattern */
+:local {
+  .mc-container {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .inner-section {
+    float: left;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow-y: auto;
+    width: calc(100% - var(--mc-panel-hover-width, 30px));
+  }
+
+  .hover-section {
+    float: right;
+    overflow: hidden;
+    width: var(--mc-panel-hover-width, 30px);
+  }
+
+  .hover-button {
+    width: 100%;
+  }
+
+  .mc-container,
+  .inner-section,
+  .hover-section,
+  .hover-button {
+    height: 100%;
+    position: relative;
+  }
+
+  .is-hover-disabled {
+    > .inner-section {
+      width: 100%;
+    }
+    
+    > .hover-section {
+      display: none;
+    }
+  }
+}
