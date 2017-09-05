@@ -6,7 +6,7 @@ import {
 
 import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
-import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
+import breakpoints from 'terra-responsive-element/lib/breakpoints.scss';
 import { navigationConfigPropType, configHasMatchingRoute } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
@@ -24,15 +24,17 @@ const propTypes = {
 class RoutingManager extends React.Component {
   static getBreakpointSize() {
     const width = window.innerWidth;
-    const { small, medium, large, huge } = getBreakpoints();
+    const { small, medium, large, huge } = breakpoints;
 
-    if (width >= huge) {
+    debugger;
+
+    if (width >= 1440) {
       return 'huge';
-    } else if (width >= large) {
+    } else if (width >= 1216) {
       return 'large';
-    } else if (width >= medium) {
+    } else if (width >= 992) {
       return 'medium';
-    } else if (width >= small) {
+    } else if (width >= 768) {
       return 'small';
     }
     return 'tiny';
