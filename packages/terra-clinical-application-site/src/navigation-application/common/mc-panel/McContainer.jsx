@@ -42,48 +42,64 @@ class McContainer extends React.Component {
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.listenersAdded = false;
+    this.isMouseEnterActive = false;
   }
 
   componentDidMount() {
     if (this.containerNode) {
-      this.containerNode.addEventListener('mouseenter', this.handleMouseEnter);
-      this.containerNode.addEventListener('mouseleave', this.handleMouseLeave);
-      this.listenersAdded = true;
+      this.listenersAdded = this.updateListenersOnNode(this.containerNode);
     }
   }
 
   componentDidUpdate() {
     if (this.containerNode) {
-      if (this.props.isHoverEnabled && !this.listenersAdded) {
-        this.containerNode.addEventListener('mouseenter', this.handleMouseEnter);
-        this.containerNode.addEventListener('mouseleave', this.handleMouseLeave);
-        this.listenersAdded = true;
-      } else if (!this.props.isHoverEnabled && this.listenersAdded) {
-        this.containerNode.removeEventListener('mouseenter', this.handleMouseEnter);
-        this.containerNode.removeEventListener('mouseleave', this.handleMouseLeave);
-        this.listenersAdded = false;
-      }
+      this.listenersAdded = this.updateListenersOnNode(this.containerNode);
     }
   }
 
   componentWillUnmount() {
-    if (this.containerNode && this.listenersAdded) {
-      this.containerNode.removeEventListener('mouseenter', this.handleMouseEnter);
-      this.containerNode.removeEventListener('mouseleave', this.handleMouseLeave);
-      this.listenersAdded = false;
+    if (this.containerNode) {
+      this.listenersAdded = this.removeListenersFromNode(this.containerNode);
     }
   }
 
+  updateListenersOnNode(node) {
+    if (this.props.isHoverEnabled) {
+      return this.addListenersToNode(node);
+    } else if (!this.props.isHoverEnabled) {
+      return removeListenersFromNode(node);
+    }
+    return false;
+  }
+
+  addListenersToNode(node) {
+    if (!this.listenersAdded) {
+      node.addEventListener('mouseenter', this.handleMouseEnter);
+      node.addEventListener('mouseleave', this.handleMouseLeave);
+    }
+    return true;
+  }
+
+  removeListenersFromNode(node) {
+    if (this.listenersAdded) {
+      node.removeEventListener('mouseenter', this.handleMouseEnter);
+      node.removeEventListener('mouseleave', this.handleMouseLeave);
+    }
+    return false;
+  }
+
   handleMouseEnter(event) {
-    if (this.props.onHoverOn) {
+    if (this.props.onHoverOn && !this.isMouseEnterActive) {
       this.props.onHoverOn(event);
     }
+    this.isMouseEnterActive = true;
   }
 
   handleMouseLeave(event) {
     if (this.props.onHoverOff) {
       this.props.onHoverOff(event);
     }
+    this.isMouseEnterActive = false;
   }
 
   handleOnClick(event) {
