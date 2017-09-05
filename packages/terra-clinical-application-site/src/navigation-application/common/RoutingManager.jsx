@@ -26,8 +26,6 @@ class RoutingManager extends React.Component {
     const width = window.innerWidth;
     const { small, medium, large, huge } = breakpoints;
 
-    debugger;
-
     if (width >= 1440) {
       return 'huge';
     } else if (width >= 1216) {
@@ -92,7 +90,7 @@ class RoutingManager extends React.Component {
       this.setState({
         size: newSize,
         toggleIsAvailable: newToggleIsAvailable,
-        menuIsOpen: newToggleIsAvailable && this.state.menuIsOpen,
+        menuIsOpen: newToggleIsAvailable && this.state.menuIsOpen && (newSize !== 'tiny' && newSize !== 'small') && (this.state.size === 'tiny' || this.state.size === 'small'),
         menuIsPinned: newMenuIsPinned,
       });
     }
