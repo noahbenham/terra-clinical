@@ -213,6 +213,7 @@ class RoutingManager extends React.Component {
             size={size}
             style={{ backgroundColor: 'lightgrey' }}
             toggleMenu={this.toggleMenu}
+            isToggleEnabled={this.state.toggleIsAvailable}
           />
         </ContentContainer>
       </div>

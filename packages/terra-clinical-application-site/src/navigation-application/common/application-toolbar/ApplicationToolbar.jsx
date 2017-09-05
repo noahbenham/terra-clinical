@@ -55,8 +55,11 @@ class ApplicationToolbar extends React.Component {
       ...customProps
     } = this.props;
 
+    const isCompact = size === 'tiny' || size === 'small';
+
     const toolbarClassNames = classNames([
       'terraClinical-ApplicationToolbar',
+      { 'terraClinical-ApplicationToolbar--compact': isCompact },
       customProps.className,
     ]);
 
@@ -79,7 +82,7 @@ class ApplicationToolbar extends React.Component {
     }
 
     let headerButton;
-    if (onToggleClick && size !== 'tiny' && size !== 'small') {
+    if (onToggleClick && (size === 'tiny' || size === 'small')) {
       const toggleButtonStyles = menuIsOpen ? {
         backgroundColor: '#888888',
         color: 'white',
@@ -104,7 +107,7 @@ class ApplicationToolbar extends React.Component {
 
     return (
       <div>
-        <div style={{ height: '10px', backgroundColor: 'rgb(36, 129, 202)' }} />
+        {!isCompact && <div style={{ height: '10px', backgroundColor: 'rgb(36, 129, 202)' }} />}
         <div {...customProps} className={toolbarClassNames}>
           {headerButton}
           {headerBody}
