@@ -31,6 +31,10 @@ const propTypes = {
    */
   isOpen: PropTypes.bool,
   /**
+   * Whether or not the panel transitions should be animated.
+   */
+  isToggleEnabled: PropTypes.bool,
+  /**
    * Callback when the overlay close functionality is triggered.
    */
   onRequestClose: PropTypes.func,
@@ -47,6 +51,7 @@ const propTypes = {
 const defaultProps = {
   isAnimated: false,
   isOpen: false,
+  isToggleEnabled: false,
   panelBehavior: 'overlay',
 };
 
@@ -57,6 +62,7 @@ const McPanel = ({
   panelBehavior,
   isAnimated,
   isOpen,
+  isToggleEnabled,
   size,
   toggleMenu,
   ...customProps
@@ -64,13 +70,13 @@ const McPanel = ({
   const isTiny = size === 'tiny';
   const compactSize = isTiny || size === 'small';
   const isOverlay = compactSize ? true : panelBehavior === 'overlay';
-  const isOverlayOpen = isOpen && isOverlay;
+  const isOverlayOpen = isOpen && isOverlay && isToggleEnabled;
   const overlayBackground = isTiny ? 'dark' : 'light';
 
   const slidePanelClassNames = cx([
     'mc-panel',
-    { 'is-open': isOpen },
-    { 'use-widescreen-style': !compactSize },
+    { 'is-open': isOpen && isToggleEnabled },
+    { 'use-widescreen-style': !compactSize && isToggleEnabled },
     { 'is-overlay': isOverlay },
     { 'is-squish': !isOverlay },
     customProps.className,
@@ -82,16 +88,23 @@ const McPanel = ({
     { 'is-animated': isAnimated },
   ]);
 
-  return (
-    <div
-      {...customProps}
-      className={slidePanelClassNames}
-    >
+  let container;
+  if (isToggleEnabled) {
+    container = (
       <div className={panelClasses} aria-hidden={!isOpen ? 'true' : null}>
         <McContainer onClick={toggleMenu} isHoverEnabled={!compactSize && isOverlay} onHoverOff={() => {if(isOpen){toggleMenu()}}} onHoverOn={() => {if(!isOpen){toggleMenu()}}}>
           {panelContent}
         </McContainer>
       </div>
+    );
+  }
+
+  return (
+    <div
+      {...customProps}
+      className={slidePanelClassNames}
+    >
+      {container}
       <div className={cx('main')}>
         <Overlay isRelativeToContainer onRequestClose={onRequestClose} isOpen={isOverlayOpen} backgroundStyle={overlayBackground} />
         {mainContent}
