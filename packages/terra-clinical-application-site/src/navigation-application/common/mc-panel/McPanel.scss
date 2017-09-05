@@ -34,19 +34,23 @@
     z-index: 5000;
   }
 
-  .use-widescreen-style {
+  // Move the slider back to its origin when its on-screen.
+  .is-open > .panel {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .use-widescreen-style.is-overlay {
     > .main {
       width: calc(100% - var(--mc-panel-hover-width, 30px));// allow for hover bar
     }
 
     > .panel {
-      transform: translate3d(calc(-100% + var(--mc-panel-hover-width, 30px)), 0, 0);// allow for hover bar
-    }  
-  }
+      left: 30px;
+    }
 
-  // Move the slider back to its origin when its on-screen.
-  .is-open > .panel {
-    transform: translate3d(0, 0, 0);
+    &.is-open > .panel {
+      left: 0;
+    }
   }
 
   .panel.is-tiny {

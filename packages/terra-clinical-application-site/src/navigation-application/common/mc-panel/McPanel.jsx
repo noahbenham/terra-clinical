@@ -88,7 +88,7 @@ const McPanel = ({
       className={slidePanelClassNames}
     >
       <div className={panelClasses} aria-hidden={!isOpen ? 'true' : null}>
-        <McContainer onClick={toggleMenu} isHoverEnabled={!compactSize} onHoverOff={() => {if(isOpen){toggleMenu()}}} onHoverOn={() => {if(!isOpen){toggleMenu()}}}>
+        <McContainer onClick={toggleMenu} isHoverEnabled={!compactSize && isOverlay} onHoverOff={() => {if(isOpen){toggleMenu()}}} onHoverOn={() => {if(!isOpen){toggleMenu()}}}>
           {panelContent}
         </McContainer>
       </div>
