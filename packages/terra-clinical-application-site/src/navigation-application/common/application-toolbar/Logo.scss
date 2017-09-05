@@ -6,6 +6,10 @@
   flex: 0 0 auto;
 }
 
+.terraClinical-NavigationLogo--compact {
+  color: white,
+}
+
 .terraClinical-NavigationLogo-accessory {
   @include terra-padding-start(5px);
 }

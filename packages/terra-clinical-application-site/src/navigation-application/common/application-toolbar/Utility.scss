@@ -4,10 +4,14 @@
   align-items: center;
   display: flex;
   flex: 0 0 auto;
+
+  & > * {
+    @include terra-padding-end(5px);    
+  }
 }
 
-.terraClinical-NavigationUtility-accessory {
-  @include terra-padding-end(5px);
+.terraClinical-NavigationUtility--compact {
+  color: white,
 }
 
 .terraClinical-NavigationUtility-title {
@@ -16,5 +20,4 @@
   white-space: nowrap;
   word-break: normal;
   word-wrap: normal;
-  @include terra-padding-end(5px);
 }

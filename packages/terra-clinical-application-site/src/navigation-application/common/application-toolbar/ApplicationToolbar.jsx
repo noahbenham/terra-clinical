@@ -83,13 +83,10 @@ class ApplicationToolbar extends React.Component {
 
     let headerButton;
     if (onToggleClick && (size === 'tiny' || size === 'small')) {
-      const toggleButtonStyles = menuIsOpen ? {
-        backgroundColor: '#888888',
-        color: 'white',
-      } : null;
+      const toggleButtonStyles = { color: 'white' };
       headerButton = (
         <div className="terraClinical-ApplicationToolbar-button">
-          <Button variant="secondary" icon={<IconMenu />} onClick={onToggleClick} style={toggleButtonStyles} />
+          <Button variant="link" icon={<IconMenu />} onClick={onToggleClick} style={toggleButtonStyles} />
         </div>
       );
     }

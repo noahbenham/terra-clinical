@@ -9,15 +9,15 @@ import './Logo.scss';
 const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
+   * */
   accesory: PropTypes.element,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
+   * */
   app: AppDelegate.propType,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
-   **/
+   * */
   title: PropTypes.string,
 };
 
@@ -28,9 +28,9 @@ const Logo = ({
     title,
     ...customProps
   }) => {
-
   const logoClassNames = classNames([
     'terraClinical-NavigationLogo',
+    { 'terraClinical-NavigationLogo--compact': size === 'tiny' || size === 'small' },
     customProps.className,
   ]);
 
