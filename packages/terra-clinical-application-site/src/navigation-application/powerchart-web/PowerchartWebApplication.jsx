@@ -12,6 +12,7 @@ import AppDelegate from 'terra-app-delegate';
 
 import RoutingManager from '../common/RoutingManager';
 import routeConfig from './routeConfig';
+import PowerchartWebNavigation from './PowerchartWebNavigation';
 
 import chartReviewReducers from './patient-context/chart/review/reducers';
 import chartReviewSagas from './patient-context/chart/review/sagas';
@@ -40,7 +41,7 @@ class PowerchartWebApplication extends React.Component {
           <Route
             render={() => (
               <Application locale="en-US">
-                <RoutingManager routeConfig={routeConfig} />
+                <PowerchartWebNavigation />
               </Application>
             )}
           />

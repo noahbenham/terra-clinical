@@ -24,7 +24,7 @@ class RoutingStack extends React.Component {
   constructor(props) {
     super(props);
 
-    this.updateMenuLocation = this.updateMenuLocation.bind(this);
+    this.updateStackLocation = this.updateStackLocation.bind(this);
     this.createMenuRoutes = this.createMenuRoutes.bind(this);
 
     this.state = {
@@ -38,7 +38,7 @@ class RoutingStack extends React.Component {
     });
   }
 
-  updateMenuLocation(path) {
+  updateStackLocation(path) {
     this.setState({
       stackLocation: { pathname: path },
     });
@@ -47,15 +47,15 @@ class RoutingStack extends React.Component {
   createMenuRoutes(routeConfig) {
     const { navEnabled, routingManager, app, location, size } = this.props;
 
-    return flattenRouteConfig(routeConfig, size).map((routeData) => {
+    return flattenRouteConfig(routeConfig, routingManager.size).map((routeData) => {
       const routingManagerDelegate = RoutingManagerDelegate.clone(routingManager, {
+        location: this.state.stackLocation,
         browserLocation: location,
-        managerLocation: this.state.stackLocation,
         goBack: navEnabled && routeData.parentPaths && routeData.parentPaths.length ? () => {
-          this.updateMenuLocation(routeData.parentPaths[routeData.parentPaths.length - 1]);
+          this.updateStackLocation(routeData.parentPaths[routeData.parentPaths.length - 1]);
         } : undefined,
         goToRoot: navEnabled && routeData.parentPaths && routeData.parentPaths.length > 1 ? () => {
-          this.updateMenuLocation(routeData.parentPaths[0]);
+          this.updateStackLocation(routeData.parentPaths[0]);
         } : undefined,
       });
 

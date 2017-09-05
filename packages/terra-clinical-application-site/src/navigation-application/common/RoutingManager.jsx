@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Route,
-  Redirect,
-  NavLink,
   withRouter,
   matchPath,
 } from 'react-router-dom';
@@ -11,12 +8,6 @@ import {
 import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
-import IconVisualization from 'terra-icon/lib/icon/IconVisualization';
-import IconProvider from 'terra-icon/lib/icon/IconProvider';
-
-import ApplicationToolbar from './application-toolbar/ApplicationToolbar';
-import VerticalToolbar from './vertical-toolbar/VerticalToolbar';
-import RoutingStack from './RoutingStack';
 import { flattenRouteConfig, navigationConfigPropType } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
@@ -26,6 +17,8 @@ const propTypes = {
   location: PropTypes.object,
   app: AppDelegate.propType,
   applicationToolbar: PropTypes.element,
+  menuRoutingVessel: PropTypes.element,
+  contentRoutingVessel: PropTypes.element,
 };
 
 class RoutingManager extends React.Component {
@@ -71,7 +64,7 @@ class RoutingManager extends React.Component {
     this.updateSize = this.updateSize.bind(this);
     this.isCompactLayout = this.isCompactLayout.bind(this);
     this.renderApplicationToolbar = this.renderApplicationToolbar.bind(this);
-    this.renderMenuPanel = this.renderMenuPanel.bind(this);
+    this.renderMenu = this.renderMenu.bind(this);
     this.renderContent = this.renderContent.bind(this);
 
     const initialSize = RoutingManager.getBreakpointSize();
@@ -92,7 +85,10 @@ class RoutingManager extends React.Component {
     const toggleIsAvailable = RoutingManager.hasMatchingMenuRoute(nextProps.location.pathname, nextProps.routeConfig, this.state.size);
 
     if (toggleIsAvailable !== this.state.toggleIsAvailable) {
-      this.setState({ toggleIsAvailable });
+      this.setState({
+        toggleIsAvailable,
+        menuIsOpen: toggleIsAvailable && this.state.menuIsOpen,
+      });
     }
   }
 
@@ -104,9 +100,12 @@ class RoutingManager extends React.Component {
     const newSize = RoutingManager.getBreakpointSize();
 
     if (this.state.size !== newSize) {
+      const newToggleIsAvailable = RoutingManager.hasMatchingMenuRoute(this.props.location.pathname, this.props.routeConfig, newSize);
+
       this.setState({
         size: newSize,
-        toggleIsAvailable: RoutingManager.hasMatchingMenuRoute(this.props.location.pathname, this.props.routeConfig, newSize),
+        toggleIsAvailable: newToggleIsAvailable,
+        menuIsOpen: newToggleIsAvailable && this.state.menuIsOpen,
       });
     }
   }
@@ -124,151 +123,87 @@ class RoutingManager extends React.Component {
   }
 
   isCompactLayout() {
-    return this.state.size === 'tiny';
+    return this.state.size === 'tiny' || this.state.size === 'small';
   }
 
   renderApplicationToolbar() {
     const { app, routeConfig, applicationToolbar } = this.props;
-    const shouldDisplayMenuToggle = this.isCompactLayout() || this.state.toggleIsAvailable;
+    const { size, menuIsOpen } = this.state;
 
-    if (applicationToolbar) {
-      return React.cloneElement(applicationToolbar, {
-        app,
-        size: this.state.size,
-        navigationLinks: routeConfig.navigation.links,
-        onToggleClick: shouldDisplayMenuToggle ? this.toggleMenu : undefined,
-        menuIsOpen: this.state.menuIsOpen,
-      });
+    if (!applicationToolbar) {
+      return null;
     }
 
-    const logo = <ApplicationToolbar.Logo accessory={<IconVisualization />} title={'Chart App'} />;
-    const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
+    const isCompactLayout = this.isCompactLayout();
+    const shouldDisplayMenuToggle = isCompactLayout || this.state.toggleIsAvailable;
 
-    const primaryNavButtons = [];
-    if (!this.isCompactLayout()) {
-      routeConfig.navigation.links.forEach((link) => {
-        primaryNavButtons.push((
-          <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ paddingLeft: '5px' }}>
-            {link.text}
-          </NavLink>
-        ));
-      });
-    }
-
-    return (
-      <ApplicationToolbar
-        app={app}
-        utility={utility}
-        logo={logo}
-        size={this.state.size}
-        content={<div style={{ margin: '0 5px 0 5px' }}>{primaryNavButtons}</div>}
-        onToggleClick={shouldDisplayMenuToggle ? this.toggleMenu : undefined}
-        menuIsOpen={this.state.menuIsOpen}
-      />
-    );
+    return React.cloneElement(applicationToolbar, {
+      app,
+      routingManager: {
+        size,
+        location,
+        routeConfig,
+        isCompactLayout,
+        toggleMenu: shouldDisplayMenuToggle && this.toggleMenu,
+        menuIsOpen,
+      },
+      onToggleClick: shouldDisplayMenuToggle ? this.toggleMenu : undefined,
+    });
   }
 
-  renderMenuPanel() {
-    const { app, location, routeConfig } = this.props;
+  renderMenu() {
+    const { app, routeConfig, menuRoutingVessel } = this.props;
     const { size, menuIsOpen, menuIsPinned } = this.state;
+
+    if (!menuRoutingVessel) {
+      return null;
+    }
 
     const isCompactLayout = this.isCompactLayout();
 
-    let verticalNavToolbar;
-    if (isCompactLayout) {
-      const verticalNavItems = [];
-      routeConfig.navigation.links.forEach((link) => {
-        const Component = link.component;
-        verticalNavItems.push((
-          <div key={link.path}>
-            <NavLink to={link.path} activeStyle={{ color: 'white' }} style={{ paddingLeft: '5px' }}>
-              <Component />
-            </NavLink>
-          </div>
-        ));
-      });
-
-      verticalNavToolbar = (
-        <VerticalToolbar>
-          {verticalNavItems}
-        </VerticalToolbar>
-      );
-    }
-
-    const menuPlaceholder = (
-      <Route
-        render={() => (
-          <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
-            <h2>Chart App</h2>
-          </div>
-        )}
-      />
-    );
-
-    let menuHeader;
-    if (isCompactLayout) {
-      menuHeader = (
-        <div style={{ height: '45px', padding: '5px', backgroundColor: '#f7f7f7', borderBottom: '1px solid lightgrey', display: 'flex', alignItems: 'center' }}>
-          <h2>Chart App</h2>
-        </div>
-      );
-    }
-
-    return (
-      <ContentContainer
-        fill
-        header={menuHeader}
-      >
-        <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
-          <div style={{ flex: '0 0 auto' }}>
-            {verticalNavToolbar}
-          </div>
-          <div style={{ flex: '1 1 auto', position: 'relative' }}>
-            <RoutingStack
-              navEnabled
-              app={app}
-              routeConfig={routeConfig.menuRoutes}
-              location={location}
-              size={size}
-              routingManager={{
-                size,
-                toggleMenu: this.toggleMenu,
-                togglePin: !isCompactLayout && this.togglePin,
-                menuIsOpen,
-                menuIsPinned: !isCompactLayout && menuIsPinned,
-              }}
-            >
-              {menuPlaceholder}
-            </RoutingStack>
-          </div>
-        </div>
-      </ContentContainer>
-    );
+    return React.cloneElement(menuRoutingVessel, {
+      app,
+      routingManager: {
+        size,
+        location,
+        routeConfig,
+        isCompactLayout,
+        toggleMenu: this.toggleMenu,
+        menuIsOpen,
+        togglePin: !isCompactLayout ? this.togglePin : undefined,
+        menuIsPinned: !isCompactLayout ? menuIsPinned : undefined,
+      },
+    });
   }
 
   renderContent() {
-    const { app, routeConfig } = this.props;
-    const { size, menuIsOpen, menuIsPinned } = this.state;
+    const { app, routeConfig, contentRoutingVessel } = this.props;
+    const { size, menuIsOpen } = this.state;
+
+    if (!contentRoutingVessel) {
+      return null;
+    }
+
+    const isCompactLayout = this.isCompactLayout();
 
     return (
       <ContentContainer
         fill
-        header={this.isCompactLayout() && this.renderApplicationToolbar()}
+        header={isCompactLayout && this.renderApplicationToolbar()}
       >
-        <RoutingStack
-          app={app}
-          routeConfig={routeConfig.contentRoutes}
-          location={this.props.location}
-          routingManager={{
-            size,
-            toggleMenu: this.toggleMenu,
-            togglePin: this.togglePin,
-            menuIsOpen,
-            menuIsPinned,
-          }}
-        >
-          <Redirect to={routeConfig.navigation.index} />
-        </RoutingStack>
+        {(
+          React.cloneElement(contentRoutingVessel, {
+            app,
+            routingManager: {
+              size,
+              location,
+              routeConfig,
+              isCompactLayout,
+              toggleMenu: this.toggleMenu,
+              menuIsOpen,
+            },
+          })
+        )}
       </ContentContainer>
     );
   }
@@ -287,7 +222,7 @@ class RoutingManager extends React.Component {
             isOpen={menuIsOpen}
             onRequestClose={this.toggleMenu}
             panelBehavior={menuIsPinned ? 'squish' : 'overlay'}
-            panelContent={this.renderMenuPanel()}
+            panelContent={this.renderMenu()}
             mainContent={this.renderContent()}
             size={size}
             style={{ backgroundColor: 'lightgrey' }}

@@ -78,7 +78,6 @@ const config = {
             customProp: 'DEFAULT CONFIG',
           },
         },
-        small: null,
         medium: null,
         large: null,
         huge: null,

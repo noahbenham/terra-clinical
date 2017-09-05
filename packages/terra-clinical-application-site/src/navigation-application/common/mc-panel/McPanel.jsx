@@ -60,7 +60,7 @@ const McPanel = ({
     customProps.className,
   ]);
 
-  const behavior = size === 'tiny' ? 'overlay' : panelBehavior;
+  const behavior = size === 'tiny' || size === 'small' ? 'overlay' : panelBehavior;
   const isOverlayOpen = isOpen && behavior === 'overlay';
   const overlayBackground = size === 'tiny' ? 'dark' : 'light';
 
@@ -70,7 +70,7 @@ const McPanel = ({
       className={slidePanelClassNames}
       data-mc-panel-panel-behavior={behavior}
     >
-      <div className={cx(['panel', { 'compact': size === 'tiny' }, { 'expanded': size !== 'tiny' }, { 'is-animated': isAnimated }])} aria-hidden={!isOpen ? 'true' : null}>
+      <div className={cx(['panel', { compact: size === 'tiny' || size === 'small' }, { expanded: size !== 'tiny' && size !== 'small' }, { 'is-animated': isAnimated }])} aria-hidden={!isOpen ? 'true' : null}>
         {panelContent}
       </div>
       <div className={cx('main')}>
