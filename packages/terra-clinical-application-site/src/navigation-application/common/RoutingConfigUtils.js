@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { matchPath } from 'react-router-dom';
 
 const supportedComponentBreakpoints = ['tiny', 'small', 'medium', 'large', 'huge'];
 
@@ -108,4 +109,27 @@ const flattenRouteConfig = (routeConfig, size, parentPaths) => {
   return [].concat(...(routes.filter(n => n)));
 };
 
-export { flattenRouteConfig };
+const configHasMatchingRoute = (pathname, routeConfig, size) => {
+  if (!routeConfig || !pathname) {
+    return false;
+  }
+
+  const processedRoutes = flattenRouteConfig(routeConfig, size);
+
+  if (!processedRoutes) {
+    return false;
+  }
+
+  for (let i = 0, length = processedRoutes.length; i < length; i += 1) {
+    const match = matchPath(pathname, { path: processedRoutes[i].path, exact: processedRoutes[i].exact, strict: processedRoutes[i].strict });
+
+    if (match) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+
+export { flattenRouteConfig, configHasMatchingRoute };

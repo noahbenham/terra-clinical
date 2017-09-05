@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   withRouter,
-  matchPath,
 } from 'react-router-dom';
 
 import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
 import getBreakpoints from 'terra-responsive-element/lib/breakpoints';
-import { flattenRouteConfig, navigationConfigPropType } from './RoutingConfigUtils';
+import { navigationConfigPropType, configHasMatchingRoute } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
 
 const propTypes = {
   routeConfig: navigationConfigPropType,
   location: PropTypes.object,
+  forceToggleAvailable: PropTypes.bool, // Need this to expose toggle when router is not used with layout
   app: AppDelegate.propType,
   applicationToolbar: PropTypes.element,
   menuRoutingVessel: PropTypes.element,
@@ -38,24 +38,6 @@ class RoutingManager extends React.Component {
     return 'tiny';
   }
 
-  static hasMatchingMenuRoute(pathname, routeConfig, size) {
-    const processedRoutes = flattenRouteConfig(routeConfig.menuRoutes, size);
-
-    if (!processedRoutes) {
-      return false;
-    }
-
-    for (let i = 0, length = processedRoutes.length; i < length; i += 1) {
-      const match = matchPath(pathname, { path: processedRoutes[i].path, exact: processedRoutes[i].exact, strict: processedRoutes[i].strict });
-
-      if (match) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   constructor(props) {
     super(props);
 
@@ -72,7 +54,7 @@ class RoutingManager extends React.Component {
     this.state = {
       menuIsOpen: false,
       menuIsPinned: true,
-      toggleIsAvailable: RoutingManager.hasMatchingMenuRoute(props.location.pathname, props.routeConfig, initialSize),
+      toggleIsAvailable: configHasMatchingRoute(props.location.pathname, props.routeConfig.menuRoutes, initialSize) || props.forceToggleAvailable,
       size: initialSize,
     };
   }
@@ -82,7 +64,7 @@ class RoutingManager extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const toggleIsAvailable = RoutingManager.hasMatchingMenuRoute(nextProps.location.pathname, nextProps.routeConfig, this.state.size);
+    const toggleIsAvailable = configHasMatchingRoute(nextProps.location.pathname, nextProps.routeConfig.menuRoutes, this.state.size) || nextProps.forceToggleAvailable;
 
     if (toggleIsAvailable !== this.state.toggleIsAvailable) {
       this.setState({
@@ -100,7 +82,7 @@ class RoutingManager extends React.Component {
     const newSize = RoutingManager.getBreakpointSize();
 
     if (this.state.size !== newSize) {
-      const newToggleIsAvailable = RoutingManager.hasMatchingMenuRoute(this.props.location.pathname, this.props.routeConfig, newSize);
+      const newToggleIsAvailable = configHasMatchingRoute(this.props.location.pathname, this.props.routeConfig.menuRoutes, newSize) || this.props.forceToggleAvailable;
 
       this.setState({
         size: newSize,
