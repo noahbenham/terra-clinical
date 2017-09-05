@@ -85,11 +85,13 @@ class RoutingManager extends React.Component {
     if (this.state.size !== newSize) {
       const newToggleIsAvailable = configHasMatchingRoute(this.props.location.pathname, this.props.routeConfig.menuRoutes, newSize) || this.props.forceToggleAvailable;
 
+      const newMenuIsPinned = newToggleIsAvailable && (newSize !== 'tiny' && newSize !== 'small') && this.state.menuIsPinned;
+
       this.setState({
         size: newSize,
         toggleIsAvailable: newToggleIsAvailable,
         menuIsOpen: newToggleIsAvailable && this.state.menuIsOpen,
-        menuIsPinned: newToggleIsAvailable && this.state.menuIsPinned,
+        menuIsPinned: newMenuIsPinned,
       });
     }
   }
