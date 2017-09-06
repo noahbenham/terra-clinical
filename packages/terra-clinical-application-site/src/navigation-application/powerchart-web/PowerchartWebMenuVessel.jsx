@@ -47,7 +47,7 @@ class PowerchartWebMenuVessel extends React.Component {
     if (isCompactLayout) {
       menuHeader = (
         <div style={{ height: '45px', padding: '5px', backgroundColor: '#f7f7f7', borderBottom: '1px solid lightgrey', display: 'flex', alignItems: 'center' }}>
-          <h2>Chart App</h2>
+          <h2>Powerchart</h2>
         </div>
       );
     }
