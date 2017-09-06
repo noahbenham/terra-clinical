@@ -14,13 +14,25 @@
   }
 
   .hover-section {
+    background: linear-gradient(to right, rgba(89, 106, 114, 1) 0%, rgba(206, 220, 231, 1) 100%);
     float: right;
     overflow: hidden;
+    padding-top: 20px;
     width: var(--mc-panel-hover-width, 30px);
   }
 
-  .hover-button {
-    width: 100%;
+  .hover-text {
+    float: left;
+    left: 50%;
+    position: relative;
+    transform: rotate(-90deg) translate3d(-100%, -50%, 0);
+    transform-origin: left top 0;
+  }
+
+  .hover-icon {
+    left: 50%;
+    position: relative;
+    transform: translate3d(-50%, -50%, 0);
   }
 
   .mc-container,
@@ -31,7 +43,8 @@
     position: relative;
   }
 
-  .is-hover-disabled {
+  .is-hover-disabled,
+  .is-menu-disabled {
     > .inner-section {
       width: 100%;
     }

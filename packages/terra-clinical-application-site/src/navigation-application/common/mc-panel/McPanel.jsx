@@ -92,7 +92,13 @@ const McPanel = ({
   if (isToggleEnabled) {
     container = (
       <div className={panelClasses} aria-hidden={!isOpen ? 'true' : null}>
-        <McContainer onClick={toggleMenu} isHoverEnabled={!compactSize && isOverlay} onHoverOff={() => { if (isOpen) { toggleMenu(); } }} onHoverOn={() => { if (!isOpen) { toggleMenu(); } }}>
+        <McContainer
+          onClick={toggleMenu}
+          isMenuEnabled={!isOpen}
+          isHoverEnabled={!compactSize && isOverlay}
+          onHoverOff={() => { if (isOpen) { toggleMenu(); } }}
+          onHoverOn={() => { if (!isOpen) { toggleMenu(); } }}
+        >
           {panelContent}
         </McContainer>
       </div>

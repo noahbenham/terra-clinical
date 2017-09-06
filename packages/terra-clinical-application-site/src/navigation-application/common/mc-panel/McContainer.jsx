@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import 'terra-base/lib/baseStyles';
 import Button from 'terra-button';
+import IconChevronRight from 'terra-icon/lib/icon/IconChevronRight';
 import styles from './McContainer.scss';
 
 const cx = classNames.bind(styles);
@@ -16,6 +17,10 @@ const propTypes = {
    * Callback when the overlay close functionality is triggered.
    */
   isHoverEnabled: PropTypes.bool,
+  /**
+   * The component to display in the panel content area.
+   */
+  isMenuEnabled: PropTypes.bool,
   /**
    * Callback when the overlay close functionality is triggered.
    */
@@ -116,6 +121,7 @@ class McContainer extends React.Component {
     const {
       children,
       isHoverEnabled,
+      isMenuEnabled,
       onHoverOff,
       onHoverOn,
       ...customProps
@@ -124,16 +130,18 @@ class McContainer extends React.Component {
     const containerClasses = cx([
       'mc-container', 
       { 'is-hover-disabled': !isHoverEnabled },
+      { 'is-menu-disabled': !isMenuEnabled },
       customProps.className,
     ]);
 
     return (
-      <div className={containerClasses} ref={this.setContainerNode}>
+      <div {...customProps} className={containerClasses} ref={this.setContainerNode}>
         <div className={cx('inner-section')}>
           {children}
         </div>
-        <div className={cx('hover-section')}>
-          <Button className={cx('hover-button')} variant="secondary" onClick={this.handleOnClick} />
+        <div className={cx('hover-section')} onClick={this.handleOnClick}>
+          <IconChevronRight className={cx('hover-icon')} />
+          <h3 className={cx('hover-text')}>Menu</h3>
         </div>
       </div>
     );
