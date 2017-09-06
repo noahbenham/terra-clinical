@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 
 // import PatientApplication from './demo/patient-application/PatientApplication';
 import PatientApplication from './navigation-application/powerchart-web/PowerchartWebApplication';
+import LayoutApplication from './navigation-application/layout-example/LayoutApplication';
 
 import './index.scss';
 
