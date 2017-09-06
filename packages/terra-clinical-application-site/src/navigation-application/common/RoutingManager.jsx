@@ -200,8 +200,6 @@ class RoutingManager extends React.Component {
   render() {
     const { menuIsOpen, menuIsPinned, size } = this.state;
 
-    debugger;
-
     return (
       <div style={{ height: '100%' }}>
         <ContentContainer
