@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import ChartReview from './review/ChartReview';
 
 const Chart = ({ routingManager, app }) => (
@@ -35,17 +35,7 @@ const Chart = ({ routingManager, app }) => (
           </div>
         )}
       />
-      <Route
-        render={() => (
-          <div style={{ height: '100%' }}>
-            <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
-                <h2>Select a Chart Section</h2>
-              </div>
-            </div>
-          </div>
-        )}
-      />
+      <Redirect to="/patients/chart/review" />
     </Switch>
   </div>
 );
