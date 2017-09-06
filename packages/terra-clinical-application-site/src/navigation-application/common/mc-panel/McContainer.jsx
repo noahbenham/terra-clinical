@@ -122,6 +122,7 @@ class McContainer extends React.Component {
       children,
       isHoverEnabled,
       isMenuEnabled,
+      onClick,
       onHoverOff,
       onHoverOn,
       ...customProps
