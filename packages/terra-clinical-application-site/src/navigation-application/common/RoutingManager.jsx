@@ -97,6 +97,7 @@ class RoutingManager extends React.Component {
   }
 
   toggleMenu() {
+    debugger;
     if (!this.state.menuIsPinned) {
       this.setState({
         menuIsOpen: !this.state.menuIsOpen,
@@ -199,6 +200,8 @@ class RoutingManager extends React.Component {
   render() {
     const { menuIsOpen, menuIsPinned, size } = this.state;
 
+    debugger;
+
     return (
       <div style={{ height: '100%' }}>
         <ContentContainer
@@ -215,7 +218,7 @@ class RoutingManager extends React.Component {
             size={size}
             style={{ backgroundColor: 'lightgrey' }}
             toggleMenu={this.toggleMenu}
-            isToggleEnabled={this.state.toggleIsAvailable}
+            isToggleEnabled={this.state.toggleIsAvailable || this.isCompactLayout()}
           />
         </ContentContainer>
       </div>

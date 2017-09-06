@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Arrange from 'terra-arrange';
 import classNames from 'classnames/bind';
 import 'terra-base/lib/baseStyles';
 import styles from './Header.scss';
@@ -22,34 +21,51 @@ const propTypes = {
    * Content to be displayed at the end of the header
    */
   endContent: PropTypes.element,
+
+  /**
+   * A Boolean indicating if element is a subheader.
+   */
+  isSubheader: PropTypes.bool,
 };
 
 const defaultProps = {
   title: '',
   startContent: null,
   endContent: null,
+  isSubheader: false,
 };
 
-const Header = ({ title, startContent, endContent, ...customProps }) => {
-  const titleElement = <h1 className={cx('title')}>{title}</h1>;
-  let headerContent;
-
-  if (startContent || endContent) {
-    headerContent = (
-      <Arrange
-        fitStart={startContent}
-        fitEnd={endContent}
-        fill={titleElement}
-        align="center"
-      />
-    );
-  } else {
-    headerContent = titleElement;
+const Header = ({ title, startContent, endContent, isSubheader, ...customProps }) => {
+  let startElement;
+  if (startContent) {
+    startElement = <div className={cx('flexEnd')}>{startContent}</div>;
   }
 
+  let titleElement;
+  if (title) {
+    titleElement = (
+      <div className={cx('titleContainer')}>
+        <h1 className={cx('title')}>
+          {title}
+        </h1>
+      </div>
+    );
+  }
+
+  let endElement;
+  if (endContent) {
+    endElement = <div className={cx('flexEnd')}>{endContent}</div>;
+  }
+
+  const headerClass = isSubheader ? 'flexSubheader' : 'flexHeader';
+
   return (
-    <header {...customProps} className={cx('header', customProps.className)}>
-      {headerContent}
+    <header {...customProps} className={cx(headerClass, customProps.className)}>
+      {startElement}
+      <div className={cx('flexFill')}>
+        {titleElement}
+      </div>
+      {endElement}
     </header>
   );
 };

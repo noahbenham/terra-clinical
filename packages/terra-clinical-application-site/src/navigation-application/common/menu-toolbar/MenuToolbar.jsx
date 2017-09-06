@@ -63,7 +63,7 @@ const MenuToolbar = ({ routingManager, text, ...customProps }) => {
     <div {...customProps} className={toolbarClassNames}>
       {toolbarStart}
       <div className="terraClinical-MenuToolbar-body">
-        <h3>{text}</h3>
+        <h3 style={{ margin: '0' }}>{text}</h3>
       </div>
       {toolbarEnd}
     </div>

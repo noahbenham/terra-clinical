@@ -1,22 +1,24 @@
 // Styles specific to development only
 // stylelint-disable
 
+body {
+  height: 100%;
+  margin: 0;
+  overflow: auto;
+  width: 100vw;
+}
+
+#terra-ApplicationMount {
+  height: 100%;
+}
+
 #terra-ApplicationMount > div[data-reactroot] {
-  height: 100vh;
+  height: 100%;
 }
 
-.terraClinical-ItemView-accessory {
+[class*="ItemView__accessory"],
+[class*="ItemView__accessory"] > * {
   max-width: 70%;
-}
-
-.menu-fade-enter {
-  opacity: 0.5;
-  z-index: 1;
-}
-
-.menu-fade-enter.menu-fade-enter-active {
-  opacity: 1;
-  transition: opacity 300ms ease-out;
 }
 
 .menu-fade-leave {

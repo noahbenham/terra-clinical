@@ -3,6 +3,15 @@ ChangeLog
 
 Unreleased
 ----------
+
+1.3.0 - (September 1, 2017)
+-----------------
+### Changed
+* Change dependency on terra-base to v2.0.0
+* Update nightwatch tests and test scripts.
+
+1.2.0 - (August 1, 2017)
+----------
 ### Fixed
 * Fixed icon styling to scale with font-size.
 

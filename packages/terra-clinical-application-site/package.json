@@ -33,7 +33,7 @@
     "react-router-dom": "^4.0.0",
     "redux": "^3.6.0",
     "redux-saga": "^0.15.3",
-    "terra-base": "^1.0.0",
+    "terra-base": "^2.1.0",
     "terra-mixins": "^1.0.0",
     "terra-button": "^1.0.0",
     "terra-button-group": "^1.0.0",
@@ -62,7 +62,7 @@
     "terra-clinical-navigation-toolbar": "^0.x",
     "terra-demographics-banner": "^1.0.0",
     "terra-image": "^1.0.0",
-    "classnames": "^1.0.0"
+    "classnames": "^2.2.5"
   },
   "peerDependencies": {
     "react": "^15.4.2",
