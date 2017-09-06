@@ -76,7 +76,7 @@ class PowerchartWebMenuVessel extends React.Component {
         header={menuHeader}
       >
         <div style={{ display: 'flex', alignItems: 'stretch', height: '100%' }}>
-          <div style={{ flex: '0 0 auto' }}>
+          <div style={{ flex: '0 0 auto', height: '100%' }}>
             {verticalNavToolbar}
           </div>
           <div style={{ flex: '1 1 auto', position: 'relative' }}>

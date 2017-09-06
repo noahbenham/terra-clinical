@@ -97,7 +97,6 @@ class RoutingManager extends React.Component {
   }
 
   toggleMenu() {
-    debugger;
     if (!this.state.menuIsPinned) {
       this.setState({
         menuIsOpen: !this.state.menuIsOpen,
