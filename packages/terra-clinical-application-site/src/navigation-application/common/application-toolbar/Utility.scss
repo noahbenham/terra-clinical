@@ -5,7 +5,7 @@
   display: flex;
   flex: 0 0 auto;
 
-  & > * {
+  & > *:not(:last-child) {
     @include terra-padding-end(5px);    
   }
 }

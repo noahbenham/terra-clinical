@@ -86,15 +86,14 @@ class Utility extends React.Component {
     return (
       <div ref={this.setPopupTargetRef}>
         <Popup
-          contentAttachment="top right"
+          isArrowDisplayed
+          contentAttachment="bottom center"
           isOpen={this.state.popupIsOpen}
           onRequestClose={this.dismissPopup}
           targetRef={this.getPopupTargetRef}
           contentHeight="40"
         >
           <Button
-            isBlock
-            isArrowDisplayed
             variant="link"
             text="Log out"
             onClick={() => {
