@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-app-delegate';
+import Button from 'terra-button';
+import Popup from 'terra-popup';
 import IconExpandMore from 'terra-icon/lib/icon/IconExpandMore';
 
 import './Utility.scss';
@@ -34,21 +36,34 @@ const propTypes = {
 class Utility extends React.Component {
   constructor(props) {
     super(props);
-    this.disclose = this.disclose.bind(this);
+    this.launchPopup = this.launchPopup.bind(this);
+    this.getPopupTargetRef = this.getPopupTargetRef.bind(this);
+    this.setPopupTargetRef = this.setPopupTargetRef.bind(this);
+    this.dismissPopup = this.dismissPopup.bind(this);
+
+    this.state = {
+      popupIsOpen: false,
+    };
   }
 
-  disclose() {
-    if (this.props.app && this.props.app.disclose) {
-      this.props.app.disclose({
-        preferredType: 'modal',
-        size: 'tiny',
-        content: {
-          key: `${this.props.menuName}-${Date.now()}`,
-          name: this.props.menuName,
-          props: this.props.menuProps,
-        },
-      });
-    }
+  launchPopup() {
+    this.setState({
+      popupIsOpen: true,
+    });
+  }
+
+  dismissPopup() {
+    this.setState({
+      popupIsOpen: false,
+    });
+  }
+
+  getPopupTargetRef() {
+    return this.popupTarget;
+  }
+
+  setPopupTargetRef(el) {
+    this.popupTarget = el;
   }
 
   render() {
@@ -69,10 +84,29 @@ class Utility extends React.Component {
     ]);
 
     return (
-      <div {...customProps} className={utilityClassNames} onClick={this.disclose}>
-        {!!title && size !== 'tiny' && <div className="terraClinical-NavigationUtility-title">{title}</div>}
-        {!!accessory && <div className="terraClinical-NavigationUtility-accessory">{accessory}</div>}
-        {<IconExpandMore />}
+      <div ref={this.setPopupTargetRef}>
+        <Popup
+          contentAttachment="top right"
+          isOpen={this.state.popupIsOpen}
+          onRequestClose={this.dismissPopup}
+          targetRef={this.getPopupTargetRef}
+          contentHeight="40"
+        >
+          <Button
+            isBlock
+            isArrowDisplayed
+            variant="link"
+            text="Log out"
+            onClick={() => {
+              window.location = '/authn/logout';
+            }}
+          />
+        </Popup>
+        <Button {...customProps} className={utilityClassNames} onClick={this.launchPopup} variant="link">
+          {!!title && size !== 'tiny' && <div className="terraClinical-NavigationUtility-title">{title}</div>}
+          {!!accessory && <div className="terraClinical-NavigationUtility-accessory">{accessory}</div>}
+          {<IconExpandMore />}
+        </Button>
       </div>
     );
   }
