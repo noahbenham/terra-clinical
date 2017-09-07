@@ -19,6 +19,7 @@ const propTypes = {
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    * */
   title: PropTypes.string,
+  subtitle: PropTypes.string,  
 };
 
 const Logo = ({
@@ -26,6 +27,7 @@ const Logo = ({
     app,
     size,
     title,
+    subtitle,
     ...customProps
   }) => {
   const logoClassNames = classNames([
@@ -37,7 +39,7 @@ const Logo = ({
   return (
     <div {...customProps} className={logoClassNames}>
       {!!accessory && <div className="terraClinical-NavigationLogo-accessory">{accessory}</div>}
-      {!!title && size !== 'tiny' && <div className="terraClinical-NavigationLogo-title"><h3>{title}</h3></div>}
+      {!!title && size !== 'tiny' && <div className="terraClinical-NavigationLogo-title"><strong>{title}</strong>{subtitle}</div>}
     </div>
   );
 };
