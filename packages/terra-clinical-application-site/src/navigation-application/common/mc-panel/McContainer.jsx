@@ -81,6 +81,7 @@ class McContainer extends React.Component {
     if (!this.listenersAdded) {
       node.addEventListener('mouseenter', this.handleMouseEnter);
       node.addEventListener('mouseleave', this.handleMouseLeave);
+      this.isMouseEnterActive = false;
     }
     return true;
   }
@@ -89,6 +90,7 @@ class McContainer extends React.Component {
     if (this.listenersAdded) {
       node.removeEventListener('mouseenter', this.handleMouseEnter);
       node.removeEventListener('mouseleave', this.handleMouseLeave);
+      this.isMouseEnterActive = false;
     }
     return false;
   }
