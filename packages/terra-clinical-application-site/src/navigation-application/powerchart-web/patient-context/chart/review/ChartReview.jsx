@@ -4,7 +4,7 @@ import Button from 'terra-button';
 import { connect } from 'react-redux';
 import Header from 'terra-clinical-header';
 import ContentContainer from 'terra-content-container';
-import { loadChartReview, focusChartReviewSection } from './actions';
+import { loadChartReview, sortReview } from './actions';
 
 class ChartReviewModal extends React.Component {
   componentDidMount() {
@@ -114,7 +114,19 @@ class ChartReview extends React.Component {
     return (
       <ContentContainer
         fill
-        header={<Header title="Review" />}
+        header={(
+          <Header 
+            title="Review" 
+            endContent={(
+              <Button 
+                text="Sort" 
+                onClick={() => {
+                  this.props.sortReview();
+                }} 
+              />
+            )}
+          />
+        )}
       >
         <div style={{ padding: '10px', height: '100%', overflow: 'auto' }} ref={(el) => { this.root = el; }}>
           {content}
@@ -132,6 +144,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loadChartReview: () => { dispatch(loadChartReview('physician1', 'patient1')); },
+  sortReview: () => { dispatch(sortReview()); },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChartReview);

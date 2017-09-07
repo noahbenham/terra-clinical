@@ -3,6 +3,7 @@ export const LOAD_CHART_REVIEW_SUCCEEDED = 'LOAD_CHART_REVIEW_SUCCEEDED';
 export const LOAD_CHART_REVIEW_FAILED = 'LOAD_CHART_REVIEW_FAILED';
 
 export const FOCUS_CHART_REVIEW_SECTION = 'FOCUS_CHART_REVIEW_SECTION';
+export const SORT_REVIEW = 'SORT_REVIEW';
 
 export function loadChartReview(physicianId, patientId) {
   return {
@@ -20,5 +21,11 @@ export function focusChartReviewSection(sectionId) {
     data: {
       sectionId,
     },
+  };
+}
+
+export function sortReview() {
+  return {
+    type: SORT_REVIEW,
   };
 }

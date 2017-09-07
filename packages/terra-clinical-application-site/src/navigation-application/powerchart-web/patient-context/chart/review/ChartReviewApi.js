@@ -4,52 +4,52 @@ const chartReviewData = {
   physician1: {
     patient1: {
       sections: {
-        '1': {
+        1: {
           id: '1',
           name: 'Allergies',
           content,
         },
-        '2': {
+        2: {
           id: '2',
           name: 'Orders',
           content,
         },
-        '3': {
+        3: {
           id: '3',
           name: 'Problems',
           content,
         },
-        '4': {
+        4: {
           id: '4',
           name: 'Chief Complaint',
           content,
         },
-        '5': {
+        5: {
           id: '5',
           name: 'Histories',
           content,
         },
-        '6': {
+        6: {
           id: '6',
           name: 'Home Meds',
           content,
         },
-        '7': {
+        7: {
           id: '7',
           name: 'Section A',
           content,
         },
-        '8': {
+        8: {
           id: '8',
           name: 'Section B',
           content,
         },
-        '9': {
+        9: {
           id: '9',
           name: 'Section C',
           content,
         },
-        '10': {
+        10: {
           id: '10',
           name: 'Section D',
           content,
@@ -66,9 +66,7 @@ const ChartReviewApi = {
   getChartReview: (physicianId, patientId) => (
     new Promise((resolve) => {
       setTimeout(() => { resolve(); }, 0);
-    }).then(() => {
-      return copy(chartReviewData[physicianId][patientId])
-    })
+    }).then(() => copy(chartReviewData[physicianId][patientId]))
   ),
 };
 

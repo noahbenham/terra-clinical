@@ -3,6 +3,7 @@ import {
   LOAD_CHART_REVIEW_SUCCEEDED,
   LOAD_CHART_REVIEW_FAILED,
   FOCUS_CHART_REVIEW_SECTION,
+  SORT_REVIEW,
 } from './actions';
 
 const chartReviewReducers = (state = { sections: {}, sectionSequence: [] }, action) => {
@@ -32,6 +33,10 @@ const chartReviewReducers = (state = { sections: {}, sectionSequence: [] }, acti
     case FOCUS_CHART_REVIEW_SECTION:
       newState.focusedSection = action.data.sectionId;
       return newState;
+
+    case SORT_REVIEW:
+      newState.sectionSequence = newState.sectionSequence.sort(() => Math.random() * 2 - 1);
+      return newState;      
 
     default:
       return state;
