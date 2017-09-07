@@ -42,7 +42,7 @@ class PowerchartWebApplication extends React.Component {
           <Route
             render={() => (
               <Application locale="en-US">
-                <PowerchartWebNavigation userInfo={this.props.userInfo} />
+                <PowerchartWebNavigation userInfo={this.props.userInfo} appTitle="PowerChart" appSubtitle="Web" />
               </Application>
             )}
           />

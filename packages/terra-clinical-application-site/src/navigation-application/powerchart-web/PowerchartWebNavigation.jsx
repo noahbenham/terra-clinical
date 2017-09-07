@@ -27,10 +27,10 @@ class PowerchartWebNavigation extends React.Component {
         app={this.props.app}
         routeConfig={routeConfig}
         applicationToolbar={(
-          <PowerchartWebApplicationToolbar userInfo={this.props.userInfo} />
+          <PowerchartWebApplicationToolbar userInfo={this.props.userInfo} appTitle={this.props.appTitle} appSubtitle={this.props.appSubtitle} />
         )}
         menuRoutingVessel={(
-          <PowerchartWebMenuVessel userInfo={this.props.userInfo} />
+          <PowerchartWebMenuVessel userInfo={this.props.userInfo} appTitle={this.props.appTitle} appSubtitle={this.props.appSubtitle} />
         )}
         contentRoutingVessel={(
           <PowerchartWebContentVessel userInfo={this.props.userInfo} />

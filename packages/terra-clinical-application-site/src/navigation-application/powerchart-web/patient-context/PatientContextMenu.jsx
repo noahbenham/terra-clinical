@@ -74,7 +74,7 @@ class PatientContextMenu extends React.Component {
                 }}
               />
             </div>
-            <div style={{ flex: '1 1 auto', position: 'relative', backgroundColor: '#f4f4f4' }}>
+            <div style={{ flex: '1 1 auto', position: 'relative' }}>
               {selectionComponent}
             </div>
           </div>
