@@ -37,8 +37,6 @@ class Utility extends React.Component {
   constructor(props) {
     super(props);
     this.launchPopup = this.launchPopup.bind(this);
-    this.getPopupTargetRef = this.getPopupTargetRef.bind(this);
-    this.setPopupTargetRef = this.setPopupTargetRef.bind(this);
     this.dismissPopup = this.dismissPopup.bind(this);
 
     this.state = {
@@ -56,14 +54,6 @@ class Utility extends React.Component {
     this.setState({
       popupIsOpen: false,
     });
-  }
-
-  getPopupTargetRef() {
-    return this.popupTarget;
-  }
-
-  setPopupTargetRef(el) {
-    this.popupTarget = el;
   }
 
   render() {
@@ -87,14 +77,15 @@ class Utility extends React.Component {
       <div ref={this.setPopupTargetRef}>
         <Popup
           isArrowDisplayed
-          contentAttachment="bottom center"
+          contentAttachment="top right"
           isOpen={this.state.popupIsOpen}
           onRequestClose={this.dismissPopup}
-          targetRef={this.getPopupTargetRef}
+          targetRef={() => document.getElementById('terra-clinical-nav-utils')}
           contentHeight="40"
         >
           <Button
             variant="link"
+            isBlock
             text="Log out"
             onClick={() => {
               window.location = '/authn/logout';
@@ -104,7 +95,7 @@ class Utility extends React.Component {
         <Button {...customProps} className={utilityClassNames} onClick={this.launchPopup} variant="link">
           {!!title && size !== 'tiny' && <div className="terraClinical-NavigationUtility-title">{title}</div>}
           {!!accessory && <div className="terraClinical-NavigationUtility-accessory">{accessory}</div>}
-          {<IconExpandMore />}
+          {<IconExpandMore id="terra-clinical-nav-utils" />}
         </Button>
       </div>
     );
