@@ -21,8 +21,8 @@ class Root extends React.Component {
             path={'/messages'}
             render={() => (
               <div style={{ height: '100%' }}>
-                <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+                <div style={{ height: '100%', backgroundColor: 'plum', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'black', transform: 'translateX(-50%)' }}>
                     <h2>No Messages</h2>
                   </div>
                 </div>
@@ -33,8 +33,8 @@ class Root extends React.Component {
             path={'/alerts'}
             render={() => (
               <div style={{ height: '100%' }}>
-                <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+                <div style={{ height: '100%', backgroundColor: 'lightblue', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'black', transform: 'translateX(-50%)' }}>
                     <h2>No Alerts</h2>
                   </div>
                 </div>

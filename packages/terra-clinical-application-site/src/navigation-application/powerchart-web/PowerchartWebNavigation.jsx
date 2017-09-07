@@ -12,7 +12,6 @@ import RoutingManager from '../common/RoutingManager';
 import PowerchartWebApplicationToolbar from './PowerchartWebApplicationToolbar';
 import PowerchartWebMenuVessel from './PowerchartWebMenuVessel';
 import PowerchartWebContentVessel from './PowerchartWebContentVessel';
-import routeConfig from './routeConfig';
 
 const propTypes = {
 //   routeConfig: PropTypes.object,
@@ -25,7 +24,7 @@ class PowerchartWebNavigation extends React.Component {
     return (
       <RoutingManager
         app={this.props.app}
-        routeConfig={routeConfig}
+        routeConfig={this.props.routeConfig}
         applicationToolbar={(
           <PowerchartWebApplicationToolbar userInfo={this.props.userInfo} appTitle={this.props.appTitle} appSubtitle={this.props.appSubtitle} />
         )}
