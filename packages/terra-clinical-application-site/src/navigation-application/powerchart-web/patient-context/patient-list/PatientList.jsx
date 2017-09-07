@@ -16,7 +16,7 @@ class PatientList extends React.Component {
   }
 
   render() {
-    const { dismissPatientContextDisclosure } = this.props;
+    const { dismissPatientContextDisclosure, routingManager } = this.props;
 
     let closeButton;
     if (dismissPatientContextDisclosure) {
@@ -30,6 +30,8 @@ class PatientList extends React.Component {
       );
     }
 
+    const layoutValue = routingManager.size === 'tiny' ? 'oneColumn' : 'twoColumns';
+
     const rambo = (
       <ItemView
         displays={[
@@ -40,7 +42,7 @@ class PatientList extends React.Component {
           <ItemDisplay text="Start Time: 08-05-2016 12:00:00" />,
           <ItemDisplay text="End Time: 08-05-2016 16:00:00" />,
         ]}
-        layout="twoColumns"
+        layout={layoutValue}
       />
     );
 
@@ -54,7 +56,7 @@ class PatientList extends React.Component {
           <ItemDisplay text="Start Time: 08-05-2016 17:00:00" />,
           <ItemDisplay text="End Time: 08-05-2016 18:00:00" />,
         ]}
-        layout="twoColumns"
+        layout={layoutValue}
       />
     );
 
@@ -68,7 +70,7 @@ class PatientList extends React.Component {
           <ItemDisplay text="Start Time: 08-05-2016 18:00:00" />,
           <ItemDisplay text="End Time: 08-05-2016 19:00:00" />,
         ]}
-        layout="twoColumns"
+        layout={layoutValue}
       />
     );
 

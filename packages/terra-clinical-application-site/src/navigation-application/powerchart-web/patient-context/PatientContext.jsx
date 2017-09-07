@@ -79,6 +79,7 @@ class PatientContext extends React.Component {
       content: {
         key: 'PATIENT_SEARCH_MODAL',
         name: patientSearchDisclosureKey,
+        props: { size: this.props.routingManager.size }
       },
     });
   }
@@ -115,7 +116,7 @@ class PatientContext extends React.Component {
     });
   }
 
-  getComponentForDisclosureType() {
+  getComponentForDisclosureType(routingManager) {
     const { currentDisclosureType } = this.state;
 
     if (currentDisclosureType === 'patientList') {
@@ -138,6 +139,7 @@ class PatientContext extends React.Component {
                   currentDisclosureType: undefined,
                 });
               }}
+              routingManager={routingManager}
             />
           </div>
           <div
@@ -170,6 +172,7 @@ class PatientContext extends React.Component {
                   currentDisclosureType: undefined,
                 });
               }}
+              routingManager={routingManager}
             />
           </div>
           <div
@@ -245,7 +248,7 @@ class PatientContext extends React.Component {
         <Redirect to="/patients" />
       );
     }
-    const componentForDisclosure = this.getComponentForDisclosureType();
+    const componentForDisclosure = this.getComponentForDisclosureType(routingManager);
 
     let toolbarContent;
     if (['tiny', 'small'].indexOf(routingManager.size) === -1) {
