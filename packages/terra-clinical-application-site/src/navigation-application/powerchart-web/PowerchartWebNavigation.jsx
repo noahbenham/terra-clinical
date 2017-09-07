@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Route,
   Redirect,
@@ -16,6 +17,7 @@ import routeConfig from './routeConfig';
 const propTypes = {
 //   routeConfig: PropTypes.object,
   app: AppDelegate.propType,
+  userInfo: PropTypes.object,
 };
 
 class PowerchartWebNavigation extends React.Component {
@@ -25,13 +27,13 @@ class PowerchartWebNavigation extends React.Component {
         app={this.props.app}
         routeConfig={routeConfig}
         applicationToolbar={(
-          <PowerchartWebApplicationToolbar />
+          <PowerchartWebApplicationToolbar userInfo={this.props.userInfo} />
         )}
         menuRoutingVessel={(
-          <PowerchartWebMenuVessel />
+          <PowerchartWebMenuVessel userInfo={this.props.userInfo} />
         )}
         contentRoutingVessel={(
-          <PowerchartWebContentVessel />
+          <PowerchartWebContentVessel userInfo={this.props.userInfo} />
         )}
       />
     );

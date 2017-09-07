@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
@@ -41,7 +42,7 @@ class PowerchartWebApplication extends React.Component {
           <Route
             render={() => (
               <Application locale="en-US">
-                <PowerchartWebNavigation />
+                <PowerchartWebNavigation userInfo={this.props.userInfo} />
               </Application>
             )}
           />
@@ -53,6 +54,7 @@ class PowerchartWebApplication extends React.Component {
 
 PowerchartWebApplication.propTypes = {
   app: AppDelegate.propType,
+  userInfo: PropTypes.object,
 };
 
 export default PowerchartWebApplication;

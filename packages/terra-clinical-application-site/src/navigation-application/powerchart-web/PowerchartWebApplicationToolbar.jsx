@@ -17,6 +17,7 @@ const propTypes = {
   size: PropTypes.string,
   onToggleClick: PropTypes.func,
   menuIsOpen: PropTypes.bool,
+  userInfo: PropTypes.object,
 };
 
 class PowerchartWebApplicationToolbar extends React.Component {
@@ -25,7 +26,7 @@ class PowerchartWebApplicationToolbar extends React.Component {
     const { size, menuIsOpen, routeConfig, isCompactLayout } = routingManager;
 
     const logo = <ApplicationToolbar.Logo accessory={<Image variant="rounded" src="http://is3.mzstatic.com/image/thumb/Purple128/v4/8d/8c/67/8d8c67d0-fc56-651a-5f24-1243ef885cd3/source/175x175bb.jpg" height="28px" width="28px" isFluid />} title={'PowerChart'} subtitle="Web" />;
-    const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={'McChart, Chart'} />;
+    const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={this.props.userInfo.name} />;
 
     let primaryNavComp;
     if (!isCompactLayout) {
