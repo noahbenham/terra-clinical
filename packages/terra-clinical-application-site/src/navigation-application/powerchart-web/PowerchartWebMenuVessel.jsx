@@ -29,7 +29,7 @@ class PowerchartWebMenuVessel extends React.Component {
       routingManager.routeConfig.navigation.links.forEach((link) => {
         const Component = link.component;
         verticalNavItems.push((
-          <div key={link.path}>
+          <div key={link.path} style={{ width: '100%' }}>
             <NavLink to={link.path} activeStyle={{ color: 'white' }} style={{ paddingLeft: '5px' }}>
               <Component />
             </NavLink>
@@ -51,7 +51,7 @@ class PowerchartWebMenuVessel extends React.Component {
           <div style={{backgroundColor: '#f7f7f7', width: '60px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Image variant="rounded" src="http://is3.mzstatic.com/image/thumb/Purple128/v4/8d/8c/67/8d8c67d0-fc56-651a-5f24-1243ef885cd3/source/175x175bb.jpg" height="28px" width="28px" isFluid />
           </div>
-          <div style={{ fontSize: '1.3rem', flex: '1 1 auto', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'center', borderBottom: '1px solid lightgrey' }}>
+          <div style={{ fontSize: '1.3rem', flex: '1 1 auto', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'center' }}>
             <div style={{ paddingLeft: '15px' }}>
               <strong>{this.props.appTitle}</strong>{this.props.appSubtitle}
             </div>

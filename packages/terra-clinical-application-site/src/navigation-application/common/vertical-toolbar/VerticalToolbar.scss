@@ -4,5 +4,11 @@
   background-color: #f4f4f4;
   overflow: auto;
   border-left: 1px solid lightgrey;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+    
   // border-right: 1px solid grey;
 }
