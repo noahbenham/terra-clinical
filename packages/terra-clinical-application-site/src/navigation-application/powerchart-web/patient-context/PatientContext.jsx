@@ -221,9 +221,9 @@ class PatientContext extends React.Component {
         <SkinnyToolbar
           buttons={
             <div style={{ display: 'inline-block' }}>
-              <Button text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={this.launchPatientList} />
-              <Button text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-              <Button text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={this.launchPatientSearch} />
+              <Button text="Patient List" icon={<IconChecklist style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={this.launchPatientList} />
+              <Button text="Schedule" icon={<IconCalendar style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Patient Search" icon={<IconSearch style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={this.launchPatientSearch} />
               {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
             </div>
           }

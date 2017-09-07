@@ -51,7 +51,7 @@ class PatientContextMenu extends React.Component {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', height: '100%', width: '100%' }}>
             <div style={{ flex: '0 0 auto', position: 'relative', borderBottom: '1px solid lightgrey' }}>
               <Button
-                text="Patient List" icon={<IconChecklist />} size="medium" variant="link" onClick={() => {
+                text="Patient List" icon={<IconChecklist style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
                   this.setState({
                     selectionType: 'list',
                   });
@@ -59,7 +59,7 @@ class PatientContextMenu extends React.Component {
               />
               <br />
               <Button
-                text="Schedule" icon={<IconCalendar />} size="medium" variant="link" onClick={() => {
+                text="Schedule" icon={<IconCalendar style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
                   this.setState({
                     selectionType: 'schedule',
                   });
@@ -67,7 +67,7 @@ class PatientContextMenu extends React.Component {
               />
               <br />
               <Button
-                text="Patient Search" icon={<IconSearch />} size="medium" variant="link" onClick={() => {
+                text="Patient Search" icon={<IconSearch style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
                   this.setState({
                     selectionType: 'search',
                   });
