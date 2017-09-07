@@ -20,7 +20,7 @@ const NavTabs = ({
   const primaryNavButtons = [];
   links.forEach((link) => {
     primaryNavButtons.push((
-      <NavLink to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }} style={{ padding: '0 10px 0 10px' }}>
+      <NavLink className="terraClinical-NavLinks" to={link.path} key={link.path} activeStyle={{ fontWeight: 'bold' }}>
         {link.text}
       </NavLink>
     ));

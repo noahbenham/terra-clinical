@@ -3,11 +3,50 @@
 .terraClinical-NavTabs {
   align-items: center;
   display: flex;
-  width: 100%;
   height: 100%;
   justify-content: center;
+  position: relative;
+  width: 100%;
 }
 
 .terraClinical-NavTabs-content {
-    flex: 0 0 auto;
+  flex: 0 0 auto;
+}
+
+.terraClinical-NavTabs-container {
+  display: flex;
+  flex: 1 1 auto;
+  height: 100%;
+  position: relative;
+}
+
+.terraClinical-NavLinks {
+  border-right: 1px solid #dedfe0;
+  box-shadow: inset -1px 0 0 0 #fff;
+  color: #444;
+  display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  line-height: 3;
+  padding: 0 21px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+
+  &:first-child {
+    border-left: 1px solid #fff;
+    box-shadow: inset 1px 0 0 0 #dedfe0;
+  }
+
+  &:hover {
+    background-color: #e6e6e6;
+    box-shadow: inset -1px 0 0 0 #e6e6e6;
+  }
+
+  &[aria-current='true'] {
+    background-color: #e6e6e6;
+    box-shadow: inset 1px 5px 18px 3px rgba(0, 0, 0, 0.18);
+    color: #1c1f21;
+    font-weight: 600;
+  }
 }
