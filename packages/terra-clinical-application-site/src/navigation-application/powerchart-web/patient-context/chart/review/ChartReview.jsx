@@ -79,6 +79,12 @@ class ChartReview extends React.Component {
     if (this.props.focusedSection && this.lastFocus !== this.props.focusedSection) {
       this.lastFocus = this.props.focusedSection;
       this.root.scrollTop = this.sectionMapping[this.props.focusedSection].offsetTop;
+
+      if (this.props.focusedSection === '10') {
+        if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+          this.props.routingManager.toggleMenu();
+        }            
+      }
     }
   }
 
@@ -106,28 +112,14 @@ class ChartReview extends React.Component {
     });
 
     return (
-      <div style={{ height: '100%', overflow: 'auto', padding: '10px' }} ref={(el) => { this.root = el; }}>
-        <h2>Review</h2>
-        <br />
-        <Button
-          text="Modal"
-          onClick={() => {
-            app.disclose({
-              preferredType: 'modal',
-              content: {
-                key: 'CHART_REVIEW_MODAL',
-                name: 'ChartReviewModal',
-              },
-            });
-          }}
-        />
-        <p>Modal Opened {this.state.modalOpenedCount} times</p>
-        <p>Modal Closed {this.state.modalClosedCount} times</p>
-        <br />
-        <br />
-        <hr />
-        {content}
-      </div>
+      <ContentContainer
+        fill
+        header={<Header title="Review" />}
+      >
+        <div style={{ padding: '10px', height: '100%', overflow: 'auto' }} ref={(el) => { this.root = el; }}>
+          {content}
+        </div>
+      </ContentContainer>
     );
   }
 }
