@@ -52,25 +52,19 @@ class PatientContextMenu extends React.Component {
             <div style={{ flex: '0 0 auto', position: 'relative', borderBottom: '1px solid lightgrey' }}>
               <Button
                 text="Patient List" icon={<IconChecklist style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
-                  this.setState({
-                    selectionType: 'list',
-                  });
+                  document.dispatchEvent(new CustomEvent('showPatientList'));
                 }}
               />
               <br />
               <Button
                 text="Schedule" icon={<IconCalendar style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
-                  this.setState({
-                    selectionType: 'schedule',
-                  });
+                  document.dispatchEvent(new CustomEvent('showPatientSchedule'));
                 }}
               />
               <br />
               <Button
                 text="Patient Search" icon={<IconSearch style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
-                  this.setState({
-                    selectionType: 'search',
-                  });
+                  document.dispatchEvent(new CustomEvent('showPatientSearch'));
                 }}
               />
             </div>

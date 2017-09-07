@@ -12,8 +12,8 @@ import Application, { reducers as terraApplicationReducers } from 'terra-clinica
 import AppDelegate from 'terra-app-delegate';
 
 import RoutingManager from '../common/RoutingManager';
-// import routeConfig from './routeConfig';
-import routeConfig from './routeConfig-updated';
+import routeConfig from './routeConfig';
+//import routeConfig from './routeConfig-updated';
 import PowerchartWebNavigation from './PowerchartWebNavigation';
 
 import chartReviewReducers from './patient-context/chart/review/reducers';

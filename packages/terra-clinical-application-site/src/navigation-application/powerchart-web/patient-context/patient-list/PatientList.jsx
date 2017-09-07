@@ -4,6 +4,7 @@ import AppDelegate from 'terra-app-delegate';
 import SingleSelectList from 'terra-list/lib/SingleSelectList';
 import ItemView from 'terra-clinical-item-view';
 import ItemDisplay from 'terra-clinical-item-display';
+import Header from 'terra-clinical-header';
 
 class PatientList extends React.Component {
   static selectPatient(patientData) {
@@ -72,15 +73,15 @@ class PatientList extends React.Component {
     );
 
     return (
-      <div style={{ padding: '10px' }}>
-        <h3>Patient List</h3>
-        <SingleSelectList isDivided={true} hasChevrons={false}>
-          <SingleSelectList.Item content={rambo} key="rambo" onClick={PatientList.selectPatient({ id: 3, name: 'Rambo, John' })} />
-          <SingleSelectList.Item content={williams} key="williams" onClick={PatientList.selectPatient({ id: 2, name: 'Williams, Ash' })} />
-          <SingleSelectList.Item content={johnson} key="johnson" onClick={PatientList.selectPatient({ id: 1, name: 'Johnson, Don' })} />
-        </SingleSelectList>
-        <br />
-        {closeButton}
+      <div>
+        <Header title="Patient List" endContent={closeButton} />
+        <div style={{ padding: '10px' }}>
+	        <SingleSelectList isDivided={true} hasChevrons={false}>
+            <SingleSelectList.Item content={rambo} key="rambo" onClick={PatientList.selectPatient({ id: 3, name: 'Rambo, John' })} />
+            <SingleSelectList.Item content={williams} key="williams" onClick={PatientList.selectPatient({ id: 2, name: 'Williams, Ash' })} />
+            <SingleSelectList.Item content={johnson} key="johnson" onClick={PatientList.selectPatient({ id: 1, name: 'Johnson, Don' })} />
+          </SingleSelectList>
+        </div>
       </div>
     );
   }

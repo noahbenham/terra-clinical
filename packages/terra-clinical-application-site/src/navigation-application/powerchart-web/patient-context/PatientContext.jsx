@@ -84,6 +84,10 @@ class PatientContext extends React.Component {
   }
 
   launchPatientSchedule() {
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
+    
     this.setState({
       currentDisclosureType: 'patientSchedule',
     });
@@ -108,46 +112,66 @@ class PatientContext extends React.Component {
       return (
         <div
           style={{
+            display: 'flex',
             position: 'absolute',
-            top: '10px',
-            bottom: '10px',
-            left: '10px',
-            right: '10px',
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            borderRadius: '5px',
-            border: '1px solid white',
+            alignContent: 'stretch',
+            top: '0',
+            bottom: '0',
+            left: '0',
+            right: '0',
           }}
         >
-          <PatientList
-            dismissPatientContextDisclosure={() => {
+          <div style={{ flex: '0 0 60%', minWidth: '360px', backgroundColor: 'white' }}>
+            <PatientList
+              dismissPatientContextDisclosure={() => {
+                this.setState({
+                  currentDisclosureType: undefined,
+                });
+              }}
+            />
+          </div>
+          <div
+            style={{ backgroundColor: 'rgba(0,0,0,0.1)', flex: '1 1 auto' }}
+            onClick={() => {
               this.setState({
                 currentDisclosureType: undefined,
               });
             }}
-          />
+          >
+          </div>
         </div>
       );
     } else if (currentDisclosureType === 'patientSchedule') {
       return (
         <div
           style={{
+            display: 'flex',
             position: 'absolute',
-            top: '10px',
-            bottom: '10px',
-            left: '10px',
-            right: '10px',
-            backgroundColor: 'rgba(255,255,255,0.9)',
-            borderRadius: '5px',
-            border: '1px solid white',
+            alignContent: 'stretch',
+            top: '0',
+            bottom: '0',
+            left: '0',
+            right: '0',
           }}
         >
-          <PatientSchedule
-            dismissPatientContextDisclosure={() => {
+          <div style={{ flex: '0 0 60%', minWidth: '360px', backgroundColor: 'white' }}>
+            <PatientSchedule
+              dismissPatientContextDisclosure={() => {
+                this.setState({
+                  currentDisclosureType: undefined,
+                });
+              }}
+            />
+          </div>
+          <div
+            style={{ backgroundColor: 'rgba(0,0,0,0.1)', flex: '1 1 auto' }}
+            onClick={() => {
               this.setState({
                 currentDisclosureType: undefined,
               });
             }}
-          />
+          >
+          </div>
         </div>
       );
     }
@@ -221,9 +245,9 @@ class PatientContext extends React.Component {
         <SkinnyToolbar
           buttons={
             <div style={{ display: 'inline-block' }}>
-              <Button text="Patient List" icon={<IconChecklist style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={this.launchPatientList} />
-              <Button text="Schedule" icon={<IconCalendar style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-              <Button text="Patient Search" icon={<IconSearch style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={this.launchPatientSearch} />
+              <Button text="Patient List" icon={<IconChecklist style={{ marginRight: '5px' }} />} size="medium" variant="link" onClick={this.launchPatientList} />
+              <Button text="Schedule" icon={<IconCalendar style={{ marginRight: '5px' }} />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
+              <Button text="Patient Search" icon={<IconSearch style={{ marginRight: '5px' }} />} size="medium" variant="link" onClick={this.launchPatientSearch} />
               {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
             </div>
           }
