@@ -64,6 +64,16 @@ class PatientContext extends React.Component {
   }
 
   launchPatientSearch() {
+    if (this.state.currentDisclosureType) {
+      this.setState({
+        currentDisclosureType: undefined,
+      });
+    }
+
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
+
     this.props.app.disclose({
       preferredType: 'modal',
       content: {
@@ -87,7 +97,7 @@ class PatientContext extends React.Component {
     if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
       this.props.routingManager.toggleMenu();
     }
-    
+
     this.setState({
       currentDisclosureType: 'patientSchedule',
     });
@@ -137,8 +147,7 @@ class PatientContext extends React.Component {
                 currentDisclosureType: undefined,
               });
             }}
-          >
-          </div>
+          />
         </div>
       );
     } else if (currentDisclosureType === 'patientSchedule') {
@@ -170,8 +179,7 @@ class PatientContext extends React.Component {
                 currentDisclosureType: undefined,
               });
             }}
-          >
-          </div>
+          />
         </div>
       );
     }
