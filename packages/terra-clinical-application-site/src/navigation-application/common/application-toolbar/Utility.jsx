@@ -90,6 +90,7 @@ class Utility extends React.Component {
             onClick={() => {
               window.location = '/authn/logout';
             }}
+            style={{ height: '100%'}}
           />
         </Popup>
         <Button {...customProps} className={utilityClassNames} onClick={this.launchPopup} variant="link">
