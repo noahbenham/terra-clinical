@@ -6,7 +6,8 @@ import {
 } from 'react-router-dom';
 
 import AppDelegate from 'terra-app-delegate';
-
+import Button from 'terra-button';
+import Header from 'terra-clinical-header';
 import RoutingManager from '../common/RoutingManager';
 
 const propTypes = {
@@ -14,21 +15,16 @@ const propTypes = {
   app: AppDelegate.propType,
 };
 
-const LayoutToolbar = () => (
-  <div style={{ height: '50px' }}>
-    <div style={{ height: '100%', backgroundColor: 'grey', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '0', left: '50%', color: 'black', transform: 'translateX(-50%)' }}>
-        <h2 style={{ margin: '0' }}>Application Toolbar</h2>
-      </div>
-    </div>
-  </div>
+const LayoutToolbar = props => (
+  <Header title="Application Toolbar" endContent={(props.routingManager.size === 'tiny' || props.routingManager.size === 'small') && <Button text="Toggle" onClick={() => { props.routingManager.toggleMenu(); }} />} />
 );
 
-const LayoutMenuContainer = () => (
+const LayoutMenuContainer = props => (
   <div style={{ height: '100%' }}>
     <div style={{ height: '100%', backgroundColor: 'lightblue', position: 'relative' }}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
         <h2>Menu</h2>
+        {props.routingManager.togglePin && <Button text="Pin" onClick={() => { props.routingManager.togglePin(); }} />}
       </div>
     </div>
   </div>
@@ -36,7 +32,7 @@ const LayoutMenuContainer = () => (
 
 const LayoutContentContainer = () => (
   <div style={{ height: '100%' }}>
-    <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
+    <div style={{ height: '100%', backgroundColor: 'lightyellow', position: 'relative' }}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
         <h2>Content</h2>
       </div>
