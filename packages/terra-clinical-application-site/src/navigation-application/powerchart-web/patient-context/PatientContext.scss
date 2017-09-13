@@ -18,11 +18,11 @@
 }
 
 .pc-button {
-  border-color: rgba(2, 2, 138,0.4) !important;
-  border-top: none !important;
   border-bottom: none !important;
+  border-color: rgba(2, 2, 138, 0.4) !important;
   border-left: none !important;
   border-radius: 0;
+  border-top: none !important;
   color: #404c57;
   flex: 0 0 auto;
   font-weight: bold;
@@ -37,14 +37,9 @@
   &:hover,
   &.is-hovered {
     background-color: #1b63a9;
-    border-color: rgba(2, 2, 138,0.4) !important;
+    border-color: rgba(2, 2, 138, 0.4) !important;
     color: #fff;
   }
-}
-
-.pc-search {
-  border-left: 1px solid !important;
-  border-right: none !important;
 }
 
 .pc-selected {

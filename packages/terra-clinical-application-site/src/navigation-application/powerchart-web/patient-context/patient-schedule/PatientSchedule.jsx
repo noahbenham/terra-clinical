@@ -75,7 +75,7 @@ class PatientSchedule extends React.Component {
 
     return (
       <div>
-        <Header title="Patient Schedule" endContent={closeButton} />
+        <Header title="Patient Schedule" />
         <div style={{ padding: '10px' }}>
           <SingleSelectList isDivided={true} hasChevrons={false}>
             <SingleSelectList.Item content={rambo} key="rambo" onClick={PatientSchedule.selectPatient({ id: 3, name: 'Rambo, John' })} />

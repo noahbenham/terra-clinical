@@ -18,6 +18,7 @@ import RoutingManagerDelegate from '../../common/RoutingManagerDelegate';
 import { disclosureKey as patientSearchDisclosureKey } from './patient-search/PatientSearch';
 import PatientList from './patient-list/PatientList';
 import PatientSchedule from './patient-schedule/PatientSchedule';
+import PatientSearch from './patient-search/PatientSearch';
 
 import './PatientContext.scss';
 
@@ -65,24 +66,34 @@ class PatientContext extends React.Component {
     this.updateSelectedPatient(event.detail.patientData);
   }
 
-  launchPatientSearch() {
-    if (this.state.currentDisclosureType) {
-      this.setState({
-        currentDisclosureType: undefined,
-      });
-    }
+  // launchPatientSearch() {
+  //   if (this.state.currentDisclosureType) {
+  //     this.setState({
+  //       currentDisclosureType: undefined,
+  //     });
+  //   }
 
+  //   if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+  //     this.props.routingManager.toggleMenu();
+  //   }
+
+  //   this.props.app.disclose({
+  //     preferredType: 'modal',
+  //     content: {
+  //       key: 'PATIENT_SEARCH_MODAL',
+  //       name: patientSearchDisclosureKey,
+  //       props: { size: this.props.routingManager.size }
+  //     },
+  //   });
+  // }
+
+  launchPatientSearch() {
     if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
       this.props.routingManager.toggleMenu();
     }
 
-    this.props.app.disclose({
-      preferredType: 'modal',
-      content: {
-        key: 'PATIENT_SEARCH_MODAL',
-        name: patientSearchDisclosureKey,
-        props: { size: this.props.routingManager.size }
-      },
+    this.setState({
+      currentDisclosureType: 'patientSearch',
     });
   }
 
@@ -187,6 +198,39 @@ class PatientContext extends React.Component {
           />
         </div>
       );
+    } else if (currentDisclosureType === 'patientSearch') {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            position: 'absolute',
+            alignContent: 'stretch',
+            top: '0',
+            bottom: '0',
+            left: '0',
+            right: '0',
+          }}
+        >
+          <div style={{ flex: '0 0 60%', minWidth: '360px', backgroundColor: 'white' }}>
+            <PatientSearch
+              dismissPatientContextDisclosure={() => {
+                this.setState({
+                  currentDisclosureType: undefined,
+                });
+              }}
+              routingManager={routingManager}
+            />
+          </div>
+          <div
+            style={{ backgroundColor: 'rgba(0,0,0,0.1)', flex: '1 1 auto' }}
+            onClick={() => {
+              this.setState({
+                currentDisclosureType: undefined,
+              });
+            }}
+          />
+        </div>
+      );
     }
 
 
@@ -254,11 +298,15 @@ class PatientContext extends React.Component {
 
     let listClassName = 'pc-button';
     let scheduleClassName = 'pc-button';
+    let searchClassName = 'pc-button';
     if (this.state.currentDisclosureType === 'patientList') {
       listClassName += ' pc-selected';
     }
     if (this.state.currentDisclosureType === 'patientSchedule') {
       scheduleClassName += ' pc-selected';
+    }
+    if (this.state.currentDisclosureType === 'patientSearch') {
+      searchClassName += ' pc-selected';
     }
 
     let toolbarContent;
@@ -270,9 +318,7 @@ class PatientContext extends React.Component {
               <div className="pc-start">
                 <Button className={listClassName} text="Patient List" icon={<IconChecklist style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientList} />
                 <Button className={scheduleClassName} text="Schedule" icon={<IconCalendar style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientSchedule} />
-              </div>
-              <div className="pc-end">
-                <Button className="pc-button pc-search" text="Patient Search" icon={<IconSearch style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientSearch} />
+                <Button className={searchClassName} text="Patient Search" icon={<IconSearch style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientSearch} />
               </div>
             </div>
           }
