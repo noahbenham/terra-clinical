@@ -233,7 +233,6 @@ class PatientContext extends React.Component {
       );
     }
 
-
     return undefined;
   }
 
