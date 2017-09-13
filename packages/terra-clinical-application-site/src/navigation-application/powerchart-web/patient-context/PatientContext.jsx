@@ -19,6 +19,8 @@ import { disclosureKey as patientSearchDisclosureKey } from './patient-search/Pa
 import PatientList from './patient-list/PatientList';
 import PatientSchedule from './patient-schedule/PatientSchedule';
 
+import './PatientContext.scss';
+
 const propTypes = {
   app: AppDelegate.propType,
   routingManager: RoutingManagerDelegate.propType,
@@ -250,16 +252,28 @@ class PatientContext extends React.Component {
     }
     const componentForDisclosure = this.getComponentForDisclosureType(routingManager);
 
+    let listClassName = 'pc-button';
+    let scheduleClassName = 'pc-button';
+    if (this.state.currentDisclosureType === 'patientList') {
+      listClassName += ' pc-selected';
+    }
+    if (this.state.currentDisclosureType === 'patientSchedule') {
+      scheduleClassName += ' pc-selected';
+    }
+
     let toolbarContent;
     if (['tiny', 'small'].indexOf(routingManager.size) === -1) {
       toolbarContent = (
         <SkinnyToolbar
           buttons={
-            <div style={{ display: 'inline-block' }}>
-              <Button text="Patient List" icon={<IconChecklist style={{ marginRight: '5px' }} />} size="medium" variant="link" onClick={this.launchPatientList} />
-              <Button text="Schedule" icon={<IconCalendar style={{ marginRight: '5px' }} />} size="medium" variant="link" onClick={this.launchPatientSchedule} />
-              <Button text="Patient Search" icon={<IconSearch style={{ marginRight: '5px' }} />} size="medium" variant="link" onClick={this.launchPatientSearch} />
-              {this.state.patientContext && <Button text="Remove" icon={<IconClose />} size="medium" variant="link" onClick={() => { this.setState({ patientContext: undefined }); }} />}
+            <div className="pc-container">
+              <div className="pc-start">
+                <Button className={listClassName} text="Patient List" icon={<IconChecklist style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientList} />
+                <Button className={scheduleClassName} text="Schedule" icon={<IconCalendar style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientSchedule} />
+              </div>
+              <div className="pc-end">
+                <Button className="pc-button pc-search" text="Patient Search" icon={<IconSearch style={{ fontWeight: 'bold', marginRight: '5px' }} />} size="medium" variant="secondary" onClick={this.launchPatientSearch} />
+              </div>
             </div>
           }
         />
