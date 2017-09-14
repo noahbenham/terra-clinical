@@ -45,11 +45,11 @@
     }
 
     > .panel {
-      left: 30px;
+      transform: translate3d(calc(-100% + var(--mc-panel-hover-width, 30px)), 0, 0);
     }
 
     &.is-open > .panel {
-      left: 0;
+      transform: translate3d(0, 0, 0);
     }
   }
 
@@ -70,6 +70,7 @@
 
     > .panel {
       border-right: 1px solid var(--mc-panel-panel-border-color, #d3d4d5);
+      transition: none;
     }
   }
 }

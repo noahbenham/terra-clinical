@@ -87,10 +87,11 @@ class RoutingManager extends React.Component {
 
       const newMenuIsPinned = newToggleIsAvailable && (newSize !== 'tiny' && newSize !== 'small') && this.state.menuIsPinned;
 
+      const newMenuIsOpen = newToggleIsAvailable && this.state.menuIsOpen && newMenuIsPinned;
       this.setState({
         size: newSize,
         toggleIsAvailable: newToggleIsAvailable,
-        menuIsOpen: newToggleIsAvailable && this.state.menuIsOpen && (newSize !== 'tiny' && newSize !== 'small') && (this.state.size === 'tiny' || this.state.size === 'small'),
+        menuIsOpen: newMenuIsOpen,
         menuIsPinned: newMenuIsPinned,
       });
     }
