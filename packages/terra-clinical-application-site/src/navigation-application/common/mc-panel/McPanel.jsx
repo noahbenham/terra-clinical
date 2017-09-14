@@ -71,7 +71,7 @@ const McPanel = ({
   const compactSize = isTiny || size === 'small';
   const isOverlay = compactSize ? true : panelBehavior === 'overlay';
   const isOverlayOpen = isOpen && isOverlay && isToggleEnabled;
-  const overlayBackground = isTiny ? 'dark' : 'light';
+  const overlayBackground = compactSize ? 'dark' : 'clear';
 
   const slidePanelClassNames = cx([
     'mc-panel',

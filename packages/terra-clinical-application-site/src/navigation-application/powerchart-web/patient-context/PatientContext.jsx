@@ -132,97 +132,55 @@ class PatientContext extends React.Component {
   getComponentForDisclosureType(routingManager) {
     const { currentDisclosureType } = this.state;
 
+    let content;
     if (currentDisclosureType === 'patientList') {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            position: 'absolute',
-            alignContent: 'stretch',
-            top: '0',
-            bottom: '0',
-            left: '0',
-            right: '0',
+      content = (
+        <PatientList
+          dismissPatientContextDisclosure={() => {
+            this.setState({
+              currentDisclosureType: undefined,
+            });
           }}
-        >
-          <div style={{ flex: '0 0 60%', minWidth: '360px', backgroundColor: 'white' }}>
-            <PatientList
-              dismissPatientContextDisclosure={() => {
-                this.setState({
-                  currentDisclosureType: undefined,
-                });
-              }}
-              routingManager={routingManager}
-            />
-          </div>
-          <div
-            style={{ backgroundColor: 'rgba(0,0,0,0.1)', flex: '1 1 auto' }}
-            onClick={() => {
-              this.setState({
-                currentDisclosureType: undefined,
-              });
-            }}
-          />
-        </div>
+          routingManager={routingManager}
+        />
       );
     } else if (currentDisclosureType === 'patientSchedule') {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            position: 'absolute',
-            alignContent: 'stretch',
-            top: '0',
-            bottom: '0',
-            left: '0',
-            right: '0',
+      content = (
+        <PatientSchedule
+          dismissPatientContextDisclosure={() => {
+            this.setState({
+              currentDisclosureType: undefined,
+            });
           }}
-        >
-          <div style={{ flex: '0 0 60%', minWidth: '360px', backgroundColor: 'white' }}>
-            <PatientSchedule
-              dismissPatientContextDisclosure={() => {
-                this.setState({
-                  currentDisclosureType: undefined,
-                });
-              }}
-              routingManager={routingManager}
-            />
-          </div>
-          <div
-            style={{ backgroundColor: 'rgba(0,0,0,0.1)', flex: '1 1 auto' }}
-            onClick={() => {
-              this.setState({
-                currentDisclosureType: undefined,
-              });
-            }}
-          />
-        </div>
+          routingManager={routingManager}
+        />
       );
     } else if (currentDisclosureType === 'patientSearch') {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            position: 'absolute',
-            alignContent: 'stretch',
-            top: '0',
-            bottom: '0',
-            left: '0',
-            right: '0',
+      content = (
+        <PatientSearch
+          dismissPatientContextDisclosure={() => {
+            this.setState({
+              currentDisclosureType: undefined,
+            });
           }}
-        >
-          <div style={{ flex: '0 0 60%', minWidth: '360px', backgroundColor: 'white' }}>
-            <PatientSearch
-              dismissPatientContextDisclosure={() => {
-                this.setState({
-                  currentDisclosureType: undefined,
-                });
-              }}
-              routingManager={routingManager}
-            />
+          routingManager={routingManager}
+        />
+      );
+    }
+
+    if (content) {
+      let contentClassNames = 'pc-panel';
+      if (['tiny', 'small'].indexOf(routingManager.size) >= 0) {
+        contentClassNames += ' pc-panel-compact';
+      }
+
+      return (
+        <div className="pc-panel-overlay">
+          <div className={contentClassNames}>
+            {content}
           </div>
           <div
-            style={{ backgroundColor: 'rgba(0,0,0,0.1)', flex: '1 1 auto' }}
+            className="pc-panel-target"
             onClick={() => {
               this.setState({
                 currentDisclosureType: undefined,
