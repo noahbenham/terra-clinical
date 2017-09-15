@@ -39,8 +39,8 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
                       fontWeight: 'bold',
                     }}
                   >
-                      Orders
-                    </NavLink>
+                    Orders
+                  </NavLink>
                   <br />
                   <br />
                   <NavLink
@@ -50,8 +50,20 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
                       fontWeight: 'bold',
                     }}
                   >
-                      Documents
-                    </NavLink>
+                    Documents
+                  </NavLink>
+                  <br />
+                  <br />
+                  <NavLink
+                    location={routingManager.browserLocation}
+                    to={`${match.path}/smart`}
+                    activeStyle={{
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    Smart
+                  </NavLink>
+
                 </div>
               )}
             />

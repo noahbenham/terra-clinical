@@ -63,7 +63,9 @@
     "terra-demographics-banner": "^1.0.0",
     "terra-image": "^1.0.0",
     "classnames": "^2.2.5",
-    "terra-popup": "^1.0.0"
+    "terra-popup": "^1.0.0",
+    "terra-embedded-content-consumer": "^1.0.0",
+    "xfc": "^1.0.0"
   },
   "peerDependencies": {
     "react": "^15.4.2",

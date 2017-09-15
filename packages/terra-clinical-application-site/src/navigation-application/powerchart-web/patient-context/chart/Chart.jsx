@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import ChartReview from './review/ChartReview';
+import SmartConsumer from './smart/SmartConsumer';
 
 const Chart = ({ routingManager, app }) => (
   <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'fuschia' }}>
@@ -33,6 +34,14 @@ const Chart = ({ routingManager, app }) => (
               </div>
             </div>
           </div>
+        )}
+      />
+      <Route
+        path="/patients/chart/smart"
+        render={props => (
+          <SmartConsumer
+            src="http://localhost:8000/fhir-app/launch.html?iss=https%3A%2F%2Ffhir-ehr.sandboxcerner.com%2Fdstu2%2F0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca&launch=151a1b76-c0e6-4e39-a6f5-efcb0adaf493"
+          />
         )}
       />
       <Redirect to="/patients/chart/review" />
