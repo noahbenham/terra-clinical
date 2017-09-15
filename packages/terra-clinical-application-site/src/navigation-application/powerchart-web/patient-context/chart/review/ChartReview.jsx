@@ -128,7 +128,7 @@ class ChartReview extends React.Component {
           />
         )}
       >
-        <div style={{ padding: '10px', height: '100%', overflow: 'auto' }} ref={(el) => { this.root = el; }}>
+        <div style={{ padding: '10px', height: '100%', overflow: 'auto', backgroundColor: 'white' }} ref={(el) => { this.root = el; }}>
           {content}
         </div>
       </ContentContainer>

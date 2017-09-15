@@ -214,7 +214,6 @@ class RoutingManager extends React.Component {
             panelContent={this.renderMenu()}
             mainContent={this.renderContent()}
             size={size}
-            style={{ backgroundColor: 'lightgrey' }}
             toggleMenu={this.toggleMenu}
             isToggleEnabled={this.state.toggleIsAvailable || this.isCompactLayout()}
           />

@@ -7,7 +7,7 @@ import MenuToolbar from '../../../common/menu-toolbar/MenuToolbar';
 import './ChartMenu.scss';
 
 const ChartMenu = ({ match, routingManager, path, location }) => (
-  <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
+  <div style={{ height: '100%', width: '100%', position: 'absolute' }}>
     <ContentContainer
       header={<MenuToolbar text="Chart" routingManager={routingManager} />}
       fill

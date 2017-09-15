@@ -5,6 +5,7 @@ import 'terra-base/lib/baseStyles';
 import Overlay from 'terra-overlay';
 import Button from 'terra-button';
 import McContainer from './McContainer';
+import McBackground from './McBackground';
 import styles from './McPanel.scss';
 
 const cx = classNames.bind(styles);
@@ -111,6 +112,7 @@ const McPanel = ({
       className={slidePanelClassNames}
     >
       {container}
+      <McBackground />
       <div className={cx('main')}>
         <Overlay isRelativeToContainer onRequestClose={onRequestClose} isOpen={isOverlayOpen} backgroundStyle={overlayBackground} />
         {mainContent}

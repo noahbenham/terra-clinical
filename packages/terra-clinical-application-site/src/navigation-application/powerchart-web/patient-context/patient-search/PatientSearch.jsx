@@ -20,7 +20,6 @@ class PatientSearch extends React.Component {
       document.dispatchEvent(new CustomEvent('patientContext:patientSelected', {
         detail: { patientData },
       }));
-      app.dismiss();
     };
   }
 

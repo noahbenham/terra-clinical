@@ -230,11 +230,6 @@ class PatientContext extends React.Component {
         render={() => (
           <div style={{ height: '100%' }}>
             { this.state.patientContext && <Redirect to="/patients/chart" /> }
-            <div style={{ height: '100%', backgroundColor: 'lightgrey', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
-                <h2>No Patient Selected</h2>
-              </div>
-            </div>
           </div>
         )}
       />
@@ -284,7 +279,7 @@ class PatientContext extends React.Component {
     }
 
     return (
-      <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
+      <div style={{ height: '100%', width: '100%', position: 'absolute'}}>
         <ContentContainer
           fill
           header={toolbarContent}

@@ -54,7 +54,7 @@ class ChartReviewMenu extends React.Component {
     });
 
     return (
-      <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'white' }}>
+      <div style={{ height: '100%', width: '100%', position: 'absolute' }}>
         <ContentContainer
           header={<MenuToolbar text="Summary" routingManager={routingManager} />}
           fill

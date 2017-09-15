@@ -5,6 +5,33 @@
       overflow: auto;
       position: relative;
       width: 100%;
+
+    :global {
+      .xfc {
+        height: 100%;
+      
+        iframe {
+          border: 0;
+          height: 100%;
+          width: 100%;          
+        }
+      }
     }
   }
+
+  .visibleOnLoad {
+    :global {
+      /* Hide mounted apps that haven't loaded or authorized */
+      .xfc[data-status='mounted'],
+      .xfc[data-status='launched'] {
+        display: none;
+      }
+
+      /* Reveal the app once its been authorized */
+      .xfc[data-status='authorized'] {
+        display: block;
+      }
+    }    
+  }
+}
   

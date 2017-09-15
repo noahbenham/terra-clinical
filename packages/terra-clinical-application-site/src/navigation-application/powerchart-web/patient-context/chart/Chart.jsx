@@ -40,7 +40,7 @@ const Chart = ({ routingManager, app }) => (
         path="/patients/chart/smart"
         render={props => (
           <SmartConsumer
-            src="http://localhost:8000/fhir-app/launch.html?iss=https%3A%2F%2Ffhir-ehr.sandboxcerner.com%2Fdstu2%2F0b8a0111-e8e6-4c26-a91c-5069cbc6b1ca&launch=151a1b76-c0e6-4e39-a6f5-efcb0adaf493"
+            src="https://smart.devcerner.com/smart/2c400054-42d8-4e74-87b7-80b5bd5fde9f/apps/a77a3d9a-28fe-4822-a96a-2ff09bed599a?PAT_PersonId=6625142&USR_PersonId=1380011&PAT_PPRCode=1116&username=ss025783&need_patient_banner=true"
           />
         )}
       />

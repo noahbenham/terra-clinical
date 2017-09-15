@@ -1,0 +1,19 @@
+/* stylelint-disable selector-class-pattern */
+:local {
+  .mc-background {
+    background-color: #2481ca;
+    left: 0;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+
+    > * {
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0);
+    }
+  }
+}
