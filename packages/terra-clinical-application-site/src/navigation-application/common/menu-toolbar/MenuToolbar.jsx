@@ -5,8 +5,7 @@ import 'terra-base/lib/baseStyles';
 
 import IconLeft from 'terra-icon/lib/icon/IconLeft';
 import IconHouse from 'terra-icon/lib/icon/IconHouse';
-import IconUnlock from 'terra-icon/lib/icon/IconUnlock';
-import IconPadlock from 'terra-icon/lib/icon/IconPadlock';
+import IconMcDurp from './IconMcDurp';
 import Button from 'terra-button';
 
 import RoutingManagerDelegate from '../RoutingManagerDelegate';
@@ -38,11 +37,11 @@ const MenuToolbar = ({ routingManager, text, ...customProps }) => {
   }
   let pinButton;
   if (routingManager.togglePin && !routingManager.menuIsPinned) {
-    pinButton = <Button onClick={routingManager.togglePin} icon={<IconPadlock />} variant="link" style={{ color: 'black' }} />;
+    pinButton = <Button onClick={routingManager.togglePin} icon={<IconMcDurp className="terraClinical-Unlock" />} variant="link" style={{ color: 'black' }} />;
   }
   let unpinButton;
   if (routingManager.togglePin && routingManager.menuIsPinned) {
-    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconUnlock />} variant="link" style={{ color: 'black' }} />;
+    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconMcDurp />} variant="link" style={{ color: 'black' }} />;
   }
 
   const toolbarStart = (
