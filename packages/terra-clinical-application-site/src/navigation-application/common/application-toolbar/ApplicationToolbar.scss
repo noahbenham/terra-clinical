@@ -2,10 +2,10 @@
 
 .terraClinical-ApplicationToolbar {
   background-color: #f7f7f7;
-  border-bottom: 1px solid lightgrey;
+  border-bottom:1px solid #BCBFC0;
   display: flex;
   justify-content: space-between;
-  height: 45px;
+  height: 35px;
   position: relative;
   width: 100%;
 }
@@ -13,7 +13,6 @@
 .terraClinical-ApplicationToolbar--compact {
   background-color: #2481ca;
   border-bottom: none;
-  height: 40px;
 }
 
 .terraClinical-ApplicationToolbar-button {

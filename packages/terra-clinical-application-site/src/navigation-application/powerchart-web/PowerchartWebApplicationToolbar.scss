@@ -3,23 +3,16 @@
   .toolbar-accessory {
     background-color: #C4CACC;
     border-radius: 50%;
-    height: 35px;
-    width: 35px;
+    height: 26px;
+    width: 26px;
     position: relative;
     & > * {
-      left: 1px;
-      top: 40%;
-      transform: translate3d(0, -50%, 0);
+      top: 3px;
       position: relative;
     }
   }
 
   .is-compact {
     background-color: #2CACE2;
-    height: 30px;
-    width: 30px;
-    & > * {
-      left: 0;
-    }
   }
 }

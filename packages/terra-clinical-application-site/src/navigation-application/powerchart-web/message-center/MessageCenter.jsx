@@ -52,7 +52,7 @@ class MessageCenter extends React.Component {
             <SingleSelectList.Item content={<ItemView startAccessory={<IconTrash />} displays={[<ItemView.Display text="Trash" key="126" />]} />} key="122" />
           </SingleSelectList>
         </div>
-        <ContentContainer className={cx('content-section')} fill header={<Header style={{ height: '39px', backgroundColor: '#EBE8E8' }} endContent={<IconEdit />} />}>
+        <ContentContainer className={cx('content-section')} fill header={<Header style={{ height: '39px', backgroundColor: '#DEDFE0' }} endContent={<IconEdit />} />}>
           <div style={{ padding: '10px' }}>
             <p>From: Joe, Joe</p>
             <p>To: Johnson, Johnson</p>
