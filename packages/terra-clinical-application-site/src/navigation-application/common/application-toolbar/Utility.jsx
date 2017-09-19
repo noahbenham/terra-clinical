@@ -90,12 +90,12 @@ class Utility extends React.Component {
             onClick={() => {
               window.location = '/authn/logout';
             }}
-            style={{ height: '100%'}}
+            style={{ height: '100%' }}
           />
         </Popup>
         <Button {...customProps} className={utilityClassNames} onClick={this.launchPopup} variant="link">
-          {!!title && size !== 'tiny' && <div className="terraClinical-NavigationUtility-title">{title}</div>}
           {!!accessory && <div className="terraClinical-NavigationUtility-accessory">{accessory}</div>}
+          {!!title && size !== 'tiny' && <div className="terraClinical-NavigationUtility-title">{title}</div>}
           {<IconExpandMore id="terra-clinical-nav-utils" />}
         </Button>
       </div>

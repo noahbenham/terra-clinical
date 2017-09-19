@@ -9,6 +9,7 @@ import PatientContext from './patient-context/PatientContext';
 import PatientContextMenu from './patient-context/PatientContextMenu';
 import ChartMenu from './patient-context/chart/ChartMenu';
 import ChartReviewMenu from './patient-context/chart/review/ChartReviewMenu';
+import MessageCenter from './message-center/MessageCenter';
 
 const ChartMenuIcon = () => (
   <Button size="large" icon={<IconClipboard />} variant="link" style={{ color: 'grey' }} />
@@ -27,15 +28,15 @@ const config = {
     index: '/patients',
     links: [{
       path: '/patients',
-      text: 'Chart',
+      text: 'Patients',
       component: ChartMenuIcon,
     }, {
       path: '/messages',
-      text: 'Messages',
+      text: 'Message Center',
       component: MessagesMenuIcon,
     }, {
-      path: '/alerts',
-      text: 'Alerts',
+      path: '/metrics',
+      text: 'Metrics',
       component: AlertsMenuIcon,
     }],
   },
@@ -55,12 +56,12 @@ const config = {
       path: '/messages',
       component: {
         default: {
-          componentClass: Root,
+          componentClass: MessageCenter,
         },
       },
     },
-    '/alerts': {
-      path: '/alerts',
+    '/metrics': {
+      path: '/metrics',
       component: {
         default: {
           componentClass: Root,

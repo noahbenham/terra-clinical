@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames/bind';
 import {
   NavLink,
 } from 'react-router-dom';
@@ -10,6 +11,10 @@ import IconProvider from 'terra-icon/lib/icon/IconProvider';
 
 import ApplicationToolbar from '../common/application-toolbar/ApplicationToolbar';
 import NavTabs from '../common/application-toolbar/NavTabs';
+
+import styles from './PowerchartWebApplicationToolbar.scss';
+
+const cx = classNames.bind(styles);
 
 const propTypes = {
   routeConfig: PropTypes.object,
@@ -32,7 +37,13 @@ class PowerchartWebApplicationToolbar extends React.Component {
         subtitle={this.props.appSubtitle} 
       />
     );
-    const utility = <ApplicationToolbar.Utility accessory={<IconProvider />} menuName="UtilityMenuExample" title={this.props.userInfo.name} />;
+    const accessoryClasses = cx([
+      'toolbar-accessory',
+      { 'is-compact': size === 'tiny' || size === 'small' },
+    ]);
+
+    const accessory = <div className={accessoryClasses}><IconProvider /></div>;
+    const utility = <ApplicationToolbar.Utility accessory={accessory} menuName="UtilityMenuExample" title={this.props.userInfo.name} />;
 
     let primaryNavComp;
     if (!isCompactLayout) {

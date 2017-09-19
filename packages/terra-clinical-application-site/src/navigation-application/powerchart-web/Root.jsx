@@ -41,6 +41,18 @@ class Root extends React.Component {
               </div>
             )}
           />
+          <Route
+            path={'/metrics'}
+            render={() => (
+              <div style={{ height: '100%' }}>
+                <div style={{ height: '100%', backgroundColor: 'lightblue', position: 'relative' }}>
+                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'black', transform: 'translateX(-50%)' }}>
+                    <h2>No Metrics</h2>
+                  </div>
+                </div>
+              </div>
+            )}
+          />
         </Switch>
       </div>
     );

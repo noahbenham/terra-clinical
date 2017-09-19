@@ -20,7 +20,7 @@ const McBackground = ({
   ]);
 
   return (
-    <div {...customProps } className={backgroundClasses}>
+    <div {...customProps} className={backgroundClasses}>
       {children}
       <McIcon />
     </div>
