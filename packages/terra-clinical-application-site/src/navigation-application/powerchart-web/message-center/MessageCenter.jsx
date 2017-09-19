@@ -54,8 +54,8 @@ class MessageCenter extends React.Component {
         </div>
         <ContentContainer className={cx('content-section')} fill header={<Header style={{ height: '39px', backgroundColor: '#DEDFE0' }} endContent={<IconEdit />} />}>
           <div style={{ padding: '10px' }}>
-            <p>From: Joe, Joe</p>
-            <p>To: Johnson, Johnson</p>
+            <p>From: JoJo, Joey</p>
+            <p>To: Johnson, John</p>
             <hr />
             <h3>Physician Office/Clinic Message</h3>
             <p>Sep 28, 2:35 PM</p>
