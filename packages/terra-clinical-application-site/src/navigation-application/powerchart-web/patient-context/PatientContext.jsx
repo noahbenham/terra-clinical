@@ -279,7 +279,7 @@ class PatientContext extends React.Component {
     }
 
     return (
-      <div style={{ height: '100%', width: '100%', position: 'absolute'}}>
+      <div style={{ height: '100%', width: '100%', position: 'absolute' }}>
         <ContentContainer
           fill
           header={toolbarContent}
