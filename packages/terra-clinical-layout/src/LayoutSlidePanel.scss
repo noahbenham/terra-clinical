@@ -1,0 +1,76 @@
+/* stylelint-disable selector-class-pattern */
+:local {
+  .layout-slide-panel {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+
+  .main,
+  .panel {
+    box-sizing: border-box;
+    height: 100%;
+    overflow: hidden;
+    transition: none;
+  }
+
+  .is-animated {
+    transition: transform 0.15s ease;
+  }
+
+  .main {
+    float: right;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+  }
+
+  .panel {
+    background-color: var(--mc-panel-background-color, #fff);
+    position: absolute;
+    transform: translate3d(-100%, 0, 0);
+    width: var(--mc-panel-panel-width, 320px);
+    z-index: 5000;
+  }
+
+  // Move the slider back to its origin when its on-screen.
+  .is-open > .panel {
+    transform: translate3d(0, 0, 0);
+  }
+
+  .use-widescreen-style.is-overlay {
+    > .main {
+      width: calc(100% - var(--mc-panel-hover-width, 30px));// allow for hover bar
+    }
+
+    > .panel {
+      transform: translate3d(calc(-100% + var(--mc-panel-hover-width, 30px)), 0, 0);
+    }
+
+    &.is-open > .panel {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .panel.is-tiny {
+    width: calc(100% - var(--mc-panel-panel-stripe, 50px));
+  }
+
+  // Overlay
+  .is-open.is-overlay > .panel {
+    box-shadow: 1px 0 5px var(--mc-panel-panel-shadow-color, #bcbfc0);
+  }
+
+  // Squish
+  .is-open.is-squish {
+    > .main {
+      width: calc(100% - #{var(--mc-panel-panel-width, 320px)});
+    }
+
+    > .panel {
+      border-right: 1px solid var(--mc-panel-panel-border-color, #d3d4d5);
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+/* stylelint-disable selector-class-pattern */
+:local {
+  .hover-target {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .content-section {
+    float: left;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overflow-y: auto;
+    width: calc(100% - var(--mc-panel-hover-width, 30px));
+  }
+
+  .hover-section {
+    background: #e8e9ea;
+    border-right: 1px solid #bcbfc0;
+    float: right;
+    overflow: hidden;
+    padding-top: 20px;
+    width: var(--mc-panel-hover-width, 30px);
+  }
+
+  .hover-text {
+    color: #4e5558;
+    float: left;
+    font-size: 0.857rem;
+    left: 50%;
+    margin: 0;
+    position: relative;
+    transform: rotate(-90deg) translate3d(-100%, -50%, 0);
+    transform-origin: left top 0;
+  }
+
+  .hover-icon {
+    color: #909496;
+    font-size: 0.571rem;
+    left: 50%;
+    position: relative;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  .hover-target,
+  .content-section,
+  .hover-section {
+    height: 100%;
+    position: relative;
+  }
+
+  .is-hover-disabled,
+  .is-menu-disabled {
+    > .inner-section {
+      width: 100%;
+    }
+    
+    > .hover-section {
+      display: none;
+    }
+  }
+}
