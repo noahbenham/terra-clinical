@@ -7,11 +7,26 @@ import breakpoints from 'terra-responsive-element/lib/breakpoints.scss';
 import Panel from './_Panel';
 
 const propTypes = {
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * */
   app: AppDelegate.propType,
-  toolbar: PropTypes.element,
-  menu: PropTypes.element,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * */
   content: PropTypes.element,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * */
   isMenuEnabled: PropTypes.bool,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * */
+  menu: PropTypes.element,
+  /**
+   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * */
+  toolbar: PropTypes.element,
 };
 
 const defaultProps = {
