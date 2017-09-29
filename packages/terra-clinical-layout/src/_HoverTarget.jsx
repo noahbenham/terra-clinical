@@ -21,15 +21,15 @@ const propTypes = {
    */
   isMenuEnabled: PropTypes.bool,
   /**
-   * Callback when the overlay close functionality is triggered.
+   * Function callback to trigger when the hover section is clicked on mobile.
    */
   onClick: PropTypes.func,
   /**
-   * Callback when the overlay close functionality is triggered.
+   * Function callback to trigger when the mouse leaves.
    */
   onHoverOff: PropTypes.func,
   /**
-   * Callback when the overlay close functionality is triggered.
+   * Function callback to trigger when the mouse enters.
    */
   onHoverOn: PropTypes.func,
 };

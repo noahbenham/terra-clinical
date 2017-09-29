@@ -12,19 +12,19 @@ const propTypes = {
    * */
   app: AppDelegate.propType,
   /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * Element to be placed within the main content section of the layout.
    * */
   content: PropTypes.element,
   /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * Whether or not the menu with accompaning hover/toggle should be displayed.
    * */
   isMenuEnabled: PropTypes.bool,
   /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * Element to be placed within the menu section of the layout.
    * */
   menu: PropTypes.element,
   /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * ELement to be placed within the toolbar section of the layout.
    * */
   toolbar: PropTypes.element,
 };
