@@ -19,8 +19,7 @@ import NoDataViewExamples from './examples/no-data-view/Index';
 import ItemCollectionExamples from './examples/item-collection/Index';
 import DemoApplicationExamples from './examples/demo-application/Index';
 import NavigationExamples from './examples/navigation/Index';
-import NavigationManagerExamples from './examples/navigation-manager/Index';
-import NavigationToolbarExamples from './examples/navigation-toolbar/Index';
+import LayoutExamples from './examples/layout/Index';
 
 // Test
 /* eslint-disable import/first */
@@ -61,11 +60,10 @@ ReactDOM.render((
         <Route path="item-display" component={ItemDisplayExamples} />
         <Route path="item-view" component={ItemViewExamples} />
         <Route path="label-value-view" component={LabelValueViewExamples} />
+        <Route path="layout" component={LayoutExamples} />
         <Route path="no-data-view" component={NoDataViewExamples} />
         <Route path="item-collection" component={ItemCollectionExamples} />
         <Route path="navigation" component={NavigationExamples} />
-        <Route path="navigation-manager" component={NavigationManagerExamples} />
-        <Route path="navigation-toolbar" component={NavigationToolbarExamples} />
       </Route>
       <Route path="/tests" component={TestLinks} />
       {ActionHeaderTestRoutes}

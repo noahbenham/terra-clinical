@@ -7,8 +7,6 @@ import AppDelegate from 'terra-app-delegate';
 import Button from 'terra-button';
 import Popup from 'terra-popup';
 import IconExpandMore from 'terra-icon/lib/icon/IconExpandMore';
-import PopupHeights from 'terra-popup/lib/_PopupHeights';
-import PopupWidths from 'terra-popup/lib/_PopupWidths';
 
 import styles from './Utility.scss';
 
@@ -16,7 +14,7 @@ const cx = classNames.bind(styles);
 
 const propTypes = {
   /**
-   * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
+   * The accessory element to be 
    * */
   accessory: PropTypes.element,
   /**
@@ -30,11 +28,11 @@ const propTypes = {
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    * */
-  contentHeight: PropTypes.oneOf(PopupHeights),
+  contentHeight: PropTypes.string,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    * */
-  contentWidth: PropTypes.oneOf(PopupWidths),
+  contentWidth: PropTypes.string,
   /**
    * Whehther or not the content of the utility popup should be displayed.
    * */

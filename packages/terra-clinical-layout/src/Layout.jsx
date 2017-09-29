@@ -4,7 +4,7 @@ import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
 import breakpoints from 'terra-responsive-element/lib/breakpoints.scss';
 
-import Panel from './_Panel';
+import LayoutSlidePanel from './_LayoutSlidePanel';
 
 const propTypes = {
   /**
@@ -201,13 +201,15 @@ class Layout extends React.Component {
 
   render() {
     const { menuIsOpen, menuIsPinned, size } = this.state;
+    const { app, content, isMenuEnabled, menu, toolbar, ...customProps } = this.props;
 
     return (
       <ContentContainer
         fill
         header={!this.isCompactLayout() && this.renderToolbar()}
+        {...customProps}
       >
-        <Panel
+        <LayoutSlidePanel
           isAnimated
           isOpen={menuIsOpen}
           onRequestClose={this.toggleMenu}
