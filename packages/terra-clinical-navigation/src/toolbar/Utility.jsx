@@ -5,7 +5,7 @@ import 'terra-base/lib/baseStyles';
 
 import AppDelegate from 'terra-app-delegate';
 import Button from 'terra-button';
-import Popup from 'terra-popup';
+import Menu from 'terra-menu';
 import IconExpandMore from 'terra-icon/lib/icon/IconExpandMore';
 
 import styles from './Utility.scss';
@@ -14,17 +14,13 @@ const cx = classNames.bind(styles);
 
 const propTypes = {
   /**
-   * The accessory element to be 
+   * The accessory element to be placed next to the title.
    * */
   accessory: PropTypes.element,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    * */
   app: AppDelegate.propType,
-  /**
-   * The content to be displayed within the utility popup.
-   * */
-  content: PropTypes.element,
   /**
    * The AppDelegate instance provided by the containing component. If present, its properties will propagate to the children components.
    * */
@@ -34,17 +30,9 @@ const propTypes = {
    * */
   contentWidth: PropTypes.string,
   /**
-   * Whehther or not the content of the utility popup should be displayed.
+   * The menu items to be displayed within the utility popup.
    * */
-  isOpen: PropTypes.bool,
-  /**
-   * The function callback to be used when managing the utility popup state..
-   * */
-  onClick: PropTypes.func,
-  /**
-   * Callback function indicating a close condition was met, should be combined with isOpen for state management.
-   * */
-  onRequestClose: PropTypes.func,
+  menuItems: PropTypes.arrayOf(PropTypes.element),
   /**
    * Current breakpoint size that the coming from the layout.
    * */
@@ -55,47 +43,69 @@ const propTypes = {
   title: PropTypes.string,
 };
 
-const Utility = ({
-  accessory,
-  app,
-  content,
-  contentHeight,
-  contentWidth,
-  isOpen,
-  onClick,
-  onRequestClose,
-  size,
-  title,
-  ...customProps
-}) => {
-  const utilityClassNames = cx([
-    'utility',
-    { 'is-compact': size === 'tiny' || size === 'small' },
-    customProps.className,
-  ]);
+const defaultProps = {
+  menuBreakpoint: 'tiny',
+};
 
-  return (
-    <div>
-      <Popup
-        isArrowDisplayed
-        contentAttachment="top right"
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        targetRef={() => document.getElementById('terra-clinical-nav-utils')}
-        contentHeight={contentHeight}
-        contentWidth={contentWidth}
-      >
-        {content}
-      </Popup>
-      <Button {...customProps} className={utilityClassNames} onClick={onClick} variant="link">
-        {!!accessory && <div className={cx('accessory')}>{accessory}</div>}
-        {!!title && size !== 'tiny' && <div className={cx('title')}>{title}</div>}
-        {<IconExpandMore id="terra-clinical-nav-utils" />}
-      </Button>
-    </div>
-  );
+class Utility extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleRequestClose = this.handleRequestClose.bind(this);
+    this.state = { menuIsOpen: false };
+  }
+
+  handleOnClick() {
+    this.setState({ menuIsOpen: true });
+  }
+
+  handleRequestClose() {
+    this.setState({ menuIsOpen: false });
+  }
+
+  render() {
+    const {
+      accessory,
+      app,
+      contentHeight,
+      contentWidth,
+      menuItems,
+      size,
+      title,
+      ...customProps
+    } = this.props;
+
+    const utilityClassNames = cx([
+      'utility',
+      { 'is-compact': size === 'tiny' || size === 'small' },
+      customProps.className,
+    ]);
+
+    return (
+      <div>
+        <Menu
+          isOpen={this.state.menuIsOpen}
+          targetRef={() => document.getElementById('terra-clinical-nav-utils')}
+          onRequestClose={this.handleRequestClose}
+          contentHeight={contentHeight}
+          contentWidth={contentWidth}
+          isArrowDisplayed
+        >
+          {menuItems}
+        </Menu>
+        <Button {...customProps} className={utilityClassNames} onClick={this.handleOnClick} variant="link">
+          {!!accessory && <div className={cx('accessory')}>{accessory}</div>}
+          {!!title && size !== 'tiny' && <div className={cx('title')}>{title}</div>}
+          {<IconExpandMore id="terra-clinical-nav-utils" />}
+        </Button>
+      </div>
+    );
+  };  
 };
 
 Utility.propTypes = propTypes;
+Utility.Item = Menu.Item;
 
 export default Utility;
