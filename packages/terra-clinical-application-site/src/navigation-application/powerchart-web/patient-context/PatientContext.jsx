@@ -88,6 +88,10 @@ class PatientContext extends React.Component {
   // }
 
   launchPatientSearch() {
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
+
     if (this.state.currentDisclosureType === 'patientSearch') {
       this.setState({
         currentDisclosureType: undefined,
@@ -96,16 +100,16 @@ class PatientContext extends React.Component {
       return;
     }
 
-    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
-      this.props.routingManager.toggleMenu();
-    }
-
     this.setState({
       currentDisclosureType: 'patientSearch',
     });
   }
 
   launchPatientList() {
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
+
     if (this.state.currentDisclosureType === 'patientList') {
       this.setState({
         currentDisclosureType: undefined,
@@ -114,26 +118,22 @@ class PatientContext extends React.Component {
       return;
     }
 
-    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
-      this.props.routingManager.toggleMenu();
-    }
-
     this.setState({
       currentDisclosureType: 'patientList',
     });
   }
 
   launchPatientSchedule() {
+    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
+      this.props.routingManager.toggleMenu();
+    }
+
     if (this.state.currentDisclosureType === 'patientSchedule') {
       this.setState({
         currentDisclosureType: undefined,
       });
 
       return;
-    }
-
-    if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
-      this.props.routingManager.toggleMenu();
     }
 
     this.setState({
@@ -193,14 +193,51 @@ class PatientContext extends React.Component {
     }
 
     if (content) {
-      let contentClassNames = 'pc-panel';
       if (['tiny', 'small'].indexOf(routingManager.size) >= 0) {
-        contentClassNames += ' pc-panel-compact';
+        let headerText;
+        if (currentDisclosureType === 'patientList') {
+          headerText = 'Patient List';
+        } else if (currentDisclosureType === 'patientSchedule') {
+          headerText = 'Patient Schedule';
+        } else if (currentDisclosureType === 'patientSearch') {
+          headerText = 'Patient Search';
+        }
+
+        return (
+          <div className="pc-modal">
+            <ContentContainer
+              fill
+              header={(
+                <div style={{ height: '34px', background: '#DEDFE0', borderBottom: '#454545', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ flex: '1 1 auto' }}>
+                    <p style={{ paddingLeft: '10px', color: '#404c57' }}>
+                      {headerText}
+                    </p>
+                  </div>
+                  <div style={{ flex: '0 0 auto' }}>
+                    <Button
+                      variant="link"
+                      text="Close"
+                      style={{ marginRight: '5px' }}
+                      onClick={() => {
+                        this.setState({
+                          currentDisclosureType: undefined,
+                        });
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+            >
+              {content}
+            </ContentContainer>
+          </div>
+        );
       }
 
       return (
-        <div className="pc-panel-overlay">
-          <div className={contentClassNames}>
+        <div className="pc-panel">
+          <div className="pc-panel-content">
             {content}
           </div>
           <div
