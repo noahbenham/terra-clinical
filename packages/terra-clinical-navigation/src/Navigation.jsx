@@ -62,7 +62,7 @@ class Navigation extends React.Component {
       customProps.className,
     ]);
 
-    const newManager = Object.assign({}, navManager, { index: navManager.index + 1});
+    const newManager = Object.assign({}, navManager, { index: navManager.index + 1 });
 
     let childContent;
     if (children) {

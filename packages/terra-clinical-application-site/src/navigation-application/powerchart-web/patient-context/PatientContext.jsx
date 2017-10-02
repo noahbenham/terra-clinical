@@ -88,6 +88,14 @@ class PatientContext extends React.Component {
   // }
 
   launchPatientSearch() {
+    if (this.state.currentDisclosureType === 'patientSearch') {
+      this.setState({
+        currentDisclosureType: undefined,
+      });
+
+      return;
+    }
+
     if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
       this.props.routingManager.toggleMenu();
     }
@@ -98,6 +106,14 @@ class PatientContext extends React.Component {
   }
 
   launchPatientList() {
+    if (this.state.currentDisclosureType === 'patientList') {
+      this.setState({
+        currentDisclosureType: undefined,
+      });
+
+      return;
+    }
+
     if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
       this.props.routingManager.toggleMenu();
     }
@@ -108,6 +124,14 @@ class PatientContext extends React.Component {
   }
 
   launchPatientSchedule() {
+    if (this.state.currentDisclosureType === 'patientSchedule') {
+      this.setState({
+        currentDisclosureType: undefined,
+      });
+
+      return;
+    }
+
     if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
       this.props.routingManager.toggleMenu();
     }
@@ -181,12 +205,17 @@ class PatientContext extends React.Component {
           </div>
           <div
             className="pc-panel-target"
-            onClick={() => {
-              this.setState({
-                currentDisclosureType: undefined,
-              });
-            }}
-          />
+          >
+            <button
+              className="pc-panel-target-button"
+              aria-label="Close Patient Selection Panel"
+              onClick={() => {
+                this.setState({
+                  currentDisclosureType: undefined,
+                });
+              }}
+            />
+          </div>
         </div>
       );
     }

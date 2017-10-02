@@ -31,10 +31,6 @@ const config = {
       text: 'Patients',
       component: ChartMenuIcon,
     }, {
-      path: '/messages',
-      text: 'Message Center',
-      component: MessagesMenuIcon,
-    }, {
       path: '/metrics',
       text: 'Metrics',
       component: AlertsMenuIcon,
