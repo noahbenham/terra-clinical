@@ -25,26 +25,31 @@
   font-size: 12px;
   flex: 0 0 auto;
   height: 28px;
-  // margin:0 2px 0 0;
-  max-width:240px;
-  min-width:135px;
+  max-width: 240px;
+  min-width: 170px;
   text-align: left !important;
   background: transparent;
-  margin-left: 15px;
 
   &:focus,
   &:hover,
   &.is-hovered {
     outline: none;
     background:#E8E9EA;
-    box-shadow:  inset 0 -4px 0 #FFF;
+    box-shadow: inset 0 -4px 0 darkgray;
   }
-}
 
-.pc-button.pc-selected,
-.pc-button:active {
-  background: linear-gradient(#E8E9EA, #FFF);
-  box-shadow: inset 0 -4px 0 #007CC3
+  &:active {
+    color: #1c1f21;
+  }
+
+  &:first-child {
+    margin-left: 15px;
+  }
+
+  &.pc-selected {
+    background: linear-gradient(#E8E9EA, #FFF);
+    box-shadow: inset 0 -4px 0 #007CC3
+  }
 }
 
 .pc-panel {
