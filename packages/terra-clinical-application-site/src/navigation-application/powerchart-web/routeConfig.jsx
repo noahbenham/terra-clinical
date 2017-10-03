@@ -12,15 +12,15 @@ import ChartReviewMenu from './patient-context/chart/review/ChartReviewMenu';
 import MessageCenter from './message-center/MessageCenter';
 
 const ChartMenuIcon = () => (
-  <Button size="large" icon={<IconClipboard />} variant="link" style={{ color: 'grey' }} />
+  <Button size="large" icon={<IconClipboard />} variant="link" style={{ color: '#fff' }} />
 );
 
 const MessagesMenuIcon = () => (
-  <Button size="large" icon={<IconComment />} variant="link" style={{ color: 'grey' }} />
+  <Button size="large" icon={<IconComment />} variant="link" style={{ color: '#fff' }} />
 );
 
 const AlertsMenuIcon = () => (
-  <Button size="large" icon={<IconNotification />} variant="link" style={{ color: 'grey' }} />
+  <Button size="large" icon={<IconNotification />} variant="link" style={{ color: '#fff' }} />
 );
 
 const config = {
