@@ -20,8 +20,9 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
           <Switch>
             <Route
               path={match.path} render={() => (
-                <div style={{ padding: '10px' }}>
+                <div>
                   <NavLink
+                    className="cm-link"
                     location={routingManager.browserLocation}
                     to={`${match.path}/review`}
                     activeStyle={{
@@ -30,9 +31,8 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
                   >
                       Review
                     </NavLink>
-                  <br />
-                  <br />
                   <NavLink
+                    className="cm-link"
                     location={routingManager.browserLocation}
                     to={`${match.path}/orders`}
                     activeStyle={{
@@ -41,9 +41,8 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
                   >
                     Orders
                   </NavLink>
-                  <br />
-                  <br />
                   <NavLink
+                    className="cm-link"
                     location={routingManager.browserLocation}
                     to={`${match.path}/documents`}
                     activeStyle={{
@@ -52,9 +51,8 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
                   >
                     Documents
                   </NavLink>
-                  <br />
-                  <br />
                   <NavLink
+                    className="cm-link"
                     location={routingManager.browserLocation}
                     to={`${match.path}/smart`}
                     activeStyle={{
