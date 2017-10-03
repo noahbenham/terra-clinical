@@ -34,8 +34,7 @@
   &:hover,
   &.is-hovered {
     outline: none;
-    background:#E8E9EA;
-    box-shadow: inset 0 -4px 0 darkgray;
+    background:linear-gradient(#E8E9EA, #FFF);
   }
 
   &:active {
