@@ -1,13 +1,11 @@
 .vertical-toolbar {
   height: 100%;
   width: 60px;
-  background-color: #1B7FCD;
+  background-image: linear-gradient(#1B7FCD,#1864A8);
   overflow: auto;
 
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
-    
-  // border-right: 1px solid grey;
 }

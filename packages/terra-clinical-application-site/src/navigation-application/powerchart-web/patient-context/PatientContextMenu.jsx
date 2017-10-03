@@ -11,6 +11,7 @@ import MenuToolbar from '../../common/menu-toolbar/MenuToolbar';
 import PatientSearch from './patient-search/PatientSearch';
 import PatientList from './patient-list/PatientList';
 import PatientSchedule from './patient-schedule/PatientSchedule';
+import './PatientContextMenu.scss';
 
 const propTypes = {
   routingManager: RoutingManagerDelegate.propType,
@@ -49,21 +50,25 @@ class PatientContextMenu extends React.Component {
           fill
         >
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'stretch', height: '100%', width: '100%' }}>
-            <div style={{ flex: '0 0 auto', position: 'relative', borderBottom: '1px solid lightgrey' }}>
+            <div style={{ flex: '0 0 auto', position: 'relative' }}>
               <Button
-                text="Patient List" icon={<IconChecklist style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
+                className="pcm-link"
+                isBlock
+                text="Patient List" icon={<IconChecklist style={{ marginRight: '10px'}} />} size="medium" variant="link" onClick={() => {
                   document.dispatchEvent(new CustomEvent('showPatientList'));
                 }}
               />
-              <br />
               <Button
-                text="Schedule" icon={<IconCalendar style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
+                className="pcm-link"
+                isBlock
+                text="Schedule" icon={<IconCalendar style={{ marginRight: '10px'}} />} size="medium" variant="link" onClick={() => {
                   document.dispatchEvent(new CustomEvent('showPatientSchedule'));
                 }}
               />
-              <br />
               <Button
-                text="Patient Search" icon={<IconSearch style={{ marginRight: '5px'}} />} size="medium" variant="link" onClick={() => {
+                className="pcm-link"
+                isBlock
+                text="Patient Search" icon={<IconSearch style={{ marginRight: '10px'}} />} size="medium" variant="link" onClick={() => {
                   document.dispatchEvent(new CustomEvent('showPatientSearch'));
                 }}
               />
