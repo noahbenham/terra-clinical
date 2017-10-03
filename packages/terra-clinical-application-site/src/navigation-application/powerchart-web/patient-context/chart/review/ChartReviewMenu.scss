@@ -1,0 +1,17 @@
+.cmr-link {
+  color: #1c1f21;
+  display: block;
+  font-size: 15px;
+  line-height: 45px;
+  text-decoration: none;
+  padding: 0 10px;
+  text-align: left;
+  &:hover {
+    background: linear-gradient(-90deg, #FFFFFF, #F1F1F2);
+    text-decoration: none;
+  }
+
+  &:focus {
+    text-decoration: none;
+  }
+}

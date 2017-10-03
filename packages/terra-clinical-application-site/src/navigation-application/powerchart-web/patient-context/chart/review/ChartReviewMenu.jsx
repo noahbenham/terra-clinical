@@ -4,7 +4,7 @@ import ContentContainer from 'terra-content-container';
 import { connect } from 'react-redux';
 import MenuToolbar from '../../../../common/menu-toolbar/MenuToolbar';
 import { loadChartReview, focusChartReviewSection } from './actions';
-// import './ChartMenu.scss';
+import './ChartReviewMenu.scss';
 
 class ChartReviewMenu extends React.Component {
   constructor(props) {
@@ -42,6 +42,7 @@ class ChartReviewMenu extends React.Component {
     (sectionSequence || []).forEach((sectionId) => {
       sectionButtons.push((
         <Button
+          className="cmr-link"
           variant="link"
           key={sections[sectionId].id}
           text={sections[sectionId].name}
@@ -49,6 +50,7 @@ class ChartReviewMenu extends React.Component {
             focusSection(sections[sectionId].id);
           }}
           style={{ display: 'block' }}
+          isBlock
         />
       ));
     });
@@ -59,7 +61,7 @@ class ChartReviewMenu extends React.Component {
           header={<MenuToolbar text="Summary" routingManager={routingManager} />}
           fill
         >
-          <div style={{ padding: '10px' }}>
+          <div>
             {sectionButtons}
           </div>
         </ContentContainer>
