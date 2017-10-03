@@ -1,7 +1,7 @@
 /* stylelint-disable selector-class-pattern */
 :local {
   .toolbar-accessory {
-    background-color: #C4CACC;
+    background-color: rgba(255,255,255, 0.4);
     border-radius: 50%;
     height: 26px;
     width: 26px;
@@ -13,6 +13,6 @@
   }
 
   .is-compact {
-    background-color: #2CACE2;
+    background-color: rgba(255,255,255, 0.4);
   }
 }

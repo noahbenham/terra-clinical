@@ -104,7 +104,6 @@ class ApplicationToolbar extends React.Component {
 
     return (
       <div>
-        {!isCompact && <div style={{ height: '10px', backgroundColor: 'rgb(36, 129, 202)' }} />}
         <div {...customProps} className={toolbarClassNames}>
           {headerButton}
           {headerBody}
