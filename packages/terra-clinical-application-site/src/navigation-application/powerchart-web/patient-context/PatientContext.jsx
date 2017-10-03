@@ -208,9 +208,9 @@ class PatientContext extends React.Component {
             <ContentContainer
               fill
               header={(
-                <div style={{ height: '34px', background: '#DEDFE0', borderBottom: '#454545', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ height: '37px', background: '#FFF', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ flex: '1 1 auto' }}>
-                    <p style={{ paddingLeft: '10px', color: '#404c57' }}>
+                    <p style={{ paddingLeft: '10px', color: '#25292c' }}>
                       {headerText}
                     </p>
                   </div>
