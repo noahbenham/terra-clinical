@@ -47,7 +47,7 @@ class PowerchartWebMenuVessel extends React.Component {
     let menuHeader;
     if (isCompactLayout) {
       menuHeader = (
-        <div style={{ height: '51px', display: 'flex', alignItems: 'stretch', background: '#E8E9EA', borderBottom: '-1px solid #BCBFC0' }}>
+        <div style={{ height: '51px', display: 'flex', alignItems: 'stretch', background: '#E8E9EA' }}>
           <div style={{ backgroundColor: '#1B7FCD', width: '60px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Image variant="rounded" src="http://is3.mzstatic.com/image/thumb/Purple128/v4/8d/8c/67/8d8c67d0-fc56-651a-5f24-1243ef885cd3/source/175x175bb.jpg" height="28px" width="28px" isFluid />
           </div>
@@ -90,7 +90,7 @@ class PowerchartWebMenuVessel extends React.Component {
           <div style={{ flex: '0 0 auto', height: '100%' }}>
             {verticalNavToolbar}
           </div>
-          <div style={{ flex: '1 1 auto', position: 'relative' }}>
+          <div style={{ flex: '1 1 auto', position: 'relative', borderLeft: '1px solid white' }}>
             {routes}
           </div>
         </div>

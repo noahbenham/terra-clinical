@@ -69,7 +69,8 @@ const McPanel = ({
   ...customProps
   }) => {
   const isTiny = size === 'tiny';
-  const compactSize = isTiny || size === 'small';
+  const isSmall = size === 'small';
+  const compactSize = isTiny || isSmall;
   const isOverlay = compactSize ? true : panelBehavior === 'overlay';
   const isOverlayOpen = isOpen && isOverlay && isToggleEnabled;
   const overlayBackground = compactSize ? 'dark' : 'clear';
@@ -86,6 +87,7 @@ const McPanel = ({
   const panelClasses = cx([
     'panel',
     { 'is-tiny': isTiny },
+    { 'is-small': isSmall },
     { 'is-animated': isAnimated },
   ]);
 
