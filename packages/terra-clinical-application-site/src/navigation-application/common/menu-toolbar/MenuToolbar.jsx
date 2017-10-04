@@ -5,7 +5,6 @@ import 'terra-base/lib/baseStyles';
 
 import IconLeft from 'terra-icon/lib/icon/IconLeft';
 import IconHouse from 'terra-icon/lib/icon/IconHouse';
-import IconMcDurp from './IconMcDurp';
 import Button from 'terra-button';
 
 import RoutingManagerDelegate from '../RoutingManagerDelegate';
@@ -23,6 +22,7 @@ const propTypes = {
 const MenuToolbar = ({ routingManager, text, ...customProps }) => {
   const toolbarClassNames = classNames([
     'terraClinical-MenuToolbar',
+    { 'is-terminal': !routingManager.goBack },
     customProps.className,
   ]);
 
@@ -35,14 +35,6 @@ const MenuToolbar = ({ routingManager, text, ...customProps }) => {
   if (routingManager.goToRoot) {
     rootButton = <Button onClick={routingManager.goToRoot} icon={<IconHouse />} variant="link" style={{ color: 'black' }} />;
   }
-  let pinButton;
-  if (routingManager.togglePin && !routingManager.menuIsPinned) {
-    pinButton = <Button onClick={routingManager.togglePin} icon={<IconMcDurp className="terraClinical-Unlock" />} variant="link" style={{ color: 'black' }} />;
-  }
-  let unpinButton;
-  if (routingManager.togglePin && routingManager.menuIsPinned) {
-    unpinButton = <Button onClick={routingManager.togglePin} icon={<IconMcDurp />} variant="link" style={{ color: 'black' }} />;
-  }
 
   const toolbarStart = (
     <div className="terraClinical-MenuToolbar-start">
@@ -52,10 +44,7 @@ const MenuToolbar = ({ routingManager, text, ...customProps }) => {
   );
 
   const toolbarEnd = (
-    <div className="terraClinical-MenuToolbar-end">
-      {pinButton}
-      {unpinButton}
-    </div>
+    <div className="terraClinical-MenuToolbar-end" />
   );
 
   return (

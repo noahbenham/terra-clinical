@@ -10,6 +10,7 @@ import breakpoints from 'terra-responsive-element/lib/breakpoints.scss';
 import { navigationConfigPropType, configHasMatchingRoute } from './RoutingConfigUtils';
 
 import McPanel from './mc-panel/McPanel';
+import MenuHeader from './menu-header/MenuHeader';
 
 const propTypes = {
   routeConfig: navigationConfigPropType,
@@ -149,8 +150,7 @@ class RoutingManager extends React.Component {
     }
 
     const isCompactLayout = this.isCompactLayout();
-
-    return React.cloneElement(menuRoutingVessel, {
+    const vessel = React.cloneElement(menuRoutingVessel, {
       app,
       routingManager: {
         size,
@@ -163,6 +163,21 @@ class RoutingManager extends React.Component {
         menuIsPinned: !isCompactLayout ? menuIsPinned : undefined,
       },
     });
+
+    return (
+      <ContentContainer
+        fill
+        header={!isCompactLayout ? (
+          <MenuHeader
+            text="Menu"
+            togglePin={!isCompactLayout ? this.togglePin : undefined}
+            isPinned={!isCompactLayout ? menuIsPinned : undefined}
+          />
+        ) : undefined}
+      >
+        {vessel}
+      </ContentContainer>
+    );
   }
 
   renderContent() {
