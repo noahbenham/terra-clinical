@@ -83,7 +83,7 @@ class ChartReview extends React.Component {
       if (this.props.focusedSection === '10') {
         if (this.props.routingManager && this.props.routingManager.toggleMenu && this.props.routingManager.menuIsOpen) {
           this.props.routingManager.toggleMenu();
-        }            
+        }
       }
     }
   }
@@ -100,7 +100,7 @@ class ChartReview extends React.Component {
           ref={(ref) => { this.sectionMapping[sections[sectionId].id] = ref; }}
         >
           <ContentContainer
-            header={<Header title={sections[sectionId].name} />}
+            header={<Header title={sections[sectionId].name} isSubheader />}
             key={sections[sectionId].id}
           >
             <div style={{ padding: '10px' }}>
@@ -115,20 +115,20 @@ class ChartReview extends React.Component {
       <ContentContainer
         fill
         header={(
-          <Header 
-            title="Review" 
+          <Header
+            title="Review"
             endContent={(
-              <Button 
-                text="Sort" 
+              <Button
+                text="Sort"
                 onClick={() => {
                   this.props.sortReview();
-                }} 
+                }}
               />
             )}
           />
         )}
       >
-        <div style={{ padding: '10px', height: '100%', overflow: 'auto', backgroundColor: 'white' }} ref={(el) => { this.root = el; }}>
+        <div style={{ height: '100%', overflow: 'auto', backgroundColor: 'white' }} ref={(el) => { this.root = el; }}>
           {content}
         </div>
       </ContentContainer>
