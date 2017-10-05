@@ -52,10 +52,10 @@ class PowerchartWebMenuVessel extends React.Component {
             <Image variant="rounded" src="http://is3.mzstatic.com/image/thumb/Purple128/v4/8d/8c/67/8d8c67d0-fc56-651a-5f24-1243ef885cd3/source/175x175bb.jpg" height="28px" width="28px" isFluid />
           </div>
           <div style={{ fontSize: '1.3rem', flex: '1 1 auto', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'center' }}>
-            <div style={{ paddingLeft: '15px' }}>
+            <div style={{ paddingLeft: '10px' }}>
               <strong>{this.props.appTitle}</strong>{this.props.appSubtitle}
             </div>
-            <div style={{ fontSize: '0.9rem', color: 'grey', paddingLeft: '15px' }}>
+            <div style={{ fontSize: '0.9rem', color: 'grey', paddingLeft: '10px' }}>
               {this.props.userInfo.name}
             </div>
           </div>
