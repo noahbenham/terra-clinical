@@ -30,18 +30,18 @@ const PrefsMenuIcon = () => (
 
 const config = {
   navigation: {
-    index: '/alerts',
+    index: '/patients',
     links: [{
-      path: '/alerts',
-      text: 'Alerts',
-      component: AlertsMenuIcon,
-    }, {
       path: '/patients',
       text: 'Chart',
       component: ChartMenuIcon,
     }, {
-      path: '/messages',
-      text: 'Messages',
+      path: '/alerts',
+      text: 'Alerts',
+      component: AlertsMenuIcon,
+    },, {
+      path: '/metrics',
+      text: 'Metrics',
       component: MessagesMenuIcon,
     }, {
       path: '/user_prefs',
@@ -61,8 +61,8 @@ const config = {
         arbitrary: 'value',
       },
     },
-    '/messages': {
-      path: '/messages',
+    '/metrics': {
+      path: '/metrics',
       component: {
         default: {
           componentClass: Root,

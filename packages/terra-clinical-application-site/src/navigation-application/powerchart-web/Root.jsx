@@ -18,18 +18,6 @@ class Root extends React.Component {
       <div style={{ height: '100%', width: '100%', position: 'absolute', backgroundColor: 'fuschia' }}>
         <Switch>
           <Route
-            path={'/messages'}
-            render={() => (
-              <div style={{ height: '100%' }}>
-                <div style={{ height: '100%', backgroundColor: 'plum', position: 'relative' }}>
-                  <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'black', transform: 'translateX(-50%)' }}>
-                    <h2>No Messages</h2>
-                  </div>
-                </div>
-              </div>
-            )}
-          />
-          <Route
             path={'/alerts'}
             render={() => (
               <div style={{ height: '100%' }}>
@@ -45,7 +33,7 @@ class Root extends React.Component {
             path={'/metrics'}
             render={() => (
               <div style={{ height: '100%' }}>
-                <div style={{ height: '100%', backgroundColor: 'lightblue', position: 'relative' }}>
+                <div style={{ height: '100%', backgroundColor: 'plum', position: 'relative' }}>
                   <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'black', transform: 'translateX(-50%)' }}>
                     <h2>No Metrics</h2>
                   </div>
