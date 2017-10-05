@@ -19,12 +19,11 @@ const LayoutToolbar = props => (
   <Header title="Application Toolbar" endContent={(props.routingManager.size === 'tiny' || props.routingManager.size === 'small') && <Button text="Toggle" onClick={() => { props.routingManager.toggleMenu(); }} />} />
 );
 
-const LayoutMenuContainer = props => (
+const LayoutMenuContainer = () => (
   <div style={{ height: '100%' }}>
     <div style={{ height: '100%', backgroundColor: 'lightblue', position: 'relative' }}>
       <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
         <h2>Menu</h2>
-        {props.routingManager.togglePin && <Button text="Pin" onClick={() => { props.routingManager.togglePin(); }} />}
       </div>
     </div>
   </div>
