@@ -86,7 +86,7 @@ const config = {
             default: {
               componentClass: ChartMenu,
               props: {
-                customProp: 'IM A CHART MENU CONFIG',
+                sections: ['summary', 'orders', 'documentation'],
               },
             },
           },

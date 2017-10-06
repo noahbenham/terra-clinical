@@ -33,7 +33,7 @@ const config = {
     index: '/patients',
     links: [{
       path: '/patients',
-      text: 'Chart',
+      text: 'Patients',
       component: ChartMenuIcon,
     }, {
       path: '/alerts',
@@ -107,7 +107,7 @@ const config = {
             default: {
               componentClass: ChartMenu,
               props: {
-                customProp: 'IM A CHART MENU CONFIG',
+                sections: ['documentation', 'summary', 'orders'],
               },
             },
           },

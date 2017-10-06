@@ -98,7 +98,7 @@ const flattenRouteConfig = (routeConfig, size, parentPaths) => {
         key: config.key || config.path,
         meta: config.meta,
         componentClass: componentConfig.componentClass,
-        componentProps: config.props,
+        componentProps: componentConfig.props,
       });
     }
 

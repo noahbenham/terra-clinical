@@ -6,7 +6,55 @@ import MenuToolbar from '../../../common/menu-toolbar/MenuToolbar';
 
 import './ChartMenu.scss';
 
-const ChartMenu = ({ match, routingManager, path, location }) => (
+const linkForSection = (routingManager, match, section) => {
+  if (section === 'summary') {
+    return (
+      <NavLink
+        key="summary"
+        className="cm-link"
+        location={routingManager.browserLocation}
+        to={`${match.path}/review`}
+        activeStyle={{
+          fontWeight: 'bold',
+        }}
+      >
+        Review
+      </NavLink>
+    );
+  } else if (section === 'orders') {
+    return (
+      <NavLink
+        key="orders"
+        className="cm-link"
+        location={routingManager.browserLocation}
+        to={`${match.path}/orders`}
+        activeStyle={{
+          fontWeight: 'bold',
+        }}
+      >
+        Orders
+      </NavLink>
+    );
+  } else if (section === 'documentation') {
+    return (
+      <NavLink
+        key="documentation"
+        className="cm-link"
+        location={routingManager.browserLocation}
+        to={`${match.path}/documents`}
+        activeStyle={{
+          fontWeight: 'bold',
+        }}
+      >
+        Documents
+      </NavLink>
+    );
+  }
+
+  return null;
+};
+
+const ChartMenu = ({ match, routingManager, path, location, sections }) => (
   <div style={{ height: '100%', width: '100%', position: 'absolute' }}>
     <ContentContainer
       header={<MenuToolbar text="Chart" routingManager={routingManager} />}
@@ -21,47 +69,7 @@ const ChartMenu = ({ match, routingManager, path, location }) => (
             <Route
               path={match.path} render={() => (
                 <div>
-                  <NavLink
-                    className="cm-link"
-                    location={routingManager.browserLocation}
-                    to={`${match.path}/review`}
-                    activeStyle={{
-                      fontWeight: 'bold',
-                    }}
-                  >
-                      Review
-                    </NavLink>
-                  <NavLink
-                    className="cm-link"
-                    location={routingManager.browserLocation}
-                    to={`${match.path}/orders`}
-                    activeStyle={{
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Orders
-                  </NavLink>
-                  <NavLink
-                    className="cm-link"
-                    location={routingManager.browserLocation}
-                    to={`${match.path}/documents`}
-                    activeStyle={{
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Documents
-                  </NavLink>
-                  <NavLink
-                    className="cm-link"
-                    location={routingManager.browserLocation}
-                    to={`${match.path}/smart`}
-                    activeStyle={{
-                      fontWeight: 'bold',
-                    }}
-                  >
-                    Smart
-                  </NavLink>
-
+                  {sections.map(section => (linkForSection(routingManager, match, section)))}
                 </div>
               )}
             />
