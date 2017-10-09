@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import classNames from 'classnames/bind';
 import Button from 'terra-button';
 import 'terra-base/lib/baseStyles';
 
 import IconPin from './_IconPin';
 
-import './MenuHeader.scss';
+import styles from './MenuHeader.scss';
+
+const cx = classNames.bind(styles);
 
 const propTypes = {
   text: PropTypes.string,
@@ -19,22 +21,22 @@ const defaultProps = {
 };
 
 const MenuHeader = ({ text, togglePin, isPinned, ...customProps }) => {
-  const headerClassNames = classNames([
-    'terraClinical-MenuHeader',
+  const headerClassNames = cx([
+    'header',
     customProps.className,
   ]);
 
   let pinButton;
   if (togglePin && !isPinned) {
-    pinButton = <Button onClick={togglePin} icon={<IconPin className="terraClinical-Unlock" />} variant="link" style={{ outline: 'none' }} />;
+    pinButton = <Button onClick={togglePin} icon={<IconPin className={cx(['icon', 'unlock'])} />} variant="link" className={cx('header-button')} />;
   }
   let unpinButton;
   if (togglePin && isPinned) {
-    unpinButton = <Button onClick={togglePin} icon={<IconPin />} variant="link" style={{ outline: 'none' }} />;
+    unpinButton = <Button onClick={togglePin} icon={<IconPin className={cx('icon')} />} variant="link" className={cx('header-button')} />;
   }
 
   const toolbarEnd = (
-    <div className="terraClinical-MenuHeader-end">
+    <div className={cx('header-content-end')}>
       {pinButton}
       {unpinButton}
     </div>
@@ -42,8 +44,8 @@ const MenuHeader = ({ text, togglePin, isPinned, ...customProps }) => {
 
   return (
     <div {...customProps} className={headerClassNames}>
-      <div className="terraClinical-MenuHeader-body">
-        <h3 style={{ margin: '0' }}>{text}</h3>
+      <div className={cx('header-content-body')}>
+        <h3 className={cx('header-display')}>{text}</h3>
       </div>
       {toolbarEnd}
     </div>
