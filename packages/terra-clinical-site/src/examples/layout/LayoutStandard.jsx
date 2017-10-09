@@ -8,9 +8,9 @@ import ToolbarExample from './ToolbarExample';
 const layout = () => (
   <Layout
     content={<ContentExample />}
-    isMenuEnabled
     menu={<MenuExample />}
     toolbar={<ToolbarExample />}
+    enableMenu
     style={{ height: '400px', width: '100%' }}
   />
 );

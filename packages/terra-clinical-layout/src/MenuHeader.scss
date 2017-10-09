@@ -1,0 +1,42 @@
+@import '~terra-mixins';
+
+.terraClinical-MenuHeader {
+  height: 29px;
+  background: #E8E9EA;
+  color: #4E5558;
+
+  font-size: 12px;
+  border-bottom: 1px solid #EDEEEE;
+  border-top: 1px solid #BCBFC0;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+}
+
+.terraClinical-MenuHeader-end {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  max-height: 100%;
+  min-width: 0;
+  position: relative;
+}
+
+.terraClinical-MenuHeader-body {
+  padding: 5px;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  max-height: 100%;
+  min-width: 0;
+  position: relative;
+  padding-left: 10px;
+}
+
+.terraClinical-Unlock {
+  transform: rotate(90deg);
+  transform-origin: left top 50%;
+}
