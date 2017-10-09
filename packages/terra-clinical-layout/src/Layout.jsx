@@ -16,7 +16,7 @@ const propTypes = {
    */
   app: AppDelegate.propType,
   /**
-   * ELement to be placed within the toolbar section of the layout.
+   * Element to be placed within the toolbar section of the layout.
    */
   toolbar: PropTypes.element,
   /**
