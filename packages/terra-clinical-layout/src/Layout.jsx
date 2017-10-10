@@ -38,9 +38,9 @@ const defaultProps = {
   enableMenu: false,
 };
 
-const compactSizes = ['tiny', 'small'];
+const COMPACT_SIZES = ['tiny', 'small'];
 const isSizeCompact = size => (
-  compactSizes.indexOf(size) >= 0
+  COMPACT_SIZES.indexOf(size) >= 0
 );
 
 class Layout extends React.Component {
@@ -158,13 +158,13 @@ class Layout extends React.Component {
     return (
       <ContentContainer
         fill
-        header={!isCompactLayout ? (
+        header={!isCompactLayout && (
           <MenuHeader
             text="Menu"
             togglePin={!isCompactLayout ? this.togglePin : undefined}
             isPinned={!isCompactLayout ? menuIsPinned : undefined}
           />
-        ) : undefined}
+        )}
       >
         {vessel}
       </ContentContainer>

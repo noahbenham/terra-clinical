@@ -1,17 +1,15 @@
 /* stylelint-disable selector-class-pattern */
 :local {
   .header {
-    height: 29px;
-    background: #E8E9EA;
-    color: #4E5558;
-
-    font-size: 12px;
-    border-bottom: 1px solid #EDEEEE;
-    border-top: 1px solid #BCBFC0;
-
-    display: flex;
-    justify-content: space-between;
     align-items: center;
+    background: var(--layout-menu-header-background-color, #E8E9EA);
+    border-bottom: var(--layout-menu-header-border-bottom, 1px solid #EDEEEE);
+    border-bottom: var(--layout-menu-header-border-top, 1px solid #BCBFC0);
+    color: var(--layout-menu-header-color, #4E5558);
+    display: flex;
+    font-size: var(--layout-menu-header-font-size, 12px);
+    height: var(--layout-menu-header-height, 29px);
+    justify-content: space-between;
     position: relative;
     width: 100%;
   }
@@ -26,20 +24,20 @@
   }
 
   .header-content-body {
-    padding: 5px;
     display: flex;
     flex: 1 1 auto;
     justify-content: flex-start;
     max-height: 100%;
     min-width: 0;
-    position: relative;
+    padding: 5px;
     padding-left: 10px;
+    position: relative;
   }
 
   .icon {
     height: 14px;
-    width: 14px;
     margin-top: 3px;
+    width: 14px;
   }
 
   .unlock {
