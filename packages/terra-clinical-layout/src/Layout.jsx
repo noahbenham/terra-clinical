@@ -68,13 +68,11 @@ class Layout extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.enableMenu !== this.props.enableMenu) {
-      this.setState({
-        menuIsEnabled: nextProps.enableMenu,
-        menuIsOpen: nextProps.enableMenu && this.state.menuIsOpen,
-        menuIsPinned: nextProps.enableMenu && this.state.menuIsPinned,
-      });
-    }
+    this.setState({
+      menuIsEnabled: nextProps.enableMenu,
+      menuIsOpen: nextProps.enableMenu && this.state.menuIsOpen,
+      menuIsPinned: nextProps.enableMenu && this.state.menuIsPinned,
+    });
   }
 
   componentWillUnmount() {
@@ -139,34 +137,38 @@ class Layout extends React.Component {
   renderMenu() {
     const { app, menu } = this.props;
     const { size, menuIsOpen, menuIsPinned } = this.state;
+    const isCompactLayout = this.isCompactLayout();
 
-    if (!menu) {
-      return null;
+    let menuHeader;
+    if (!isCompactLayout) {
+      menuHeader = (
+        <MenuHeader
+          text="Menu"
+          togglePin={!isCompactLayout && this.togglePin}
+          isPinned={!isCompactLayout && menuIsPinned}
+        />
+      );
     }
 
-    const isCompactLayout = this.isCompactLayout();
-    const vessel = React.cloneElement(menu, {
-      app,
-      layoutConfig: {
-        size,
-        isCompactLayout,
-        toggleMenu: this.toggleMenu,
-        menuIsOpen,
-      },
-    });
+    let menuContent;
+    if (menu) {
+      menuContent = React.cloneElement(menu, {
+        app,
+        layoutConfig: {
+          size,
+          isCompactLayout,
+          toggleMenu: this.toggleMenu,
+          menuIsOpen,
+        },
+      });
+    }
 
     return (
       <ContentContainer
         fill
-        header={!isCompactLayout && (
-          <MenuHeader
-            text="Menu"
-            togglePin={!isCompactLayout ? this.togglePin : undefined}
-            isPinned={!isCompactLayout ? menuIsPinned : undefined}
-          />
-        )}
+        header={menuHeader}
       >
-        {vessel}
+        {menuContent}
       </ContentContainer>
     );
   }
