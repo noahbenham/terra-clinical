@@ -33,6 +33,7 @@ const propTypes = {
    * Function callback to trigger when the mouse enters.
    */
   onHoverOn: PropTypes.func,
+  text: PropTypes.string,
 };
 
 const defaultProps = {
@@ -48,11 +49,17 @@ class HoverTarget extends React.Component {
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
     this.handleMouseLeave = this.handleMouseLeave.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.updateSize = this.updateSize.bind(this);
+
     this.listenersAdded = false;
     this.isMouseEnterActive = false;
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.updateSize);
+
+    this.updateSize();
+
     if (this.hoverNode) {
       this.listenersAdded = this.updateListenersOnNode(this.hoverNode);
     }
@@ -65,6 +72,8 @@ class HoverTarget extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('resize', this.updateSize);
+
     if (this.hoverNode) {
       this.listenersAdded = this.removeListenersFromNode(this.hoverNode);
     }
@@ -81,6 +90,10 @@ class HoverTarget extends React.Component {
       return this.removeListenersFromNode(node);
     }
     return false;
+  }
+
+  updateSize() {
+    this.textElement.style.width = `${this.textContainerElement.offsetHeight}px`;
   }
 
   addListenersToNode(node) {
@@ -129,6 +142,7 @@ class HoverTarget extends React.Component {
       onClick,
       onHoverOff,
       onHoverOn,
+      text,
       ...customProps
     } = this.props;
 
@@ -145,8 +159,12 @@ class HoverTarget extends React.Component {
           {children}
         </div>
         <div className={cx('hover-section')} onClick={this.handleOnClick}>
-          <IconChevronRight className={cx('hover-icon')} />
-          <h3 className={cx('hover-text')}>Menu</h3>
+          <div className={cx('hover-section-icon')}>
+            <IconChevronRight className={cx('hover-icon')} />
+          </div>
+          <div ref={(element) => { this.textContainerElement = element; }} className={cx('hover-section-text')}>
+            <h3 ref={(element) => { this.textElement = element; }} className={cx('hover-text')}>{text}</h3>
+          </div>
         </div>
       </div>
     );

@@ -10,7 +10,7 @@
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     overflow-y: auto;
-    width: calc(100% - var(--mc-panel-hover-width, 30px));
+    width: calc(100% - var(--hover-target-width, 30px));
   }
 
   .hover-section {
@@ -19,18 +19,42 @@
     float: right;
     overflow: hidden;
     padding-top: 20px;
-    width: var(--mc-panel-hover-width, 30px);
+    width: var(--hover-target-width, 30px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hover-section-icon {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .hover-section-text {
+    flex: 1 1 auto;
+    width: 100%;
   }
 
   .hover-text {
-    color: #4e5558;
+    color: var(--hover-target-color, #4e5558);
     float: left;
-    font-size: 0.857rem;
+    font-size: var(--hover-target-font-size, 0.857rem);
     left: 50%;
     margin: 0;
     position: relative;
     transform: rotate(-90deg) translate3d(-100%, -50%, 0);
     transform-origin: left top 0;
+
+    height: 100%;
+    text-align: end;
+    vertical-align: middle;
+    padding: 0 5px 0 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: normal;
+    word-wrap: normal;
   }
 
   .hover-icon {

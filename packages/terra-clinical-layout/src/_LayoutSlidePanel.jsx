@@ -50,6 +50,7 @@ const propTypes = {
    * Current breakpoint size.
    */
   toggleMenu: PropTypes.func,
+  menuText: PropTypes.string,
 };
 
 const defaultProps = {
@@ -70,6 +71,7 @@ const LayoutSlidePanel = ({
   panelContent,
   size,
   toggleMenu,
+  menuText,
   ...customProps
   }) => {
   const isTiny = size === 'tiny';
@@ -105,6 +107,7 @@ const LayoutSlidePanel = ({
           isHoverEnabled={!compactSize && isOverlay}
           onHoverOff={() => { if (isOpen) { toggleMenu(); } }}
           onHoverOn={() => { if (!isOpen) { toggleMenu(); } }}
+          text={menuText}
         >
           {panelContent}
         </HoverTarget>

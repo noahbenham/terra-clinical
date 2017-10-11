@@ -1,4 +1,15 @@
 /* stylelint-disable selector-class-pattern */
+@import '~terra-mixins';
+
+@include cerner-mock-theme {
+  --layout-menu-header-background-color: plum;
+  --layout-menu-header-border-bottom: 1px solid #EDEEEE;
+  --layout-menu-header-border-top: 1px solid #BCBFC0;
+  --layout-menu-header-color: blue;
+  --layout-menu-header-font-size: 14px;
+  --layout-menu-header-height: 40px;
+}
+
 :local {
   .header {
     align-items: center;
@@ -47,6 +58,11 @@
 
   .header-display {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: normal;
+    word-wrap: normal;
   }
 
   .header-button {

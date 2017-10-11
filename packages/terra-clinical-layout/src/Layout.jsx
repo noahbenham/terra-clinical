@@ -28,7 +28,11 @@ const propTypes = {
    */
   menu: PropTypes.element,
   /**
-   * Whether or not menu toggling is enabled. If not enabled, menu content will not be visible, and toggle
+   * String used to decorate menu controls
+   */
+  menuText: PropTypes.string,
+  /**
+   * Flag to enable menu functionality. If not enabled, menu content will not be visible, and toggle
    * functionality will be hidden.
    */
   enableMenu: PropTypes.bool,
@@ -83,8 +87,8 @@ class Layout extends React.Component {
     const newSize = getBreakpointSize();
 
     if (this.state.size !== newSize) {
+      const newMenuIsOpen = this.props.enableMenu && this.state.menuIsOpen;
       const newMenuIsPinned = this.props.enableMenu && !isSizeCompact(newSize) && this.state.menuIsPinned;
-      const newMenuIsOpen = this.props.enableMenu && this.state.menuIsOpen && newMenuIsPinned;
 
       this.setState({
         size: newSize,
@@ -135,7 +139,7 @@ class Layout extends React.Component {
   }
 
   renderMenu() {
-    const { app, menu } = this.props;
+    const { app, menu, menuText } = this.props;
     const { size, menuIsOpen, menuIsPinned } = this.state;
     const isCompactLayout = this.isCompactLayout();
 
@@ -143,7 +147,7 @@ class Layout extends React.Component {
     if (!isCompactLayout) {
       menuHeader = (
         <MenuHeader
-          text="Menu"
+          text={menuText}
           togglePin={!isCompactLayout && this.togglePin}
           isPinned={!isCompactLayout && menuIsPinned}
         />
@@ -204,6 +208,7 @@ class Layout extends React.Component {
   }
 
   render() {
+    const { menuText } = this.props;
     const { menuIsOpen, menuIsPinned, menuIsEnabled, size } = this.state;
 
     return (
@@ -222,6 +227,7 @@ class Layout extends React.Component {
           size={size}
           toggleMenu={this.toggleMenu}
           isToggleEnabled={menuIsEnabled}
+          menuText={menuText}
         />
       </ContentContainer>
     );
