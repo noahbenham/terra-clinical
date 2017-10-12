@@ -11,6 +11,7 @@ const layout = () => (
     menu={<MenuExample />}
     toolbar={<ToolbarExample />}
     enableMenu
+    menuText="Menu"
     style={{ height: '400px', width: '100%' }}
   />
 );
