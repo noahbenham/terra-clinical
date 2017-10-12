@@ -2,13 +2,23 @@ import React from 'react';
 import AppDelegate from 'terra-app-delegate';
 
 import Layout from '../../src/Layout';
-import { getBreakpointSize } from '../../src/utilities';
+import { getBreakpointSize, getCustomProps } from '../../src/utilities';
 
 jest.mock('../../src/utilities');
 
 describe('Layout', () => {
   it('should render a Layout without optional props', () => {
     getBreakpointSize.mockImplementation(() => 'tiny');
+
+    const result = shallow((
+      <Layout />
+    ));
+    expect(result).toMatchSnapshot();
+  });
+
+  it('should render a Layout with custom props', () => {
+    getBreakpointSize.mockImplementation(() => 'tiny');
+    getCustomProps.mockReturnValueOnce({ 'data-test-attr': 'test-val' });
 
     const result = shallow((
       <Layout />

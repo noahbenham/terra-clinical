@@ -87,8 +87,8 @@ class Layout extends React.Component {
     const newSize = getBreakpointSize();
 
     if (this.state.size !== newSize) {
-      const newMenuIsOpen = this.props.enableMenu && this.state.menuIsOpen;
       const newMenuIsPinned = this.props.enableMenu && !isSizeCompact(newSize) && this.state.menuIsPinned;
+      const newMenuIsOpen = this.props.enableMenu && this.state.menuIsOpen && newMenuIsPinned;
 
       this.setState({
         size: newSize,
@@ -238,4 +238,3 @@ Layout.propTypes = propTypes;
 Layout.defaultProps = defaultProps;
 
 export default Layout;
-export { getBreakpointSize, getCustomProps };

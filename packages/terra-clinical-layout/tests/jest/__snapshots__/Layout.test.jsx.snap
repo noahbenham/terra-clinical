@@ -19,7 +19,7 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
       Test Toolbar
     </div>
   }>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
@@ -53,7 +53,6 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            text="Menu"
             togglePin={[Function]} />
         }>
         <div
@@ -100,7 +99,7 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
       Test Toolbar
     </div>
   }>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
@@ -134,7 +133,6 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            text="Menu"
             togglePin={[Function]} />
         }>
         <div
@@ -181,7 +179,7 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
       Test Toolbar
     </div>
   }>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
@@ -215,7 +213,6 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            text="Menu"
             togglePin={[Function]} />
         }>
         <div
@@ -245,7 +242,7 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
 <ContentContainer
   fill={true}
   header={false}>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
@@ -320,7 +317,7 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
 <ContentContainer
   fill={true}
   header={false}>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
@@ -412,7 +409,7 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
       Test Toolbar
     </div>
   }>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
@@ -446,7 +443,6 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            text="Menu"
             togglePin={[Function]} />
         }>
         <div
@@ -493,7 +489,7 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
       Test Toolbar
     </div>
   }>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
@@ -527,7 +523,6 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            text="Menu"
             togglePin={[Function]} />
         }>
         <div
@@ -574,7 +569,7 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
       Test Toolbar
     </div>
   }>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
@@ -608,7 +603,6 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            text="Menu"
             togglePin={[Function]} />
         }>
         <div
@@ -638,7 +632,7 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
 <ContentContainer
   fill={true}
   header={false}>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
@@ -713,7 +707,7 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
 <ContentContainer
   fill={true}
   header={false}>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
@@ -784,11 +778,32 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
 </ContentContainer>
 `;
 
+exports[`Layout should render a Layout with custom props 1`] = `
+<ContentContainer
+  data-test-attr="test-val"
+  fill={true}
+  header={false}>
+  <MenuSlidePanel
+    isAnimated={true}
+    isOpen={false}
+    isToggleEnabled={false}
+    mainContent={null}
+    onRequestClose={[Function]}
+    panelBehavior="overlay"
+    panelContent={
+      <ContentContainer
+        fill={true} />
+    }
+    size="tiny"
+    toggleMenu={[Function]} />
+</ContentContainer>
+`;
+
 exports[`Layout should render a Layout without optional props 1`] = `
 <ContentContainer
   fill={true}
   header={false}>
-  <LayoutSlidePanel
+  <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
