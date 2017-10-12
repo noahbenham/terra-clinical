@@ -4,8 +4,8 @@ import classNames from 'classnames/bind';
 import 'terra-base/lib/baseStyles';
 import Overlay from 'terra-overlay';
 
-import HoverTarget from './_HoverTarget';
-import styles from './LayoutSlidePanel.scss';
+import HoverMenu from './_HoverMenu';
+import styles from './MenuSlidePanel.scss';
 
 const cx = classNames.bind(styles);
 
@@ -50,6 +50,9 @@ const propTypes = {
    * Current breakpoint size.
    */
   toggleMenu: PropTypes.func,
+  /**
+   * String to display on menu hover target.
+   */
   menuText: PropTypes.string,
 };
 
@@ -60,7 +63,7 @@ const defaultProps = {
   panelBehavior: 'overlay',
 };
 
-const LayoutSlidePanel = ({
+const MenuSlidePanel = ({
   background,
   isAnimated,
   isOpen,
@@ -82,7 +85,7 @@ const LayoutSlidePanel = ({
   const overlayBackground = compactSize ? 'dark' : 'clear';
 
   const slidePanelClassNames = cx([
-    'layout-slide-panel',
+    'menu-slide-panel',
     { 'is-open': isOpen && isToggleEnabled },
     { 'use-widescreen-style': !compactSize && isToggleEnabled },
     { 'is-overlay': isOverlay },
@@ -101,7 +104,7 @@ const LayoutSlidePanel = ({
   if (isToggleEnabled) {
     panel = (
       <div className={panelClasses} aria-hidden={!isOpen ? 'true' : null}>
-        <HoverTarget
+        <HoverMenu
           onClick={toggleMenu}
           isMenuEnabled={!isOpen}
           isHoverEnabled={!compactSize && isOverlay}
@@ -110,7 +113,7 @@ const LayoutSlidePanel = ({
           text={menuText}
         >
           {panelContent}
-        </HoverTarget>
+        </HoverMenu>
       </div>
     );
   }
@@ -130,7 +133,7 @@ const LayoutSlidePanel = ({
   );
 };
 
-LayoutSlidePanel.propTypes = propTypes;
-LayoutSlidePanel.defaultProps = defaultProps;
+MenuSlidePanel.propTypes = propTypes;
+MenuSlidePanel.defaultProps = defaultProps;
 
-export default LayoutSlidePanel;
+export default MenuSlidePanel;

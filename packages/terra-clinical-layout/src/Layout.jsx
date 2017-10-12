@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
 
-import LayoutSlidePanel from './_LayoutSlidePanel';
+import MenuSlidePanel from './_MenuSlidePanel';
 import MenuHeader from './_MenuHeader';
 import {
   getBreakpointSize,
@@ -217,7 +217,7 @@ class Layout extends React.Component {
         header={!this.isCompactLayout() && this.renderToolbar()}
         {...getCustomProps(this.props, propTypes)}
       >
-        <LayoutSlidePanel
+        <MenuSlidePanel
           isAnimated
           isOpen={menuIsOpen}
           onRequestClose={this.toggleMenu}

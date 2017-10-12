@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import IconChevronRight from 'terra-icon/lib/icon/IconChevronRight';
 
 import 'terra-base/lib/baseStyles';
-import styles from './HoverTarget.scss';
+import styles from './HoverMenu.scss';
 
 const cx = classNames.bind(styles);
 
@@ -33,6 +33,9 @@ const propTypes = {
    * Function callback to trigger when the mouse enters.
    */
   onHoverOn: PropTypes.func,
+  /**
+   * String text to display.
+   */
   text: PropTypes.string,
 };
 
@@ -42,7 +45,7 @@ const defaultProps = {
   isMenuEnabled: false,
 };
 
-class HoverTarget extends React.Component {
+class HoverMenu extends React.Component {
   constructor(props) {
     super(props);
     this.setHoverNode = this.setHoverNode.bind(this);
@@ -93,6 +96,8 @@ class HoverTarget extends React.Component {
   }
 
   updateSize() {
+    // Due to the nature of the rotated text and therefore inverted coordinates, we need to update
+    // the width of the text element to match the available height of the container.
     this.textElement.style.width = `${this.textContainerElement.offsetHeight}px`;
   }
 
@@ -147,7 +152,7 @@ class HoverTarget extends React.Component {
     } = this.props;
 
     const hoverClasses = cx([
-      'hover-target',
+      'hover-menu',
       { 'is-hover-disabled': !isHoverEnabled },
       { 'is-menu-disabled': !isMenuEnabled },
       customProps.className,
@@ -171,7 +176,7 @@ class HoverTarget extends React.Component {
   }
 }
 
-HoverTarget.propTypes = propTypes;
-HoverTarget.defaultProps = defaultProps;
+HoverMenu.propTypes = propTypes;
+HoverMenu.defaultProps = defaultProps;
 
-export default HoverTarget;
+export default HoverMenu;

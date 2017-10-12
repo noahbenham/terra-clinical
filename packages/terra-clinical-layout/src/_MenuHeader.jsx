@@ -11,8 +11,17 @@ import styles from './MenuHeader.scss';
 const cx = classNames.bind(styles);
 
 const propTypes = {
+  /**
+   * The String display for the header.
+   */
   text: PropTypes.string,
+  /**
+   * The Function that, if given, will be executed when the 'pin' button is clicked.
+   */
   togglePin: PropTypes.func,
+  /**
+   * The Boolean flag indicating whether or not the menu is currently pinned.
+   */
   isPinned: PropTypes.bool,
 };
 
@@ -45,7 +54,7 @@ const MenuHeader = ({ text, togglePin, isPinned, ...customProps }) => {
   return (
     <div {...customProps} className={headerClassNames}>
       <div className={cx('header-content-body')}>
-        <h3 className={cx('header-display')}>{text}</h3>
+        <h3 className={cx('header-text')}>{text}</h3>
       </div>
       {toolbarEnd}
     </div>
