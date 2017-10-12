@@ -80,11 +80,12 @@
   // Squish
   .is-open.is-squish {
     > .main {
-      width: calc(100% - #{var(--layout-menu-panel-panel-width, 260px)});
+      width: calc(100% - #{var(--layout-menu-panel-panel-width, 260px)} - 1px);
     }
 
     > .panel {
       border-right: 1px solid var(--layout-menu-panel-panel-border-color, #d3d4d5);
+      width: calc(1px + #{var(--layout-menu-panel-panel-width, 260px)});
       transition: none;
     }
   }
