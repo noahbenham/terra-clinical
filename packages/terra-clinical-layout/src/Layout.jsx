@@ -16,9 +16,9 @@ const propTypes = {
    */
   app: AppDelegate.propType,
   /**
-   * Element to be placed within the toolbar section of the layout.
+   * Element to be placed within the header section of the layout.
    */
-  toolbar: PropTypes.element,
+  header: PropTypes.element,
   /**
    * Element to be placed within the main content section of the layout.
    */
@@ -55,7 +55,7 @@ class Layout extends React.Component {
     this.togglePin = this.togglePin.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.isCompactLayout = this.isCompactLayout.bind(this);
-    this.renderToolbar = this.renderToolbar.bind(this);
+    this.renderHeader = this.renderHeader.bind(this);
     this.renderMenu = this.renderMenu.bind(this);
     this.renderContent = this.renderContent.bind(this);
 
@@ -116,18 +116,18 @@ class Layout extends React.Component {
     return isSizeCompact(this.state.size);
   }
 
-  renderToolbar() {
-    const { app, toolbar } = this.props;
+  renderHeader() {
+    const { app, header } = this.props;
     const { size, menuIsOpen, menuIsEnabled } = this.state;
 
-    if (!toolbar) {
+    if (!header) {
       return null;
     }
 
     const isCompactLayout = this.isCompactLayout();
     const shouldDisplayMenuToggle = isCompactLayout && menuIsEnabled;
 
-    return React.cloneElement(toolbar, {
+    return React.cloneElement(header, {
       app,
       layoutConfig: {
         size,
@@ -190,7 +190,7 @@ class Layout extends React.Component {
     return (
       <ContentContainer
         fill
-        header={isCompactLayout && this.renderToolbar()}
+        header={isCompactLayout && this.renderHeader()}
       >
         {(
           React.cloneElement(content, {
@@ -214,7 +214,7 @@ class Layout extends React.Component {
     return (
       <ContentContainer
         fill
-        header={!this.isCompactLayout() && this.renderToolbar()}
+        header={!this.isCompactLayout() && this.renderHeader()}
         {...getCustomProps(this.props, propTypes)}
       >
         <MenuSlidePanel

@@ -9,7 +9,7 @@ const layout = () => (
   <Layout
     content={<ContentExample />}
     menu={<MenuExample />}
-    toolbar={<ToolbarExample />}
+    header={<ToolbarExample />}
     enableMenu
     menuText="Menu"
     style={{ height: '400px', width: '100%' }}

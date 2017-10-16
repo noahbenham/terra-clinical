@@ -18,7 +18,6 @@ import LabelValueViewExamples from './examples/label-value-view/Index';
 import NoDataViewExamples from './examples/no-data-view/Index';
 import ItemCollectionExamples from './examples/item-collection/Index';
 import DemoApplicationExamples from './examples/demo-application/Index';
-import NavigationExamples from './examples/navigation/Index';
 import LayoutExamples from './examples/layout/Index';
 
 // Test
@@ -63,7 +62,6 @@ ReactDOM.render((
         <Route path="layout" component={LayoutExamples} />
         <Route path="no-data-view" component={NoDataViewExamples} />
         <Route path="item-collection" component={ItemCollectionExamples} />
-        <Route path="navigation" component={NavigationExamples} />
       </Route>
       <Route path="/tests" component={TestLinks} />
       {ActionHeaderTestRoutes}

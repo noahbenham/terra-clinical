@@ -1,15 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 @import '~terra-mixins';
 
-@include cerner-mock-theme {
-  --layout-menu-panel-background-color: lightblue;
-  --layout-menu-panel-panel-shadow-color: blue;
-  --layout-menu-panel-hover-target-width: 50px;
-  --layout-menu-panel-dismiss-target-width: 60px;
-  --layout-menu-panel-panel-width: 60%;
-  --layout-menu-panel-small-panel-width: 50%;
-}
-
 :local {
   .menu-slide-panel {
     height: 100%;
@@ -41,7 +32,7 @@
     background-color: var(--layout-menu-panel-background-color, #fff);
     position: absolute;
     transform: translate3d(-100%, 0, 0);
-    width: var(--layout-menu-panel-panel-width, 260px);
+    width: var(--layout-menu-panel-desktop-panel-width, 260px);
     z-index: 5000;
   }
 
@@ -52,11 +43,11 @@
 
   .use-widescreen-style.is-overlay {
     > .main {
-      width: calc(100% - var(--layout-menu-panel-hover-target-width, 30px));// allow for hover bar
+      width: calc(100% - var(--layout-menu-hover-target-width, 30px));// allow for hover bar
     }
 
     > .panel {
-      transform: translate3d(calc(-100% + var(--layout-menu-panel-hover-target-width, 30px)), 0, 0);
+      transform: translate3d(calc(-100% + var(--layout-menu-hover-target-width, 30px)), 0, 0);
     }
 
     &.is-open > .panel {
@@ -65,11 +56,11 @@
   }
 
   .panel.is-tiny {
-    width: calc(100% - var(--layout-menu-panel-dismiss-target-width, 50px));
+    width: var(--layout-menu-panel-phone-panel-width, calc(100% - 50px));
   }
 
   .panel.is-small {
-    width: var(--layout-menu-panel-small-panel-width, 320px);
+    width: var(--layout-menu-panel-tablet-panel-width, 320px);
   }
 
   // Overlay
@@ -80,12 +71,12 @@
   // Squish
   .is-open.is-squish {
     > .main {
-      width: calc(100% - #{var(--layout-menu-panel-panel-width, 260px)} - 1px);
+      width: calc(100% - #{var(--layout-menu-panel-desktop-panel-width, 260px)} - 1px);
     }
 
     > .panel {
       border-right: 1px solid var(--layout-menu-panel-panel-border-color, #d3d4d5);
-      width: calc(1px + #{var(--layout-menu-panel-panel-width, 260px)});
+      width: calc(1px + #{var(--layout-menu-panel-desktop-panel-width, 260px)});
       transition: none;
     }
   }

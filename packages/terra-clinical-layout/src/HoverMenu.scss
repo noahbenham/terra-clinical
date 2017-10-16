@@ -10,16 +10,16 @@
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: -ms-autohiding-scrollbar;
     overflow-y: auto;
-    width: calc(100% - var(--hover-menu-bar-width, 30px));
+    width: calc(100% - var(--layout-menu-hover-target-width, 30px));
   }
 
   .hover-section {
-    background: var(--hover-menu-bar-background-color, #e8e9ea);
-    border-right: var(--hover-menu-bar-border-right, 1px solid #bcbfc0);
+    background: var(--layout-menu-hover-target-background-color, #e8e9ea);
+    border-right: var(--layout-menu-hover-target-border-right, 1px solid #bcbfc0);
     float: right;
     overflow: hidden;
     padding-top: 20px;
-    width: var(--hover-menu-bar-width, 30px);
+    width: var(--layout-menu-hover-target-width, 30px);
 
     display: flex;
     flex-direction: column;
@@ -37,9 +37,9 @@
   }
 
   .hover-text {
-    color: var(--hover-menu-bar-text-color, #4e5558);
+    color: var(--layout-menu-hover-target-text-color, #4e5558);
     float: left;
-    font-size: var(--hover-menu-bar-font-size, 0.857rem);
+    font-size: var(--layout-menu-hover-target-font-size, 0.857rem);
     left: 50%;
     margin: 0;
     position: relative;
@@ -58,7 +58,7 @@
   }
 
   .hover-icon {
-    color: var(--hover-menu-bar-icon-color, #909496);
+    color: var(--layout-menu-hover-target-icon-color, #909496);
     font-size: 0.571rem;
     left: 50%;
     position: relative;

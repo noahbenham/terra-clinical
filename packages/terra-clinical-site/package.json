@@ -42,6 +42,7 @@
     "terra-clinical-item-display": "^1.4.0",
     "terra-clinical-item-view": "^1.4.0",
     "terra-clinical-label-value-view": "^1.3.0",
+    "terra-clinical-layout": "^0.x",
     "terra-clinical-no-data-view": "^1.3.0",
     "terra-content-container": "^1.0.0",
     "terra-i18n": "^1.0.0",
