@@ -9,7 +9,7 @@ const layout = () => (
   <Layout
     header={<ToolbarExample />}
     menu={<MenuExample />}
-    menuText="Menu"
+    menuText="Menu Text That Is Incredibly Long To Demonstrate Truncation"
     style={{ height: '400px', width: '100%' }}
   >
     <ContentExample />

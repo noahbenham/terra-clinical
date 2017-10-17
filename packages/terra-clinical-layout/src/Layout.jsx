@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppDelegate from 'terra-app-delegate';
 import ContentContainer from 'terra-content-container';
 
 import MenuSlidePanel from './_MenuSlidePanel';
@@ -12,17 +11,9 @@ import {
 
 const propTypes = {
   /**
-   * The AppDelegate instance provided by the containing component.
-   */
-  app: AppDelegate.propType,
-  /**
    * Element to be placed within the header section of the layout.
    */
   header: PropTypes.element,
-  /**
-   * Element to be placed within the main content section of the layout.
-   */
-  content: PropTypes.element,
   /**
    * Element to be placed within the menu section of the layout.
    */
@@ -32,14 +23,9 @@ const propTypes = {
    */
   menuText: PropTypes.string,
   /**
-   * Flag to enable menu functionality. If not enabled, menu content will not be visible, and toggle
-   * functionality will be hidden.
+   * Element to be placed within the main content section of the layout.
    */
-  enableMenu: PropTypes.bool,
-};
-
-const defaultProps = {
-  enableMenu: false,
+  children: PropTypes.element,
 };
 
 const COMPACT_SIZES = ['tiny', 'small'];
@@ -62,7 +48,6 @@ class Layout extends React.Component {
     this.state = {
       menuIsOpen: false,
       menuIsPinned: false,
-      menuIsEnabled: props.enableMenu,
       size: getBreakpointSize(),
     };
   }
@@ -73,9 +58,8 @@ class Layout extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      menuIsEnabled: nextProps.enableMenu,
-      menuIsOpen: nextProps.enableMenu && this.state.menuIsOpen,
-      menuIsPinned: nextProps.enableMenu && this.state.menuIsPinned,
+      menuIsOpen: !!nextProps.menu && this.state.menuIsOpen,
+      menuIsPinned: !!nextProps.menu && this.state.menuIsPinned,
     });
   }
 
@@ -87,8 +71,8 @@ class Layout extends React.Component {
     const newSize = getBreakpointSize();
 
     if (this.state.size !== newSize) {
-      const newMenuIsPinned = this.props.enableMenu && !isSizeCompact(newSize) && this.state.menuIsPinned;
-      const newMenuIsOpen = this.props.enableMenu && this.state.menuIsOpen && newMenuIsPinned;
+      const newMenuIsPinned = !!this.props.menu && !isSizeCompact(newSize) && this.state.menuIsPinned;
+      const newMenuIsOpen = !!this.props.menu && this.state.menuIsOpen && newMenuIsPinned;
 
       this.setState({
         size: newSize,
@@ -117,18 +101,17 @@ class Layout extends React.Component {
   }
 
   renderHeader() {
-    const { app, header } = this.props;
-    const { size, menuIsOpen, menuIsEnabled } = this.state;
+    const { header, menu } = this.props;
+    const { size, menuIsOpen } = this.state;
 
     if (!header) {
       return null;
     }
 
     const isCompactLayout = this.isCompactLayout();
-    const shouldDisplayMenuToggle = isCompactLayout && menuIsEnabled;
+    const shouldDisplayMenuToggle = isCompactLayout && !!menu;
 
     return React.cloneElement(header, {
-      app,
       layoutConfig: {
         size,
         isCompactLayout,
@@ -139,7 +122,7 @@ class Layout extends React.Component {
   }
 
   renderMenu() {
-    const { app, menu, menuText } = this.props;
+    const { menu, menuText } = this.props;
     const { size, menuIsOpen, menuIsPinned } = this.state;
     const isCompactLayout = this.isCompactLayout();
 
@@ -157,7 +140,6 @@ class Layout extends React.Component {
     let menuContent;
     if (menu) {
       menuContent = React.cloneElement(menu, {
-        app,
         layoutConfig: {
           size,
           isCompactLayout,
@@ -178,10 +160,10 @@ class Layout extends React.Component {
   }
 
   renderContent() {
-    const { app, content } = this.props;
+    const { children } = this.props;
     const { size, menuIsOpen } = this.state;
 
-    if (!content) {
+    if (!children) {
       return null;
     }
 
@@ -193,8 +175,7 @@ class Layout extends React.Component {
         header={isCompactLayout && this.renderHeader()}
       >
         {(
-          React.cloneElement(content, {
-            app,
+          React.cloneElement(children, {
             layoutConfig: {
               size,
               isCompactLayout,
@@ -208,8 +189,8 @@ class Layout extends React.Component {
   }
 
   render() {
-    const { menuText } = this.props;
-    const { menuIsOpen, menuIsPinned, menuIsEnabled, size } = this.state;
+    const { menu, menuText } = this.props;
+    const { menuIsOpen, menuIsPinned, size } = this.state;
 
     return (
       <ContentContainer
@@ -226,7 +207,7 @@ class Layout extends React.Component {
           mainContent={this.renderContent()}
           size={size}
           toggleMenu={this.toggleMenu}
-          isToggleEnabled={menuIsEnabled}
+          isToggleEnabled={!!menu}
           menuText={menuText}
         />
       </ContentContainer>
@@ -235,6 +216,5 @@ class Layout extends React.Component {
 }
 
 Layout.propTypes = propTypes;
-Layout.defaultProps = defaultProps;
 
 export default Layout;

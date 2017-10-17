@@ -42,12 +42,14 @@
   }
 
   .use-widescreen-style.is-overlay {
+    $hover-target-width: var(--layout-menu-hover-target-width, 30px);
+
     > .main {
-      width: calc(100% - var(--layout-menu-hover-target-width, 30px));// allow for hover bar
+      width: calc(100% - #{$hover-target-width});// allow for hover bar
     }
 
     > .panel {
-      transform: translate3d(calc(-100% + var(--layout-menu-hover-target-width, 30px)), 0, 0);
+      transform: translateX(-100%) translateX($hover-target-width);
     }
 
     &.is-open > .panel {

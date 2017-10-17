@@ -11,6 +11,8 @@ import LayoutSrc from '!raw-loader!terra-clinical-layout/src/Layout.jsx';
 
 // Example Files
 import LayoutStandard from './LayoutStandard';
+import LayoutMenuDisabled from './LayoutMenuDisabled';
+import LayoutLongText from './LayoutLongText';
 
 const NavigationExamples = () => (
   <div>
@@ -19,6 +21,11 @@ const NavigationExamples = () => (
     <PropsTable id="props-layout" src={LayoutSrc} />
     <h2 id="layout-standard">Layout Standard</h2>
     <LayoutStandard />
+    <h2 id="layout-menu-disabled">Menu Disabled</h2>
+    <LayoutMenuDisabled />
+    <h2 id="layout-long-text">Long Menu Text</h2>
+    <LayoutLongText />
+
   </div>
 );
 
