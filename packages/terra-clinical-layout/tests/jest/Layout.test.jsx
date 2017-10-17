@@ -1,5 +1,4 @@
 import React from 'react';
-import AppDelegate from 'terra-app-delegate';
 
 import Layout from '../../src/Layout';
 import { getBreakpointSize, getCustomProps } from '../../src/utilities';
@@ -29,13 +28,10 @@ describe('Layout', () => {
   describe('Menu Disabled', () => {
     const layout = (
       <Layout
-        app={AppDelegate.create({
-          disclose: () => {},
-        })}
-        toolbar={<div>Test Toolbar</div>}
-        menu={<div>Test Menu</div>}
-        content={<div>Test Content</div>}
-      />
+        header={<div>Test Header</div>}
+      >
+        <div>Test Content</div>
+      </Layout>
     );
 
     it('should render a Layout when tiny', () => {
@@ -77,14 +73,11 @@ describe('Layout', () => {
   describe('Menu Enabled', () => {
     const layout = (
       <Layout
-        app={AppDelegate.create({
-          disclose: () => {},
-        })}
-        toolbar={<div>Test Toolbar</div>}
+        header={<div>Test Header</div>}
         menu={<div>Test Menu</div>}
-        content={<div>Test Content</div>}
-        enableMenu
-      />
+      >
+        <div>Test Content</div>
+      </Layout>
     );
 
     it('should render a Layout when tiny', () => {

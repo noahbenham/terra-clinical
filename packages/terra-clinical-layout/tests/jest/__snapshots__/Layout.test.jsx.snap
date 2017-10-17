@@ -1,13 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
 <ContentContainer
   fill={true}
   header={
     <div
-      app={
-        AppDelegateInstance {
-          "disclose": [Function],
-        }
-      }
       layoutConfig={
         Object {
           "isCompactLayout": false,
@@ -15,10 +12,12 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
           "size": "huge",
           "toggleMenu": false,
         }
-      }>
-      Test Toolbar
+      }
+    >
+      Test Header
     </div>
-  }>
+  }
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -26,13 +25,9 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
     mainContent={
       <ContentContainer
         fill={true}
-        header={false}>
+        header={false}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -40,7 +35,8 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
               "size": "huge",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -53,28 +49,14 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            togglePin={[Function]} />
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "huge",
-              "toggleMenu": [Function],
-            }
-          }>
-          Test Menu
-        </div>
-      </ContentContainer>
+            togglePin={[Function]}
+          />
+        }
+      />
     }
     size="huge"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
@@ -83,11 +65,6 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
   fill={true}
   header={
     <div
-      app={
-        AppDelegateInstance {
-          "disclose": [Function],
-        }
-      }
       layoutConfig={
         Object {
           "isCompactLayout": false,
@@ -95,10 +72,12 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
           "size": "large",
           "toggleMenu": false,
         }
-      }>
-      Test Toolbar
+      }
+    >
+      Test Header
     </div>
-  }>
+  }
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -106,13 +85,9 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
     mainContent={
       <ContentContainer
         fill={true}
-        header={false}>
+        header={false}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -120,7 +95,8 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
               "size": "large",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -133,28 +109,14 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            togglePin={[Function]} />
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "large",
-              "toggleMenu": [Function],
-            }
-          }>
-          Test Menu
-        </div>
-      </ContentContainer>
+            togglePin={[Function]}
+          />
+        }
+      />
     }
     size="large"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
@@ -163,11 +125,6 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
   fill={true}
   header={
     <div
-      app={
-        AppDelegateInstance {
-          "disclose": [Function],
-        }
-      }
       layoutConfig={
         Object {
           "isCompactLayout": false,
@@ -175,10 +132,12 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
           "size": "medium",
           "toggleMenu": false,
         }
-      }>
-      Test Toolbar
+      }
+    >
+      Test Header
     </div>
-  }>
+  }
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -186,13 +145,9 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
     mainContent={
       <ContentContainer
         fill={true}
-        header={false}>
+        header={false}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -200,7 +155,8 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
               "size": "medium",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -213,35 +169,22 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            togglePin={[Function]} />
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "medium",
-              "toggleMenu": [Function],
-            }
-          }>
-          Test Menu
-        </div>
-      </ContentContainer>
+            togglePin={[Function]}
+          />
+        }
+      />
     }
     size="medium"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
 exports[`Layout Menu Disabled should render a Layout when small 1`] = `
 <ContentContainer
   fill={true}
-  header={false}>
+  header={false}
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -251,11 +194,6 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
         fill={true}
         header={
           <div
-            app={
-              AppDelegateInstance {
-                "disclose": [Function],
-              }
-            }
             layoutConfig={
               Object {
                 "isCompactLayout": true,
@@ -263,16 +201,13 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
                 "size": "small",
                 "toggleMenu": false,
               }
-            }>
-            Test Toolbar
-          </div>
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
             }
-          }
+          >
+            Test Header
+          </div>
+        }
+      >
+        <div
           layoutConfig={
             Object {
               "isCompactLayout": true,
@@ -280,7 +215,8 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
               "size": "small",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -289,34 +225,20 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
-        fill={true}>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
-          layoutConfig={
-            Object {
-              "isCompactLayout": true,
-              "menuIsOpen": false,
-              "size": "small",
-              "toggleMenu": [Function],
-            }
-          }>
-          Test Menu
-        </div>
-      </ContentContainer>
+        fill={true}
+      />
     }
     size="small"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
 exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
 <ContentContainer
   fill={true}
-  header={false}>
+  header={false}
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -326,11 +248,6 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
         fill={true}
         header={
           <div
-            app={
-              AppDelegateInstance {
-                "disclose": [Function],
-              }
-            }
             layoutConfig={
               Object {
                 "isCompactLayout": true,
@@ -338,16 +255,13 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
                 "size": "tiny",
                 "toggleMenu": false,
               }
-            }>
-            Test Toolbar
-          </div>
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
             }
-          }
+          >
+            Test Header
+          </div>
+        }
+      >
+        <div
           layoutConfig={
             Object {
               "isCompactLayout": true,
@@ -355,7 +269,8 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
               "size": "tiny",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -364,27 +279,12 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
-        fill={true}>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
-          layoutConfig={
-            Object {
-              "isCompactLayout": true,
-              "menuIsOpen": false,
-              "size": "tiny",
-              "toggleMenu": [Function],
-            }
-          }>
-          Test Menu
-        </div>
-      </ContentContainer>
+        fill={true}
+      />
     }
     size="tiny"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
@@ -393,11 +293,6 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
   fill={true}
   header={
     <div
-      app={
-        AppDelegateInstance {
-          "disclose": [Function],
-        }
-      }
       layoutConfig={
         Object {
           "isCompactLayout": false,
@@ -405,10 +300,12 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
           "size": "huge",
           "toggleMenu": false,
         }
-      }>
-      Test Toolbar
+      }
+    >
+      Test Header
     </div>
-  }>
+  }
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -416,13 +313,9 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
     mainContent={
       <ContentContainer
         fill={true}
-        header={false}>
+        header={false}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -430,7 +323,8 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
               "size": "huge",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -443,14 +337,11 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            togglePin={[Function]} />
-        }>
+            togglePin={[Function]}
+          />
+        }
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -458,13 +349,15 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
               "size": "huge",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Menu
         </div>
       </ContentContainer>
     }
     size="huge"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
@@ -473,11 +366,6 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
   fill={true}
   header={
     <div
-      app={
-        AppDelegateInstance {
-          "disclose": [Function],
-        }
-      }
       layoutConfig={
         Object {
           "isCompactLayout": false,
@@ -485,10 +373,12 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
           "size": "large",
           "toggleMenu": false,
         }
-      }>
-      Test Toolbar
+      }
+    >
+      Test Header
     </div>
-  }>
+  }
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -496,13 +386,9 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
     mainContent={
       <ContentContainer
         fill={true}
-        header={false}>
+        header={false}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -510,7 +396,8 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
               "size": "large",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -523,14 +410,11 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            togglePin={[Function]} />
-        }>
+            togglePin={[Function]}
+          />
+        }
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -538,13 +422,15 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
               "size": "large",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Menu
         </div>
       </ContentContainer>
     }
     size="large"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
@@ -553,11 +439,6 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
   fill={true}
   header={
     <div
-      app={
-        AppDelegateInstance {
-          "disclose": [Function],
-        }
-      }
       layoutConfig={
         Object {
           "isCompactLayout": false,
@@ -565,10 +446,12 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
           "size": "medium",
           "toggleMenu": false,
         }
-      }>
-      Test Toolbar
+      }
+    >
+      Test Header
     </div>
-  }>
+  }
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -576,13 +459,9 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
     mainContent={
       <ContentContainer
         fill={true}
-        header={false}>
+        header={false}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -590,7 +469,8 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
               "size": "medium",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -603,14 +483,11 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
         header={
           <MenuHeader
             isPinned={false}
-            togglePin={[Function]} />
-        }>
+            togglePin={[Function]}
+          />
+        }
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": false,
@@ -618,20 +495,23 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
               "size": "medium",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Menu
         </div>
       </ContentContainer>
     }
     size="medium"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
 exports[`Layout Menu Enabled should render a Layout when small 1`] = `
 <ContentContainer
   fill={true}
-  header={false}>
+  header={false}
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -641,11 +521,6 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
         fill={true}
         header={
           <div
-            app={
-              AppDelegateInstance {
-                "disclose": [Function],
-              }
-            }
             layoutConfig={
               Object {
                 "isCompactLayout": true,
@@ -653,16 +528,13 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
                 "size": "small",
                 "toggleMenu": [Function],
               }
-            }>
-            Test Toolbar
-          </div>
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
             }
-          }
+          >
+            Test Header
+          </div>
+        }
+      >
+        <div
           layoutConfig={
             Object {
               "isCompactLayout": true,
@@ -670,7 +542,8 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
               "size": "small",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -679,13 +552,9 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
-        fill={true}>
+        fill={true}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": true,
@@ -693,20 +562,23 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
               "size": "small",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Menu
         </div>
       </ContentContainer>
     }
     size="small"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
 exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
 <ContentContainer
   fill={true}
-  header={false}>
+  header={false}
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -716,11 +588,6 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
         fill={true}
         header={
           <div
-            app={
-              AppDelegateInstance {
-                "disclose": [Function],
-              }
-            }
             layoutConfig={
               Object {
                 "isCompactLayout": true,
@@ -728,16 +595,13 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
                 "size": "tiny",
                 "toggleMenu": [Function],
               }
-            }>
-            Test Toolbar
-          </div>
-        }>
-        <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
             }
-          }
+          >
+            Test Header
+          </div>
+        }
+      >
+        <div
           layoutConfig={
             Object {
               "isCompactLayout": true,
@@ -745,7 +609,8 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
               "size": "tiny",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Content
         </div>
       </ContentContainer>
@@ -754,13 +619,9 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
-        fill={true}>
+        fill={true}
+      >
         <div
-          app={
-            AppDelegateInstance {
-              "disclose": [Function],
-            }
-          }
           layoutConfig={
             Object {
               "isCompactLayout": true,
@@ -768,13 +629,15 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
               "size": "tiny",
               "toggleMenu": [Function],
             }
-          }>
+          }
+        >
           Test Menu
         </div>
       </ContentContainer>
     }
     size="tiny"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
@@ -782,7 +645,8 @@ exports[`Layout should render a Layout with custom props 1`] = `
 <ContentContainer
   data-test-attr="test-val"
   fill={true}
-  header={false}>
+  header={false}
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -792,17 +656,20 @@ exports[`Layout should render a Layout with custom props 1`] = `
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
-        fill={true} />
+        fill={true}
+      />
     }
     size="tiny"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
 
 exports[`Layout should render a Layout without optional props 1`] = `
 <ContentContainer
   fill={true}
-  header={false}>
+  header={false}
+>
   <MenuSlidePanel
     isAnimated={true}
     isOpen={false}
@@ -812,9 +679,11 @@ exports[`Layout should render a Layout without optional props 1`] = `
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
-        fill={true} />
+        fill={true}
+      />
     }
     size="tiny"
-    toggleMenu={[Function]} />
+    toggleMenu={[Function]}
+  />
 </ContentContainer>
 `;
