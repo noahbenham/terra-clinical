@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import IconChevronRight from 'terra-icon/lib/icon/IconChevronRight';
 import 'terra-base/lib/baseStyles';
 
-import styles from './Menu.scss';
+import styles from './HoverTarget.scss';
 
 const cx = classNames.bind(styles);
 
@@ -14,13 +14,13 @@ const propTypes = {
    */
   children: PropTypes.node,
   /**
-   * Flag to enable the menu hover target.
+   * Flag to enable the hover functionality.
    */
   isHoverEnabled: PropTypes.bool,
   /**
    * Flag to menu .
    */
-  isEnabled: PropTypes.bool,
+  isOpen: PropTypes.bool,
   /**
    * Function callback to trigger when the hover section is clicked on mobile.
    */
@@ -45,7 +45,7 @@ const defaultProps = {
   isEnabled: false,
 };
 
-class HoverMenu extends React.Component {
+class HoverTarget extends React.Component {
   constructor(props) {
     super(props);
     this.setHoverNode = this.setHoverNode.bind(this);
@@ -143,7 +143,7 @@ class HoverMenu extends React.Component {
     const {
       children,
       isHoverEnabled,
-      isEnabled,
+      isOpen,
       onClick,
       onHoverOff,
       onHoverOn,
@@ -154,7 +154,7 @@ class HoverMenu extends React.Component {
     const hoverClasses = cx([
       'hover-menu',
       { 'is-hover-disabled': !isHoverEnabled },
-      { 'is-menu-disabled': !isEnabled },
+      { 'is-hover-tab-hidden': isOpen },
       customProps.className,
     ]);
 
@@ -176,7 +176,7 @@ class HoverMenu extends React.Component {
   }
 }
 
-HoverMenu.propTypes = propTypes;
-HoverMenu.defaultProps = defaultProps;
+HoverTarget.propTypes = propTypes;
+HoverTarget.defaultProps = defaultProps;
 
-export default HoverMenu;
+export default HoverTarget;

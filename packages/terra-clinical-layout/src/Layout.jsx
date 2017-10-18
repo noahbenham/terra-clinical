@@ -199,15 +199,14 @@ class Layout extends React.Component {
         {...getCustomProps(this.props, propTypes)}
       >
         <LayoutSlidePanel
-          isAnimated
-          isOpen={menuIsOpen}
-          onRequestClose={this.toggleMenu}
-          panelBehavior={menuIsPinned ? 'squish' : 'overlay'}
           panelContent={this.renderMenu()}
+          panelBehavior={menuIsPinned ? 'squish' : 'overlay'}
           size={size}
-          toggleMenu={this.toggleMenu}
+          onToggle={this.toggleMenu}
+          toggleText={menuText}
+          isOpen={menuIsOpen}
           isToggleEnabled={!!menu}
-          menuText={menuText}
+          isAnimated
         >
           {this.renderContent()}
         </LayoutSlidePanel>

@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import 'terra-base/lib/baseStyles';
 import Overlay from 'terra-overlay';
 import 'terra-base/lib/baseStyles';
 
-import Menu from './_Menu';
+import HoverTarget from './_HoverTarget';
 import styles from './LayoutSlidePanel.scss';
 
 const cx = classNames.bind(styles);
@@ -20,17 +19,13 @@ const propTypes = {
    */
   isOpen: PropTypes.bool,
   /**
-   * Whether or not the panel transitions should be animated.
+   * Whether or not panel toggling is enabled.
    */
   isToggleEnabled: PropTypes.bool,
     /**
-   * The component to display in the main content area.
+   * The element to display in the main content area.
    */
   children: PropTypes.element,
-  /**
-   * Callback when the overlay close functionality is triggered.
-   */
-  onRequestClose: PropTypes.func,
   /**
    * The style of panel presentation. One of `overlay`, `squish`.
    */
@@ -44,13 +39,13 @@ const propTypes = {
    */
   size: PropTypes.string.isRequired,
   /**
-   * Current breakpoint size.
+   * The function called when panel state changes are desired.
    */
-  toggleMenu: PropTypes.func,
+  onToggle: PropTypes.func,
   /**
    * String to display on menu hover target.
    */
-  menuText: PropTypes.string,
+  toggleText: PropTypes.string,
 };
 
 const defaultProps = {
@@ -65,12 +60,11 @@ const LayoutSlidePanel = ({
   isOpen,
   isToggleEnabled,
   children,
-  onRequestClose,
   panelBehavior,
   panelContent,
   size,
-  toggleMenu,
-  menuText,
+  onToggle,
+  toggleText,
   ...customProps
   }) => {
   const isTiny = size === 'tiny';
@@ -83,9 +77,9 @@ const LayoutSlidePanel = ({
   const slidePanelClassNames = cx([
     'layout-slide-panel',
     { 'is-open': isOpen && isToggleEnabled },
-    { 'use-widescreen-style': !compactSize && isToggleEnabled },
     { 'is-overlay': isOverlay },
     { 'is-squish': !isOverlay },
+    { 'hover-toggle-enabled': !compactSize && isToggleEnabled },
     customProps.className,
   ]);
 
@@ -100,16 +94,16 @@ const LayoutSlidePanel = ({
   if (isToggleEnabled) {
     panel = (
       <div className={panelClasses} aria-hidden={!isOpen ? 'true' : null}>
-        <Menu
-          onClick={toggleMenu}
-          isEnabled={!isOpen}
+        <HoverTarget
+          text={toggleText}
+          isOpen={isOpen}
           isHoverEnabled={!compactSize && isOverlay}
-          onHoverOff={() => { if (isOpen) { toggleMenu(); } }}
-          onHoverOn={() => { if (!isOpen) { toggleMenu(); } }}
-          text={menuText}
+          onHoverOff={() => { if (isOpen) { onToggle(); } }}
+          onHoverOn={() => { if (!isOpen) { onToggle(); } }}
+          onClick={onToggle}
         >
           {panelContent}
-        </Menu>
+        </HoverTarget>
       </div>
     );
   }
@@ -120,8 +114,8 @@ const LayoutSlidePanel = ({
       className={slidePanelClassNames}
     >
       {panel}
-      <div className={cx('main')}>
-        <Overlay isRelativeToContainer onRequestClose={onRequestClose} isOpen={isOverlayOpen} backgroundStyle={overlayBackground} />
+      <div className={cx('content')}>
+        <Overlay isRelativeToContainer onRequestClose={onToggle} isOpen={isOverlayOpen} backgroundStyle={overlayBackground} />
         {children}
       </div>
     </div>
