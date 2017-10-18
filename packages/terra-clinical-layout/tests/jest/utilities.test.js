@@ -1,5 +1,5 @@
-import { getCustomProps } from '../../src/utilities';
 import PropTypes from 'prop-types';
+import { getCustomProps } from '../../src/utilities';
 
 describe('utilities', () => {
   describe('getCustomProps', () => {

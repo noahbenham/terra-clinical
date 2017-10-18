@@ -14,15 +14,19 @@
   }
 
   .hover-section {
+    align-items: stretch;
     background: var(--layout-menu-hover-target-background-color, #e8e9ea);
+    border: 0;
     border-right: var(--layout-menu-hover-target-border-right, 1px solid #bcbfc0);
+    display: flex;
+    flex-direction: column;
     float: right;
     overflow: hidden;
     width: var(--layout-menu-hover-target-width, 30px);
 
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    &:active {
+      background: var(--layout-menu-hover-target-background-color, #C6C7C9);
+    }
   }
 
   .hover-section-icon {
@@ -62,6 +66,7 @@
     left: 50%;
     position: relative;
     transform: translate3d(-50%, -50%, 0);
+    width: 100%;
   }
 
   .hover-menu,
