@@ -15,6 +15,7 @@
 
   .hover-section {
     background: var(--layout-menu-hover-target-background-color, #e8e9ea);
+    border: 0;
     border-right: var(--layout-menu-hover-target-border-right, 1px solid #bcbfc0);
     float: right;
     overflow: hidden;
