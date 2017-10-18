@@ -3,17 +3,14 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import 'terra-base/lib/baseStyles';
 import Overlay from 'terra-overlay';
+import 'terra-base/lib/baseStyles';
 
-import HoverMenu from './_HoverMenu';
-import styles from './MenuSlidePanel.scss';
+import Menu from './_Menu';
+import styles from './LayoutSlidePanel.scss';
 
 const cx = classNames.bind(styles);
 
 const propTypes = {
-  /**
-   * The component to display in the main content area.
-   */
-  background: PropTypes.node,
   /**
    * Whether or not the panel transitions should be animated.
    */
@@ -63,8 +60,7 @@ const defaultProps = {
   panelBehavior: 'overlay',
 };
 
-const MenuSlidePanel = ({
-  background,
+const LayoutSlidePanel = ({
   isAnimated,
   isOpen,
   isToggleEnabled,
@@ -85,7 +81,7 @@ const MenuSlidePanel = ({
   const overlayBackground = compactSize ? 'dark' : 'clear';
 
   const slidePanelClassNames = cx([
-    'menu-slide-panel',
+    'layout-slide-panel',
     { 'is-open': isOpen && isToggleEnabled },
     { 'use-widescreen-style': !compactSize && isToggleEnabled },
     { 'is-overlay': isOverlay },
@@ -104,16 +100,16 @@ const MenuSlidePanel = ({
   if (isToggleEnabled) {
     panel = (
       <div className={panelClasses} aria-hidden={!isOpen ? 'true' : null}>
-        <HoverMenu
+        <Menu
           onClick={toggleMenu}
-          isMenuEnabled={!isOpen}
+          isEnabled={!isOpen}
           isHoverEnabled={!compactSize && isOverlay}
           onHoverOff={() => { if (isOpen) { toggleMenu(); } }}
           onHoverOn={() => { if (!isOpen) { toggleMenu(); } }}
           text={menuText}
         >
           {panelContent}
-        </HoverMenu>
+        </Menu>
       </div>
     );
   }
@@ -124,7 +120,6 @@ const MenuSlidePanel = ({
       className={slidePanelClassNames}
     >
       {panel}
-      {background}
       <div className={cx('main')}>
         <Overlay isRelativeToContainer onRequestClose={onRequestClose} isOpen={isOverlayOpen} backgroundStyle={overlayBackground} />
         {mainContent}
@@ -133,7 +128,7 @@ const MenuSlidePanel = ({
   );
 };
 
-MenuSlidePanel.propTypes = propTypes;
-MenuSlidePanel.defaultProps = defaultProps;
+LayoutSlidePanel.propTypes = propTypes;
+LayoutSlidePanel.defaultProps = defaultProps;
 
-export default MenuSlidePanel;
+export default LayoutSlidePanel;

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import IconChevronRight from 'terra-icon/lib/icon/IconChevronRight';
-
 import 'terra-base/lib/baseStyles';
-import styles from './HoverMenu.scss';
+
+import styles from './Menu.scss';
 
 const cx = classNames.bind(styles);
 
@@ -14,13 +14,13 @@ const propTypes = {
    */
   children: PropTypes.node,
   /**
-   * Callback when the overlay close functionality is triggered.
+   * Flag to enable the menu hover target.
    */
   isHoverEnabled: PropTypes.bool,
   /**
-   * The component to display in the panel content area.
+   * Flag to menu .
    */
-  isMenuEnabled: PropTypes.bool,
+  isEnabled: PropTypes.bool,
   /**
    * Function callback to trigger when the hover section is clicked on mobile.
    */
@@ -42,7 +42,7 @@ const propTypes = {
 const defaultProps = {
   children: [],
   isHoverEnabled: false,
-  isMenuEnabled: false,
+  isEnabled: false,
 };
 
 class HoverMenu extends React.Component {
@@ -143,7 +143,7 @@ class HoverMenu extends React.Component {
     const {
       children,
       isHoverEnabled,
-      isMenuEnabled,
+      isEnabled,
       onClick,
       onHoverOff,
       onHoverOn,
@@ -154,7 +154,7 @@ class HoverMenu extends React.Component {
     const hoverClasses = cx([
       'hover-menu',
       { 'is-hover-disabled': !isHoverEnabled },
-      { 'is-menu-disabled': !isMenuEnabled },
+      { 'is-menu-disabled': !isEnabled },
       customProps.className,
     ]);
 
