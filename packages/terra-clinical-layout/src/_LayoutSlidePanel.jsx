@@ -26,7 +26,7 @@ const propTypes = {
     /**
    * The component to display in the main content area.
    */
-  mainContent: PropTypes.node,
+  children: PropTypes.element,
   /**
    * Callback when the overlay close functionality is triggered.
    */
@@ -64,7 +64,7 @@ const LayoutSlidePanel = ({
   isAnimated,
   isOpen,
   isToggleEnabled,
-  mainContent,
+  children,
   onRequestClose,
   panelBehavior,
   panelContent,
@@ -122,7 +122,7 @@ const LayoutSlidePanel = ({
       {panel}
       <div className={cx('main')}>
         <Overlay isRelativeToContainer onRequestClose={onRequestClose} isOpen={isOverlayOpen} backgroundStyle={overlayBackground} />
-        {mainContent}
+        {children}
       </div>
     </div>
   );

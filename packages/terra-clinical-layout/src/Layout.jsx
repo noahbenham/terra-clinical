@@ -204,12 +204,13 @@ class Layout extends React.Component {
           onRequestClose={this.toggleMenu}
           panelBehavior={menuIsPinned ? 'squish' : 'overlay'}
           panelContent={this.renderMenu()}
-          mainContent={this.renderContent()}
           size={size}
           toggleMenu={this.toggleMenu}
           isToggleEnabled={!!menu}
           menuText={menuText}
-        />
+        >
+          {this.renderContent()}
+        </LayoutSlidePanel>
       </ContentContainer>
     );
   }
