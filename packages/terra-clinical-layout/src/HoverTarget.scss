@@ -1,6 +1,6 @@
 /* stylelint-disable selector-class-pattern */
 :local {
-  .hover-menu {
+  .hover-target {
     overflow: hidden;
     width: 100%;
   }
@@ -69,7 +69,7 @@
     width: 100%;
   }
 
-  .hover-menu,
+  .hover-target,
   .content-section,
   .hover-section {
     height: 100%;
@@ -77,7 +77,7 @@
   }
 
   .is-hover-disabled,
-  .is-menu-disabled {
+  .is-hover-tab-hidden {
     > .content-section {
       width: 100%;
     }
