@@ -1,6 +1,8 @@
 /* stylelint-disable selector-class-pattern */
 
 :local {
+  $hover-target-width: var(--layout-slide-hover-target-width, 30px);
+
   .layout-slide-panel {
     height: 100%;
     overflow: hidden;
@@ -41,8 +43,6 @@
   }
 
   .hover-toggle-enabled.is-overlay {
-    $hover-target-width: var(--layout-slide-hover-target-width, 30px);
-
     > .content {
       width: calc(100% - #{$hover-target-width});// allow for hover bar
     }
@@ -53,6 +53,16 @@
 
     &.is-open > .panel {
       transform: translate3d(0, 0, 0);
+    }
+  }
+
+  // Due to conflicts with the RTL plugin and the use of the variable, we need to explicitly
+  // specify the rtl-based transform value.
+  [dir=rtl] {
+    .hover-toggle-enabled.is-overlay {
+      > .panel {
+        transform: translateX(100%) translateX(calc(-1 * #{$hover-target-width}));
+      }
     }
   }
 
