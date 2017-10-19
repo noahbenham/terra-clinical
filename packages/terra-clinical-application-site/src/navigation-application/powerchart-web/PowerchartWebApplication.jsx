@@ -13,7 +13,7 @@ import AppDelegate from 'terra-app-delegate';
 
 import RoutingManager from '../common/RoutingManager';
 import routeConfig from './routeConfig';
-// import routeConfig from './routeConfig-updated';
+import alternateConfig from './routeConfig-updated';
 import PowerchartWebNavigation from './PowerchartWebNavigation';
 
 import chartReviewReducers from './patient-context/chart/review/reducers';
@@ -31,6 +31,7 @@ const store = createStore(
   )),
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
+
 
 chartReviewSagas.map(saga => (sagaMiddleware.run(saga)));
 

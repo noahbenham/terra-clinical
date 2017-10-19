@@ -16,7 +16,7 @@ const propTypes = {
 };
 
 const LayoutToolbar = props => (
-  <div style={{ height: '60px', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative', display: 'flex' }}>
+  <div style={{ height: '60px', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative', display: 'flex', backgroundColor: 'white' }}>
     <div style={{ position: 'absolute', top: '15px', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
       <h2 style={{ display: 'inline', margin: 0 }}>Header</h2>
       {(props.routingManager.size === 'tiny' || props.routingManager.size === 'small') && props.routingManager.toggleMenu && <button style={{ display: 'inline', marginLeft: '5px', height: '25px', border: '1px dashed lightgrey' }} onClick={props.routingManager.toggleMenu}>Toggle Menu</button>}
@@ -25,7 +25,7 @@ const LayoutToolbar = props => (
 );
 
 const LayoutMenuContainer = () => (
-  <div style={{ height: 'calc(100% - 10px)', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative' }}>
+  <div style={{ height: 'calc(100% - 10px)', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative', backgroundColor: 'white' }}>
     <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
       <h2 style={{ margin: '0' }}>Menu</h2>
     </div>
