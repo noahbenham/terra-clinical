@@ -49,7 +49,7 @@ class PowerchartWebMenuVessel extends React.Component {
       menuHeader = (
         <div style={{ height: '51px', display: 'flex', alignItems: 'stretch', background: '#E8E9EA' }}>
           <div style={{ backgroundColor: '#1B7FCD', width: '60px', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Image variant="rounded" src="http://is3.mzstatic.com/image/thumb/Purple128/v4/8d/8c/67/8d8c67d0-fc56-651a-5f24-1243ef885cd3/source/175x175bb.jpg" height="28px" width="28px" isFluid />
+            <Image variant="rounded" src="https://yt3.ggpht.com/wm5LCci89chQvQ0oeDl-QxDMwCFTu6v0YiSEytYinTbG-hU_iLP9Jqc6cC57SbNLGxIlOfAhsrfE7BG_HO8=s900-nd-c-c0xffffffff-rj-k-no" height="28px" width="28px" isFluid />
           </div>
           <div style={{ fontSize: '1.3rem', flex: '1 1 auto', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'center' }}>
             <div style={{ paddingLeft: '10px' }}>

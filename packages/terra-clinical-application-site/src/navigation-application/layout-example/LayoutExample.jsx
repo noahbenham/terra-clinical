@@ -16,25 +16,26 @@ const propTypes = {
 };
 
 const LayoutToolbar = props => (
-  <Header title="Application Toolbar" endContent={(props.routingManager.size === 'tiny' || props.routingManager.size === 'small') && <Button text="Toggle" onClick={() => { props.routingManager.toggleMenu(); }} />} />
+  <div style={{ height: '60px', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative', display: 'flex' }}>
+    <div style={{ position: 'absolute', top: '15px', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+      <h2 style={{ display: 'inline', margin: 0 }}>Header</h2>
+      {(props.routingManager.size === 'tiny' || props.routingManager.size === 'small') && props.routingManager.toggleMenu && <button style={{ display: 'inline', marginLeft: '5px', height: '25px', border: '1px dashed lightgrey' }} onClick={props.routingManager.toggleMenu}>Toggle Menu</button>}
+    </div>
+  </div>
 );
 
 const LayoutMenuContainer = () => (
-  <div style={{ height: '100%' }}>
-    <div style={{ height: '100%', backgroundColor: 'lightblue', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
-        <h2>Menu</h2>
-      </div>
+  <div style={{ height: 'calc(100% - 10px)', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative' }}>
+    <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+      <h2 style={{ margin: '0' }}>Menu</h2>
     </div>
   </div>
 );
 
 const LayoutContentContainer = () => (
-  <div style={{ height: '100%' }}>
-    <div style={{ height: '100%', backgroundColor: 'lightyellow', position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
-        <h2>Content</h2>
-      </div>
+  <div style={{ height: 'calc(100% - 10px)', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative', backgroundColor: 'white' }}>
+    <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
+      <h2 style={{ margin: '0' }}>Content</h2>
     </div>
   </div>
 );

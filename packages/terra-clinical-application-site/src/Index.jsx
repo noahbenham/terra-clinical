@@ -19,5 +19,5 @@ import './index.scss';
   window.CustomEvent = CustomEvent;
 }());
 
-ReactDOM.render(<PatientApplication userInfo={{ name: 'Dr. John Johnson', location: 'Children\'s Mercy' }} />, document.getElementById('terra-ApplicationMount'));
+ReactDOM.render(<LayoutApplication userInfo={{ name: 'Biethman, Tyler', location: 'Children\'s Mercy' }} />, document.getElementById('terra-ApplicationMount'));
 

@@ -31,10 +31,10 @@ class PowerchartWebApplicationToolbar extends React.Component {
     const { size, menuIsOpen, routeConfig, isCompactLayout } = routingManager;
 
     const logo = (
-      <ApplicationToolbar.Logo 
-        accessory={<Image variant="rounded" src="http://is3.mzstatic.com/image/thumb/Purple128/v4/8d/8c/67/8d8c67d0-fc56-651a-5f24-1243ef885cd3/source/175x175bb.jpg" height="26px" width="26px" isFluid />} 
-        title={this.props.appTitle} 
-        subtitle={this.props.appSubtitle} 
+      <ApplicationToolbar.Logo
+        accessory={<Image variant="rounded" src="https://yt3.ggpht.com/wm5LCci89chQvQ0oeDl-QxDMwCFTu6v0YiSEytYinTbG-hU_iLP9Jqc6cC57SbNLGxIlOfAhsrfE7BG_HO8=s900-nd-c-c0xffffffff-rj-k-no" height="26px" width="26px" isFluid />}
+        title={this.props.appTitle}
+        subtitle={this.props.appSubtitle}
       />
     );
     const accessoryClasses = cx([
