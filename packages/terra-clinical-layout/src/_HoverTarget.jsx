@@ -152,7 +152,7 @@ class HoverTarget extends React.Component {
     } = this.props;
 
     const hoverClasses = cx([
-      'hover-menu',
+      'hover-target',
       { 'is-hover-disabled': !isHoverEnabled },
       { 'is-hover-tab-hidden': isOpen },
       customProps.className,
