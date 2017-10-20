@@ -19,11 +19,11 @@ const NavigationExamples = () => (
     <div id="version">Version: {version}</div>
     <Markdown id="readme" src={ReadMe} />
     <PropsTable id="props-layout" src={LayoutSrc} />
-    <h2 id="layout-standard">Layout Standard</h2>
+    <h2 id="layout-standard">Layout</h2>
     <LayoutStandard />
-    <h2 id="layout-menu-disabled">Menu Disabled</h2>
+    <h2 id="layout-no-menu">Layout w/ No Menu</h2>
     <LayoutMenuDisabled />
-    <h2 id="layout-long-text">Long Menu Text</h2>
+    <h2 id="layout-long-text">Layout w/ Long Menu Text</h2>
     <LayoutLongText />
 
   </div>

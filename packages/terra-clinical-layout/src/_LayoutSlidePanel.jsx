@@ -97,7 +97,7 @@ const LayoutSlidePanel = ({
         <HoverTarget
           text={toggleText}
           isOpen={isOpen}
-          isHoverEnabled={!compactSize && isOverlay}
+          hoverIsEnabled={!compactSize && isOverlay}
           onHoverOff={() => { if (isOpen) { onToggle(); } }}
           onHoverOn={() => { if (!isOpen) { onToggle(); } }}
           onClick={onToggle}

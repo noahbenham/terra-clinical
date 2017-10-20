@@ -16,7 +16,7 @@ const propTypes = {
   /**
    * Flag to enable the hover functionality.
    */
-  isHoverEnabled: PropTypes.bool,
+  hoverIsEnabled: PropTypes.bool,
   /**
    * Flag to menu .
    */
@@ -41,7 +41,7 @@ const propTypes = {
 
 const defaultProps = {
   children: [],
-  isHoverEnabled: false,
+  hoverIsEnabled: false,
   isEnabled: false,
 };
 
@@ -87,9 +87,9 @@ class HoverTarget extends React.Component {
   }
 
   updateListenersOnNode(node) {
-    if (this.props.isHoverEnabled) {
+    if (this.props.hoverIsEnabled) {
       return this.addListenersToNode(node);
-    } else if (!this.props.isHoverEnabled) {
+    } else if (!this.props.hoverIsEnabled) {
       return this.removeListenersFromNode(node);
     }
     return false;
@@ -142,7 +142,7 @@ class HoverTarget extends React.Component {
   render() {
     const {
       children,
-      isHoverEnabled,
+      hoverIsEnabled,
       isOpen,
       onClick,
       onHoverOff,
@@ -153,7 +153,7 @@ class HoverTarget extends React.Component {
 
     const hoverClasses = cx([
       'hover-target',
-      { 'is-hover-disabled': !isHoverEnabled },
+      { 'is-hover-disabled': !hoverIsEnabled },
       { 'is-hover-tab-hidden': isOpen },
       customProps.className,
     ]);

@@ -15,11 +15,11 @@ const propTypes = {
    */
   header: PropTypes.element,
   /**
-   * Element to be placed within the menu section of the layout.
+   * Element to be placed within the menu section of the layout. If not set, Layout-provided menu controls will be hidden.
    */
   menu: PropTypes.element,
   /**
-   * String used to decorate menu controls
+   * String used to decorate menu controls.
    */
   menuText: PropTypes.string,
   /**
