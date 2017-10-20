@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IconPin should render a the icon 1`] = `
+exports[`IconPin should render an IconPin 1`] = `
 <svg
   viewBox="0 0 48 48"
 >

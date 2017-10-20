@@ -3,7 +3,7 @@ import React from 'react';
 import IconPin from '../../src/_IconPin';
 
 describe('IconPin', () => {
-  it('should render a the icon', () => {
+  it('should render an IconPin', () => {
     const result = shallow((
       <IconPin />
     ));

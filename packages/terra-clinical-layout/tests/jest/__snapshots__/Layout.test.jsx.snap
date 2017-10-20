@@ -18,30 +18,11 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
     </div>
   }
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={false}
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "huge",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -55,8 +36,25 @@ exports[`Layout Menu Disabled should render a Layout when huge 1`] = `
       />
     }
     size="huge"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={false}
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": false,
+            "menuIsOpen": false,
+            "size": "huge",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -78,30 +76,11 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
     </div>
   }
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={false}
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "large",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -115,8 +94,25 @@ exports[`Layout Menu Disabled should render a Layout when large 1`] = `
       />
     }
     size="large"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={false}
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": false,
+            "menuIsOpen": false,
+            "size": "large",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -138,30 +134,11 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
     </div>
   }
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={false}
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "medium",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -175,8 +152,25 @@ exports[`Layout Menu Disabled should render a Layout when medium 1`] = `
       />
     }
     size="medium"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={false}
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": false,
+            "menuIsOpen": false,
+            "size": "medium",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -185,43 +179,11 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
   fill={true}
   header={false}
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={
-          <div
-            layoutConfig={
-              Object {
-                "isCompactLayout": true,
-                "menuIsOpen": false,
-                "size": "small",
-                "toggleMenu": false,
-              }
-            }
-          >
-            Test Header
-          </div>
-        }
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": true,
-              "menuIsOpen": false,
-              "size": "small",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -229,8 +191,38 @@ exports[`Layout Menu Disabled should render a Layout when small 1`] = `
       />
     }
     size="small"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={
+        <div
+          layoutConfig={
+            Object {
+              "isCompactLayout": true,
+              "menuIsOpen": false,
+              "size": "small",
+              "toggleMenu": false,
+            }
+          }
+        >
+          Test Header
+        </div>
+      }
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": true,
+            "menuIsOpen": false,
+            "size": "small",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -239,43 +231,11 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
   fill={true}
   header={false}
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={
-          <div
-            layoutConfig={
-              Object {
-                "isCompactLayout": true,
-                "menuIsOpen": false,
-                "size": "tiny",
-                "toggleMenu": false,
-              }
-            }
-          >
-            Test Header
-          </div>
-        }
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": true,
-              "menuIsOpen": false,
-              "size": "tiny",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -283,8 +243,38 @@ exports[`Layout Menu Disabled should render a Layout when tiny 1`] = `
       />
     }
     size="tiny"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={
+        <div
+          layoutConfig={
+            Object {
+              "isCompactLayout": true,
+              "menuIsOpen": false,
+              "size": "tiny",
+              "toggleMenu": false,
+            }
+          }
+        >
+          Test Header
+        </div>
+      }
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": true,
+            "menuIsOpen": false,
+            "size": "tiny",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -306,30 +296,11 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
     </div>
   }
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={false}
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "huge",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -356,8 +327,25 @@ exports[`Layout Menu Enabled should render a Layout when huge 1`] = `
       </ContentContainer>
     }
     size="huge"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={false}
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": false,
+            "menuIsOpen": false,
+            "size": "huge",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -379,30 +367,11 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
     </div>
   }
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={false}
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "large",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -429,8 +398,25 @@ exports[`Layout Menu Enabled should render a Layout when large 1`] = `
       </ContentContainer>
     }
     size="large"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={false}
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": false,
+            "menuIsOpen": false,
+            "size": "large",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -452,30 +438,11 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
     </div>
   }
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={false}
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": false,
-              "menuIsOpen": false,
-              "size": "medium",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -502,8 +469,25 @@ exports[`Layout Menu Enabled should render a Layout when medium 1`] = `
       </ContentContainer>
     }
     size="medium"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={false}
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": false,
+            "menuIsOpen": false,
+            "size": "medium",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -512,43 +496,11 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
   fill={true}
   header={false}
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={
-          <div
-            layoutConfig={
-              Object {
-                "isCompactLayout": true,
-                "menuIsOpen": false,
-                "size": "small",
-                "toggleMenu": [Function],
-              }
-            }
-          >
-            Test Header
-          </div>
-        }
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": true,
-              "menuIsOpen": false,
-              "size": "small",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -569,8 +521,38 @@ exports[`Layout Menu Enabled should render a Layout when small 1`] = `
       </ContentContainer>
     }
     size="small"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={
+        <div
+          layoutConfig={
+            Object {
+              "isCompactLayout": true,
+              "menuIsOpen": false,
+              "size": "small",
+              "toggleMenu": [Function],
+            }
+          }
+        >
+          Test Header
+        </div>
+      }
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": true,
+            "menuIsOpen": false,
+            "size": "small",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -579,43 +561,11 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
   fill={true}
   header={false}
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={true}
-    mainContent={
-      <ContentContainer
-        fill={true}
-        header={
-          <div
-            layoutConfig={
-              Object {
-                "isCompactLayout": true,
-                "menuIsOpen": false,
-                "size": "tiny",
-                "toggleMenu": [Function],
-              }
-            }
-          >
-            Test Header
-          </div>
-        }
-      >
-        <div
-          layoutConfig={
-            Object {
-              "isCompactLayout": true,
-              "menuIsOpen": false,
-              "size": "tiny",
-              "toggleMenu": [Function],
-            }
-          }
-        >
-          Test Content
-        </div>
-      </ContentContainer>
-    }
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -636,8 +586,38 @@ exports[`Layout Menu Enabled should render a Layout when tiny 1`] = `
       </ContentContainer>
     }
     size="tiny"
-    toggleMenu={[Function]}
-  />
+  >
+    <ContentContainer
+      fill={true}
+      header={
+        <div
+          layoutConfig={
+            Object {
+              "isCompactLayout": true,
+              "menuIsOpen": false,
+              "size": "tiny",
+              "toggleMenu": [Function],
+            }
+          }
+        >
+          Test Header
+        </div>
+      }
+    >
+      <div
+        layoutConfig={
+          Object {
+            "isCompactLayout": true,
+            "menuIsOpen": false,
+            "size": "tiny",
+            "toggleMenu": [Function],
+          }
+        }
+      >
+        Test Content
+      </div>
+    </ContentContainer>
+  </LayoutSlidePanel>
 </ContentContainer>
 `;
 
@@ -647,12 +627,11 @@ exports[`Layout should render a Layout with custom props 1`] = `
   fill={true}
   header={false}
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={null}
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -660,7 +639,6 @@ exports[`Layout should render a Layout with custom props 1`] = `
       />
     }
     size="tiny"
-    toggleMenu={[Function]}
   />
 </ContentContainer>
 `;
@@ -670,12 +648,11 @@ exports[`Layout should render a Layout without optional props 1`] = `
   fill={true}
   header={false}
 >
-  <MenuSlidePanel
+  <LayoutSlidePanel
     isAnimated={true}
     isOpen={false}
     isToggleEnabled={false}
-    mainContent={null}
-    onRequestClose={[Function]}
+    onToggle={[Function]}
     panelBehavior="overlay"
     panelContent={
       <ContentContainer
@@ -683,7 +660,6 @@ exports[`Layout should render a Layout without optional props 1`] = `
       />
     }
     size="tiny"
-    toggleMenu={[Function]}
   />
 </ContentContainer>
 `;

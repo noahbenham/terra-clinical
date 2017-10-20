@@ -31,7 +31,7 @@
 
   .hover-section-icon {
     flex: 0 0 auto;
-    padding-top: 20px;
+    padding-top: 10px;
     width: 100%;
   }
 
@@ -63,9 +63,7 @@
   .hover-icon {
     color: var(--layout-menu-hover-target-icon-color, #909496);
     font-size: 0.571rem;
-    left: 50%;
     position: relative;
-    transform: translate3d(-50%, -50%, 0);
     width: 100%;
   }
 
