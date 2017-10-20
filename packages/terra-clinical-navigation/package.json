@@ -35,8 +35,8 @@
     "terra-base": "^2.5.0",
     "terra-button": "^1.10.0",
     "terra-menu": "^1.2.0",
-    "terra-icon": "^1.11.0"
-
+    "terra-icon": "^1.11.0",
+    "terra-clinical-layout": "^0.x"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -44,7 +44,8 @@
     "terra-base": "^2.5.0",
     "terra-button": "^1.10.0",
     "terra-menu": "^1.2.0",
-    "terra-icon": "^1.11.0"
+    "terra-icon": "^1.11.0",
+    "terra-clinical-layout": "^0.x"
   },
   "scripts": {
     "compile": "npm run compile:clean && npm run compile:build",

@@ -6,11 +6,8 @@ import {
 
 import AppDelegate from 'terra-app-delegate';
 import breakpoints from 'terra-responsive-element/lib/breakpoints.scss';
-import ContentContainer from 'terra-content-container';
 import { navigationConfigPropType, configHasMatchingRoute } from './RoutingConfigUtils';
 import Layout from 'terra-clinical-layout';
-
-import MenuHeader from './menu-header/MenuHeader';
 
 const propTypes = {
   routeConfig: navigationConfigPropType,
@@ -20,6 +17,7 @@ const propTypes = {
   applicationToolbar: PropTypes.element,
   menuRoutingVessel: PropTypes.element,
   contentRoutingVessel: PropTypes.element,
+  menuText: PropTypes.string,
 };
 
 class Navigation extends React.Component {
@@ -42,8 +40,6 @@ class Navigation extends React.Component {
   constructor(props) {
     super(props);
 
-    this.toggleMenu = this.toggleMenu.bind(this);
-    this.togglePin = this.togglePin.bind(this);
     this.updateSize = this.updateSize.bind(this);
     this.isCompactLayout = this.isCompactLayout.bind(this);
     this.renderApplicationToolbar = this.renderApplicationToolbar.bind(this);
@@ -53,8 +49,6 @@ class Navigation extends React.Component {
     const initialSize = Navigation.getBreakpointSize();
 
     this.state = {
-      menuIsOpen: false,
-      menuIsPinned: false,
       toggleIsAvailable: configHasMatchingRoute(props.location.pathname, props.routeConfig.menuRoutes, initialSize) || props.forceToggleAvailable,
       size: initialSize,
     };
@@ -70,8 +64,6 @@ class Navigation extends React.Component {
     if (toggleIsAvailable !== this.state.toggleIsAvailable) {
       this.setState({
         toggleIsAvailable,
-        menuIsOpen: toggleIsAvailable && this.state.menuIsOpen,
-        menuIsPinned: toggleIsAvailable && this.state.menuIsPinned,
       });
     }
   }
@@ -81,149 +73,50 @@ class Navigation extends React.Component {
   }
 
   updateSize() {
-    const newSize = RoutingManager.getBreakpointSize();
+    const newSize = Navigation.getBreakpointSize();
 
     if (this.state.size !== newSize) {
       const newToggleIsAvailable = configHasMatchingRoute(this.props.location.pathname, this.props.routeConfig.menuRoutes, newSize) || this.props.forceToggleAvailable;
 
-      const newMenuIsPinned = newToggleIsAvailable && (newSize !== 'tiny' && newSize !== 'small') && this.state.menuIsPinned;
-
-      const newMenuIsOpen = newToggleIsAvailable && this.state.menuIsOpen && newMenuIsPinned;
       this.setState({
         size: newSize,
         toggleIsAvailable: newToggleIsAvailable,
-        menuIsOpen: newMenuIsOpen,
-        menuIsPinned: newMenuIsPinned,
       });
     }
-  }
-
-  toggleMenu() {
-    if (!this.state.menuIsPinned) {
-      this.setState({
-        menuIsOpen: !this.state.menuIsOpen,
-      });
-    }
-  }
-
-  togglePin() {
-    this.setState({
-      menuIsPinned: !this.state.menuIsPinned,
-    });
   }
 
   isCompactLayout() {
     return this.state.size === 'tiny' || this.state.size === 'small';
   }
 
-  renderApplicationToolbar() {
-    const { app, routeConfig, applicationToolbar } = this.props;
-    const { size, menuIsOpen } = this.state;
-
-    if (!applicationToolbar) {
+  decorateElement(element) {
+    if (!element) {
       return null;
     }
+    const { app, routeConfig } = this.props;
+    const { size } = this.state;
 
-    const isCompactLayout = this.isCompactLayout();
-    const shouldDisplayMenuToggle = isCompactLayout || this.state.toggleIsAvailable;
-
-    return React.cloneElement(applicationToolbar, {
+    return React.cloneElement(element, {
       app,
       routingManager: {
         size,
         location,
         routeConfig,
-        isCompactLayout,
-        toggleMenu: shouldDisplayMenuToggle && this.toggleMenu,
-        menuIsOpen,
-      },
-      onToggleClick: shouldDisplayMenuToggle ? this.toggleMenu : undefined,
-    });
-  }
-
-  renderMenu() {
-    const { app, routeConfig, menuRoutingVessel } = this.props;
-    const { size, menuIsOpen, menuIsPinned } = this.state;
-
-    if (!menuRoutingVessel) {
-      return null;
-    }
-
-    const isCompactLayout = this.isCompactLayout();
-    const vessel = React.cloneElement(menuRoutingVessel, {
-      app,
-      routingManager: {
-        size,
-        location,
-        routeConfig,
-        isCompactLayout,
-        toggleMenu: this.toggleMenu,
-        menuIsOpen,
-        togglePin: !isCompactLayout ? this.togglePin : undefined,
-        menuIsPinned: !isCompactLayout ? menuIsPinned : undefined,
       },
     });
-
-    return (
-      <ContentContainer
-        fill
-        header={!isCompactLayout ? (
-          <MenuHeader
-            text="Menu"
-            togglePin={!isCompactLayout ? this.togglePin : undefined}
-            isPinned={!isCompactLayout ? menuIsPinned : undefined}
-          />
-        ) : undefined}
-      >
-        {vessel}
-      </ContentContainer>
-    );
-  }
-
-  renderContent() {
-    const { app, routeConfig, contentRoutingVessel } = this.props;
-    const { size, menuIsOpen } = this.state;
-
-    if (!contentRoutingVessel) {
-      return null;
-    }
-
-    const isCompactLayout = this.isCompactLayout();
-
-    return (
-      <ContentContainer
-        fill
-        header={isCompactLayout && this.renderApplicationToolbar()}
-      >
-        {(
-          React.cloneElement(contentRoutingVessel, {
-            app,
-            routingManager: {
-              size,
-              location,
-              routeConfig,
-              isCompactLayout,
-              toggleMenu: this.toggleMenu,
-              menuIsOpen,
-            },
-          })
-        )}
-      </ContentContainer>
-    );
   }
 
   render() {
-    const { menuIsOpen, menuIsPinned, size } = this.state;
     const { applicationToolbar, contentRoutingVessel, menuRoutingVessel, menuText, ...customProps } = this.props;
 
     return (
       <Layout
         {...customProps}
-        header={this.renderApplicationToolbar()}
-        menu={this.renderMenu()}
+        header={this.decorateElement(applicationToolbar)}
+        menu={this.decorateElement(menuRoutingVessel)}
         menuText={menuText}
       >
-        {contentRoutingVessel}
+        {this.decorateElement(contentRoutingVessel)}
       </Layout>
     );
   }
