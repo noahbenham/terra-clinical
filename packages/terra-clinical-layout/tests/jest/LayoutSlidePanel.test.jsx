@@ -2,43 +2,6 @@ import React from 'react';
 
 import LayoutSlidePanel from '../../src/_LayoutSlidePanel';
 
-  // /**
-  //  * Whether or not the panel transitions should be animated.
-  //  */
-  // isAnimated: PropTypes.bool,
-  // /**
-  //  * Whether or not the panel should be displayed.
-  //  */
-  // isOpen: PropTypes.bool,
-  // /**
-  //  * Whether or not panel toggling is enabled.
-  //  */
-  // isToggleEnabled: PropTypes.bool,
-  //   /**
-  //  * The element to display in the main content area.
-  //  */
-  // children: PropTypes.element,
-  // /**
-  //  * The style of panel presentation. One of `overlay`, `squish`.
-  //  */
-  // panelBehavior: PropTypes.oneOf(['overlay', 'squish']),
-  // /**
-  //  * The component to display in the panel content area.
-  //  */
-  // panelContent: PropTypes.node,
-  // /**
-  //  * Current breakpoint size.
-  //  */
-  // size: PropTypes.string.isRequired,
-  // /**
-  //  * The function called when panel state changes are desired.
-  //  */
-  // onToggle: PropTypes.func,
-  // /**
-  //  * String to display on menu hover target.
-  //  */
-  // toggleText: PropTypes.string,
-
 describe('LayoutSlidePanel', () => {
   it('should render without optional props', () => {
     const result = shallow((
