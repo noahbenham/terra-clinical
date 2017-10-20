@@ -6,18 +6,17 @@ import {
 
 import AppDelegate from 'terra-app-delegate';
 import breakpoints from 'terra-responsive-element/lib/breakpoints.scss';
-import { navigationConfigPropType, configHasMatchingRoute } from './RoutingConfigUtils';
+import { navigationConfigPropType } from './routing/RoutingConfigUtils';
 import Layout from 'terra-clinical-layout';
 
 const propTypes = {
-  routeConfig: navigationConfigPropType,
-  location: PropTypes.object,
-  forceToggleAvailable: PropTypes.bool, // Need this to expose toggle when router is not used with layout
   app: AppDelegate.propType,
   applicationToolbar: PropTypes.element,
-  menuRoutingVessel: PropTypes.element,
   contentRoutingVessel: PropTypes.element,
+  location: PropTypes.object,
+  menuRoutingVessel: PropTypes.element,
   menuText: PropTypes.string,
+  routeConfig: navigationConfigPropType,
 };
 
 class Navigation extends React.Component {
@@ -46,26 +45,13 @@ class Navigation extends React.Component {
     this.renderMenu = this.renderMenu.bind(this);
     this.renderContent = this.renderContent.bind(this);
 
-    const initialSize = Navigation.getBreakpointSize();
-
     this.state = {
-      toggleIsAvailable: configHasMatchingRoute(props.location.pathname, props.routeConfig.menuRoutes, initialSize) || props.forceToggleAvailable,
-      size: initialSize,
+      size: Navigation.getBreakpointSize(),
     };
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.updateSize);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const toggleIsAvailable = configHasMatchingRoute(nextProps.location.pathname, nextProps.routeConfig.menuRoutes, this.state.size) || nextProps.forceToggleAvailable;
-
-    if (toggleIsAvailable !== this.state.toggleIsAvailable) {
-      this.setState({
-        toggleIsAvailable,
-      });
-    }
   }
 
   componentWillUnmount() {
@@ -76,17 +62,10 @@ class Navigation extends React.Component {
     const newSize = Navigation.getBreakpointSize();
 
     if (this.state.size !== newSize) {
-      const newToggleIsAvailable = configHasMatchingRoute(this.props.location.pathname, this.props.routeConfig.menuRoutes, newSize) || this.props.forceToggleAvailable;
-
       this.setState({
         size: newSize,
-        toggleIsAvailable: newToggleIsAvailable,
       });
     }
-  }
-
-  isCompactLayout() {
-    return this.state.size === 'tiny' || this.state.size === 'small';
   }
 
   decorateElement(element) {

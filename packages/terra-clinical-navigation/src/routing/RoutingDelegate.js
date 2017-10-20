@@ -15,8 +15,6 @@ const RoutingDelegate = {
     navigationConfig: PropTypes.object,
     location: PropTypes.object,
     browserLocation: PropTypes.object,
-    goToRoot: PropTypes.func,
-    goBack: PropTypes.func,
   }),
   clone: (source, overrides) => (
     Object.assign({}, source, overrides)
