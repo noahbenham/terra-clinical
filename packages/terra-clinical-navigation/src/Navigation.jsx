@@ -40,10 +40,6 @@ class Navigation extends React.Component {
     super(props);
 
     this.updateSize = this.updateSize.bind(this);
-    this.isCompactLayout = this.isCompactLayout.bind(this);
-    this.renderApplicationToolbar = this.renderApplicationToolbar.bind(this);
-    this.renderMenu = this.renderMenu.bind(this);
-    this.renderContent = this.renderContent.bind(this);
 
     this.state = {
       size: Navigation.getBreakpointSize(),
