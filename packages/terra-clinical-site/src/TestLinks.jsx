@@ -20,8 +20,7 @@ const TestLinks = () => (
       <li><Link to="/tests/no-data-view-tests">NoDataView Tests</Link></li>
       <li><Link to="/tests/item-collection-tests">ItemCollection Tests</Link></li>
       <li><Link to="/tests/item-collection-table-header-cell-tests">Item Collection Table Header Cell Test</Link></li>
-      <li><Link to="/tests/navgiation-primary-tests">NavigationPrimary Tests</Link></li>
-      <li><Link to="/tests/navigation-secondary-tests">NavigationSecondary Tests</Link></li>
+      <li><Link to="/tests/layout-tests">Layout Tests</Link></li>
     </ul>
   </div>
 );
