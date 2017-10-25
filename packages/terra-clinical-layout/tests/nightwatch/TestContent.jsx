@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TestContent = () => (
-  <div className="test-content" style={{ height: 'calc(100% - 10px)', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative' }}>
+  <div id="test-content" style={{ height: 'calc(100% - 10px)', width: 'calc(100% - 10px)', border: '4px dashed lightgrey', margin: '5px', position: 'relative' }}>
     <div style={{ position: 'absolute', top: '50%', left: '50%', color: 'grey', transform: 'translateX(-50%)' }}>
       <h2 style={{ margin: '0' }}>Content</h2>
     </div>

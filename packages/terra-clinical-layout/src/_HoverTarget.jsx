@@ -159,11 +159,11 @@ class HoverTarget extends React.Component {
     ]);
 
     return (
-      <div {...customProps} className={hoverClasses} ref={this.setHoverNode}>
+      <div {...customProps} className={hoverClasses} ref={this.setHoverNode} data-hover-target>
         <div className={cx('content-section')}>
           {children}
         </div>
-        <button className={cx('hover-section')} onClick={this.handleOnClick}>
+        <button className={cx('hover-section')} onClick={this.handleOnClick} data-hover-target-hover-section>
           <div className={cx('hover-section-icon')}>
             <IconChevronRight className={cx('hover-icon')} />
           </div>

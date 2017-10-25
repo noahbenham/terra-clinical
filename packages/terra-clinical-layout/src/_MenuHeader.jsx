@@ -37,11 +37,11 @@ const MenuHeader = ({ text, togglePin, isPinned, ...customProps }) => {
 
   let pinButton;
   if (togglePin && !isPinned) {
-    pinButton = <Button onClick={togglePin} icon={<IconPin className={cx(['icon', 'unlock'])} />} variant="link" className={cx('header-button')} />;
+    pinButton = <Button onClick={togglePin} icon={<IconPin className={cx(['icon', 'unlock'])} />} variant="link" className={cx('header-button')} data-menu-header-pin />;
   }
   let unpinButton;
   if (togglePin && isPinned) {
-    unpinButton = <Button onClick={togglePin} icon={<IconPin className={cx('icon')} />} variant="link" className={cx('header-button')} />;
+    unpinButton = <Button onClick={togglePin} icon={<IconPin className={cx('icon')} />} variant="link" className={cx('header-button')} data-menu-header-unpin />;
   }
 
   const toolbarEnd = (
@@ -52,7 +52,7 @@ const MenuHeader = ({ text, togglePin, isPinned, ...customProps }) => {
   );
 
   return (
-    <div {...customProps} className={headerClassNames}>
+    <div {...customProps} className={headerClassNames} data-menu-header>
       <div className={cx('header-content-body')}>
         <h3 className={cx('header-text')}>{text}</h3>
       </div>
